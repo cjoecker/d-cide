@@ -11,7 +11,6 @@ import Typography from "@material-ui/core/Typography";
 import * as LongStrings from "../../components/LongStrings";
 import ReactGA from 'react-ga';
 import connect from "react-redux/es/connect/connect";
-import {get_result} from "../../services/actions/Result_Action";
 
 const styles = theme => ({
     root: {
@@ -80,7 +79,7 @@ class Result extends Component {
     render() {
 
         const {classes} = this.props;
-        const {isLoading} = this.props;
+        const {isFetchingDataPackage} = this.props.app;
 
 
         return (
@@ -99,11 +98,12 @@ class Result extends Component {
                                     <InfoIcon color="secondary"/>
                                 </IconButton>
                             </Typography>
-
+                            {!isFetchingDataPackage &&
                             <ResultsChart
                                 itemsKey={"decisionOption"}
                                 projectId={this.props.projectId}
                                 YKey={"name"}/>
+                            }
 
                         </Paper>
                     </Grid>
@@ -118,12 +118,12 @@ class Result extends Component {
                                     <InfoIcon color="secondary"/>
                                 </IconButton>
                             </Typography>
-
+                            {!isFetchingDataPackage &&
                             <ResultsChart
                                 itemsKey={"selectionCriteria"}
                                 projectId={this.props.projectId}
                                 YKey={"name"}/>
-
+                            }
                         </Paper>
                     </Grid>
                 </Grid>

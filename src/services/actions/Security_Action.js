@@ -5,7 +5,9 @@ import {
     START_LOADING,
     SET_CURRENT_USER,
     GET_UNREGISTERED_USERS,
-    SIGNUP_SUCCESSFUL
+    SIGNUP_SUCCESSFUL,
+    START_FETCHING_DATA_PACKAGE,
+    END_FETCHING_DATA_PACKAGE,
 } from "./types";
 import setJWTToken from "../securityUtils";
 import jwt_decode from "jwt-decode";
@@ -15,6 +17,7 @@ export const signUp = (newUser, history) => async dispatch => {
 
     //Show Loading Bar
     dispatch({type: START_LOADING});
+    dispatch({type: START_FETCHING_DATA_PACKAGE});
 
     let signUpSuccessful = false;
 
@@ -41,6 +44,7 @@ export const signUp = (newUser, history) => async dispatch => {
     });
 
     //Show Loading Bar
+    dispatch({type: END_FETCHING_DATA_PACKAGE});
     dispatch({type: END_LOADING});
 };
 
@@ -48,6 +52,7 @@ export const login = LoginRequest => async dispatch => {
 
     //Show Loading Bar
     dispatch({type: START_LOADING});
+    dispatch({type: START_FETCHING_DATA_PACKAGE});
 
     try {
         // post => Login Request
@@ -78,6 +83,7 @@ export const login = LoginRequest => async dispatch => {
     }
 
     //Show Loading Bar
+    dispatch({type: END_FETCHING_DATA_PACKAGE});
     dispatch({type: END_LOADING});
 };
 

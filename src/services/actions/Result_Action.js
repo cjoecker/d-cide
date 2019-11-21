@@ -1,5 +1,11 @@
 import axios from "axios";
-import {START_LOADING, END_LOADING, GET_RESULT, GET_ERRORS} from "./types";
+import {
+    START_LOADING,
+    END_LOADING,
+    GET_RESULT,
+    GET_ERRORS,
+
+} from "./types";
 
 
 export const get_result = (itemsKey, projectId) => async dispatch => {

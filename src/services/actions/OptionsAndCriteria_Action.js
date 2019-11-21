@@ -1,11 +1,22 @@
 import axios from "axios";
-import {GET_ITEMS, CREATE_ITEM, START_LOADING, END_LOADING, DELETE_ITEM, EDIT_ITEM, GET_ERRORS} from "./types";
+import {
+    GET_ITEMS,
+    CREATE_ITEM,
+    START_LOADING,
+    END_LOADING,
+    DELETE_ITEM,
+    EDIT_ITEM,
+    GET_ERRORS,
+    START_FETCHING_DATA_PACKAGE,
+    END_FETCHING_DATA_PACKAGE,
+} from "./types";
 
 
 export const get_items = (itemsKey, projectId) => async dispatch => {
 
     //Show Loading Bar
     dispatch({type: START_LOADING});
+
 
     //Get Information
     try {
@@ -27,12 +38,14 @@ export const get_items = (itemsKey, projectId) => async dispatch => {
     //Show Loading Bar
     dispatch({type: END_LOADING});
 
+
 };
 
 export const create_item = (newEntry, itemsKey, projectId) => async dispatch => {
 
     //Show Loading Bar
     dispatch({type: START_LOADING});
+    dispatch({type: START_FETCHING_DATA_PACKAGE});
 
     //Get Information
     try {
@@ -50,6 +63,7 @@ export const create_item = (newEntry, itemsKey, projectId) => async dispatch => 
     }
 
     //Show Loading Bar
+    dispatch({type: END_FETCHING_DATA_PACKAGE});
     dispatch({type: END_LOADING});
 
 };
@@ -58,6 +72,7 @@ export const delete_item = (id, itemsKey) => async dispatch => {
 
     //Show Loading Bar
     dispatch({type: START_LOADING});
+    dispatch({type: START_FETCHING_DATA_PACKAGE});
 
     //Get Information
     try {
@@ -75,6 +90,7 @@ export const delete_item = (id, itemsKey) => async dispatch => {
     }
 
     //Show Loading Bar
+    dispatch({type: END_FETCHING_DATA_PACKAGE});
     dispatch({type: END_LOADING});
 
 };
@@ -83,6 +99,7 @@ export const edit_item = (newEntry, itemsKey, projectId) => async dispatch => {
 
     //Show Loading Bar
     dispatch({type: START_LOADING});
+    dispatch({type: START_FETCHING_DATA_PACKAGE});
 
     //Get Information
     try {
@@ -100,6 +117,7 @@ export const edit_item = (newEntry, itemsKey, projectId) => async dispatch => {
     }
 
     //Show Loading Bar
+    dispatch({type: END_FETCHING_DATA_PACKAGE});
     dispatch({type: END_LOADING});
 
 };

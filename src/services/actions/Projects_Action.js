@@ -9,6 +9,8 @@ import {
     CREATE_EXAMPLE_DATA,
     GET_ERRORS,
     TRANSFER_PROJECT_TO_USER,
+    START_FETCHING_DATA_PACKAGE,
+    END_FETCHING_DATA_PACKAGE,
 } from "./types";
 
 
@@ -40,6 +42,7 @@ export const create_project = (newEntry) => async dispatch => {
 
     //Show Loading Bar
     dispatch({type: START_LOADING});
+    dispatch({type: START_FETCHING_DATA_PACKAGE});
 
     //Get Information
     try {
@@ -56,6 +59,7 @@ export const create_project = (newEntry) => async dispatch => {
     }
 
     //Show Loading Bar
+    dispatch({type: END_FETCHING_DATA_PACKAGE});
     dispatch({type: END_LOADING});
 
 };
@@ -64,6 +68,7 @@ export const delete_project = (id) => async dispatch => {
 
     //Show Loading Bar
     dispatch({type: START_LOADING});
+    dispatch({type: START_FETCHING_DATA_PACKAGE});
 
     //Get Information
     try {
@@ -80,6 +85,7 @@ export const delete_project = (id) => async dispatch => {
     }
 
     //Show Loading Bar
+    dispatch({type: END_FETCHING_DATA_PACKAGE});
     dispatch({type: END_LOADING});
 
 };
@@ -88,6 +94,7 @@ export const edit_project = (newItem) => async dispatch => {
 
     //Show Loading Bar
     dispatch({type: START_LOADING});
+    dispatch({type: START_FETCHING_DATA_PACKAGE});
 
     //Get Information
     try {
@@ -103,6 +110,7 @@ export const edit_project = (newItem) => async dispatch => {
     }
 
     //Show Loading Bar
+    dispatch({type: END_FETCHING_DATA_PACKAGE});
     dispatch({type: END_LOADING});
 
 };
@@ -111,6 +119,7 @@ export const create_exampleData = () => async dispatch => {
 
     //Show Loading Bar
     dispatch({type: START_LOADING});
+    dispatch({type: START_FETCHING_DATA_PACKAGE});
 
     //Get Information
     try {
@@ -126,6 +135,7 @@ export const create_exampleData = () => async dispatch => {
     }
 
     //Show Loading Bar
+    dispatch({type: END_FETCHING_DATA_PACKAGE});
     dispatch({type: END_LOADING});
 
 };
@@ -134,10 +144,11 @@ export const transfer_projectToUser = (username) => async dispatch => {
 
     //Show Loading Bar
     dispatch({type: START_LOADING});
+    dispatch({type: START_FETCHING_DATA_PACKAGE});
 
     //Get Information
     try {
-        const res = await axios.put(`/api/transferProjectToUser`,username, {headers: {"Content-Type": "text/plain"}});
+        const res = await axios.put(`/api/transferProjectToUser`, username, {headers: {"Content-Type": "text/plain"}});
         dispatch({
             type: TRANSFER_PROJECT_TO_USER,
         });
@@ -149,6 +160,7 @@ export const transfer_projectToUser = (username) => async dispatch => {
     }
 
     //Show Loading Bar
+    dispatch({type: END_FETCHING_DATA_PACKAGE});
     dispatch({type: END_LOADING});
 
 };

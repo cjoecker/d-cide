@@ -1,5 +1,14 @@
 import axios from "axios";
-import {START_LOADING, END_LOADING, GET_OPTIONS, CHANGE_OPTION, GET_ERRORS, SEND_EVERY_OPTION} from "./types";
+import {
+    START_LOADING,
+    END_LOADING,
+    GET_OPTIONS,
+    CHANGE_OPTION,
+    GET_ERRORS,
+    SEND_EVERY_OPTION,
+    START_FETCHING_DATA_PACKAGE,
+    END_FETCHING_DATA_PACKAGE,
+} from "./types";
 
 
 export const get_options = (projectId) => async dispatch => {
@@ -30,6 +39,7 @@ export const change_option = (criteriaId, optionId, rating) => async dispatch =>
 
     //Show Loading Bar
     dispatch({type: START_LOADING});
+    dispatch({type: START_FETCHING_DATA_PACKAGE});
 
     //Get Information
     try {
@@ -45,6 +55,7 @@ export const change_option = (criteriaId, optionId, rating) => async dispatch =>
     }
 
     //Show Loading Bar
+    dispatch({type: END_FETCHING_DATA_PACKAGE});
     dispatch({type: END_LOADING});
 
 };
@@ -53,6 +64,7 @@ export const send_every_option = (options) => async dispatch => {
 
     //Show Loading Bar
     dispatch({type: START_LOADING});
+    dispatch({type: START_FETCHING_DATA_PACKAGE});
     //Get Information
     try {
         const res = await axios.post(`/api/every_ratedOption`, options);
@@ -67,6 +79,7 @@ export const send_every_option = (options) => async dispatch => {
     }
 
     //Show Loading Bar
+    dispatch({type: END_FETCHING_DATA_PACKAGE});
     dispatch({type: END_LOADING});
 
 };
