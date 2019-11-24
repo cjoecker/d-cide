@@ -73,7 +73,7 @@ class LandingPage extends Component {
 
             //Open Project
             if(this.props.project.projects.length > 0) {
-                this.props.history.push("/decision/" + this.props.project.projects[0].id);
+                this.props.history.push("/decisions/" + this.props.project.projects[0].id);
             }else{
                 this.props.logout();
                 this.props.history.push("/");

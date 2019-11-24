@@ -256,7 +256,7 @@ class App extends Component {
 
                             {/*Private Scenes*/}
                             <SecureRoute exact path="/decisions" component={Projects}/>
-                            <SecureRoute exact path="/decision/:projectId" component={Decision}/>
+                            <SecureRoute exact path="/decisions/:projectId" component={Decision}/>
                             <Route component={NotFound}/>
                         </Switch>
 

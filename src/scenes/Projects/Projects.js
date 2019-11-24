@@ -150,7 +150,7 @@ class Projects extends React.Component {
     }
 
     goToProject(id) {
-        this.props.history.push(`/decision/${id}`);
+        this.props.history.push(`/decisions/${id}`);
     }
 
     onChangeNewEntry = (event) => {
