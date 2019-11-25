@@ -106,7 +106,7 @@ class Projects extends React.Component {
             this.setState({projects: this.props.project.projects});
         }
 
-        //Go to decision when project created
+        //Go to decision when decision created
         if (prevProps.project.projects.length !== 0 &&
             prevProps.project.projects.length < this.props.project.projects.length &&
             this.state.isMounted === true

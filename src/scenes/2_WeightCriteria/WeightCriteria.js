@@ -149,7 +149,7 @@ class WeightCriteria extends Component {
             }
         }
 
-        //Go to decisions after asking to save project
+        //Go to decisions after asking to save decision
         if (prevState.weightedCriteria !== !this.state.weightedCriteria) {
             console.log("data");
             // this.props.change_criteria(itemLocal);

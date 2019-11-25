@@ -1,56 +1,22 @@
 import {Component} from "react";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
-import {get_unregisteredUsersNum, login, signUp, logout} from "../services/actions/Security_Action";
+import {login, signUp, logout, get_unregisteredUser} from "../services/actions/Security_Action";
 import {create_exampleData, create_project, get_projects} from "../services/actions/Projects_Action";
 import ReactGA from 'react-ga';
 
 class LandingPage extends Component {
     async componentDidMount() {
+
+
+
         //Unregistered User
         if (!this.props.security.validToken) {
+            //Get Projects
+            await this.props.get_unregisteredUser();
 
-            ReactGA.event({
-                category: 'Landing page',
-                action: 'Create New User'
-            });
-
-            //get total number of unregistered users
-            await this.props.get_unregisteredUsersNum();
-
-            //create random user
-            let userName = (this.props.security.unregisteredUsers + 1) + "@UnregisteredUser.com";
-            let password = Math.random().toString(36).substring(4);
-
-            const newUser = {
-                username: userName,
-                registeredUser: false,
-                fullName: "Unregistered User",
-                password: password,
-                confirmPassword: password
-            };
-
-            await this.props.signUp(newUser, this.props.history);
-
-            //Login random user
-
-            const user = {
-                username: userName,
-                password: password
-            };
-
-            await this.props.login(user);
-
-            //Create Project
-            const project = {
-                name: "Unnamed Decision"
-            };
-
-            await this.props.create_project(project);
-
-            //Create Example Data
-            await this.props.create_exampleData();
         }
+
         if(this.props.security.user.registeredUser){
 
             ReactGA.event({
@@ -71,7 +37,7 @@ class LandingPage extends Component {
             //Get Projects
             await this.props.get_projects();
 
-            //Open Project
+            //Open Decision
             if(this.props.project.projects.length > 0) {
                 this.props.history.push("/decisions/" + this.props.project.projects[0].id);
             }else{
@@ -112,7 +78,7 @@ export default connect(
         login,
         logout,
         signUp,
-        get_unregisteredUsersNum,
+        get_unregisteredUser,
         create_project,
         get_projects,
         create_exampleData

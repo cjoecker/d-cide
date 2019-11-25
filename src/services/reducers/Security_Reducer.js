@@ -4,7 +4,6 @@ const initialState = {
     validToken: false,
     signUpSuccessful: false,
     user: {},
-    unregisteredUsers: 0
 };
 
 export default function(state = initialState, action) {
@@ -19,7 +18,8 @@ export default function(state = initialState, action) {
         case GET_UNREGISTERED_USERS:
             return {
                 ...state,
-                unregisteredUsers: action.payload
+                validToken: !!action.payload,
+                user: action.payload
             };
         case SIGNUP_SUCCESSFUL:
             return {

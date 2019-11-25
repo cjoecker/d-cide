@@ -96,26 +96,44 @@ export const logout = () => dispatch => {
     });
 };
 
-export const get_unregisteredUsersNum = () => async dispatch => {
+export const get_unregisteredUser = () => async dispatch => {
 
     //Show Loading Bar
     dispatch({type: START_LOADING});
+    dispatch({type: START_FETCHING_DATA_PACKAGE});
 
-    //Get Information
     try {
-        const res = await axios.get(`/api/users/unregistered`);
+        // post => Login Request
+        const res = await axios.get("/api/users/unregistered");
+
+        // extract token from res.data
+        const {token} = res.data;
+
+        // store the token in the localStorage
+        localStorage.setItem("jwtToken", token);
+
+        // set our token in header ***
+        setJWTToken(token);
+
+        // decode token on React
+        const decoded = jwt_decode(token);
+
+        // dispatch to our securityReducer
         dispatch({
-            type: GET_UNREGISTERED_USERS,
-            payload: res.data,
+            type: SET_CURRENT_USER,
+            payload: decoded
         });
-    } catch (error) {
+    } catch (err) {
+
+        console.log(err);
         dispatch({
             type: GET_ERRORS,
-            payload: `${error.response.statusText} (${error.response.status})`
+            payload: err.response.data
         });
     }
 
     //Show Loading Bar
+    dispatch({type: END_FETCHING_DATA_PACKAGE});
     dispatch({type: END_LOADING});
 
 };

@@ -108,7 +108,7 @@ class ForgotPassword extends React.Component {
         }
 
 
-        //Go to decisions after asking to save project
+        //Go to decisions after asking to save decision
         if (prevState.showSaveDecision && !this.state.showSaveDecision) {
             this.props.history.push("/login");
         }

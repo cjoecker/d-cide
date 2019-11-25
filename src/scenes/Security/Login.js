@@ -126,17 +126,17 @@ class Login extends React.Component {
         }
 
 
-        //Show form to transfer project to user
+        //Show form to transfer decision to user
         if (getValueSafe(() => prevProps.security.user.registeredUser) === false && getValueSafe(() => this.props.security.user.registeredUser) === true) {
             this.setState({showSaveDecision: true});
         }
 
-        //Go to decisions after asking to save project
+        //Go to decisions after asking to save decision
         if (prevState.showSaveDecision && !this.state.showSaveDecision) {
             this.props.history.push("/decisions");
         }
 
-        //Go to decisions after asking to save project
+        //Go to decisions after asking to save decision
         if (getValueSafe(() => prevProps.security.user.registeredUser) === null
             && getValueSafe(() => this.props.security.user.registeredUser) === true
         ) {
