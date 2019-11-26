@@ -18,7 +18,7 @@ import Typography from "@material-ui/core/Typography";
 import TwoButtonsDialog from "../../components/TwoButtonsDialog";
 
 import ReactGA from "react-ga";
-import {get_projects, transfer_projectToUser} from "../../services/actions/Decisions_Action";
+import {get_decisions, transfer_decisionToUser} from "../../services/actions/Decisions_Action";
 import {getValueSafe} from "../../services/generalUtils";
 
 
@@ -171,7 +171,7 @@ class Login extends React.Component {
 
         this.setState({showSaveDecision: false,});
 
-        await this.props.transfer_projectToUser(this.state.unregisteredUsername);
+        await this.props.transfer_decisionToUser(this.state.unregisteredUsername);
 
         ReactGA.event({
             category: 'Login',
@@ -332,9 +332,9 @@ class Login extends React.Component {
                             <TwoButtonsDialog
                                 show={this.state.showSaveDecision}
                                 title="Save actual decision into your user account?"
-                                message="We can save the actual decision you have been working on unlogged into your user account."
+                                message="The actual decision you have been working on unlogged will be saved into your user account."
                                 primaryButtonText="Save it!"
-                                secondaryButtonText="Dismiss it!"
+                                secondaryButtonText="Dismiss it"
                                 handlePrimary={(e) => this.saveDecision(e)}
                                 handleSecondary={(e) => this.dismissDecision(e)}
                             />
@@ -353,17 +353,17 @@ Login.propTypes = {
     classes: PropTypes.object.isRequired,
     errors: PropTypes.object.isRequired,
     security: PropTypes.object.isRequired,
-    project: PropTypes.object.isRequired,
+    decision: PropTypes.object.isRequired,
     login: PropTypes.func.isRequired,
-    transfer_projectToUser: PropTypes.func.isRequired,
-    get_projects: PropTypes.func.isRequired,
+    transfer_decisionToUser: PropTypes.func.isRequired,
+    get_decisions: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
     errors: state.errors,
     security: state.security,
-    project: state.project,
+    decision: state.decision,
 });
 
 
-export default connect(mapStateToProps, {login, transfer_projectToUser, get_projects})(withStyles(styles)(Login));
+export default connect(mapStateToProps, {login, transfer_decisionToUser, get_decisions})(withStyles(styles)(Login));

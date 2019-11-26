@@ -108,7 +108,7 @@ class OptionsAndCriteria extends Component {
                         </Typography>
                         <EditableList
                             itemsKey='decisionOption'
-                            projectId={this.props.projectId}
+                            decisionId={this.props.decisionId}
                             minItemsThere={this.decisionOptionsReady}
                         />
                     </Grid>
@@ -124,7 +124,7 @@ class OptionsAndCriteria extends Component {
                         </Typography>
                         <EditableList
                             itemsKey='selectionCriteria'
-                            projectId={this.props.projectId}
+                            decisionId={this.props.decisionId}
                             minItemsThere={this.selectionCriteriaReady}
                         />
                     </Grid>

@@ -18,7 +18,7 @@ import Typography from "@material-ui/core/Typography";
 import TwoButtonsDialog from "../../components/TwoButtonsDialog";
 
 import ReactGA from "react-ga";
-import {get_projects, transfer_projectToUser} from "../../services/actions/Decisions_Action";
+import {get_decisions, transfer_decisionToUser} from "../../services/actions/Decisions_Action";
 import {getValueSafe} from "../../services/generalUtils";
 
 
@@ -195,9 +195,9 @@ class ForgotPassword extends React.Component {
                             <TwoButtonsDialog
                                 show={this.state.showSaveDecision}
                                 title="Save actual decision into your user account?"
-                                message="We can save the actual decision you have been working on unlogged into your user account."
+                                message="The actual decision you have been working on unlogged will be saved into your user account."
                                 primaryButtonText="Save it!"
-                                secondaryButtonText="Dismiss it!"
+                                secondaryButtonText="Dismiss it"
                                 handlePrimary={(e) => this.saveDecision(e)}
                                 handleSecondary={(e) => this.dismissDecision(e)}
                             />

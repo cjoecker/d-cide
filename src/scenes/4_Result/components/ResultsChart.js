@@ -43,7 +43,7 @@ class ResultsChart extends React.Component {
     //Load Data from Server
     async componentDidMount() {
 
-        await this.props.get_result(this.props.itemsKey, this.props.projectId);
+        await this.props.get_result(this.props.itemsKey, this.props.decisionId);
     };
 
     //Refresh when redux state changes

@@ -12,7 +12,7 @@ import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 
 
 import {connect} from "react-redux";
-import {get_projects, create_project, delete_project, edit_project} from "../../services/actions/Decisions_Action";
+import {get_decisions, create_decision, delete_decision, edit_decision} from "../../services/actions/Decisions_Action";
 import Fab from "@material-ui/core/Fab";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
@@ -60,14 +60,14 @@ const styles = theme => ({
 });
 
 
-class Projects extends React.Component {
+class Decisions extends React.Component {
 
 
     constructor(props) {
         super(props);
 
         this.state = {
-            projects: [],
+            decisions: [],
             newEntry: '',
             isMounted: false,
             errors: {},
@@ -75,10 +75,10 @@ class Projects extends React.Component {
             DeleteDecisionNum: '',
             DeleteDecisionName: "",
         };
-        this.createProject = this.createProject.bind(this);
-        this.deleteProject = this.deleteProject.bind(this);
-        this.goToProject = this.goToProject.bind(this);
-        this.onChangeProject = this.onChangeProject.bind(this);
+        this.createDecision = this.createDecision.bind(this);
+        this.deleteDecision = this.deleteDecision.bind(this);
+        this.goToDecision = this.goToDecision.bind(this);
+        this.onChangeDecision = this.onChangeDecision.bind(this);
 
         this.deleteDecision = this.deleteDecision.bind(this);
         this.cancelDeleteDecision = this.cancelDeleteDecision.bind(this);
@@ -86,10 +86,10 @@ class Projects extends React.Component {
 
 
     async componentDidMount() {
-        await this.props.get_projects();
+        await this.props.get_decisions();
 
         if (!this.props.security.user.registeredUser){
-            this.goToProject(this.props.project.projects[0].id)
+            this.goToDecision(this.props.decision.decisions[0].id)
         }
 
         this.setState({isMounted: true});
@@ -102,28 +102,28 @@ class Projects extends React.Component {
     //Refresh when redux state changes
     componentDidUpdate(prevProps, prevState, snapshot) {
 
-        //Get Projects
-        if (prevProps.project !== this.props.project) {
-            this.setState({projects: this.props.project.projects});
+        //Get Decisions
+        if (prevProps.decision !== this.props.decision) {
+            this.setState({decisions: this.props.decision.decisions});
         }
 
         //Go to decision when decision created
-        if (prevProps.project.projects.length !== 0 &&
-            prevProps.project.projects.length < this.props.project.projects.length &&
+        if (prevProps.decision.decisions.length !== 0 &&
+            prevProps.decision.decisions.length < this.props.decision.decisions.length &&
             this.state.isMounted === true
         ) {
-            const prevSet = new Set(prevProps.project.projects.map(o => o.id));
-            const added = this.props.project.projects.filter(o => !prevSet.has(o.id));
+            const prevSet = new Set(prevProps.decision.decisions.map(o => o.id));
+            const added = this.props.decision.decisions.filter(o => !prevSet.has(o.id));
 
-            let projectId = added[0].id;
-            this.goToProject(projectId);
+            let decisionId = added[0].id;
+            this.goToDecision(decisionId);
         }
 
 
     }
 
 
-    async createProject() {
+    async createDecision() {
 
         //Exit if entry
         if (this.state.newEntry === '') return;
@@ -132,7 +132,7 @@ class Projects extends React.Component {
             name: this.state.newEntry
         };
 
-        await this.props.create_project(newEntry);
+        await this.props.create_decision(newEntry);
 
         this.setState({
             newEntry: '',
@@ -141,7 +141,7 @@ class Projects extends React.Component {
     }
 
 
-    deleteProject(id, name) {
+    deleteDecision(id, name) {
 
         this.setState({
             showAskBeforeDelete: true,
@@ -151,7 +151,7 @@ class Projects extends React.Component {
 
     }
 
-    goToProject(id) {
+    goToDecision(id) {
         this.props.history.push(`/decisions/${id}`);
     }
 
@@ -160,31 +160,31 @@ class Projects extends React.Component {
     };
 
 
-    onChangeProject = (event, projectLocal) => {
+    onChangeDecision = (event, decisionLocal) => {
 
-        let array = this.state.projects;
-        let objIndex = array.findIndex((obj => obj.id === projectLocal.id));
+        let array = this.state.decisions;
+        let objIndex = array.findIndex((obj => obj.id === decisionLocal.id));
         array[objIndex].name = event.target.value;
         this.setState({
-            projects: array
+            decisions: array
         });
 
     };
 
-    editProjectName(projectLocal) {
+    editDecisionName(decisionLocal) {
 
         //Exit if entry empty
-        if (projectLocal.name === '') {
-            this.deleteProject(projectLocal.id);
+        if (decisionLocal.name === '') {
+            this.deleteDecision(decisionLocal.id);
             return;
         }
-        this.props.edit_project(projectLocal);
+        this.props.edit_decision(decisionLocal);
 
     }
 
     async deleteDecision(e) {
 
-        this.props.delete_project(this.state.DeleteDecisionNum);
+        this.props.delete_decision(this.state.DeleteDecisionNum);
 
         this.setState({
             showAskBeforeDelete: false,
@@ -192,7 +192,7 @@ class Projects extends React.Component {
         });
 
         ReactGA.event({
-            category: 'Projects',
+            category: 'Decisions',
             action: 'Delete Decision'
         });
     };
@@ -207,14 +207,14 @@ class Projects extends React.Component {
         });
 
         ReactGA.event({
-            category: 'Projects',
+            category: 'Decisions',
             action: 'Cancel Delete Decision'
         });
     };
 
     render() {
         const {classes} = this.props;
-        const {projects, isMounted} = this.state;
+        const {decisions, isMounted} = this.state;
 
         return (
             isMounted &&
@@ -236,7 +236,7 @@ class Projects extends React.Component {
                                         onKeyPress={(event) => {
                                             if (event.key === 'Enter') {
                                                 event.preventDefault();
-                                                this.createProject();
+                                                this.createDecision();
                                             }
                                         }}
                                         onChange={this.onChangeNewEntry}
@@ -247,22 +247,22 @@ class Projects extends React.Component {
                                             size="small"
                                             color="primary"
                                             aria-label="Add"
-                                            onClick={this.createProject}
+                                            onClick={this.createDecision}
                                         >
                                             <AddIcon/>
                                         </Fab>
                                     </ListItemSecondaryAction>
                                 </ListItem>
                             </Paper>
-                            {projects.map(project =>
-                                <Paper elevation={2} key={project.id} className={classes.paper}>
+                            {decisions.map(decision =>
+                                <Paper elevation={2} key={decision.id} className={classes.paper}>
                                     <ListItem>
                                         <InputBase
                                             multiline
                                             className={classes.inputBaseItem}
-                                            value={project.name}
-                                            onChange={(event) => this.onChangeProject(event, project)}
-                                            onBlur={() => this.editProjectName(project)}
+                                            value={decision.name}
+                                            onChange={(event) => this.onChangeDecision(event, decision)}
+                                            onBlur={() => this.editDecisionName(decision)}
                                             onKeyPress={(event) => {
                                                 if (event.key === 'Enter') {
                                                     event.preventDefault();
@@ -275,7 +275,7 @@ class Projects extends React.Component {
                                                 size="small"
                                                 color="secondary"
                                                 aria-label="Delete"
-                                                onClick={() => this.deleteProject(project.id, project.name)}
+                                                onClick={() => this.deleteDecision(decision.id, decision.name)}
                                                  style={{marginRight: 7}}
                                             >
                                                 <DeleteIcon/>
@@ -284,7 +284,7 @@ class Projects extends React.Component {
                                                 size="small"
                                                 color="primary"
                                                 aria-label="Work on Decision"
-                                                onClick={() => this.goToProject(project.id)}
+                                                onClick={() => this.goToDecision(decision.id)}
                                             >
                                                 <ArrowForwardIcon/>
                                             </Fab>
@@ -310,27 +310,27 @@ class Projects extends React.Component {
     }
 }
 
-Projects.propTypes = {
+Decisions.propTypes = {
     classes: PropTypes.object.isRequired,
     errors: PropTypes.object.isRequired,
-    project: PropTypes.object.isRequired,
+    decision: PropTypes.object.isRequired,
     security: PropTypes.object.isRequired,
-    get_projects: PropTypes.func.isRequired,
-    create_project: PropTypes.func.isRequired,
-    delete_project: PropTypes.func.isRequired,
-    edit_project: PropTypes.func.isRequired,
+    get_decisions: PropTypes.func.isRequired,
+    create_decision: PropTypes.func.isRequired,
+    delete_decision: PropTypes.func.isRequired,
+    edit_decision: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
     errors: state.errors,
-    project: state.project,
+    decision: state.decision,
     security: state.security,
 });
 
 
 export default connect(mapStateToProps, {
-    get_projects,
-    create_project,
-    delete_project,
-    edit_project
-})(withStyles(styles)(Projects));
+    get_decisions,
+    create_decision,
+    delete_decision,
+    edit_decision
+})(withStyles(styles)(Decisions));

@@ -77,12 +77,12 @@ class Decision extends Component {
         this.state = {
             activeStep: 0,
             stepComplete: {},
-            projectId: 0,
+            decisionId: 0,
         };
     }
 
     componentDidMount() {
-        this.setState({projectId: this.props.match.params.projectId});
+        this.setState({decisionId: this.props.match.params.decisionId});
     }
 
 
@@ -162,19 +162,19 @@ class Decision extends Component {
         switch (stepIndex) {
             case 0:
                 return <OptionsAndCriteria
-                    projectId={this.props.match.params.projectId}
+                    decisionId={this.props.match.params.decisionId}
                 />;
             case 1:
                 return <WeightCriteria
-                    projectId={this.props.match.params.projectId}
+                    decisionId={this.props.match.params.decisionId}
                 />;
             case 2:
                 return <OptionsRating
-                    projectId={this.props.match.params.projectId}
+                    decisionId={this.props.match.params.decisionId}
                 />;
             case 3:
                 return <Result
-                    projectId={this.props.match.params.projectId}
+                    decisionId={this.props.match.params.decisionId}
                 />;
             default:
                 return 'Unknown stepIndex';

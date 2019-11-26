@@ -54,7 +54,7 @@ class EditableList extends Component {
 
     //GET_ITEMS
     async componentDidMount() {
-        await this.props.get_items(this.props.itemsKey, this.props.projectId);
+        await this.props.get_items(this.props.itemsKey, this.props.decisionId);
     }
 
 
@@ -83,7 +83,7 @@ class EditableList extends Component {
             name: this.state.newEntry
         };
 
-        this.props.create_item(newEntry, this.props.itemsKey, this.props.projectId);
+        this.props.create_item(newEntry, this.props.itemsKey, this.props.decisionId);
 
         this.setState({newEntry: ''});
 
@@ -137,7 +137,7 @@ class EditableList extends Component {
             this.onDeleteItem(itemLocal.id);
             return;
         }
-        this.props.edit_item(itemLocal, this.props.itemsKey, this.props.projectId);
+        this.props.edit_item(itemLocal, this.props.itemsKey, this.props.decisionId);
 
         ReactGA.event({
             category: 'Options And Criteria',

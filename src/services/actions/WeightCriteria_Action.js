@@ -11,14 +11,14 @@ import {
 } from "./types";
 
 
-export const get_criteria = (projectId) => async dispatch => {
+export const get_criteria = (decisionId) => async dispatch => {
 
     //Show Loading Bar
     dispatch({type: START_LOADING});
 
     //Get Information
     try {
-        const res = await axios.get(`/api/every_weightedCriteria/${projectId}`);
+        const res = await axios.get(`/api/every_weightedCriteria/${decisionId}`);
         dispatch({
             type: GET_CRITERIA,
             payload: res.data

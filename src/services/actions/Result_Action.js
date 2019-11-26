@@ -8,14 +8,14 @@ import {
 } from "./types";
 
 
-export const get_result = (itemsKey, projectId) => async dispatch => {
+export const get_result = (itemsKey, decisionId) => async dispatch => {
 
     //Show Loading Bar
     dispatch({type: START_LOADING});
 
     //Get Information
     try {
-        const res = await axios.get(`/api/result/${itemsKey}/${projectId}`);
+        const res = await axios.get(`/api/result/${itemsKey}/${decisionId}`);
         dispatch({
             type: GET_RESULT,
             payload: res.data,

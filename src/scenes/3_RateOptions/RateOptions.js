@@ -131,7 +131,7 @@ class RateOptions extends React.Component {
         let ratedCriteria = [];
 
 
-        await this.props.get_options(this.props.projectId);
+        await this.props.get_options(this.props.decisionId);
         importedRatedCriteria = this.props.rateOptions.ratedCriteria;
 
         //Create nested object to summarize list

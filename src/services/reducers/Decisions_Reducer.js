@@ -1,39 +1,39 @@
 import {
-    GET_PROJECTS,
-    CREATE_PROJECT,
-    DELETE_PROJECT,
-    EDIT_PROJECT,
+    GET_DECISIONS,
+    CREATE_DECISION,
+    DELETE_DECISION,
+    EDIT_DECISION,
     CREATE_EXAMPLE_DATA,
-    TRANSFER_PROJECT_TO_USER,
+    TRANSFER_DECISION_TO_USER,
 } from "../actions/types";
 
 const initialState = {
-    projects: [],
-    project: {}
+    decisions: [],
+    decision: {}
 };
 
 export default function(state = initialState, action) {
     switch (action.type) {
 
-        case GET_PROJECTS:
+        case GET_DECISIONS:
             return {
                 ...state,
-                projects: action.payload
+                decisions: action.payload
             };
 
-        case CREATE_PROJECT:
+        case CREATE_DECISION:
             return {
                 ...state,
-                projects: [action.payload, ...state.projects]
+                decisions: [action.payload, ...state.decisions]
             };
 
-        case DELETE_PROJECT:
+        case DELETE_DECISION:
             return {
                 ...state,
-                projects: state.projects.filter(project => project.id !== action.payload)
+                decisions: state.decisions.filter(decision => decision.id !== action.payload)
             };
 
-        case EDIT_PROJECT:
+        case EDIT_DECISION:
             return {
                 ...state
             };
@@ -42,7 +42,7 @@ export default function(state = initialState, action) {
             return {
                 ...state
             };
-        case TRANSFER_PROJECT_TO_USER:
+        case TRANSFER_DECISION_TO_USER:
             return {
                 ...state
             };

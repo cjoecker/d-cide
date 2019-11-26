@@ -113,7 +113,7 @@ class WeightCriteria extends Component {
 
     //GET_CRITERIA
     async componentDidMount() {
-        await this.props.get_criteria(this.props.projectId);
+        await this.props.get_criteria(this.props.decisionId);
     }
 
     async componentWillUnmount() {

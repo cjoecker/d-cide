@@ -18,7 +18,7 @@ import jwt_decode from "jwt-decode";
 import setJWTToken from "./services/securityUtils";
 import {SET_CURRENT_USER} from "./services/actions/types";
 import Decision from "./scenes/Decision/Decision";
-import Projects from "./scenes/Projects/Projects";
+import Decisions from "./scenes/Decisions/Decisions";
 import {logout} from "./services/actions/Security_Action";
 import SecureRoute from "./services/SecureRoute";
 import LandingPage from "./scenes/LandingPage";
@@ -255,8 +255,8 @@ class App extends Component {
                             {/*<Route exact path="/resetPassword" component={ResetPassword}/>*/}
 
                             {/*Private Scenes*/}
-                            <SecureRoute exact path="/decisions" component={Projects}/>
-                            <SecureRoute exact path="/decisions/:projectId" component={Decision}/>
+                            <SecureRoute exact path="/decisions" component={Decisions}/>
+                            <SecureRoute exact path="/decisions/:decisionId" component={Decision}/>
                             <Route component={NotFound}/>
                         </Switch>
 

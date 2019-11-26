@@ -101,7 +101,7 @@ class Result extends Component {
                             {!isFetchingDataPackage &&
                             <ResultsChart
                                 itemsKey={"decisionOption"}
-                                projectId={this.props.projectId}
+                                decisionId={this.props.decisionId}
                                 YKey={"name"}/>
                             }
 
@@ -121,7 +121,7 @@ class Result extends Component {
                             {!isFetchingDataPackage &&
                             <ResultsChart
                                 itemsKey={"selectionCriteria"}
-                                projectId={this.props.projectId}
+                                decisionId={this.props.decisionId}
                                 YKey={"name"}/>
                             }
                         </Paper>

@@ -12,7 +12,7 @@ import {
 } from "./types";
 
 
-export const get_items = (itemsKey, projectId) => async dispatch => {
+export const get_items = (itemsKey, decisionId) => async dispatch => {
 
     //Show Loading Bar
     dispatch({type: START_LOADING});
@@ -20,7 +20,7 @@ export const get_items = (itemsKey, projectId) => async dispatch => {
 
     //Get Information
     try {
-        const res = await axios.get(`/api/every_${itemsKey}/${projectId}`);
+        const res = await axios.get(`/api/every_${itemsKey}/${decisionId}`);
         dispatch({
             type: GET_ITEMS,
             payload: res.data,
@@ -41,7 +41,7 @@ export const get_items = (itemsKey, projectId) => async dispatch => {
 
 };
 
-export const create_item = (newEntry, itemsKey, projectId) => async dispatch => {
+export const create_item = (newEntry, itemsKey, decisionId) => async dispatch => {
 
     //Show Loading Bar
     dispatch({type: START_LOADING});
@@ -49,7 +49,7 @@ export const create_item = (newEntry, itemsKey, projectId) => async dispatch => 
 
     //Get Information
     try {
-        const res = await axios.post(`/api/${itemsKey}/${projectId}`, newEntry);
+        const res = await axios.post(`/api/${itemsKey}/${decisionId}`, newEntry);
         dispatch({
             type: CREATE_ITEM,
             payload: res.data,
@@ -95,7 +95,7 @@ export const delete_item = (id, itemsKey) => async dispatch => {
 
 };
 
-export const edit_item = (newEntry, itemsKey, projectId) => async dispatch => {
+export const edit_item = (newEntry, itemsKey, decisionId) => async dispatch => {
 
     //Show Loading Bar
     dispatch({type: START_LOADING});
@@ -103,7 +103,7 @@ export const edit_item = (newEntry, itemsKey, projectId) => async dispatch => {
 
     //Get Information
     try {
-        const res = await axios.post(`/api/${itemsKey}/${projectId}`, newEntry);
+        const res = await axios.post(`/api/${itemsKey}/${decisionId}`, newEntry);
         dispatch({
             type: EDIT_ITEM,
             payload: res.data,
