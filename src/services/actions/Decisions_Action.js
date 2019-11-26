@@ -21,7 +21,7 @@ export const get_projects = () => async dispatch => {
 
     //Get Information
     try {
-        const res = await axios.get(`/api/every_project`);
+        const res = await axios.get(`/api/decisions`);
         dispatch({
             type: GET_PROJECTS,
             payload: res.data,
@@ -46,7 +46,7 @@ export const create_project = (newEntry) => async dispatch => {
 
     //Get Information
     try {
-        const res = await axios.post(`/api/project`, newEntry);
+        const res = await axios.post(`/api/decisions`, newEntry);
         dispatch({
             type: CREATE_PROJECT,
             payload: res.data,
@@ -72,7 +72,7 @@ export const delete_project = (id) => async dispatch => {
 
     //Get Information
     try {
-        const res = await axios.delete(`/api/project/${id}`);
+        const res = await axios.delete(`/api/decisions/${id}`);
         dispatch({
             type: DELETE_PROJECT,
             payload: id,
@@ -98,7 +98,7 @@ export const edit_project = (newItem) => async dispatch => {
 
     //Get Information
     try {
-        const res = await axios.post(`/api/project`, newItem);
+        const res = await axios.post(`/api/decisions`, newItem);
         dispatch({
             type: EDIT_PROJECT
         });
@@ -115,30 +115,6 @@ export const edit_project = (newItem) => async dispatch => {
 
 };
 
-export const create_exampleData = () => async dispatch => {
-
-    //Show Loading Bar
-    dispatch({type: START_LOADING});
-    dispatch({type: START_FETCHING_DATA_PACKAGE});
-
-    //Get Information
-    try {
-        const res = await axios.post(`/api/createExampleData`);
-        dispatch({
-            type: CREATE_EXAMPLE_DATA,
-        });
-    } catch (error) {
-        dispatch({
-            type: GET_ERRORS,
-            payload: `${error.response.statusText} (${error.response.status})`
-        });
-    }
-
-    //Show Loading Bar
-    dispatch({type: END_FETCHING_DATA_PACKAGE});
-    dispatch({type: END_LOADING});
-
-};
 
 export const transfer_projectToUser = (username) => async dispatch => {
 

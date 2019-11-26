@@ -12,7 +12,7 @@ import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 
 
 import {connect} from "react-redux";
-import {get_projects, create_project, delete_project, edit_project} from "../../services/actions/Projects_Action";
+import {get_projects, create_project, delete_project, edit_project} from "../../services/actions/Decisions_Action";
 import Fab from "@material-ui/core/Fab";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
@@ -73,6 +73,7 @@ class Projects extends React.Component {
             errors: {},
             showAskBeforeDelete: false,
             DeleteDecisionNum: '',
+            DeleteDecisionName: "",
         };
         this.createProject = this.createProject.bind(this);
         this.deleteProject = this.deleteProject.bind(this);
@@ -140,11 +141,12 @@ class Projects extends React.Component {
     }
 
 
-    deleteProject(id) {
+    deleteProject(id, name) {
 
         this.setState({
             showAskBeforeDelete: true,
-            DeleteDecisionNum: id
+            DeleteDecisionNum: id,
+            DeleteDecisionName: name,
         });
 
     }
@@ -196,6 +198,8 @@ class Projects extends React.Component {
     };
 
     cancelDeleteDecision(e) {
+
+        console.log(e);
 
         this.setState({
             showAskBeforeDelete: false,
@@ -271,7 +275,7 @@ class Projects extends React.Component {
                                                 size="small"
                                                 color="secondary"
                                                 aria-label="Delete"
-                                                onClick={() => this.deleteProject(project.id)}
+                                                onClick={() => this.deleteProject(project.id, project.name)}
                                                  style={{marginRight: 7}}
                                             >
                                                 <DeleteIcon/>
@@ -294,8 +298,8 @@ class Projects extends React.Component {
                 {/*Ask before deleting*/}
                 <TwoButtonsDialog
                     show={this.state.showAskBeforeDelete}
-                    title="Do you really want to delete this decision?"
-                    message="Your decision will be deleted permanently and the it won't be possible to restore the information."
+                    title={`Permanently delete ${this.state.DeleteDecisionName}?`}
+                    message="Your decision will be deleted permanently. It won't be possible to restore the information."
                     primaryButtonText="Delete it"
                     secondaryButtonText="Cancel"
                     handlePrimary={(e) => this.deleteDecision(e)}

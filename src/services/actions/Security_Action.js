@@ -4,13 +4,11 @@ import {
     GET_ERRORS,
     START_LOADING,
     SET_CURRENT_USER,
-    GET_UNREGISTERED_USERS,
     SIGNUP_SUCCESSFUL,
     START_FETCHING_DATA_PACKAGE,
     END_FETCHING_DATA_PACKAGE,
 } from "./types";
-import setJWTToken from "../securityUtils";
-import jwt_decode from "jwt-decode";
+import setJWTToken, {setUser} from "../securityUtils";
 
 
 export const signUp = (newUser, history) => async dispatch => {
@@ -56,24 +54,12 @@ export const login = LoginRequest => async dispatch => {
 
     try {
         // post => Login Request
-        const res = await axios.post("/api/users/login", LoginRequest);
-
-        // extract token from res.data
-        const {token} = res.data;
-
-        // store the token in the localStorage
-        localStorage.setItem("jwtToken", token);
-
-        // set our token in header ***
-        setJWTToken(token);
-
-        // decode token on React
-        const decoded = jwt_decode(token);
+        const res = await axios.post("/api/users/logIn", LoginRequest);
 
         // dispatch to our securityReducer
         dispatch({
             type: SET_CURRENT_USER,
-            payload: decoded
+            payload: setUser(res.data.token),
         });
     } catch (err) {
         dispatch({
@@ -106,22 +92,10 @@ export const get_unregisteredUser = () => async dispatch => {
         // post => Login Request
         const res = await axios.get("/api/users/unregistered");
 
-        // extract token from res.data
-        const {token} = res.data;
-
-        // store the token in the localStorage
-        localStorage.setItem("jwtToken", token);
-
-        // set our token in header ***
-        setJWTToken(token);
-
-        // decode token on React
-        const decoded = jwt_decode(token);
-
         // dispatch to our securityReducer
         dispatch({
             type: SET_CURRENT_USER,
-            payload: decoded
+            payload: setUser(res.data.token),
         });
     } catch (err) {
 
@@ -137,3 +111,4 @@ export const get_unregisteredUser = () => async dispatch => {
     dispatch({type: END_LOADING});
 
 };
+

@@ -18,7 +18,7 @@ import Typography from "@material-ui/core/Typography";
 import TwoButtonsDialog from "../../components/TwoButtonsDialog";
 
 import ReactGA from "react-ga";
-import {get_projects, transfer_projectToUser} from "../../services/actions/Projects_Action";
+import {get_projects, transfer_projectToUser} from "../../services/actions/Decisions_Action";
 import {getValueSafe} from "../../services/generalUtils";
 
 

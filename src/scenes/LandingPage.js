@@ -2,13 +2,11 @@ import {Component} from "react";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import {login, signUp, logout, get_unregisteredUser} from "../services/actions/Security_Action";
-import {create_exampleData, create_project, get_projects} from "../services/actions/Projects_Action";
+import {create_project, get_projects} from "../services/actions/Decisions_Action";
 import ReactGA from 'react-ga';
 
 class LandingPage extends Component {
     async componentDidMount() {
-
-
 
         //Unregistered User
         if (!this.props.security.validToken) {
@@ -19,12 +17,13 @@ class LandingPage extends Component {
 
         if(this.props.security.user.registeredUser){
 
+            //Registered User
             ReactGA.event({
                 category: 'Landing page',
                 action: 'Registered User',
             });
 
-            //Registered User
+
             this.props.history.push("/decisions");
 
         }else{
@@ -80,6 +79,5 @@ export default connect(
         signUp,
         get_unregisteredUser,
         create_project,
-        get_projects,
-        create_exampleData
+        get_projects
     })(LandingPage);
