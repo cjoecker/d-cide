@@ -46,7 +46,7 @@ export const create_decision = (newEntry) => async dispatch => {
 
     //Get Information
     try {
-        const res = await axios.post(`/api/decisions`, newEntry);
+        const res = await axios.post(`/api/decisions/`, newEntry);
         dispatch({
             type: CREATE_DECISION,
             payload: res.data,
@@ -98,7 +98,7 @@ export const edit_decision = (newItem) => async dispatch => {
 
     //Get Information
     try {
-        const res = await axios.post(`/api/decisions`, newItem);
+        const res = await axios.put(`/api/decisions/`, newItem);
         dispatch({
             type: EDIT_DECISION
         });

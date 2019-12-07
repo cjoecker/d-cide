@@ -141,7 +141,7 @@ class Decisions extends React.Component {
     }
 
 
-    deleteDecision(id, name) {
+    deleteDecisionClick(id, name) {
 
         this.setState({
             showAskBeforeDelete: true,
@@ -275,7 +275,7 @@ class Decisions extends React.Component {
                                                 size="small"
                                                 color="secondary"
                                                 aria-label="Delete"
-                                                onClick={() => this.deleteDecision(decision.id, decision.name)}
+                                                onClick={() => this.deleteDecisionClick(decision.id, decision.name)}
                                                  style={{marginRight: 7}}
                                             >
                                                 <DeleteIcon/>
@@ -299,7 +299,7 @@ class Decisions extends React.Component {
                 <TwoButtonsDialog
                     show={this.state.showAskBeforeDelete}
                     title={`Permanently delete ${this.state.DeleteDecisionName}?`}
-                    message="Your decision will be deleted permanently. It won't be possible to restore the information."
+                    message="Your decision will be permanently deleted. This cannot be undone."
                     primaryButtonText="Delete it"
                     secondaryButtonText="Cancel"
                     handlePrimary={(e) => this.deleteDecision(e)}

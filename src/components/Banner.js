@@ -32,7 +32,7 @@ const styles1 = theme => ({
         backgroundColor: theme.palette.primary.dark,
     },
     warning: {
-        backgroundColor: amber[700],
+        backgroundColor: amber[800],
     },
     icon: {
         fontSize: 20,

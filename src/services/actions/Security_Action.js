@@ -20,7 +20,7 @@ export const signUp = (newUser, history) => async dispatch => {
     let signUpSuccessful = false;
 
     try {
-        await axios.post("/api/users/signUp", newUser);
+        await axios.post("/api/users/", newUser);
         dispatch({
             type: GET_ERRORS,
             payload: {}
@@ -54,7 +54,7 @@ export const login = LoginRequest => async dispatch => {
 
     try {
         // post => Login Request
-        const res = await axios.post("/api/users/logIn", LoginRequest);
+        const res = await axios.post("/api/sessions/", LoginRequest);
 
         // dispatch to our securityReducer
         dispatch({
@@ -90,7 +90,7 @@ export const get_unregisteredUser = () => async dispatch => {
 
     try {
         // post => Login Request
-        const res = await axios.get("/api/users/unregistered");
+        const res = await axios.post("/api/sessions/unregistered");
 
         // dispatch to our securityReducer
         dispatch({
