@@ -13,12 +13,12 @@ import Link from "@material-ui/core/Link/index";
 import Fab from "@material-ui/core/Fab/index";
 
 import {connect} from "react-redux";
-import {login} from "../../services/actions/Security_Action";
+import {login, set_user} from "../../services/actions/Security_Action";
 import Typography from "@material-ui/core/Typography";
 import TwoButtonsDialog from "../../components/TwoButtonsDialog";
 
 import ReactGA from "react-ga";
-import {get_decisions, transfer_decisionToUser} from "../../services/actions/Decisions_Action";
+import {get_decisions, edit_decision} from "../../services/actions/Decisions_Action";
 import {getValueSafe} from "../../services/generalUtils";
 
 
@@ -118,7 +118,7 @@ class Login extends React.Component {
     }
 
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
+    async componentDidUpdate(prevProps, prevState, snapshot) {
 
         //show errors
         if (prevProps.errors !== this.props.errors) {
@@ -133,6 +133,7 @@ class Login extends React.Component {
 
         //Go to decisions after asking to save decision
         if (prevState.showSaveDecision && !this.state.showSaveDecision) {
+
             this.props.history.push("/decisions");
         }
 
@@ -140,6 +141,8 @@ class Login extends React.Component {
         if (getValueSafe(() => prevProps.security.user.registeredUser) === null
             && getValueSafe(() => this.props.security.user.registeredUser) === true
         ) {
+            await this.props.set_user(this.props.security.jwt);
+
             this.props.history.push("/decisions");
         }
 
@@ -169,9 +172,26 @@ class Login extends React.Component {
 
     async saveDecision(e) {
 
-        this.setState({showSaveDecision: false,});
+        const user = {
+            username: this.state.username,
+            password: this.state.password
+        };
 
-        await this.props.transfer_decisionToUser(this.state.unregisteredUsername);
+        //get unregistered decisions
+        await this.props.get_decisions;
+
+        const decision = {
+            id: this.props.decision.decisions[0].id,
+            name: this.props.decision.decisions[0].name,
+            user: user
+        };
+
+        //transfer decision to user
+        await this.props.edit_decision(decision);
+
+        await this.props.set_user(this.props.security.jwt);
+
+        this.setState({showSaveDecision: false,});
 
         ReactGA.event({
             category: 'Login',
@@ -179,7 +199,9 @@ class Login extends React.Component {
         });
     };
 
-    dismissDecision(e) {
+    async dismissDecision(e) {
+
+        await this.props.set_user(this.props.security.jwt);
 
         this.setState({showSaveDecision: false,});
 
@@ -332,7 +354,7 @@ class Login extends React.Component {
                             <TwoButtonsDialog
                                 show={this.state.showSaveDecision}
                                 title="Save actual decision into your user account?"
-                                message="The actual decision you have been working on unlogged will be saved into your user account."
+                                message="The actual decision you have been working on unlogged can be saved into your user account."
                                 primaryButtonText="Save it!"
                                 secondaryButtonText="Dismiss it"
                                 handlePrimary={(e) => this.saveDecision(e)}
@@ -355,8 +377,9 @@ Login.propTypes = {
     security: PropTypes.object.isRequired,
     decision: PropTypes.object.isRequired,
     login: PropTypes.func.isRequired,
-    transfer_decisionToUser: PropTypes.func.isRequired,
+    edit_decision: PropTypes.func.isRequired,
     get_decisions: PropTypes.func.isRequired,
+    set_user: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -366,4 +389,4 @@ const mapStateToProps = state => ({
 });
 
 
-export default connect(mapStateToProps, {login, transfer_decisionToUser, get_decisions})(withStyles(styles)(Login));
+export default connect(mapStateToProps, {login, edit_decision, get_decisions, set_user})(withStyles(styles)(Login));

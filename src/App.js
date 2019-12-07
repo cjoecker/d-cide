@@ -16,7 +16,7 @@ import store from "./store";
 import SignUp from "./scenes/Security/SignUp";
 import jwt_decode from "jwt-decode";
 import setJWTToken from "./services/securityUtils";
-import {SET_CURRENT_USER} from "./services/actions/types";
+import {SET_USER} from "./services/actions/types";
 import Decision from "./scenes/Decision/Decision";
 import Decisions from "./scenes/Decisions/Decisions";
 import {logout} from "./services/actions/Security_Action";
@@ -47,7 +47,7 @@ if (jwtToken) {
     setJWTToken(jwtToken);
     const decoded_jwtToken = jwt_decode(jwtToken);
     store.dispatch({
-        type: SET_CURRENT_USER,
+        type: SET_USER,
         payload: decoded_jwtToken
     });
     const currentTime = Date.now() / 1000;

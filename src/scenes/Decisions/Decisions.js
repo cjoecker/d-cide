@@ -298,7 +298,7 @@ class Decisions extends React.Component {
                 {/*Ask before deleting*/}
                 <TwoButtonsDialog
                     show={this.state.showAskBeforeDelete}
-                    title={`Permanently delete ${this.state.DeleteDecisionName}?`}
+                    title={`Delete ${this.state.DeleteDecisionName}?`}
                     message="Your decision will be permanently deleted. This cannot be undone."
                     primaryButtonText="Delete it"
                     secondaryButtonText="Cancel"

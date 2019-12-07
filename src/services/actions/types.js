@@ -33,5 +33,7 @@ export const GET_RESULT = "GET_RESULT";
 
 //Security
 export const GET_ERRORS  = "GET_ERRORS";
-export const SET_CURRENT_USER = "SET_CURRENT_USER";
+export const SET_USER = "SET_USER";
 export const SIGNUP_SUCCESSFUL = "SIGNUP_SUCCESSFUL";
+export const SAVE_JWT = "SAVE_JWT";
+export const DELETE_JWT = "DELETE_JWT";

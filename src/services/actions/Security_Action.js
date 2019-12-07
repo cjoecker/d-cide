@@ -3,12 +3,15 @@ import {
     END_LOADING,
     GET_ERRORS,
     START_LOADING,
-    SET_CURRENT_USER,
+    SET_USER,
     SIGNUP_SUCCESSFUL,
     START_FETCHING_DATA_PACKAGE,
     END_FETCHING_DATA_PACKAGE,
+    SAVE_JWT,
+    DELETE_JWT,
 } from "./types";
-import setJWTToken, {setUser} from "../securityUtils";
+import setJWTToken, {setJwt} from "../securityUtils";
+import jwt_decode from "jwt-decode";
 
 
 export const signUp = (newUser, history) => async dispatch => {
@@ -52,14 +55,21 @@ export const login = LoginRequest => async dispatch => {
     dispatch({type: START_LOADING});
     dispatch({type: START_FETCHING_DATA_PACKAGE});
 
+
     try {
         // post => Login Request
         const res = await axios.post("/api/sessions/", LoginRequest);
 
-        // dispatch to our securityReducer
+        //save jwt in redux before saving it
         dispatch({
-            type: SET_CURRENT_USER,
-            payload: setUser(res.data.token),
+            type: SAVE_JWT,
+            payload: res.data.token,
+        });
+
+        //set new user
+        dispatch({
+            type: SET_USER,
+            payload: jwt_decode(res.data.token),
         });
     } catch (err) {
         dispatch({
@@ -73,11 +83,20 @@ export const login = LoginRequest => async dispatch => {
     dispatch({type: END_LOADING});
 };
 
+export const set_user = (jwt) => dispatch => {
+
+    //save jwt in cookie
+    setJwt(jwt);
+
+    //delete jwt from redux
+    dispatch({type: DELETE_JWT});
+};
+
 export const logout = () => dispatch => {
     localStorage.removeItem("jwtToken");
     setJWTToken(false);
     dispatch({
-        type: SET_CURRENT_USER,
+        type: SET_USER,
         payload: null
     });
 };
@@ -89,14 +108,16 @@ export const get_unregisteredUser = () => async dispatch => {
     dispatch({type: START_FETCHING_DATA_PACKAGE});
 
     try {
-        // post => Login Request
         const res = await axios.post("/api/sessions/unregistered");
 
-        // dispatch to our securityReducer
         dispatch({
-            type: SET_CURRENT_USER,
-            payload: setUser(res.data.token),
+            type: SET_USER,
+            payload: jwt_decode(res.data.token),
         });
+
+        setJwt(res.data.token);
+
+
     } catch (err) {
 
         console.log(err);
