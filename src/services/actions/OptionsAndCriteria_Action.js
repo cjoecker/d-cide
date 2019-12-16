@@ -20,7 +20,8 @@ export const get_items = (itemsKey, decisionId) => async dispatch => {
 
     //Get Information
     try {
-        const res = await axios.get(`/api/every_${itemsKey}/${decisionId}`);
+        const res = await axios.get(`/api/decisions/${decisionId}/${itemsKey}`);
+        console.log(`/api/decisions/${decisionId}/${itemsKey}`);
         dispatch({
             type: GET_ITEMS,
             payload: res.data,
@@ -49,7 +50,7 @@ export const create_item = (newEntry, itemsKey, decisionId) => async dispatch =>
 
     //Get Information
     try {
-        const res = await axios.post(`/api/${itemsKey}/${decisionId}`, newEntry);
+        const res = await axios.post(`/api/decisions/${decisionId}/${itemsKey}/`, newEntry);
         dispatch({
             type: CREATE_ITEM,
             payload: res.data,
@@ -68,7 +69,7 @@ export const create_item = (newEntry, itemsKey, decisionId) => async dispatch =>
 
 };
 
-export const delete_item = (id, itemsKey) => async dispatch => {
+export const delete_item = (id, itemsKey, decisionId) => async dispatch => {
 
     //Show Loading Bar
     dispatch({type: START_LOADING});
@@ -76,7 +77,7 @@ export const delete_item = (id, itemsKey) => async dispatch => {
 
     //Get Information
     try {
-        const res = await axios.delete(`/api/${itemsKey}/${id}`);
+        const res = await axios.delete(`/api/decisions/${decisionId}/${itemsKey}/${id}`);
         dispatch({
             type: DELETE_ITEM,
             payload: id,
@@ -103,7 +104,7 @@ export const edit_item = (newEntry, itemsKey, decisionId) => async dispatch => {
 
     //Get Information
     try {
-        const res = await axios.post(`/api/${itemsKey}/${decisionId}`, newEntry);
+        const res = await axios.put(`/api/decisions/${decisionId}/${itemsKey}/`, newEntry);
         dispatch({
             type: EDIT_ITEM,
             payload: res.data,

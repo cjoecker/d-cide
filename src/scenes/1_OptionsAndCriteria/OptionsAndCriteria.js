@@ -107,7 +107,7 @@ class OptionsAndCriteria extends Component {
                             </IconButton>
                         </Typography>
                         <EditableList
-                            itemsKey='decisionOption'
+                            itemsKey='decisionOptions'
                             decisionId={this.props.decisionId}
                             minItemsThere={this.decisionOptionsReady}
                         />

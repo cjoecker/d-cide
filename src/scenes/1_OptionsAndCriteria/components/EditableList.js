@@ -104,7 +104,7 @@ class EditableList extends Component {
             });
         }
 
-        this.props.delete_item(id, this.props.itemsKey);
+        this.props.delete_item(id, this.props.itemsKey, this.props.decisionId);
 
         ReactGA.event({
             category: 'Options And Criteria',
