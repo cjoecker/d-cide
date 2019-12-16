@@ -62,6 +62,11 @@ class OptionsAndCriteria extends Component {
         this.hideInfo = this.hideInfo.bind(this);
     }
 
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (prevProps !== this.props) {
+            console.log(this.props.optionsAndCriteria.decisionOption);
+        }
+    }
 
     showInfo(e, name) {
         this.setState({[name]: true});
@@ -88,7 +93,7 @@ class OptionsAndCriteria extends Component {
         const minItemsThere =
             (!isLoading &&
                 errorsPresent &&
-                !(this.props.optionsAndCriteria.decisionOption.length >= 2 &&
+                !(this.props.optionsAndCriteria.decisionOptions.length >= 2 &&
                     this.props.optionsAndCriteria.selectionCriteria.length >= 2));
 
         const minItemsWarningText = "At least two Decision Options and two Selection Criteria are necessary! ";
@@ -109,7 +114,6 @@ class OptionsAndCriteria extends Component {
                         <EditableList
                             itemsKey='decisionOptions'
                             decisionId={this.props.decisionId}
-                            minItemsThere={this.decisionOptionsReady}
                         />
                     </Grid>
                     <Grid item xs={6} className={classes.cell}>
@@ -125,7 +129,6 @@ class OptionsAndCriteria extends Component {
                         <EditableList
                             itemsKey='selectionCriteria'
                             decisionId={this.props.decisionId}
-                            minItemsThere={this.selectionCriteriaReady}
                         />
                     </Grid>
                 </Grid>

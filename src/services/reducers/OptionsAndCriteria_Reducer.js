@@ -2,7 +2,7 @@ import { GET_ITEMS, CREATE_ITEM, DELETE_ITEM, EDIT_ITEM} from "../actions/types"
 
 const initialState = {
     optionsAndCriteria: {},
-    decisionOption: [],
+    decisionOptions: [],
     selectionCriteria: []
 };
 

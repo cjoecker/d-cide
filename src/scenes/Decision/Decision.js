@@ -188,7 +188,7 @@ class Decision extends Component {
         const {activeStep} = this.state;
 
         const minItemsThere =
-            !(this.props.optionsAndCriteria.decisionOption.length >= 2 &&
+            !(this.props.optionsAndCriteria.decisionOptions.length >= 2 &&
                 this.props.optionsAndCriteria.selectionCriteria.length >= 2);
 
         const stepDisabled = [
