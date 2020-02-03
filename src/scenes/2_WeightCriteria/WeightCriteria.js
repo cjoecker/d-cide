@@ -11,7 +11,7 @@ import InfoIcon from '@material-ui/icons/Info';
 import IconButton from "@material-ui/core/IconButton/IconButton";
 import InfoDialog from "../../components/InfoDialog";
 import {connect} from "react-redux";
-import {get_criteria, change_criteria, send_every_criteria} from "../../services/actions/WeightCriteria_Action";
+import {get_criteria, change_criteria, change_every_criteria} from "../../services/actions/WeightCriteria_Action";
 import * as LongStrings from "../../components/LongStrings";
 import ReactGA from 'react-ga';
 
@@ -117,26 +117,56 @@ class WeightCriteria extends Component {
     }
 
     async componentWillUnmount() {
-        await this.props.send_every_criteria(this.state.weightedCriteria);
+
+        let weightedCriteriaArray = [];
+
+        this.state.weightedCriteria.forEach(function (criteria, index) {
+            const weightedCriteria = {
+                id: criteria.id,
+                weight: criteria.weight,
+            };
+
+            weightedCriteriaArray = [...weightedCriteriaArray, weightedCriteria];
+        });
+
+        await this.props.change_every_criteria(this.props.decisionId, weightedCriteriaArray);
     }
 
     //Refresh when redux state changes
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (prevProps.weightCriteria.weightedCriteria !== this.props.weightCriteria.weightedCriteria) {
 
-            this.setState({weightedCriteria: this.props.weightCriteria.weightedCriteria});
-
             //Load InfoText at start
             if (this.state.weightInfo.length === 0 && this.props.weightCriteria.weightedCriteria.length > 0) {
 
                 let weightInfoArray = this.state.weightInfo;
+                let selectionCriteria = this.props.optionsAndCriteria.selectionCriteria;
+                let weightedCriteriaArray = [];
 
                 this.props.weightCriteria.weightedCriteria.forEach(function (criteria, index) {
-                    weightInfoArray[index] = WeightCriteria.getWeightInfoText(criteria);
+
+                    let criteria1 = selectionCriteria.find(obj =>
+                        obj.id === criteria.selectionCriteria1Id
+                    );
+
+                    let criteria2 = selectionCriteria.find(obj =>
+                        obj.id === criteria.selectionCriteria2Id
+                    );
+
+                    const weightedCriteria = {
+                        id: criteria.id,
+                        weight: criteria.weight,
+                        selectionCriteria1: criteria1,
+                        selectionCriteria2: criteria2,
+                    };
+
+                    weightInfoArray[index] = WeightCriteria.getWeightInfoText(weightedCriteria);
+                    weightedCriteriaArray = [...weightedCriteriaArray, weightedCriteria];
+
                 });
 
                 this.setState({
-                    weightInfo: weightInfoArray,
+                    weightedCriteria: weightedCriteriaArray,
                 });
 
                 if(this.props.weightCriteria.weightedCriteria !== null){
@@ -147,12 +177,6 @@ class WeightCriteria extends Component {
                     });
                 }
             }
-        }
-
-        //Go to decisions after asking to save decision
-        if (prevState.weightedCriteria !== !this.state.weightedCriteria) {
-            console.log("data");
-            // this.props.change_criteria(itemLocal);
         }
     }
 
@@ -173,14 +197,10 @@ class WeightCriteria extends Component {
 
         let weightInfoArray = this.state.weightInfo;
 
-        //Save selected criteria if left or right
-        let selectedCriteria = (value < 0) ? itemLocal.selectionCriteria1 : itemLocal.selectionCriteria2;
-
         //Update State
         let newState = update(this.state.weightedCriteria, {
             [index]: {
                 weight: {$set: value},
-                selectedCriteria: {$set: selectedCriteria}
             }
         });
 
@@ -315,7 +335,7 @@ WeightCriteria.propTypes = {
     classes: PropTypes.object.isRequired,
     weightCriteria: PropTypes.object.isRequired,
     get_criteria: PropTypes.func.isRequired,
-    send_every_criteria: PropTypes.func.isRequired,
+    change_every_criteria: PropTypes.func.isRequired,
     change_criteria: PropTypes.func.isRequired,
     optionsAndCriteria: PropTypes.object.isRequired,
 };
@@ -326,4 +346,4 @@ const mapStateToProps = state => ({
 });
 
 
-export default connect(mapStateToProps, {get_criteria, change_criteria,send_every_criteria})(withStyles(styles)(WeightCriteria));
+export default connect(mapStateToProps, {get_criteria, change_criteria, change_every_criteria})(withStyles(styles)(WeightCriteria));

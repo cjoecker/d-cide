@@ -18,7 +18,7 @@ export const get_criteria = (decisionId) => async dispatch => {
 
     //Get Information
     try {
-        const res = await axios.get(`/api/every_weightedCriteria/${decisionId}`);
+        const res = await axios.get(`/api/decisions/${decisionId}/weightedCriteria`);
         dispatch({
             type: GET_CRITERIA,
             payload: res.data
@@ -61,7 +61,7 @@ export const change_criteria = (criteria) => async dispatch => {
 
 };
 
-export const send_every_criteria = (criteria) => async dispatch => {
+export const change_every_criteria = (decisionId, criteria) => async dispatch => {
 
     //Show Loading Bar
     dispatch({type: START_LOADING});
@@ -69,7 +69,7 @@ export const send_every_criteria = (criteria) => async dispatch => {
 
     //Get Information
     try {
-        const res = await axios.post(`/api/every_weightedCriteria`, criteria);
+        const res = await axios.put(`/api/decisions/${decisionId}/weightedCriteria`, criteria);
         dispatch({
             type: SEND_EVERY_CRITERIA,
         });
