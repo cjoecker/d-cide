@@ -11,7 +11,7 @@ import InfoIcon from '@material-ui/icons/Info';
 import IconButton from "@material-ui/core/IconButton/IconButton";
 import InfoDialog from "../../components/InfoDialog";
 import {connect} from "react-redux";
-import {get_criteria, change_criteria, change_every_criteria} from "../../services/actions/WeightCriteria_Action";
+import {get_criteria, change_criteria} from "../../services/actions/WeightCriteria_Action";
 import * as LongStrings from "../../components/LongStrings";
 import ReactGA from 'react-ga';
 
@@ -183,8 +183,6 @@ class WeightCriteria extends Component {
 
     //CHANGE_CRITERIA
     onDragEnd(itemLocal) {
-        //Will be used when bug from slider in MaterialUI is repaired
-        //this.props.change_criteria(itemLocal);
 
         ReactGA.event({
             category: 'Weight Criteria',
@@ -336,7 +334,6 @@ WeightCriteria.propTypes = {
     weightCriteria: PropTypes.object.isRequired,
     get_criteria: PropTypes.func.isRequired,
     change_every_criteria: PropTypes.func.isRequired,
-    change_criteria: PropTypes.func.isRequired,
     optionsAndCriteria: PropTypes.object.isRequired,
 };
 
@@ -346,4 +343,4 @@ const mapStateToProps = state => ({
 });
 
 
-export default connect(mapStateToProps, {get_criteria, change_criteria, change_every_criteria})(withStyles(styles)(WeightCriteria));
+export default connect(mapStateToProps, {get_criteria, change_every_criteria: change_criteria})(withStyles(styles)(WeightCriteria));

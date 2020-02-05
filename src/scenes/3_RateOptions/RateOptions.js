@@ -12,7 +12,7 @@ import InfoDialog from "../../components/InfoDialog";
 import * as LongStrings from "../../components/LongStrings";
 
 import {connect} from "react-redux";
-import {get_options, change_option, send_every_option} from "../../services/actions/RateOptions_Action";
+import {get_options, send_every_option} from "../../services/actions/RateOptions_Action";
 import ReactGA from "react-ga";
 
 
@@ -126,7 +126,7 @@ class RateOptions extends React.Component {
     async componentDidMount() {
 
         let {selectionCriteria} = this.props.optionsAndCriteria;
-        let {decisionOption} = this.props.optionsAndCriteria;
+        let {decisionOptions} = this.props.optionsAndCriteria;
         let importedRatedCriteria = [];
         let ratedCriteria = [];
 
@@ -134,19 +134,21 @@ class RateOptions extends React.Component {
         await this.props.get_options(this.props.decisionId);
         importedRatedCriteria = this.props.rateOptions.ratedCriteria;
 
+        console.log(this.props.rateOptions.ratedCriteria);
+
         //Create nested object to summarize list
         selectionCriteria.forEach(function (criteria) {
 
             let decisionOptionLocal = [];
 
             //Add object properties
-            decisionOption.forEach(function (option) {
+            decisionOptions.forEach(function (option) {
                 let optionLocal = Object.assign({}, option);
 
                 //Get old ratings
                 let objIndex = importedRatedCriteria.findIndex(obj =>
-                    obj.selectionCriteria.id === criteria.id &&
-                    obj.decisionOption.id === option.id
+                    obj.selectionCriteriaId === criteria.id &&
+                    obj.decisionOptionId === option.id
                 );
 
                 //Add ratings if existing
@@ -174,19 +176,17 @@ class RateOptions extends React.Component {
                const ratedOption = {
                    id: 0,
                    rating: option.rating,
-                   decisionOption: option,
-                   selectionCriteria: criteria,
+                   decisionOptionId: option.id,
+                   selectionCriteriaId: criteria.id,
                };
 
                ratedOptions = [...ratedOptions, ratedOption];
            });
         });
 
-        await this.props.send_every_option(ratedOptions);
+        await this.props.send_every_option(this.props.decisionId, ratedOptions);
     }
     onDragEnd = (event, criteriaLocal, optionLocal) => {
-        //Will be used when bug from slider in MaterialUI is repaired
-        //this.props.change_option(criteriaLocal.id, optionLocal.id, optionLocal.rating);
 
         ReactGA.event({
             category: 'Rate Options',
@@ -315,7 +315,6 @@ RateOptions.propTypes = {
     classes: PropTypes.object.isRequired,
     rateOptions: PropTypes.object.isRequired,
     get_options: PropTypes.func.isRequired,
-    change_option: PropTypes.func.isRequired,
     send_every_option: PropTypes.func.isRequired,
     optionsAndCriteria: PropTypes.object.isRequired,
     weightCriteria: PropTypes.object.isRequired
@@ -328,4 +327,4 @@ const mapStateToProps = state => ({
 });
 
 
-export default connect(mapStateToProps, {get_options, change_option, send_every_option})(withStyles(styles)(RateOptions));
+export default connect(mapStateToProps, {get_options, send_every_option})(withStyles(styles)(RateOptions));

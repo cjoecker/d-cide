@@ -18,7 +18,7 @@ export const get_options = (decisionId) => async dispatch => {
 
     //Get Information
     try {
-        const res = await axios.get(`/api/every_ratedOption/${decisionId}`);
+        const res = await axios.get(`/api/decisions/${decisionId}/ratedOptions`);
         dispatch({
             type: GET_OPTIONS,
             payload: res.data
@@ -35,39 +35,14 @@ export const get_options = (decisionId) => async dispatch => {
 
 };
 
-export const change_option = (criteriaId, optionId, rating) => async dispatch => {
-
-    //Show Loading Bar
-    dispatch({type: START_LOADING});
-    dispatch({type: START_FETCHING_DATA_PACKAGE});
-
-    //Get Information
-    try {
-        const res = await axios.post(`/api/ratedOption/${criteriaId}/${optionId}/${rating}`);
-        dispatch({
-            type: CHANGE_OPTION
-        });
-    } catch (error) {
-        dispatch({
-            type: GET_ERRORS,
-            payload: `${error.response.statusText} (${error.response.status})`
-        });
-    }
-
-    //Show Loading Bar
-    dispatch({type: END_FETCHING_DATA_PACKAGE});
-    dispatch({type: END_LOADING});
-
-};
-
-export const send_every_option = (options) => async dispatch => {
+export const send_every_option = (decisionId, options) => async dispatch => {
 
     //Show Loading Bar
     dispatch({type: START_LOADING});
     dispatch({type: START_FETCHING_DATA_PACKAGE});
     //Get Information
     try {
-        const res = await axios.post(`/api/every_ratedOption`, options);
+        const res = await axios.put(`/api/decisions/${decisionId}/ratedOptions`, options);
         dispatch({
             type: SEND_EVERY_OPTION
         });

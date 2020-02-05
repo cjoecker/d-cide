@@ -35,33 +35,7 @@ export const get_criteria = (decisionId) => async dispatch => {
 
 };
 
-
-export const change_criteria = (criteria) => async dispatch => {
-
-    //Show Loading Bar
-    dispatch({type: START_LOADING});
-    dispatch({type: START_FETCHING_DATA_PACKAGE});
-
-    //Get Information
-    try {
-        const res = await axios.post(`/api/weightedCriteria`, criteria);
-        dispatch({
-            type: CHANGE_CRITERIA
-        });
-    } catch (error) {
-        dispatch({
-            type: GET_ERRORS,
-            payload: `${error.response.statusText} (${error.response.status})`
-        });
-    }
-
-    //Show Loading Bar
-    dispatch({type: END_FETCHING_DATA_PACKAGE});
-    dispatch({type: END_LOADING});
-
-};
-
-export const change_every_criteria = (decisionId, criteria) => async dispatch => {
+export const change_criteria = (decisionId, criteria) => async dispatch => {
 
     //Show Loading Bar
     dispatch({type: START_LOADING});
