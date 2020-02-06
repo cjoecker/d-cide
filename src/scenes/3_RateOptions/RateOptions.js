@@ -174,7 +174,6 @@ class RateOptions extends React.Component {
 
            criteria.decisionOption.forEach(function (option) {
                const ratedOption = {
-                   id: 0,
                    rating: option.rating,
                    decisionOptionId: option.id,
                    selectionCriteriaId: criteria.id,
