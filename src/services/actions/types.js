@@ -28,9 +28,6 @@ export const GET_OPTIONS = "GET_OPTIONS";
 export const CHANGE_OPTION = "CHANGE_OPTION";
 export const SEND_EVERY_OPTION = "SEND_EVERY_OPTION";
 
-//Result
-export const GET_RESULT = "GET_RESULT";
-
 //Security
 export const GET_ERRORS  = "GET_ERRORS";
 export const SET_USER = "SET_USER";
