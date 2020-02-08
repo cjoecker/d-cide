@@ -2,7 +2,7 @@ import {Component} from "react";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import {login, signUp, logout, get_unregisteredUser} from "../services/actions/Security_Action";
-import {create_decision, get_decisions} from "../services/actions/Decisions_Action";
+import {post_decision, get_decisions} from "../services/actions/Decisions_Action";
 import ReactGA from 'react-ga';
 
 class LandingPage extends Component {
@@ -56,7 +56,6 @@ LandingPage.propTypes = {
     LandingPage: PropTypes.object.isRequired,
     security: PropTypes.object.isRequired,
     decision: PropTypes.object.isRequired,
-    create_decision: PropTypes.func.isRequired,
     login: PropTypes.func.isRequired,
     logout: PropTypes.func.isRequired,
     signUp: PropTypes.func.isRequired,
@@ -78,6 +77,5 @@ export default connect(
         logout,
         signUp,
         get_unregisteredUser,
-        create_decision,
         get_decisions
     })(LandingPage);

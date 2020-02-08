@@ -12,7 +12,7 @@ import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 
 
 import {connect} from "react-redux";
-import {get_decisions, create_decision, delete_decision, edit_decision} from "../../services/actions/Decisions_Action";
+import {get_decisions, post_decision, delete_decision, put_decision} from "../../services/actions/Decisions_Action";
 import Fab from "@material-ui/core/Fab";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
@@ -132,7 +132,7 @@ class Decisions extends React.Component {
             name: this.state.newEntry
         };
 
-        await this.props.create_decision(newEntry);
+        await this.props.post_decision(newEntry);
 
         this.setState({
             newEntry: '',
@@ -178,7 +178,7 @@ class Decisions extends React.Component {
             this.deleteDecision(decisionLocal.id);
             return;
         }
-        this.props.edit_decision(decisionLocal);
+        this.props.put_decision(decisionLocal);
 
     }
 
@@ -316,9 +316,9 @@ Decisions.propTypes = {
     decision: PropTypes.object.isRequired,
     security: PropTypes.object.isRequired,
     get_decisions: PropTypes.func.isRequired,
-    create_decision: PropTypes.func.isRequired,
+    post_decision: PropTypes.func.isRequired,
     delete_decision: PropTypes.func.isRequired,
-    edit_decision: PropTypes.func.isRequired,
+    put_decision: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -330,7 +330,7 @@ const mapStateToProps = state => ({
 
 export default connect(mapStateToProps, {
     get_decisions,
-    create_decision,
+    post_decision,
     delete_decision,
-    edit_decision
+    put_decision
 })(withStyles(styles)(Decisions));

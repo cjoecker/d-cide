@@ -1,10 +1,8 @@
 import {
     GET_DECISIONS,
-    CREATE_DECISION,
+    POST_DECISION,
     DELETE_DECISION,
-    EDIT_DECISION,
-    CREATE_EXAMPLE_DATA,
-    TRANSFER_DECISION_TO_USER,
+    PUT_DECISION,
 } from "../actions/types";
 
 const initialState = {
@@ -21,7 +19,7 @@ export default function(state = initialState, action) {
                 decisions: action.payload
             };
 
-        case CREATE_DECISION:
+        case POST_DECISION:
             return {
                 ...state,
                 decisions: [action.payload, ...state.decisions]
@@ -33,20 +31,10 @@ export default function(state = initialState, action) {
                 decisions: state.decisions.filter(decision => decision.id !== action.payload)
             };
 
-        case EDIT_DECISION:
+        case PUT_DECISION:
             return {
                 ...state
             };
-
-        case CREATE_EXAMPLE_DATA:
-            return {
-                ...state
-            };
-        case TRANSFER_DECISION_TO_USER:
-            return {
-                ...state
-            };
-
         default:
             return state;
     }
