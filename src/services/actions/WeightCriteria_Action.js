@@ -2,15 +2,15 @@ import axios from "axios";
 import {
     START_LOADING,
     END_LOADING,
-    GET_CRITERIA,
-    PUT_CRITERIA,
+    GET_WEIGHTED_CRITERIA,
+    PUT_WEIGHTED_CRITERIA,
     GET_ERRORS,
     START_FETCHING_DATA_PACKAGE,
     END_FETCHING_DATA_PACKAGE,
 } from "./types";
 
 
-export const get_criteria = (decisionId) => async dispatch => {
+export const getWeightedCriteria = (decisionId) => async dispatch => {
 
     //Show Loading Bar
     dispatch({type: START_LOADING});
@@ -19,7 +19,7 @@ export const get_criteria = (decisionId) => async dispatch => {
     try {
         const res = await axios.get(`/api/decisions/${decisionId}/weightedCriteria`);
         dispatch({
-            type: GET_CRITERIA,
+            type: GET_WEIGHTED_CRITERIA,
             payload: res.data
         });
     } catch (error) {
@@ -34,7 +34,7 @@ export const get_criteria = (decisionId) => async dispatch => {
 
 };
 
-export const put_criteria = (decisionId, criteria) => async dispatch => {
+export const putWeightedCriteria = (decisionId, criteria) => async dispatch => {
 
     //Show Loading Bar
     dispatch({type: START_LOADING});
@@ -44,7 +44,7 @@ export const put_criteria = (decisionId, criteria) => async dispatch => {
     try {
         const res = await axios.put(`/api/decisions/${decisionId}/weightedCriteria`, criteria);
         dispatch({
-            type: PUT_CRITERIA,
+            type: PUT_WEIGHTED_CRITERIA,
         });
     } catch (error) {
         dispatch({

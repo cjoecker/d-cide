@@ -3,9 +3,8 @@ import {
     START_LOADING,
     END_LOADING,
     GET_OPTIONS,
-    CHANGE_OPTION,
     GET_ERRORS,
-    SEND_EVERY_OPTION,
+    POST_OPTIONS,
     START_FETCHING_DATA_PACKAGE,
     END_FETCHING_DATA_PACKAGE,
 } from "./types";
@@ -44,7 +43,7 @@ export const send_every_option = (decisionId, options) => async dispatch => {
     try {
         const res = await axios.put(`/api/decisions/${decisionId}/ratedOptions`, options);
         dispatch({
-            type: SEND_EVERY_OPTION
+            type: POST_OPTIONS
         });
     } catch (error) {
         dispatch({

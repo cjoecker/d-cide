@@ -17,13 +17,12 @@ export const DELETE_ITEM = "DELETE_ITEM";
 export const PUT_ITEM = "EDIT_ITEM";
 
 //WeightCriteria
-export const GET_CRITERIA = "GET_CRITERIA";
-export const PUT_CRITERIA = "CHANGE_CRITERIA";
+export const GET_WEIGHTED_CRITERIA = "GET_WEIGHTED_CRITERIA";
+export const PUT_WEIGHTED_CRITERIA = "PUT_WEIGHTED_CRITERIA";
 
 //RateOptions
 export const GET_OPTIONS = "GET_OPTIONS";
-export const CHANGE_OPTION = "CHANGE_OPTION";
-export const SEND_EVERY_OPTION = "SEND_EVERY_OPTION";
+export const POST_OPTIONS = "SEND_EVERY_OPTION";
 
 //Security
 export const GET_ERRORS  = "GET_ERRORS";

@@ -11,7 +11,7 @@ import InfoIcon from '@material-ui/icons/Info';
 import IconButton from "@material-ui/core/IconButton/IconButton";
 import InfoDialog from "../../components/InfoDialog";
 import {connect} from "react-redux";
-import {get_criteria, put_criteria} from "../../services/actions/WeightCriteria_Action";
+import {getWeightedCriteria, putWeightedCriteria} from "../../services/actions/WeightCriteria_Action";
 import * as LongStrings from "../../components/LongStrings";
 import ReactGA from 'react-ga';
 
@@ -113,7 +113,7 @@ class WeightCriteria extends Component {
 
     //GET_CRITERIA
     async componentDidMount() {
-        await this.props.get_criteria(this.props.decisionId);
+        await this.props.getWeightedCriteria(this.props.decisionId);
     }
 
     async componentWillUnmount() {
@@ -129,7 +129,7 @@ class WeightCriteria extends Component {
             weightedCriteriaArray = [...weightedCriteriaArray, weightedCriteria];
         });
 
-        await this.props.change_every_criteria(this.props.decisionId, weightedCriteriaArray);
+        await this.props.putWeightedCriteria(this.props.decisionId, weightedCriteriaArray);
     }
 
     //Refresh when redux state changes
@@ -332,8 +332,8 @@ class WeightCriteria extends Component {
 WeightCriteria.propTypes = {
     classes: PropTypes.object.isRequired,
     weightCriteria: PropTypes.object.isRequired,
-    get_criteria: PropTypes.func.isRequired,
-    change_every_criteria: PropTypes.func.isRequired,
+    getWeightedCriteria: PropTypes.func.isRequired,
+    putWeightedCriteria: PropTypes.func.isRequired,
     optionsAndCriteria: PropTypes.object.isRequired,
 };
 
@@ -343,4 +343,4 @@ const mapStateToProps = state => ({
 });
 
 
-export default connect(mapStateToProps, {get_criteria, change_every_criteria: put_criteria})(withStyles(styles)(WeightCriteria));
+export default connect(mapStateToProps, {getWeightedCriteria, putWeightedCriteria})(withStyles(styles)(WeightCriteria));

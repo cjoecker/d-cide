@@ -1,4 +1,4 @@
-import {GET_OPTIONS, CHANGE_OPTION, SEND_EVERY_OPTION} from "../actions/types";
+import {GET_OPTIONS, POST_OPTIONS} from "../actions/types";
 
 const initialState = {
     rateOptions: [],
@@ -14,12 +14,7 @@ export default function(state = initialState, action) {
                 ratedCriteria: action.payload
             };
 
-        case CHANGE_OPTION:
-            return {
-                ...state
-            };
-
-        case SEND_EVERY_OPTION:
+        case POST_OPTIONS:
             return {
                 ...state
             };
