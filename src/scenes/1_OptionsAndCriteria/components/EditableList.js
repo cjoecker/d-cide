@@ -11,7 +11,7 @@ import InputBase from "@material-ui/core/es/InputBase/InputBase";
 import Paper from "@material-ui/core/Paper/Paper";
 import ReactGA from 'react-ga';
 import {connect} from "react-redux";
-import {get_items, create_item, delete_item, edit_item} from "../../../services/actions/OptionsAndCriteria_Action";
+import {get_items, post_item, delete_item, put_item} from "../../../services/actions/OptionsAndCriteria_Action";
 
 
 const styles = theme => ({
@@ -83,7 +83,7 @@ class EditableList extends Component {
             name: this.state.newEntry
         };
 
-        this.props.create_item(newEntry, this.props.itemsKey, this.props.decisionId);
+        this.props.post_item(newEntry, this.props.itemsKey, this.props.decisionId);
 
         this.setState({newEntry: ''});
 
@@ -137,7 +137,7 @@ class EditableList extends Component {
             this.onDeleteItem(itemLocal.id);
             return;
         }
-        this.props.edit_item(itemLocal, this.props.itemsKey, this.props.decisionId);
+        this.props.put_item(itemLocal, this.props.itemsKey, this.props.decisionId);
 
         ReactGA.event({
             category: 'Options And Criteria',
@@ -216,9 +216,9 @@ class EditableList extends Component {
 EditableList.propTypes = {
     optionsAndCriteria: PropTypes.object.isRequired,
     get_items: PropTypes.func.isRequired,
-    create_item: PropTypes.func.isRequired,
+    post_item: PropTypes.func.isRequired,
     delete_item: PropTypes.func.isRequired,
-    edit_item: PropTypes.func.isRequired,
+    put_item: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -228,8 +228,8 @@ const mapStateToProps = state => ({
 
 export default connect(mapStateToProps, {
     get_items,
-    create_item,
+    post_item,
     delete_item,
-    edit_item
+    put_item
 })(withStyles(styles)(EditableList));
 

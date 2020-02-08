@@ -1,4 +1,4 @@
-import { GET_ITEMS, CREATE_ITEM, DELETE_ITEM, EDIT_ITEM} from "../actions/types";
+import { GET_ITEMS, POST_ITEM, DELETE_ITEM, PUT_ITEM} from "../actions/types";
 
 const initialState = {
     optionsAndCriteria: {},
@@ -15,7 +15,7 @@ export default function(state = initialState, action) {
                 [action.itemsKey]: action.payload
             };
 
-        case CREATE_ITEM:
+        case POST_ITEM:
             return {
                 ...state,
                 [action.itemsKey]: [action.payload, ...state[action.itemsKey]]
@@ -27,7 +27,7 @@ export default function(state = initialState, action) {
                 [action.itemsKey]: state[action.itemsKey].filter(item => item.id !== action.payload)
             };
 
-        case EDIT_ITEM:
+        case PUT_ITEM:
             return {
                 ...state
             };

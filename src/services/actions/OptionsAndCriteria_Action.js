@@ -1,11 +1,11 @@
 import axios from "axios";
 import {
     GET_ITEMS,
-    CREATE_ITEM,
+    POST_ITEM,
     START_LOADING,
     END_LOADING,
     DELETE_ITEM,
-    EDIT_ITEM,
+    PUT_ITEM,
     GET_ERRORS,
     START_FETCHING_DATA_PACKAGE,
     END_FETCHING_DATA_PACKAGE,
@@ -46,7 +46,7 @@ export const get_items = (itemsKey, decisionId, calculatedScore) => async dispat
 
 };
 
-export const create_item = (newEntry, itemsKey, decisionId) => async dispatch => {
+export const post_item = (newEntry, itemsKey, decisionId) => async dispatch => {
 
     //Show Loading Bar
     dispatch({type: START_LOADING});
@@ -56,7 +56,7 @@ export const create_item = (newEntry, itemsKey, decisionId) => async dispatch =>
     try {
         const res = await axios.post(`/api/decisions/${decisionId}/${itemsKey}/`, newEntry);
         dispatch({
-            type: CREATE_ITEM,
+            type: POST_ITEM,
             payload: res.data,
             itemsKey: itemsKey
         });
@@ -100,7 +100,7 @@ export const delete_item = (id, itemsKey, decisionId) => async dispatch => {
 
 };
 
-export const edit_item = (newEntry, itemsKey, decisionId) => async dispatch => {
+export const put_item = (newEntry, itemsKey, decisionId) => async dispatch => {
 
     //Show Loading Bar
     dispatch({type: START_LOADING});
@@ -110,7 +110,7 @@ export const edit_item = (newEntry, itemsKey, decisionId) => async dispatch => {
     try {
         const res = await axios.put(`/api/decisions/${decisionId}/${itemsKey}/`, newEntry);
         dispatch({
-            type: EDIT_ITEM,
+            type: PUT_ITEM,
             payload: res.data,
             itemsKey: itemsKey
         });
