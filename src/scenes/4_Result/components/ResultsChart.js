@@ -10,7 +10,7 @@ import Rectangle from "recharts/es6/shape/Rectangle";
 import Cell from "recharts/es6/component/Cell";
 
 import {connect} from "react-redux";
-import {get_items} from "../../../services/actions/OptionsAndCriteria_Action";
+import {getItems} from "../../../services/actions/OptionsAndCriteria_Action";
 import CartesianGrid from "recharts/es6/cartesian/CartesianGrid";
 import ReactGA from "react-ga";
 
@@ -43,7 +43,7 @@ class ResultsChart extends React.Component {
     //Load Data from Server
     async componentDidMount() {
 
-        await this.props.get_items(this.props.itemsKey, this.props.decisionId, true);
+        await this.props.getItems(this.props.itemsKey, this.props.decisionId, true);
     };
 
     //Refresh when redux state changes
@@ -149,7 +149,7 @@ class ResultsChart extends React.Component {
 ResultsChart.propTypes = {
     classes: PropTypes.object.isRequired,
     optionsAndCriteria: PropTypes.object.isRequired,
-    get_items: PropTypes.func.isRequired
+    getItems: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -158,4 +158,4 @@ const mapStateToProps = state => ({
 });
 
 
-export default connect(mapStateToProps, {get_items})(withStyles(styles)(ResultsChart));
+export default connect(mapStateToProps, {getItems})(withStyles(styles)(ResultsChart));

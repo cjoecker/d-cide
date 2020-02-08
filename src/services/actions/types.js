@@ -12,9 +12,9 @@ export const PUT_DECISION = "PUT_DECISION";
 
 //OptionsAndCriteria
 export const GET_ITEMS = "GET_ITEMS";
-export const POST_ITEM = "CREATE_ITEM";
+export const POST_ITEM = "POST_ITEM";
 export const DELETE_ITEM = "DELETE_ITEM";
-export const PUT_ITEM = "EDIT_ITEM";
+export const PUT_ITEM = "PUT_ITEM";
 
 //WeightCriteria
 export const GET_WEIGHTED_CRITERIA = "GET_WEIGHTED_CRITERIA";

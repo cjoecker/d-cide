@@ -11,7 +11,7 @@ import InputBase from "@material-ui/core/es/InputBase/InputBase";
 import Paper from "@material-ui/core/Paper/Paper";
 import ReactGA from 'react-ga';
 import {connect} from "react-redux";
-import {get_items, post_item, delete_item, put_item} from "../../../services/actions/OptionsAndCriteria_Action";
+import {getItems, postItem, deleteItem, putItem} from "../../../services/actions/OptionsAndCriteria_Action";
 
 
 const styles = theme => ({
@@ -54,7 +54,7 @@ class EditableList extends Component {
 
     //GET_ITEMS
     async componentDidMount() {
-        await this.props.get_items(this.props.itemsKey, this.props.decisionId, false);
+        await this.props.getItems(this.props.itemsKey, this.props.decisionId, false);
     }
 
 
@@ -83,7 +83,7 @@ class EditableList extends Component {
             name: this.state.newEntry
         };
 
-        this.props.post_item(newEntry, this.props.itemsKey, this.props.decisionId);
+        this.props.postItem(newEntry, this.props.itemsKey, this.props.decisionId);
 
         this.setState({newEntry: ''});
 
@@ -104,7 +104,7 @@ class EditableList extends Component {
             });
         }
 
-        this.props.delete_item(id, this.props.itemsKey, this.props.decisionId);
+        this.props.deleteItem(id, this.props.itemsKey, this.props.decisionId);
 
         ReactGA.event({
             category: 'Options And Criteria',
@@ -137,7 +137,7 @@ class EditableList extends Component {
             this.onDeleteItem(itemLocal.id);
             return;
         }
-        this.props.put_item(itemLocal, this.props.itemsKey, this.props.decisionId);
+        this.props.putItem(itemLocal, this.props.itemsKey, this.props.decisionId);
 
         ReactGA.event({
             category: 'Options And Criteria',
@@ -215,10 +215,10 @@ class EditableList extends Component {
 
 EditableList.propTypes = {
     optionsAndCriteria: PropTypes.object.isRequired,
-    get_items: PropTypes.func.isRequired,
-    post_item: PropTypes.func.isRequired,
-    delete_item: PropTypes.func.isRequired,
-    put_item: PropTypes.func.isRequired,
+    getItems: PropTypes.func.isRequired,
+    postItem: PropTypes.func.isRequired,
+    deleteItem: PropTypes.func.isRequired,
+    putItem: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -227,9 +227,9 @@ const mapStateToProps = state => ({
 
 
 export default connect(mapStateToProps, {
-    get_items,
-    post_item,
-    delete_item,
-    put_item
+    getItems,
+    postItem,
+    deleteItem,
+    putItem
 })(withStyles(styles)(EditableList));
 

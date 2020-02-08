@@ -12,7 +12,7 @@ import {
 } from "./types";
 
 
-export const get_items = (itemsKey, decisionId, calculatedScore) => async dispatch => {
+export const getItems = (itemsKey, decisionId, calculatedScore) => async dispatch => {
 
     //Show Loading Bar
     dispatch({type: START_LOADING});
@@ -46,7 +46,7 @@ export const get_items = (itemsKey, decisionId, calculatedScore) => async dispat
 
 };
 
-export const post_item = (newEntry, itemsKey, decisionId) => async dispatch => {
+export const postItem = (newEntry, itemsKey, decisionId) => async dispatch => {
 
     //Show Loading Bar
     dispatch({type: START_LOADING});
@@ -73,7 +73,7 @@ export const post_item = (newEntry, itemsKey, decisionId) => async dispatch => {
 
 };
 
-export const delete_item = (id, itemsKey, decisionId) => async dispatch => {
+export const deleteItem = (id, itemsKey, decisionId) => async dispatch => {
 
     //Show Loading Bar
     dispatch({type: START_LOADING});
@@ -100,7 +100,7 @@ export const delete_item = (id, itemsKey, decisionId) => async dispatch => {
 
 };
 
-export const put_item = (newEntry, itemsKey, decisionId) => async dispatch => {
+export const putItem = (newEntry, itemsKey, decisionId) => async dispatch => {
 
     //Show Loading Bar
     dispatch({type: START_LOADING});
