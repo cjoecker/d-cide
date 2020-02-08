@@ -12,7 +12,7 @@ import InfoDialog from "../../components/InfoDialog";
 import * as LongStrings from "../../components/LongStrings";
 
 import {connect} from "react-redux";
-import {get_options, send_every_option} from "../../services/actions/RateOptions_Action";
+import {getRatedOptions, postRatedOptions} from "../../services/actions/RateOptions_Action";
 import ReactGA from "react-ga";
 
 
@@ -131,7 +131,7 @@ class RateOptions extends React.Component {
         let ratedCriteria = [];
 
 
-        await this.props.get_options(this.props.decisionId);
+        await this.props.getRatedOptions(this.props.decisionId);
         importedRatedCriteria = this.props.rateOptions.ratedCriteria;
 
         console.log(this.props.rateOptions.ratedCriteria);
@@ -183,7 +183,7 @@ class RateOptions extends React.Component {
            });
         });
 
-        await this.props.send_every_option(this.props.decisionId, ratedOptions);
+        await this.props.postRatedOptions(this.props.decisionId, ratedOptions);
     }
     onDragEnd = (event, criteriaLocal, optionLocal) => {
 
@@ -313,8 +313,8 @@ class RateOptions extends React.Component {
 RateOptions.propTypes = {
     classes: PropTypes.object.isRequired,
     rateOptions: PropTypes.object.isRequired,
-    get_options: PropTypes.func.isRequired,
-    send_every_option: PropTypes.func.isRequired,
+    getRatedOptions: PropTypes.func.isRequired,
+    postRatedOptions: PropTypes.func.isRequired,
     optionsAndCriteria: PropTypes.object.isRequired,
     weightCriteria: PropTypes.object.isRequired
 };
@@ -326,4 +326,4 @@ const mapStateToProps = state => ({
 });
 
 
-export default connect(mapStateToProps, {get_options, send_every_option})(withStyles(styles)(RateOptions));
+export default connect(mapStateToProps, {getRatedOptions, postRatedOptions})(withStyles(styles)(RateOptions));

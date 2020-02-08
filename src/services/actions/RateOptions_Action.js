@@ -2,15 +2,15 @@ import axios from "axios";
 import {
     START_LOADING,
     END_LOADING,
-    GET_OPTIONS,
+    GET_RATED_OPTIONS,
     GET_ERRORS,
-    POST_OPTIONS,
+    POST_RATED_OPTIONS,
     START_FETCHING_DATA_PACKAGE,
     END_FETCHING_DATA_PACKAGE,
 } from "./types";
 
 
-export const get_options = (decisionId) => async dispatch => {
+export const getRatedOptions = (decisionId) => async dispatch => {
 
     //Show Loading Bar
     dispatch({type: START_LOADING});
@@ -19,7 +19,7 @@ export const get_options = (decisionId) => async dispatch => {
     try {
         const res = await axios.get(`/api/decisions/${decisionId}/ratedOptions`);
         dispatch({
-            type: GET_OPTIONS,
+            type: GET_RATED_OPTIONS,
             payload: res.data
         });
     } catch (error) {
@@ -34,7 +34,7 @@ export const get_options = (decisionId) => async dispatch => {
 
 };
 
-export const send_every_option = (decisionId, options) => async dispatch => {
+export const postRatedOptions = (decisionId, options) => async dispatch => {
 
     //Show Loading Bar
     dispatch({type: START_LOADING});
@@ -43,7 +43,7 @@ export const send_every_option = (decisionId, options) => async dispatch => {
     try {
         const res = await axios.put(`/api/decisions/${decisionId}/ratedOptions`, options);
         dispatch({
-            type: POST_OPTIONS
+            type: POST_RATED_OPTIONS
         });
     } catch (error) {
         dispatch({

@@ -1,4 +1,4 @@
-import {GET_OPTIONS, POST_OPTIONS} from "../actions/types";
+import {GET_RATED_OPTIONS, POST_RATED_OPTIONS} from "../actions/types";
 
 const initialState = {
     rateOptions: [],
@@ -8,13 +8,13 @@ const initialState = {
 export default function(state = initialState, action) {
     switch (action.type) {
 
-        case GET_OPTIONS:
+        case GET_RATED_OPTIONS:
             return {
                 ...state,
                 ratedCriteria: action.payload
             };
 
-        case POST_OPTIONS:
+        case POST_RATED_OPTIONS:
             return {
                 ...state
             };
