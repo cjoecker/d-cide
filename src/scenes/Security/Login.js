@@ -18,7 +18,7 @@ import Typography from "@material-ui/core/Typography";
 import TwoButtonsDialog from "../../components/TwoButtonsDialog";
 
 import ReactGA from "react-ga";
-import {get_decisions, put_decision} from "../../services/actions/Decisions_Action";
+import {getDecisions, putDecision} from "../../services/actions/Decisions_Action";
 import {getValueSafe} from "../../services/generalUtils";
 
 
@@ -178,7 +178,7 @@ class Login extends React.Component {
         };
 
         //get unregistered decisions
-        await this.props.get_decisions;
+        await this.props.getDecisions;
 
         const decision = {
             id: this.props.decision.decisions[0].id,
@@ -187,7 +187,7 @@ class Login extends React.Component {
         };
 
         //transfer decision to user
-        await this.props.put_decision(decision);
+        await this.props.putDecision(decision);
 
         await this.props.set_user(this.props.security.jwt);
 
@@ -377,8 +377,8 @@ Login.propTypes = {
     security: PropTypes.object.isRequired,
     decision: PropTypes.object.isRequired,
     login: PropTypes.func.isRequired,
-    put_decision: PropTypes.func.isRequired,
-    get_decisions: PropTypes.func.isRequired,
+    putDecision: PropTypes.func.isRequired,
+    getDecisions: PropTypes.func.isRequired,
     set_user: PropTypes.func.isRequired,
 };
 
@@ -389,4 +389,4 @@ const mapStateToProps = state => ({
 });
 
 
-export default connect(mapStateToProps, {login, put_decision, get_decisions, set_user})(withStyles(styles)(Login));
+export default connect(mapStateToProps, {login, putDecision, getDecisions, set_user})(withStyles(styles)(Login));

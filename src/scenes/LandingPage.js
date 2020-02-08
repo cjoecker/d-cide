@@ -2,7 +2,7 @@ import {Component} from "react";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import {login, signUp, logout, get_unregisteredUser} from "../services/actions/Security_Action";
-import {post_decision, get_decisions} from "../services/actions/Decisions_Action";
+import {postDecision, getDecisions} from "../services/actions/Decisions_Action";
 import ReactGA from 'react-ga';
 
 class LandingPage extends Component {
@@ -34,7 +34,7 @@ class LandingPage extends Component {
             });
 
             //Get Decisions
-            await this.props.get_decisions();
+            await this.props.getDecisions();
 
             //Open Decision
             if(this.props.decision.decisions.length > 0) {
@@ -60,7 +60,7 @@ LandingPage.propTypes = {
     logout: PropTypes.func.isRequired,
     signUp: PropTypes.func.isRequired,
     get_unregisteredUsersNum: PropTypes.func.isRequired,
-    get_decisions: PropTypes.func.isRequired,
+    getDecisions: PropTypes.func.isRequired,
     create_exampleData: PropTypes.func.isRequired,
 };
 
@@ -77,5 +77,5 @@ export default connect(
         logout,
         signUp,
         get_unregisteredUser,
-        get_decisions
+        getDecisions
     })(LandingPage);

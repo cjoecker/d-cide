@@ -12,7 +12,7 @@ import {
 } from "./types";
 
 
-export const get_decisions = () => async dispatch => {
+export const getDecisions = () => async dispatch => {
 
     //Show Loading Bar
     dispatch({type: START_LOADING});
@@ -36,7 +36,7 @@ export const get_decisions = () => async dispatch => {
 
 };
 
-export const post_decision = (newEntry) => async dispatch => {
+export const postDecision = (newEntry) => async dispatch => {
 
     //Show Loading Bar
     dispatch({type: START_LOADING});
@@ -62,7 +62,7 @@ export const post_decision = (newEntry) => async dispatch => {
 
 };
 
-export const delete_decision = (id) => async dispatch => {
+export const deleteDecision = (id) => async dispatch => {
 
     //Show Loading Bar
     dispatch({type: START_LOADING});
@@ -88,7 +88,7 @@ export const delete_decision = (id) => async dispatch => {
 
 };
 
-export const put_decision = (newItem) => async dispatch => {
+export const putDecision = (newItem) => async dispatch => {
 
     //Show Loading Bar
     dispatch({type: START_LOADING});

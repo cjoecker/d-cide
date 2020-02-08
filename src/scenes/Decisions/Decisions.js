@@ -12,7 +12,7 @@ import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 
 
 import {connect} from "react-redux";
-import {get_decisions, post_decision, delete_decision, put_decision} from "../../services/actions/Decisions_Action";
+import {getDecisions, postDecision, deleteDecision, putDecision} from "../../services/actions/Decisions_Action";
 import Fab from "@material-ui/core/Fab";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
@@ -86,7 +86,7 @@ class Decisions extends React.Component {
 
 
     async componentDidMount() {
-        await this.props.get_decisions();
+        await this.props.getDecisions();
 
         if (!this.props.security.user.registeredUser){
             this.goToDecision(this.props.decision.decisions[0].id)
@@ -132,7 +132,7 @@ class Decisions extends React.Component {
             name: this.state.newEntry
         };
 
-        await this.props.post_decision(newEntry);
+        await this.props.postDecision(newEntry);
 
         this.setState({
             newEntry: '',
@@ -178,13 +178,13 @@ class Decisions extends React.Component {
             this.deleteDecision(decisionLocal.id);
             return;
         }
-        this.props.put_decision(decisionLocal);
+        this.props.putDecision(decisionLocal);
 
     }
 
     async deleteDecision(e) {
 
-        this.props.delete_decision(this.state.DeleteDecisionNum);
+        this.props.deleteDecision(this.state.DeleteDecisionNum);
 
         this.setState({
             showAskBeforeDelete: false,
@@ -315,10 +315,10 @@ Decisions.propTypes = {
     errors: PropTypes.object.isRequired,
     decision: PropTypes.object.isRequired,
     security: PropTypes.object.isRequired,
-    get_decisions: PropTypes.func.isRequired,
-    post_decision: PropTypes.func.isRequired,
-    delete_decision: PropTypes.func.isRequired,
-    put_decision: PropTypes.func.isRequired,
+    getDecisions: PropTypes.func.isRequired,
+    postDecision: PropTypes.func.isRequired,
+    deleteDecision: PropTypes.func.isRequired,
+    putDecision: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -329,8 +329,8 @@ const mapStateToProps = state => ({
 
 
 export default connect(mapStateToProps, {
-    get_decisions,
-    post_decision,
-    delete_decision,
-    put_decision
+    getDecisions,
+    postDecision,
+    deleteDecision,
+    putDecision
 })(withStyles(styles)(Decisions));
