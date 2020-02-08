@@ -6,9 +6,9 @@ export const END_FETCHING_DATA_PACKAGE = "END_FETCHING_DATA_PACKAGE";
 
 //Decisions
 export const GET_DECISIONS = "GET_DECISIONS";
-export const POST_DECISION = "CREATE_DECISION";
+export const POST_DECISION = "POST_DECISION";
 export const DELETE_DECISION = "DELETE_DECISION";
-export const PUT_DECISION = "EDIT_DECISION";
+export const PUT_DECISION = "PUT_DECISION";
 
 //OptionsAndCriteria
 export const GET_ITEMS = "GET_ITEMS";
