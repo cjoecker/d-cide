@@ -1,7 +1,7 @@
 import {Component} from "react";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
-import {login, signUp, logout, get_unregisteredUser} from "../services/actions/Security_Action";
+import {login, postUsers, logout, get_unregisteredUser} from "../services/actions/Security_Action";
 import {postDecision, getDecisions} from "../services/actions/Decisions_Action";
 import ReactGA from 'react-ga';
 
@@ -58,7 +58,7 @@ LandingPage.propTypes = {
     decision: PropTypes.object.isRequired,
     login: PropTypes.func.isRequired,
     logout: PropTypes.func.isRequired,
-    signUp: PropTypes.func.isRequired,
+    postUsers: PropTypes.func.isRequired,
     get_unregisteredUsersNum: PropTypes.func.isRequired,
     getDecisions: PropTypes.func.isRequired,
     create_exampleData: PropTypes.func.isRequired,
@@ -75,7 +75,7 @@ export default connect(
     mapStateToProps, {
         login,
         logout,
-        signUp,
+        postUsers,
         get_unregisteredUser,
         getDecisions
     })(LandingPage);

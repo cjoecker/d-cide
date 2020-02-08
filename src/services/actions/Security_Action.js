@@ -3,8 +3,8 @@ import {
     END_LOADING,
     GET_ERRORS,
     START_LOADING,
-    SET_USER,
-    SIGNUP_SUCCESSFUL,
+    POST_SESSION,
+    POST_USER,
     START_FETCHING_DATA_PACKAGE,
     END_FETCHING_DATA_PACKAGE,
     SAVE_JWT,
@@ -14,7 +14,7 @@ import setJWTToken, {setJwt} from "../securityUtils";
 import jwt_decode from "jwt-decode";
 
 
-export const signUp = (newUser, history) => async dispatch => {
+export const postUsers = (newUser, history) => async dispatch => {
 
     //Show Loading Bar
     dispatch({type: START_LOADING});
@@ -40,7 +40,7 @@ export const signUp = (newUser, history) => async dispatch => {
 
     //SignUp Successful
     dispatch({
-        type: SIGNUP_SUCCESSFUL,
+        type: POST_USER,
         payload: signUpSuccessful
     });
 
@@ -68,7 +68,7 @@ export const login = LoginRequest => async dispatch => {
 
         //set new user
         dispatch({
-            type: SET_USER,
+            type: POST_SESSION,
             payload: jwt_decode(res.data.token),
         });
     } catch (err) {
@@ -96,7 +96,7 @@ export const logout = () => dispatch => {
     localStorage.removeItem("jwtToken");
     setJWTToken(false);
     dispatch({
-        type: SET_USER,
+        type: POST_SESSION,
         payload: null
     });
 };
@@ -111,7 +111,7 @@ export const get_unregisteredUser = () => async dispatch => {
         const res = await axios.post("/api/sessions/unregistered");
 
         dispatch({
-            type: SET_USER,
+            type: POST_SESSION,
             payload: jwt_decode(res.data.token),
         });
 

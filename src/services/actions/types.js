@@ -3,6 +3,7 @@ export const START_LOADING = "START_LOADING";
 export const END_LOADING = "END_LOADING";
 export const START_FETCHING_DATA_PACKAGE = "START_FETCHING_DATA_PACKAGE";
 export const END_FETCHING_DATA_PACKAGE = "END_FETCHING_DATA_PACKAGE";
+export const GET_ERRORS  = "GET_ERRORS";
 
 //Decisions
 export const GET_DECISIONS = "GET_DECISIONS";
@@ -24,9 +25,8 @@ export const PUT_WEIGHTED_CRITERIA = "PUT_WEIGHTED_CRITERIA";
 export const GET_RATED_OPTIONS = "GET_RATED_OPTIONS";
 export const POST_RATED_OPTIONS = "POST_RATED_OPTIONS";
 
-//Security
-export const GET_ERRORS  = "GET_ERRORS";
-export const SET_USER = "SET_USER";
-export const SIGNUP_SUCCESSFUL = "SIGNUP_SUCCESSFUL";
+//Session
+export const POST_SESSION = "POST_SESSION";
+export const POST_USER = "POST_USER";
 export const SAVE_JWT = "SAVE_JWT";
 export const DELETE_JWT = "DELETE_JWT";

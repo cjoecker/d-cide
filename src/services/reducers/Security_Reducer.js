@@ -1,4 +1,4 @@
-import {SET_USER, SIGNUP_SUCCESSFUL, SAVE_JWT, DELETE_JWT} from "../actions/types";
+import {POST_SESSION, POST_USER, SAVE_JWT, DELETE_JWT} from "../actions/types";
 
 const initialState = {
     validToken: false,
@@ -10,7 +10,7 @@ const initialState = {
 export default function(state = initialState, action) {
 
     switch (action.type) {
-        case SET_USER:
+        case POST_SESSION:
             return {
                 ...state,
                 validToken: !!action.payload,
@@ -26,7 +26,7 @@ export default function(state = initialState, action) {
                 ...state,
                 jwt: ""
             };
-        case SIGNUP_SUCCESSFUL:
+        case POST_USER:
             return {
                 ...state,
                 signUpSuccessful: action.payload

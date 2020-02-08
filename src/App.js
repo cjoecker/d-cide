@@ -16,7 +16,6 @@ import store from "./store";
 import SignUp from "./scenes/Security/SignUp";
 import jwt_decode from "jwt-decode";
 import setJWTToken from "./services/securityUtils";
-import {SET_USER} from "./services/actions/types";
 import Decision from "./scenes/Decision/Decision";
 import Decisions from "./scenes/Decisions/Decisions";
 import {logout} from "./services/actions/Security_Action";
@@ -39,6 +38,7 @@ import Menu from "@material-ui/core/Menu/Menu";
 import MenuItem from "@material-ui/core/MenuItem/MenuItem";
 import {getValueSafe} from "./services/generalUtils";
 import ForgotPassword from "./scenes/Security/ForgotPassword";
+import {POST_SESSION} from "./services/actions/types";
 
 const jwtToken = localStorage.jwtToken;
 
@@ -47,7 +47,7 @@ if (jwtToken) {
     setJWTToken(jwtToken);
     const decoded_jwtToken = jwt_decode(jwtToken);
     store.dispatch({
-        type: SET_USER,
+        type: POST_SESSION,
         payload: decoded_jwtToken
     });
     const currentTime = Date.now() / 1000;
