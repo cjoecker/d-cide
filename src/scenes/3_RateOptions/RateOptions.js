@@ -145,14 +145,14 @@ class RateOptions extends React.Component {
             decisionOptions.forEach(function (option) {
                 let optionLocal = Object.assign({}, option);
 
-                //Get old ratings
+                //Get old scores
                 let objIndex = importedRatedCriteria.findIndex(obj =>
                     obj.selectionCriteriaId === criteria.id &&
                     obj.decisionOptionId === option.id
                 );
 
-                //Add ratings if existing
-                optionLocal.rating = (objIndex >= 0) ? importedRatedCriteria[objIndex].rating : 50;
+                //Add scores if existing
+                optionLocal.score = (objIndex >= 0) ? importedRatedCriteria[objIndex].score : 50;
 
                 decisionOptionLocal = [...decisionOptionLocal, optionLocal];
 
@@ -174,7 +174,7 @@ class RateOptions extends React.Component {
 
            criteria.decisionOption.forEach(function (option) {
                const ratedOption = {
-                   rating: option.rating,
+                   score: option.score,
                    decisionOptionId: option.id,
                    selectionCriteriaId: criteria.id,
                };
@@ -194,11 +194,11 @@ class RateOptions extends React.Component {
     };
 
 
-    onChange = (event, criteriaIndex, optionIndex, rating) => {
+    onChange = (event, criteriaIndex, optionIndex, score) => {
 
         let ratedCriteriaLocal = this.state.ratedCriteria;
 
-        ratedCriteriaLocal[criteriaIndex].decisionOption[optionIndex].rating = rating;
+        ratedCriteriaLocal[criteriaIndex].decisionOption[optionIndex].score = score;
 
         this.setState({
             ratedCriteria: ratedCriteriaLocal,
@@ -277,7 +277,7 @@ class RateOptions extends React.Component {
                                                                     trackBefore: classes.track,
                                                                     container: classes.sliderContainer,
                                                                 }}
-                                                                value={option.rating}
+                                                                value={option.score}
                                                                 min={0}
                                                                 max={100}
                                                                 step={1}

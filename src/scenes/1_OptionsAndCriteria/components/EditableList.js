@@ -54,7 +54,7 @@ class EditableList extends Component {
 
     //GET_ITEMS
     async componentDidMount() {
-        await this.props.get_items(this.props.itemsKey, this.props.decisionId);
+        await this.props.get_items(this.props.itemsKey, this.props.decisionId, false);
     }
 
 

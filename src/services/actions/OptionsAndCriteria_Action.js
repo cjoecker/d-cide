@@ -12,7 +12,7 @@ import {
 } from "./types";
 
 
-export const get_items = (itemsKey, decisionId) => async dispatch => {
+export const get_items = (itemsKey, decisionId, calculatedScore) => async dispatch => {
 
     //Show Loading Bar
     dispatch({type: START_LOADING});
@@ -20,8 +20,12 @@ export const get_items = (itemsKey, decisionId) => async dispatch => {
 
     //Get Information
     try {
-        const res = await axios.get(`/api/decisions/${decisionId}/${itemsKey}`);
-        console.log(`/api/decisions/${decisionId}/${itemsKey}`);
+        const res = await axios.get(`/api/decisions/${decisionId}/${itemsKey}`, {
+            params: {
+                calculatedScore: calculatedScore
+            }
+        });
+
         dispatch({
             type: GET_ITEMS,
             payload: res.data,

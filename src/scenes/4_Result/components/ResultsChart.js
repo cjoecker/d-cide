@@ -10,7 +10,7 @@ import Rectangle from "recharts/es6/shape/Rectangle";
 import Cell from "recharts/es6/component/Cell";
 
 import {connect} from "react-redux";
-import {get_result} from "../../../services/actions/Result_Action";
+import {get_items} from "../../../services/actions/OptionsAndCriteria_Action";
 import CartesianGrid from "recharts/es6/cartesian/CartesianGrid";
 import ReactGA from "react-ga";
 
@@ -43,15 +43,15 @@ class ResultsChart extends React.Component {
     //Load Data from Server
     async componentDidMount() {
 
-        await this.props.get_result(this.props.itemsKey, this.props.decisionId);
+        await this.props.get_items(this.props.itemsKey, this.props.decisionId, true);
     };
 
     //Refresh when redux state changes
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if (prevProps.result[this.props.itemsKey] !== this.props.result[this.props.itemsKey]) {
+        if (prevProps.optionsAndCriteria[this.props.itemsKey] !== this.props.optionsAndCriteria[this.props.itemsKey]) {
 
             //Get items
-            const items = this.props.result[this.props.itemsKey];
+            const items = this.props.optionsAndCriteria[this.props.itemsKey];
 
             this.setState({items: items});
 
@@ -65,11 +65,11 @@ class ResultsChart extends React.Component {
 
             this.setState({labelsOffset: totalOffset});
 
-            if(this.props.result[this.props.itemsKey] !== null) {
+            if(this.props.optionsAndCriteria[this.props.itemsKey] !== null) {
                 ReactGA.event({
                     category: 'Result',
                     action: 'Items number from ' + this.props.itemsKey,
-                    value: this.props.result[this.props.itemsKey].length,
+                    value: this.props.optionsAndCriteria[this.props.itemsKey].length,
                 });
             }
 
@@ -148,14 +148,14 @@ class ResultsChart extends React.Component {
 
 ResultsChart.propTypes = {
     classes: PropTypes.object.isRequired,
-    result: PropTypes.object.isRequired,
-    get_result: PropTypes.func.isRequired
+    optionsAndCriteria: PropTypes.object.isRequired,
+    get_items: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
     app: state.app,
-    result: state.result
+    optionsAndCriteria: state.optionsAndCriteria
 });
 
 
-export default connect(mapStateToProps, {get_result})(withStyles(styles)(ResultsChart));
+export default connect(mapStateToProps, {get_items})(withStyles(styles)(ResultsChart));

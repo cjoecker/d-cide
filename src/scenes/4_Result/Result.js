@@ -100,7 +100,7 @@ class Result extends Component {
                             </Typography>
                             {!isFetchingDataPackage &&
                             <ResultsChart
-                                itemsKey={"decisionOption"}
+                                itemsKey={"decisionOptions"}
                                 decisionId={this.props.decisionId}
                                 YKey={"name"}/>
                             }
