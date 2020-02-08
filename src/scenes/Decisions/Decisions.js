@@ -243,14 +243,14 @@ class Decisions extends React.Component {
                                         multiline
                                     />
                                     <ListItemSecondaryAction>
-                                        <Fab
+                                        {this.state.newEntry.length > 0 ?<Fab
                                             size="small"
                                             color="primary"
                                             aria-label="Add"
                                             onClick={this.createDecision}
                                         >
                                             <AddIcon/>
-                                        </Fab>
+                                        </Fab>: null}
                                     </ListItemSecondaryAction>
                                 </ListItem>
                             </Paper>
