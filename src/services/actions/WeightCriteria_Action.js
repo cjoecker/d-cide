@@ -3,9 +3,8 @@ import {
     START_LOADING,
     END_LOADING,
     GET_CRITERIA,
-    CHANGE_CRITERIA,
+    PUT_CRITERIA,
     GET_ERRORS,
-    SEND_EVERY_CRITERIA,
     START_FETCHING_DATA_PACKAGE,
     END_FETCHING_DATA_PACKAGE,
 } from "./types";
@@ -35,7 +34,7 @@ export const get_criteria = (decisionId) => async dispatch => {
 
 };
 
-export const change_criteria = (decisionId, criteria) => async dispatch => {
+export const put_criteria = (decisionId, criteria) => async dispatch => {
 
     //Show Loading Bar
     dispatch({type: START_LOADING});
@@ -45,7 +44,7 @@ export const change_criteria = (decisionId, criteria) => async dispatch => {
     try {
         const res = await axios.put(`/api/decisions/${decisionId}/weightedCriteria`, criteria);
         dispatch({
-            type: SEND_EVERY_CRITERIA,
+            type: PUT_CRITERIA,
         });
     } catch (error) {
         dispatch({

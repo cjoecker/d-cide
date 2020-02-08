@@ -1,4 +1,4 @@
-import {GET_CRITERIA, CHANGE_CRITERIA, SEND_EVERY_CRITERIA} from "../actions/types";
+import {GET_CRITERIA, PUT_CRITERIA, POST_CRITERIA} from "../actions/types";
 
 const initialState = {
     weightCriteria: [],
@@ -14,12 +14,7 @@ export default function(state = initialState, action) {
                 weightedCriteria: action.payload
             };
 
-        case CHANGE_CRITERIA:
-            return {
-                ...state
-            };
-
-        case SEND_EVERY_CRITERIA:
+        case PUT_CRITERIA:
             return {
                 ...state
             };

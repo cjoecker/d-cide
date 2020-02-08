@@ -18,8 +18,7 @@ export const PUT_ITEM = "EDIT_ITEM";
 
 //WeightCriteria
 export const GET_CRITERIA = "GET_CRITERIA";
-export const CHANGE_CRITERIA = "CHANGE_CRITERIA";
-export const SEND_EVERY_CRITERIA = "SEND_EVERY_CRITERIA";
+export const PUT_CRITERIA = "CHANGE_CRITERIA";
 
 //RateOptions
 export const GET_OPTIONS = "GET_OPTIONS";
