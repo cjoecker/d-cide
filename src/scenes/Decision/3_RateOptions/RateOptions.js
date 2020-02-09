@@ -117,58 +117,19 @@ class RateOptions extends React.Component {
         this.onDragEnd = this.onDragEnd.bind(this);
         this.onHideInfo = this.onHideInfo.bind(this);
         this.onShowInfo = this.onShowInfo.bind(this);
-
-
     }
 
 
     //Load Data from Server
-    async componentDidMount() {
-
-        let {selectionCriteria} = this.props.optionsAndCriteria;
-        let {decisionOptions} = this.props.optionsAndCriteria;
-        let importedRatedCriteria = [];
-        let ratedCriteria = [];
-
-
-        await this.props.getRatedOptions(this.props.decisionId);
-        importedRatedCriteria = this.props.rateOptions.ratedCriteria;
-
-        //Create nested object to summarize list
-        selectionCriteria.forEach(function (criteria) {
-
-            let decisionOptionLocal = [];
-
-            //Add object properties
-            decisionOptions.forEach(function (option) {
-                let optionLocal = Object.assign({}, option);
-
-                //Get old scores
-                let objIndex = importedRatedCriteria.findIndex(obj =>
-                    obj.selectionCriteriaId === criteria.id &&
-                    obj.decisionOptionId === option.id
-                );
-
-                //Add scores if existing
-                optionLocal.score = (objIndex >= 0) ? importedRatedCriteria[objIndex].score : 50;
-
-                decisionOptionLocal = [...decisionOptionLocal, optionLocal];
-
-            });
-
-            criteria.decisionOption = decisionOptionLocal;
-            ratedCriteria = [...ratedCriteria, criteria];
-        });
-
-        this.setState({ratedCriteria: ratedCriteria});
-
+    componentDidMount() {
+        this.props.getRatedOptions(this.props.decisionId);
     }
 
-    async componentWillUnmount() {
+    componentWillUnmount() {
 
         let ratedOptions = [];
 
-        await this.state.ratedCriteria.forEach(function (criteria) {
+        this.state.ratedCriteria.forEach(function (criteria) {
 
            criteria.decisionOption.forEach(function (option) {
                const ratedOption = {
@@ -181,8 +142,20 @@ class RateOptions extends React.Component {
            });
         });
 
-        await this.props.postRatedOptions(this.props.decisionId, ratedOptions);
+        this.props.postRatedOptions(this.props.decisionId, ratedOptions);
     }
+
+
+    //Refresh when redux state changes
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (prevProps.rateOptions.ratedCriteria !== this.props.rateOptions.ratedCriteria) {
+            if (this.props.rateOptions.ratedCriteria.length > 0) {
+                this.setRatedOptions();
+            }
+        }
+    }
+
+
     onDragEnd = (event, criteriaLocal, optionLocal) => {
 
         ReactGA.event({
@@ -221,6 +194,45 @@ class RateOptions extends React.Component {
         });
     };
 
+    setRatedOptions(){
+
+        //get basic data
+        let {selectionCriteria} = this.props.optionsAndCriteria;
+        let {decisionOptions} = this.props.optionsAndCriteria;
+        let importedRatedCriteria = [];
+        let ratedCriteria = [];
+
+        importedRatedCriteria = this.props.rateOptions.ratedCriteria;
+
+        //Create nested object to summarize list
+        selectionCriteria.forEach(function (criteria) {
+
+            let decisionOptionLocal = [];
+
+            //Add object properties
+            decisionOptions.forEach(function (option) {
+                let optionLocal = Object.assign({}, option);
+
+                //Get old scores
+                let objIndex = importedRatedCriteria.findIndex(obj =>
+                    obj.selectionCriteriaId === criteria.id &&
+                    obj.decisionOptionId === option.id
+                );
+
+                //Add scores if existing
+                optionLocal.score = (objIndex >= 0) ? importedRatedCriteria[objIndex].score : 50;
+
+                decisionOptionLocal = [...decisionOptionLocal, optionLocal];
+
+            });
+
+            //add objects to array
+            criteria.decisionOption = decisionOptionLocal;
+            ratedCriteria = [...ratedCriteria, criteria];
+        });
+
+        this.setState({ratedCriteria: ratedCriteria});
+    }
 
     render() {
         const {classes} = this.props;

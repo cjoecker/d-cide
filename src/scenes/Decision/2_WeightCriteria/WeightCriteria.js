@@ -136,7 +136,7 @@ class WeightCriteria extends Component {
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (prevProps.weightCriteria.weightedCriteria !== this.props.weightCriteria.weightedCriteria) {
 
-            if (this.state.weightInfo.length === 0 && this.props.weightCriteria.weightedCriteria.length > 0) {
+            if (this.props.weightCriteria.weightedCriteria.length > 0) {
 
                 this.setWeightedCriteria();
 
