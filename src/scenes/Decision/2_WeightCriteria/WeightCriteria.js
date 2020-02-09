@@ -5,14 +5,14 @@ import PropTypes from "prop-types";
 import {withStyles} from "@material-ui/core";
 import Slider from "@material-ui/lab/Slider";
 import update from 'immutability-helper';
-import WeightSlider_Scale from "../../images/WeightSlider_Scale.svg"
+import WeightSlider_Scale from "../../../images/WeightSlider_Scale.svg"
 import Typography from "@material-ui/core/Typography/Typography";
 import InfoIcon from '@material-ui/icons/Info';
 import IconButton from "@material-ui/core/IconButton/IconButton";
-import InfoDialog from "../../components/InfoDialog";
+import InfoDialog from "../../../components/InfoDialog";
 import {connect} from "react-redux";
-import {getWeightedCriteria, putWeightedCriteria} from "../../services/actions/WeightCriteria_Action";
-import * as LongStrings from "../../components/LongStrings";
+import {getWeightedCriteria, putWeightedCriteria} from "../../../services/actions/WeightCriteria_Action";
+import * as LongStrings from "../../../components/LongStrings";
 import ReactGA from 'react-ga';
 
 const styles = theme => ({

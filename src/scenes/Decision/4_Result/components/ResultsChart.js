@@ -10,7 +10,7 @@ import Rectangle from "recharts/es6/shape/Rectangle";
 import Cell from "recharts/es6/component/Cell";
 
 import {connect} from "react-redux";
-import {getItems} from "../../../services/actions/OptionsAndCriteria_Action";
+import {getItems} from "../../../../services/actions/OptionsAndCriteria_Action";
 import CartesianGrid from "recharts/es6/cartesian/CartesianGrid";
 import ReactGA from "react-ga";
 

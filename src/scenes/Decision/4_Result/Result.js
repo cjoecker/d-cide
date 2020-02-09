@@ -6,9 +6,9 @@ import Paper from "@material-ui/core/Paper/Paper";
 import ResultsChart from "./components/ResultsChart";
 import InfoIcon from '@material-ui/icons/Info';
 import IconButton from "@material-ui/core/IconButton/IconButton";
-import InfoDialog from "../../components/InfoDialog";
+import InfoDialog from "../../../components/InfoDialog";
 import Typography from "@material-ui/core/Typography";
-import * as LongStrings from "../../components/LongStrings";
+import * as LongStrings from "../../../components/LongStrings";
 import ReactGA from 'react-ga';
 import connect from "react-redux/es/connect/connect";
 

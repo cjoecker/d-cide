@@ -5,14 +5,14 @@ import Paper from "@material-ui/core/Paper/Paper";
 import Grid from "@material-ui/core/Grid/Grid";
 import Slider from "@material-ui/lab/Slider/Slider";
 import Typography from "@material-ui/core/Typography/Typography";
-import RateSlider_Scale from "../../images/RateSlider_Scale.svg";
+import RateSlider_Scale from "../../../images/RateSlider_Scale.svg";
 import IconButton from "@material-ui/core/IconButton/IconButton";
 import InfoIcon from '@material-ui/icons/Info';
-import InfoDialog from "../../components/InfoDialog";
-import * as LongStrings from "../../components/LongStrings";
+import InfoDialog from "../../../components/InfoDialog";
+import * as LongStrings from "../../../components/LongStrings";
 
 import {connect} from "react-redux";
-import {getRatedOptions, postRatedOptions} from "../../services/actions/RatedOptions_Action";
+import {getRatedOptions, postRatedOptions} from "../../../services/actions/RatedOptions_Action";
 import ReactGA from "react-ga";
 
 

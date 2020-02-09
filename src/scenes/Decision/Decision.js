@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import OptionsAndCriteria from "../1_OptionsAndCriteria/OptionsAndCriteria";
-import Result from "../4_Result/Result";
+import OptionsAndCriteria from "./1_OptionsAndCriteria/OptionsAndCriteria";
+import Result from "./4_Result/Result";
 import Typography from "@material-ui/core/Typography/Typography";
 import PropTypes from "prop-types";
 import {withStyles} from "@material-ui/core";
@@ -11,8 +11,8 @@ import Fab from "@material-ui/core/Fab/Fab";
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 
-import OptionsRating from "../3_RateOptions/RateOptions";
-import WeightCriteria from "../2_WeightCriteria/WeightCriteria";
+import OptionsRating from "./3_RateOptions/RateOptions";
+import WeightCriteria from "./2_WeightCriteria/WeightCriteria";
 
 import {connect} from "react-redux";
 import ReactGA from "react-ga";

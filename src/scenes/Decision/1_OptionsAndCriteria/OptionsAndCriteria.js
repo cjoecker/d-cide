@@ -3,13 +3,13 @@ import Grid from "@material-ui/core/Grid/Grid";
 import EditableList from "./components/EditableList";
 import InfoIcon from '@material-ui/icons/Info';
 import IconButton from "@material-ui/core/IconButton/IconButton";
-import InfoDialog from "../../components/InfoDialog";
+import InfoDialog from "../../../components/InfoDialog";
 import PropTypes from "prop-types";
 import {withStyles} from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
-import Banner from "../../components/Banner";
+import Banner from "../../../components/Banner";
 import {connect} from "react-redux";
-import * as LongStrings from "../../components/LongStrings";
+import * as LongStrings from "../../../components/LongStrings";
 import ReactGA from 'react-ga';
 
 

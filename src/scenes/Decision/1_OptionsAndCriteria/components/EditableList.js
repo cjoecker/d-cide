@@ -11,7 +11,7 @@ import InputBase from "@material-ui/core/es/InputBase/InputBase";
 import Paper from "@material-ui/core/Paper/Paper";
 import ReactGA from 'react-ga';
 import {connect} from "react-redux";
-import {getItems, postItem, deleteItem, putItem} from "../../../services/actions/OptionsAndCriteria_Action";
+import {getItems, postItem, deleteItem, putItem} from "../../../../services/actions/OptionsAndCriteria_Action";
 
 
 const styles = theme => ({
