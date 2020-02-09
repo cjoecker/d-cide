@@ -11,14 +11,13 @@ import MuiThemeProvider from "@material-ui/core/es/styles/MuiThemeProvider";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import {Router, Route, Switch} from "react-router-dom";
 import {connect} from "react-redux";
-import Login from "./scenes/Security/Login";
+import Login from "./scenes/Sessions/Login";
 import store from "./store";
-import SignUp from "./scenes/Security/SignUp";
+import SignUp from "./scenes/Sessions/SignUp";
 import jwt_decode from "jwt-decode";
-import setJWTToken from "./services/securityUtils";
 import Decision from "./scenes/Decision/Decision";
 import Decisions from "./scenes/Decisions/Decisions";
-import {logout} from "./services/actions/Security_Action";
+import {logout, setJWT} from "./services/actions/Sessions_Action";
 import SecureRoute from "./services/SecureRoute";
 import LandingPage from "./scenes/LandingPage";
 import Banner from "./components/Banner";
@@ -36,15 +35,18 @@ import IconButton from "@material-ui/core/IconButton/IconButton";
 import Toolbar from "@material-ui/core/es/Toolbar/Toolbar";
 import Menu from "@material-ui/core/Menu/Menu";
 import MenuItem from "@material-ui/core/MenuItem/MenuItem";
-import {getValueSafe} from "./services/generalUtils";
-import ForgotPassword from "./scenes/Security/ForgotPassword";
+import {getValueSafe} from "./services/GeneralUtils";
+import ForgotPassword from "./scenes/Sessions/ForgotPassword";
 import {POST_SESSION} from "./services/actions/types";
+import axios from "axios";
 
 const jwtToken = localStorage.jwtToken;
 
 //Security
 if (jwtToken) {
-    setJWTToken(jwtToken);
+
+    axios.defaults.headers.common["Authorization"] = jwtToken;
+
     const decoded_jwtToken = jwt_decode(jwtToken);
     store.dispatch({
         type: POST_SESSION,
@@ -187,14 +189,6 @@ class App extends Component {
                         </MenuItem>
                     </Link>
                     <Divider/>
-                    {/*<Link href={'/UserSettings'} style={{textDecoration: 'none'}}>*/}
-                        {/*<MenuItem>*/}
-                            {/*<ListItemIcon>*/}
-                                {/*<SettingsIcon/>*/}
-                            {/*</ListItemIcon>*/}
-                            {/*<ListItemText primary="User Settings"/>*/}
-                        {/*</MenuItem>*/}
-                    {/*</Link>*/}
                     <Link onClick={this.logout.bind(this)} style={{textDecoration: 'none'}}>
                         <MenuItem>
                             <ListItemIcon>
@@ -284,16 +278,18 @@ App.propTypes = {
     errors: PropTypes.object.isRequired,
     optionsAndCriteria: PropTypes.object.isRequired,
     logout: PropTypes.func.isRequired,
+    setJWT: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
     app: state.app,
     errors: state.errors,
     security: state.security,
-    optionsAndCriteria: state.optionsAndCriteria
+    optionsAndCriteria: state.optionsAndCriteria,
 });
 
 
 export default connect(mapStateToProps, {
     logout,
+    setJWT,
 })(withStyles(styles)(App));

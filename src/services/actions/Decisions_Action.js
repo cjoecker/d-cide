@@ -14,6 +14,8 @@ import {
 
 export const getDecisions = () => async dispatch => {
 
+
+
     //Show Loading Bar
     dispatch({type: START_LOADING});
 
@@ -24,12 +26,15 @@ export const getDecisions = () => async dispatch => {
             type: GET_DECISIONS,
             payload: res.data,
         });
+
     } catch (error) {
         dispatch({
             type: GET_ERRORS,
             payload: `${error.response.statusText} (${error.response.status})`
         });
     }
+
+
 
     //Show Loading Bar
     dispatch({type: END_LOADING});

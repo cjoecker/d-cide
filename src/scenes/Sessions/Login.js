@@ -13,13 +13,15 @@ import Link from "@material-ui/core/Link/index";
 import Fab from "@material-ui/core/Fab/index";
 
 import {connect} from "react-redux";
-import {login, set_user} from "../../services/actions/Security_Action";
+import {postSession,setJWT} from "../../services/actions/Sessions_Action";
+
 import Typography from "@material-ui/core/Typography";
 import TwoButtonsDialog from "../../components/TwoButtonsDialog";
 
 import ReactGA from "react-ga";
 import {getDecisions, putDecision} from "../../services/actions/Decisions_Action";
-import {getValueSafe} from "../../services/generalUtils";
+import {getValueSafe} from "../../services/GeneralUtils";
+
 
 
 const styles = theme => ({
@@ -141,7 +143,7 @@ class Login extends React.Component {
         if (getValueSafe(() => prevProps.security.user.registeredUser) === null
             && getValueSafe(() => this.props.security.user.registeredUser) === true
         ) {
-            await this.props.set_user(this.props.security.jwt);
+            await this.props.setJWT(this.props.security.jwt);
 
             this.props.history.push("/decisions");
         }
@@ -156,7 +158,7 @@ class Login extends React.Component {
             password: this.state.password
         };
 
-        await this.props.login(user);
+        await this.props.postSession(user);
 
 
     }
@@ -189,7 +191,7 @@ class Login extends React.Component {
         //transfer decision to user
         await this.props.putDecision(decision);
 
-        await this.props.set_user(this.props.security.jwt);
+        await this.props.setJWT(this.props.security.jwt);
 
         this.setState({showSaveDecision: false,});
 
@@ -201,7 +203,7 @@ class Login extends React.Component {
 
     async dismissDecision(e) {
 
-        await this.props.set_user(this.props.security.jwt);
+        await this.props.setJWT(this.props.security.jwt);
 
         this.setState({showSaveDecision: false,});
 
@@ -376,10 +378,10 @@ Login.propTypes = {
     errors: PropTypes.object.isRequired,
     security: PropTypes.object.isRequired,
     decision: PropTypes.object.isRequired,
-    login: PropTypes.func.isRequired,
+    postSession: PropTypes.func.isRequired,
     putDecision: PropTypes.func.isRequired,
     getDecisions: PropTypes.func.isRequired,
-    set_user: PropTypes.func.isRequired,
+    setJWT: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -389,4 +391,4 @@ const mapStateToProps = state => ({
 });
 
 
-export default connect(mapStateToProps, {login, putDecision, getDecisions, set_user})(withStyles(styles)(Login));
+export default connect(mapStateToProps, {postSession, putDecision, getDecisions, setJWT})(withStyles(styles)(Login));

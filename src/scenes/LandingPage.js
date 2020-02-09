@@ -1,19 +1,23 @@
 import {Component} from "react";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
-import {login, postUsers, logout, get_unregisteredUser} from "../services/actions/Security_Action";
+import {postSession, postUser, logout, get_unregisteredUser} from "../services/actions/Sessions_Action";
 import {postDecision, getDecisions} from "../services/actions/Decisions_Action";
 import ReactGA from 'react-ga';
+import axios from "axios";
 
 class LandingPage extends Component {
     async componentDidMount() {
+
+        console.log("Token " + axios.defaults.headers.common["Authorization"]);
 
         //Unregistered User
         if (!this.props.security.validToken) {
             //Get Decisions
             await this.props.get_unregisteredUser();
-
         }
+
+
 
         if(this.props.security.user.registeredUser){
 
@@ -22,7 +26,6 @@ class LandingPage extends Component {
                 category: 'Landing page',
                 action: 'Registered User',
             });
-
 
             this.props.history.push("/decisions");
 
@@ -56,9 +59,9 @@ LandingPage.propTypes = {
     LandingPage: PropTypes.object.isRequired,
     security: PropTypes.object.isRequired,
     decision: PropTypes.object.isRequired,
-    login: PropTypes.func.isRequired,
+    postSession: PropTypes.func.isRequired,
     logout: PropTypes.func.isRequired,
-    postUsers: PropTypes.func.isRequired,
+    postUser: PropTypes.func.isRequired,
     get_unregisteredUsersNum: PropTypes.func.isRequired,
     getDecisions: PropTypes.func.isRequired,
     create_exampleData: PropTypes.func.isRequired,
@@ -73,9 +76,9 @@ const mapStateToProps = state => ({
 
 export default connect(
     mapStateToProps, {
-        login,
+        postSession,
         logout,
-        postUsers,
+        postUser,
         get_unregisteredUser,
         getDecisions
     })(LandingPage);

@@ -25,7 +25,7 @@ export const PUT_WEIGHTED_CRITERIA = "PUT_WEIGHTED_CRITERIA";
 export const GET_RATED_OPTIONS = "GET_RATED_OPTIONS";
 export const POST_RATED_OPTIONS = "POST_RATED_OPTIONS";
 
-//Session
+//Sessions
 export const POST_SESSION = "POST_SESSION";
 export const POST_USER = "POST_USER";
 export const SAVE_JWT = "SAVE_JWT";

@@ -12,7 +12,7 @@ import InfoDialog from "../../components/InfoDialog";
 import * as LongStrings from "../../components/LongStrings";
 
 import {connect} from "react-redux";
-import {getRatedOptions, postRatedOptions} from "../../services/actions/RateOptions_Action";
+import {getRatedOptions, postRatedOptions} from "../../services/actions/RatedOptions_Action";
 import ReactGA from "react-ga";
 
 
@@ -133,8 +133,6 @@ class RateOptions extends React.Component {
 
         await this.props.getRatedOptions(this.props.decisionId);
         importedRatedCriteria = this.props.rateOptions.ratedCriteria;
-
-        console.log(this.props.rateOptions.ratedCriteria);
 
         //Create nested object to summarize list
         selectionCriteria.forEach(function (criteria) {

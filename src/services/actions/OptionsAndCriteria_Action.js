@@ -17,7 +17,6 @@ export const getItems = (itemsKey, decisionId, calculatedScore) => async dispatc
     //Show Loading Bar
     dispatch({type: START_LOADING});
 
-
     //Get Information
     try {
         const res = await axios.get(`/api/decisions/${decisionId}/${itemsKey}`, {

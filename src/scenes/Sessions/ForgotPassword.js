@@ -13,7 +13,7 @@ import Link from "@material-ui/core/Link/index";
 import Fab from "@material-ui/core/Fab/index";
 
 import {connect} from "react-redux";
-import {login} from "../../services/actions/Security_Action";
+import {postSession} from "../../services/actions/Sessions_Action";
 import Typography from "@material-ui/core/Typography";
 import TwoButtonsDialog from "../../components/TwoButtonsDialog";
 
@@ -120,7 +120,7 @@ class ForgotPassword extends React.Component {
             username: this.state.username,
         };
 
-        await this.props.login(user);
+        await this.props.postSession(user);
 
 
     }

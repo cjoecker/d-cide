@@ -9,7 +9,7 @@ import Fab from "@material-ui/core/Fab/index";
 import Typography from "@material-ui/core/Typography/index";
 import * as LongStrings from "../../components/LongStrings";
 import {connect} from "react-redux";
-import {login, postUsers} from "../../services/actions/Security_Action";
+import {postSession, postUser} from "../../services/actions/Sessions_Action";
 import ReactGA from "react-ga";
 import InfoDialog from "../../components/InfoDialog";
 
@@ -104,7 +104,7 @@ class SignUp extends React.Component {
             confirmPassword: this.state.confirmPassword
         };
 
-        await this.props.postUsers(newUser, this.props.history);
+        await this.props.postUser(newUser, this.props.history);
 
     }
 
@@ -140,7 +140,7 @@ class SignUp extends React.Component {
                 password: this.state.password
             };
 
-            await this.props.login(user);
+            await this.props.postSession(user);
 
             this.props.history.push("/decisions");
 
@@ -320,8 +320,8 @@ SignUp.propTypes = {
     classes: PropTypes.object.isRequired,
     security: PropTypes.object.isRequired,
     errors: PropTypes.object.isRequired,
-    postUsers: PropTypes.func.isRequired,
-    login: PropTypes.func.isRequired,
+    postUser: PropTypes.func.isRequired,
+    postSession: PropTypes.func.isRequired,
 
 };
 
@@ -331,4 +331,4 @@ const mapStateToProps = state => ({
 });
 
 
-export default connect(mapStateToProps, {postUsers, login})(withStyles(styles)(SignUp));
+export default connect(mapStateToProps, {postUser, postSession})(withStyles(styles)(SignUp));

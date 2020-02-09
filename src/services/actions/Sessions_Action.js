@@ -10,11 +10,10 @@ import {
     SAVE_JWT,
     DELETE_JWT,
 } from "./types";
-import setJWTToken, {setJwt} from "../securityUtils";
 import jwt_decode from "jwt-decode";
 
 
-export const postUsers = (newUser, history) => async dispatch => {
+export const postUser = (newUser, history) => async dispatch => {
 
     //Show Loading Bar
     dispatch({type: START_LOADING});
@@ -49,7 +48,7 @@ export const postUsers = (newUser, history) => async dispatch => {
     dispatch({type: END_LOADING});
 };
 
-export const login = LoginRequest => async dispatch => {
+export const postSession = LoginRequest => async dispatch => {
 
     //Show Loading Bar
     dispatch({type: START_LOADING});
@@ -83,18 +82,12 @@ export const login = LoginRequest => async dispatch => {
     dispatch({type: END_LOADING});
 };
 
-export const set_user = (jwt) => dispatch => {
 
-    //save jwt in cookie
-    setJwt(jwt);
-
-    //delete jwt from redux
-    dispatch({type: DELETE_JWT});
-};
 
 export const logout = () => dispatch => {
-    localStorage.removeItem("jwtToken");
-    setJWTToken(false);
+
+    dispatch(setJWT(false));
+
     dispatch({
         type: POST_SESSION,
         payload: null
@@ -115,12 +108,9 @@ export const get_unregisteredUser = () => async dispatch => {
             payload: jwt_decode(res.data.token),
         });
 
-        setJwt(res.data.token);
-
+        dispatch(setJWT(res.data.token));
 
     } catch (err) {
-
-        console.log(err);
         dispatch({
             type: GET_ERRORS,
             payload: err.response.data
@@ -130,6 +120,23 @@ export const get_unregisteredUser = () => async dispatch => {
     //Show Loading Bar
     dispatch({type: END_FETCHING_DATA_PACKAGE});
     dispatch({type: END_LOADING});
+
+};
+
+export const setJWT = token => async dispatch => {
+
+    //Set Jwt in cookie
+    if (token) {
+        // store the token in the localStorage
+        localStorage.setItem("jwtToken", token);
+        axios.defaults.headers.common["Authorization"] = token;
+    } else {
+        localStorage.removeItem("jwtToken");
+        delete axios.defaults.headers.common["Authorization"];
+
+        //delete jwt from redux
+        dispatch({type: DELETE_JWT});
+    }
 
 };
 

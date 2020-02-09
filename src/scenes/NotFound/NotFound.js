@@ -6,7 +6,7 @@ import Grid from "@material-ui/core/Grid/Grid";
 import Paper from "@material-ui/core/Paper/index";
 
 import {connect} from "react-redux";
-import {login} from "../../services/actions/Security_Action";
+import {postSession} from "../../services/actions/Sessions_Action";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import ReactGA from "react-ga";
@@ -114,7 +114,7 @@ class Login extends React.Component {
 
 Login.propTypes = {
     classes: PropTypes.object.isRequired,
-    login: PropTypes.func.isRequired,
+    postSession: PropTypes.func.isRequired,
     errors: PropTypes.object.isRequired,
     security: PropTypes.object.isRequired
 };
@@ -125,4 +125,4 @@ const mapStateToProps = state => ({
 });
 
 
-export default connect(mapStateToProps, {login})(withStyles(styles)(Login));
+export default connect(mapStateToProps, {postSession})(withStyles(styles)(Login));
