@@ -112,11 +112,11 @@ class WeightCriteria extends Component {
 
 
     //GET_CRITERIA
-    async componentDidMount() {
-        await this.props.getWeightedCriteria(this.props.decisionId);
+    componentDidMount() {
+        this.props.getWeightedCriteria(this.props.decisionId);
     }
 
-    async componentWillUnmount() {
+    componentWillUnmount() {
 
         let weightedCriteriaArray = [];
 
@@ -129,53 +129,17 @@ class WeightCriteria extends Component {
             weightedCriteriaArray = [...weightedCriteriaArray, weightedCriteria];
         });
 
-        await this.props.putWeightedCriteria(this.props.decisionId, weightedCriteriaArray);
+        this.props.putWeightedCriteria(this.props.decisionId, weightedCriteriaArray);
     }
 
     //Refresh when redux state changes
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (prevProps.weightCriteria.weightedCriteria !== this.props.weightCriteria.weightedCriteria) {
 
-            //Load InfoText at start
             if (this.state.weightInfo.length === 0 && this.props.weightCriteria.weightedCriteria.length > 0) {
 
-                let weightInfoArray = this.state.weightInfo;
-                let selectionCriteria = this.props.optionsAndCriteria.selectionCriteria;
-                let weightedCriteriaArray = [];
+                this.setWeightedCriteria();
 
-                this.props.weightCriteria.weightedCriteria.forEach(function (criteria, index) {
-
-                    let criteria1 = selectionCriteria.find(obj =>
-                        obj.id === criteria.selectionCriteria1Id
-                    );
-
-                    let criteria2 = selectionCriteria.find(obj =>
-                        obj.id === criteria.selectionCriteria2Id
-                    );
-
-                    const weightedCriteria = {
-                        id: criteria.id,
-                        weight: criteria.weight,
-                        selectionCriteria1: criteria1,
-                        selectionCriteria2: criteria2,
-                    };
-
-                    weightInfoArray[index] = WeightCriteria.getWeightInfoText(weightedCriteria);
-                    weightedCriteriaArray = [...weightedCriteriaArray, weightedCriteria];
-
-                });
-
-                this.setState({
-                    weightedCriteria: weightedCriteriaArray,
-                });
-
-                if(this.props.weightCriteria.weightedCriteria !== null){
-                    ReactGA.event({
-                        category: 'Weight Criteria',
-                        action: 'Items Number',
-                        value: this.props.weightCriteria.weightedCriteria.length,
-                    });
-                }
             }
         }
     }
@@ -231,6 +195,45 @@ class WeightCriteria extends Component {
             action: 'Show Info'
         });
     };
+
+    setWeightedCriteria(){
+        let weightInfoArray = this.state.weightInfo;
+        let selectionCriteria = this.props.optionsAndCriteria.selectionCriteria;
+        let weightedCriteriaArray = [];
+
+        this.props.weightCriteria.weightedCriteria.forEach(function (criteria, index) {
+
+            //find and set criterias
+            let criteria1 = selectionCriteria.find(obj =>
+                obj.id === criteria.selectionCriteria1Id
+            );
+
+            let criteria2 = selectionCriteria.find(obj =>
+                obj.id === criteria.selectionCriteria2Id
+            );
+
+            //create weighted criteria
+            const weightedCriteria = {
+                id: criteria.id,
+                weight: criteria.weight,
+                selectionCriteria1: criteria1,
+                selectionCriteria2: criteria2,
+            };
+
+            //get infoText
+            weightInfoArray[index] = WeightCriteria.getWeightInfoText(weightedCriteria);
+
+            //add object to array
+            weightedCriteriaArray = [...weightedCriteriaArray, weightedCriteria];
+
+        });
+
+        //set state
+        this.setState({
+            weightedCriteria: weightedCriteriaArray,
+        });
+
+    }
 
 
     static getWeightInfoText(itemLocal) {
