@@ -85,12 +85,8 @@ class Decisions extends React.Component {
     }
 
 
-    async componentDidMount() {
-        await this.props.getDecisions();
-
-        if (!this.props.security.user.registeredUser){
-            this.goToDecision(this.props.decision.decisions[0].id)
-        }
+    componentDidMount() {
+        this.props.getDecisions();
 
         this.setState({isMounted: true});
     }
@@ -104,6 +100,12 @@ class Decisions extends React.Component {
 
         //Get Decisions
         if (prevProps.decision !== this.props.decision) {
+
+            //Go to new decision if
+            if (!this.props.security.user.registeredUser){
+                this.goToDecision(this.props.decision.decisions[0].id)
+            }
+
             this.setState({decisions: this.props.decision.decisions});
         }
 
