@@ -36,7 +36,7 @@ const styles = theme => ({
     titleText: {
         margin: theme.spacing.unit * 1,
         textAlign: "center",
-        marginTop: theme.spacing.unit * 1,
+        paddingTop: theme.spacing.unit * 1,
     },
 });
 
@@ -53,7 +53,35 @@ class Result extends Component {
             optionsInfo: false,
             criteriaInfo: false,
             isLoading: true,
+            showOptionsRanking: true,
+            showCriteriaRanking: true,
         };
+    }
+
+    //Refresh when redux state changes
+    componentDidUpdate(prevProps, prevState, snapshot) {
+        if (prevProps.app.isFetchingDataPackage !== this.props.app.isFetchingDataPackage) {
+
+            if (this.props.app.isFetchingDataPackage > 0){
+                this.setState({
+                    showOptionsRanking: false,
+                    showCriteriaRanking: false,
+                });
+            }else {
+
+                this.setState({
+                    showOptionsRanking: true,
+                });
+
+                //Timer to avoid chrome breaking animations
+                setTimeout(() => {
+                    this.setState({showCriteriaRanking: true});
+                }, 1000);
+
+            }
+
+
+        }
     }
 
 
@@ -79,14 +107,13 @@ class Result extends Component {
     render() {
 
         const {classes} = this.props;
-        const {isFetchingDataPackage} = this.props.app;
-
 
         return (
 
             <div className={classes.mainDiv}>
                 <Grid container justify="center" alignContent='center' spacing={24}>
                     <Grid className={classes.cell} key="1" item xs={12}>
+                        {this.state.showOptionsRanking &&
                         <Paper className={classes.paper} elevation={2} key={"Option"}>
 
                             <Typography variant="h5" className={classes.titleText} gutterBottom>
@@ -98,33 +125,33 @@ class Result extends Component {
                                     <InfoIcon color="secondary"/>
                                 </IconButton>
                             </Typography>
-                            {!isFetchingDataPackage &&
+
                             <ResultsChart
                                 itemsKey={"decisionOptions"}
                                 decisionId={this.props.decisionId}
                                 YKey={"name"}/>
-                            }
-
                         </Paper>
+                        }
                     </Grid>
                     <Grid className={classes.cell} key="2" item xs={12}>
+                        {this.state.showCriteriaRanking &&
                         <Paper className={classes.paper} elevation={2} key={"Criteria"}>
                             <Typography variant="h5" className={classes.titleText} gutterBottom>
                                 Selection Criteria Ranking
                                 <IconButton
                                     aria-label="Help"
                                     className={classes.infoButton}
-                                    onClick={(e) => this.showInfo(e,"criteriaInfo")}>
+                                    onClick={(e) => this.showInfo(e, "criteriaInfo")}>
                                     <InfoIcon color="secondary"/>
                                 </IconButton>
                             </Typography>
-                            {!isFetchingDataPackage &&
+
                             <ResultsChart
                                 itemsKey={"selectionCriteria"}
                                 decisionId={this.props.decisionId}
                                 YKey={"name"}/>
-                            }
                         </Paper>
+                        }
                     </Grid>
                 </Grid>
                 {/*Info Dialogs*/}

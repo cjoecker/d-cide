@@ -62,12 +62,6 @@ class OptionsAndCriteria extends Component {
         this.hideInfo = this.hideInfo.bind(this);
     }
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        if (prevProps !== this.props) {
-            console.log(this.props.optionsAndCriteria.decisionOption);
-        }
-    }
-
     showInfo(e, name) {
         this.setState({[name]: true});
         ReactGA.event({

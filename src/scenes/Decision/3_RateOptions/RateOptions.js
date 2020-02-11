@@ -149,9 +149,7 @@ class RateOptions extends React.Component {
     //Refresh when redux state changes
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (prevProps.rateOptions.ratedCriteria !== this.props.rateOptions.ratedCriteria) {
-            if (this.props.rateOptions.ratedCriteria.length > 0) {
-                this.setRatedOptions();
-            }
+            this.setRatedOptions();
         }
     }
 

@@ -9,8 +9,6 @@ import axios from "axios";
 class LandingPage extends Component {
     async componentDidMount() {
 
-        console.log("Token " + axios.defaults.headers.common["Authorization"]);
-
         //Unregistered User
         if (!this.props.security.validToken) {
             //Get Decisions

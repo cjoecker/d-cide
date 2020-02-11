@@ -199,8 +199,6 @@ class Decisions extends React.Component {
 
     cancelDeleteDecision(e) {
 
-        console.log(e);
-
         this.setState({
             showAskBeforeDelete: false,
             DeleteDecisionNum: ''

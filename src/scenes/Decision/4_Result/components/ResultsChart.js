@@ -13,6 +13,7 @@ import {connect} from "react-redux";
 import {getItems} from "../../../../services/actions/OptionsAndCriteria_Action";
 import CartesianGrid from "recharts/es6/cartesian/CartesianGrid";
 import ReactGA from "react-ga";
+import Zoom from "@material-ui/core/Zoom";
 
 const styles = theme => ({
     root: {
@@ -41,38 +42,39 @@ class ResultsChart extends React.Component {
 
 
     //Load Data from Server
-    async componentDidMount() {
-
-        await this.props.getItems(this.props.itemsKey, this.props.decisionId, true);
+    componentDidMount() {
+        this.props.getItems(this.props.itemsKey, this.props.decisionId, true);
     };
 
     //Refresh when redux state changes
     componentDidUpdate(prevProps, prevState, snapshot) {
         if (prevProps.optionsAndCriteria[this.props.itemsKey] !== this.props.optionsAndCriteria[this.props.itemsKey]) {
+            this.setResults();
+        }
+    }
 
-            //Get items
-            const items = this.props.optionsAndCriteria[this.props.itemsKey];
+    setResults(){
+        //Get items
+        const items = this.props.optionsAndCriteria[this.props.itemsKey];
 
-            this.setState({items: items});
+        this.setState({items: items});
 
-            //Set labels offset for long items
-            const labelsMaxNumChars = 18;
-            const maxNumOffset = 35;
+        //Set labels offset for long items
+        const labelsMaxNumChars = 18;
+        const maxNumOffset = 35;
 
-            let longest = Math.max(...items.map(movie => movie.name.length));
+        let longest = Math.max(...items.map(movie => movie.name.length));
 
-            const totalOffset = parseInt(longest / labelsMaxNumChars) * maxNumOffset;
+        const totalOffset = parseInt(longest / labelsMaxNumChars) * maxNumOffset;
 
-            this.setState({labelsOffset: totalOffset});
+        this.setState({labelsOffset: totalOffset});
 
-            if(this.props.optionsAndCriteria[this.props.itemsKey] !== null) {
-                ReactGA.event({
-                    category: 'Result',
-                    action: 'Items number from ' + this.props.itemsKey,
-                    value: this.props.optionsAndCriteria[this.props.itemsKey].length,
-                });
-            }
-
+        if(this.props.optionsAndCriteria[this.props.itemsKey] !== null) {
+            ReactGA.event({
+                category: 'Result',
+                action: 'Items number from ' + this.props.itemsKey,
+                value: this.props.optionsAndCriteria[this.props.itemsKey].length,
+            });
         }
     }
 
