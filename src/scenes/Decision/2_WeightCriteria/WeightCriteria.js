@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import Grid from "@material-ui/core/Grid/Grid";
 import Paper from "@material-ui/core/Paper/Paper";
 import PropTypes from "prop-types";
-import {withStyles} from "@material-ui/core";
+import {Slide, withStyles} from "@material-ui/core";
 import Slider from "@material-ui/lab/Slider";
 import update from 'immutability-helper';
 import WeightSlider_Scale from "../../../images/WeightSlider_Scale.svg"
@@ -14,6 +14,7 @@ import {connect} from "react-redux";
 import {getWeightedCriteria, putWeightedCriteria} from "../../../services/actions/WeightCriteria_Action";
 import * as LongStrings from "../../../components/LongStrings";
 import ReactGA from 'react-ga';
+import Fade from "@material-ui/core/Fade";
 
 const styles = theme => ({
     root: {
@@ -86,7 +87,6 @@ const styles = theme => ({
     },
 
 });
-
 
 
 class WeightCriteria extends Component {
@@ -196,7 +196,7 @@ class WeightCriteria extends Component {
         });
     };
 
-    setWeightedCriteria(){
+    setWeightedCriteria() {
         let weightInfoArray = this.state.weightInfo;
         let selectionCriteria = this.props.optionsAndCriteria.selectionCriteria;
         let weightedCriteriaArray = [];
@@ -276,45 +276,47 @@ class WeightCriteria extends Component {
                         </Typography>
                     </Grid>
                     {this.state.weightedCriteria.map((criteria, index) =>
-                        <Grid item xs={6} className={classes.cellCriteria} key={criteria.id}>
-                            <Paper className={classes.paper} elevation={2}>
-                                <div className={classes.paperDiv}>
-                                    <Grid container spacing={16}>
-                                        <Grid item xs={6}>
-                                            <Typography variant="body1">
-                                                {criteria.selectionCriteria1.name}
-                                            </Typography>
+                        <Fade in={true} style={{transitionDelay: `${index * 100}ms`}}>
+                            <Grid item xs={6} className={classes.cellCriteria} key={criteria.id}>
+                                <Paper className={classes.paper} elevation={2}>
+                                    <div className={classes.paperDiv}>
+                                        <Grid container spacing={16}>
+                                            <Grid item xs={6}>
+                                                <Typography variant="body1">
+                                                    {criteria.selectionCriteria1.name}
+                                                </Typography>
+                                            </Grid>
+                                            <Grid item xs={6}>
+                                                <Typography variant="body1">
+                                                    {criteria.selectionCriteria2.name}
+                                                </Typography>
+                                            </Grid>
+                                            <Grid item xs={12} zeroMinWidth className={classes.sliderScale}>
+                                                <Slider
+                                                    className={classes.slider}
+                                                    classes={{
+                                                        trackAfter: classes.track,
+                                                        trackBefore: classes.track,
+                                                        container: classes.sliderContainer,
+                                                    }}
+                                                    value={criteria.weight}
+                                                    min={-100}
+                                                    max={100}
+                                                    step={1}
+                                                    onChange={(event, value) => this.onChange(event, value, criteria, index)}
+                                                    onDragEnd={() => this.onDragEnd(criteria)}
+                                                />
+                                            </Grid>
+                                            <Grid item xs={12}>
+                                                <Typography variant="caption">
+                                                    {this.state.weightInfo[index]}
+                                                </Typography>
+                                            </Grid>
                                         </Grid>
-                                        <Grid item xs={6}>
-                                            <Typography variant="body1">
-                                                {criteria.selectionCriteria2.name}
-                                            </Typography>
-                                        </Grid>
-                                        <Grid item xs={12} zeroMinWidth className={classes.sliderScale}>
-                                            <Slider
-                                                className={classes.slider}
-                                                classes={{
-                                                    trackAfter: classes.track,
-                                                    trackBefore: classes.track,
-                                                    container: classes.sliderContainer,
-                                                }}
-                                                value={criteria.weight}
-                                                min={-100}
-                                                max={100}
-                                                step={1}
-                                                onChange={(event, value) => this.onChange(event, value, criteria, index)}
-                                                onDragEnd={() => this.onDragEnd(criteria)}
-                                            />
-                                        </Grid>
-                                        <Grid item xs={12}>
-                                            <Typography variant="caption">
-                                                {this.state.weightInfo[index]}
-                                            </Typography>
-                                        </Grid>
-                                    </Grid>
-                                </div>
-                            </Paper>
-                        </Grid>
+                                    </div>
+                                </Paper>
+                            </Grid>
+                        </Fade>
                     )}
                 </Grid>
                 {/*Empty Line for Buttons*/}

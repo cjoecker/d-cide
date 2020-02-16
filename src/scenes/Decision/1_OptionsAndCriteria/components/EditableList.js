@@ -12,6 +12,7 @@ import Paper from "@material-ui/core/Paper/Paper";
 import ReactGA from 'react-ga';
 import {connect} from "react-redux";
 import {getItems, postItem, deleteItem, putItem} from "../../../../services/actions/OptionsAndCriteria_Action";
+import Fade from "@material-ui/core/Fade";
 
 
 const styles = theme => ({
@@ -180,31 +181,33 @@ class EditableList extends Component {
                             </ListItemSecondaryAction>
                         </ListItem>
                     </Paper>
-                    {this.state.items.map(item =>
-                        <Paper className={classes.paper} elevation={2} key={item.id}>
-                            <ListItem>
-                                <InputBase
-                                    className={classes.inputBase}
-                                    value={item.name}
-                                    onChange={(event) => this.onChangeItem(event, item)}
-                                    onBlur={() => this.onBlurItem(item)}
-                                    multiline
-                                    onKeyPress={(event) => {
-                                        if (event.key === 'Enter') {
-                                            event.preventDefault();
-                                            event.target.blur();
-                                        }
-                                    }}
-                                />
-                                <ListItemSecondaryAction>
-                                    <IconButton
-                                        aria-label="Delete"
-                                        onClick={() => this.onDeleteItem(item.id)}>
-                                        <CloseIcon/>
-                                    </IconButton>
-                                </ListItemSecondaryAction>
-                            </ListItem>
-                        </Paper>
+                    {this.state.items.map((item, index) =>
+                        <Fade in={true} style={{transitionDelay: `${index * 100}ms`}}>
+                            <Paper className={classes.paper} elevation={2} key={item.id}>
+                                <ListItem>
+                                    <InputBase
+                                        className={classes.inputBase}
+                                        value={item.name}
+                                        onChange={(event) => this.onChangeItem(event, item)}
+                                        onBlur={() => this.onBlurItem(item)}
+                                        multiline
+                                        onKeyPress={(event) => {
+                                            if (event.key === 'Enter') {
+                                                event.preventDefault();
+                                                event.target.blur();
+                                            }
+                                        }}
+                                    />
+                                    <ListItemSecondaryAction>
+                                        <IconButton
+                                            aria-label="Delete"
+                                            onClick={() => this.onDeleteItem(item.id)}>
+                                            <CloseIcon/>
+                                        </IconButton>
+                                    </ListItemSecondaryAction>
+                                </ListItem>
+                            </Paper>
+                        </Fade>
                     )}
                 </List>
             </div>

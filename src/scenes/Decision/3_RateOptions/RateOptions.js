@@ -14,6 +14,7 @@ import * as LongStrings from "../../../components/LongStrings";
 import {connect} from "react-redux";
 import {getRatedOptions, postRatedOptions} from "../../../services/actions/RatedOptions_Action";
 import ReactGA from "react-ga";
+import Fade from "@material-ui/core/Fade";
 
 
 const styles = theme => ({
@@ -131,15 +132,15 @@ class RateOptions extends React.Component {
 
         this.state.ratedCriteria.forEach(function (criteria) {
 
-           criteria.decisionOption.forEach(function (option) {
-               const ratedOption = {
-                   score: option.score,
-                   decisionOptionId: option.id,
-                   selectionCriteriaId: criteria.id,
-               };
+            criteria.decisionOption.forEach(function (option) {
+                const ratedOption = {
+                    score: option.score,
+                    decisionOptionId: option.id,
+                    selectionCriteriaId: criteria.id,
+                };
 
-               ratedOptions = [...ratedOptions, ratedOption];
-           });
+                ratedOptions = [...ratedOptions, ratedOption];
+            });
         });
 
         this.props.postRatedOptions(this.props.decisionId, ratedOptions);
@@ -192,7 +193,7 @@ class RateOptions extends React.Component {
         });
     };
 
-    setRatedOptions(){
+    setRatedOptions() {
 
         //get basic data
         let {selectionCriteria} = this.props.optionsAndCriteria;
@@ -248,60 +249,62 @@ class RateOptions extends React.Component {
                         </Typography>
                     </Grid>
                     {this.state.ratedCriteria.map((criteria, criteriaIndex) =>
-                        <Grid item xs={6} className={classes.cellOptionTitle} key={criteria.id}>
-                            <Paper elevation={2} key={criteria.id}>
-                                <div className={classes.paperDiv}>
-                                    <Grid container spacing={16}>
-                                        <Grid item xs={12}>
-                                            <Typography variant="h6">
-                                                {criteria.name}
-                                            </Typography>
-                                        </Grid>
-                                        {criteria.decisionOption.map((option, optionIndex) =>
-                                            <Grid container justify="center" alignItems="center"
-                                                  className={classes.cellOption} key={option.id}>
-                                                <Grid item xs={4} className={classes.cellOptionText}>
-                                                    {option.name}
-                                                </Grid>
-                                                <Grid item xs={8}>
-                                                    <Grid container>
-                                                        <Grid item xs={6} className={classes.sliderText}>
-                                                            <Typography variant="caption"
-                                                                        style={{fontSize: 11, textAlign: "left"}}>
-                                                                Bad
-                                                            </Typography>
-                                                        </Grid>
-                                                        <Grid item xs={6} className={classes.sliderText}>
-                                                            <Typography variant="caption"
-                                                                        style={{fontSize: 11, textAlign: "right"}}>
-                                                                Good
-                                                            </Typography>
-                                                        </Grid>
-                                                        <Grid item xs={12} className={classes.sliderScale}>
-                                                            <Slider
-                                                                className={classes.slider}
-                                                                classes={{
-                                                                    trackAfter: classes.track,
-                                                                    trackBefore: classes.track,
-                                                                    container: classes.sliderContainer,
-                                                                }}
-                                                                value={option.score}
-                                                                min={0}
-                                                                max={100}
-                                                                step={1}
-                                                                onChange={(event, value) => this.onChange(event, criteriaIndex, optionIndex, value)}
-                                                                onDragEnd={(event) => this.onDragEnd(event, criteria, option)}
-                                                            />
+                        <Fade in={true} style={{transitionDelay: `${criteriaIndex * 100}ms`}}>
+                            <Grid item xs={6} className={classes.cellOptionTitle} key={criteria.id}>
+                                <Paper elevation={2} key={criteria.id}>
+                                    <div className={classes.paperDiv}>
+                                        <Grid container spacing={16}>
+                                            <Grid item xs={12}>
+                                                <Typography variant="h6">
+                                                    {criteria.name}
+                                                </Typography>
+                                            </Grid>
+                                            {criteria.decisionOption.map((option, optionIndex) =>
+                                                <Grid container justify="center" alignItems="center"
+                                                      className={classes.cellOption} key={option.id}>
+                                                    <Grid item xs={4} className={classes.cellOptionText}>
+                                                        {option.name}
+                                                    </Grid>
+                                                    <Grid item xs={8}>
+                                                        <Grid container>
+                                                            <Grid item xs={6} className={classes.sliderText}>
+                                                                <Typography variant="caption"
+                                                                            style={{fontSize: 11, textAlign: "left"}}>
+                                                                    Bad
+                                                                </Typography>
+                                                            </Grid>
+                                                            <Grid item xs={6} className={classes.sliderText}>
+                                                                <Typography variant="caption"
+                                                                            style={{fontSize: 11, textAlign: "right"}}>
+                                                                    Good
+                                                                </Typography>
+                                                            </Grid>
+                                                            <Grid item xs={12} className={classes.sliderScale}>
+                                                                <Slider
+                                                                    className={classes.slider}
+                                                                    classes={{
+                                                                        trackAfter: classes.track,
+                                                                        trackBefore: classes.track,
+                                                                        container: classes.sliderContainer,
+                                                                    }}
+                                                                    value={option.score}
+                                                                    min={0}
+                                                                    max={100}
+                                                                    step={1}
+                                                                    onChange={(event, value) => this.onChange(event, criteriaIndex, optionIndex, value)}
+                                                                    onDragEnd={(event) => this.onDragEnd(event, criteria, option)}
+                                                                />
+                                                            </Grid>
                                                         </Grid>
                                                     </Grid>
                                                 </Grid>
-                                            </Grid>
-                                        )}
+                                            )}
 
-                                    </Grid>
-                                </div>
-                            </Paper>
-                        </Grid>
+                                        </Grid>
+                                    </div>
+                                </Paper>
+                            </Grid>
+                        </Fade>
                     )}
                 </Grid>
                 {/*Empty Line for Buttons*/}
