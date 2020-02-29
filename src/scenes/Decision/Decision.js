@@ -31,7 +31,7 @@ TabContainer.propTypes = {
 };
 
 const styles = theme => ({
-        root: {
+        mainDiv: {
             flexGrow: 1,
             width: '100%',
             overflowX: 'hidden', //Avoid negative margin from mainGrid
@@ -43,14 +43,14 @@ const styles = theme => ({
         },
 
 
-        nextButton: {
+        button_next: {
             position: 'fixed',
             bottom: 0,
             right: 0,
             margin: theme.spacing.unit * 1,
         },
 
-        backButton: {
+        button_back: {
             position: 'fixed',
             bottom: 0,
             left: 0,
@@ -199,7 +199,7 @@ class Decision extends Component {
         ];
 
         return (
-            <div className={classes.root}>
+            <div className={classes.mainDiv}>
                 <Stepper className={classes.stepper} alternativeLabel nonLinear activeStep={activeStep}>
                     {steps.map((label, index) => {
                         return (
@@ -223,7 +223,7 @@ class Decision extends Component {
                     <Fab color="secondary"
                          aria-label="Previous Step"
                          size="medium"
-                         className={classes.backButton}
+                         className={classes.button_back}
                          onClick={this.handleBack}
                     >
                         <ArrowBackIcon/>
@@ -233,7 +233,7 @@ class Decision extends Component {
                     <Fab color="primary"
                          aria-label="Next Step"
                          size="medium"
-                         className={classes.nextButton}
+                         className={classes.button_next}
                          onClick={this.handleNext}
                          disabled={minItemsThere}
                     >

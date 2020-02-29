@@ -18,20 +18,12 @@ import Fade from "@material-ui/core/Fade";
 
 
 const styles = theme => ({
-    root: {
-        flexGrow: 1,
-        align: 'center',
-        overflowX: 'hidden', //Avoid negative margin from mainGrid
-    },
 
     mainDiv: {
         paddingTop: theme.spacing.unit * 2.5,
         paddingBottom: theme.spacing.unit * 5.5,
-    },
-
-    titleText: {
         textAlign: "center",
-        marginTop: theme.spacing.unit * 1,
+        alignContent: 'center',
     },
 
     infoButton: {
@@ -39,43 +31,35 @@ const styles = theme => ({
         left: theme.spacing.unit * 1,
     },
 
-    paperDiv: {
+    paper: {
         padding: theme.spacing.unit * 1,
     },
 
-    cellTitle: {
-        width: theme.spacing.unit * 100,
-    },
-
-    cellOptionTitle: {
+    gridItem_title: {
         minWidth: theme.spacing.unit * 40,
         maxWidth: theme.spacing.unit * 50,
-        alignContent: 'center',
-        textAlign: 'center',
     },
 
-    cellOption: {
+    gridItem_gridContainer: {
         paddingBottom: theme.spacing.unit * 1,
     },
 
-    cellOptionText: {
-        textAlign: 'center',
+    gridItem_gridContainer_title: {
         paddingLeft: theme.spacing.unit * 2,
     },
 
 
-    sliderText: {
+    slider_text: {
         paddingLeft: theme.spacing.unit * 1.8,
         paddingRight: theme.spacing.unit * 1.8,
         marginTop: theme.spacing.unit * 1,
     },
 
-    slider: {
-        opacity: 1,
-
+    slider_track: {
+        opacity: 0.7,
     },
 
-    sliderContainer: {
+    slider_container: {
         paddingTop: theme.spacing.unit * 2,
         paddingBottom: theme.spacing.unit * 2,
         paddingLeft: 0,
@@ -87,19 +71,13 @@ const styles = theme => ({
 
     },
 
-    sliderScale: {
+    slider_scale: {
         marginTop: -theme.spacing.unit * 2,
         marginLeft: theme.spacing.unit,
         marginRight: theme.spacing.unit,
-        alignContent: 'center',
-        textAlign: 'center',
     },
 
-    track: {
-        opacity: 0.7,
-    },
-
-    emptyLine: {
+    emptySpace: {
         height: theme.spacing.unit * 4,
     },
 
@@ -240,7 +218,7 @@ class RateOptions extends React.Component {
 
             <div className={classes.mainDiv}>
                 <Grid container justify="center" alignContent='center' spacing={24}>
-                    <Grid item xs={12} className={classes.titleText}>
+                    <Grid item xs={12}>
                         <Typography variant="h5" gutterBottom>
                             Rate Options
                             <IconButton aria-label="Help" className={classes.infoButton} onClick={this.onShowInfo}>
@@ -250,9 +228,9 @@ class RateOptions extends React.Component {
                     </Grid>
                     {this.state.ratedCriteria.map((criteria, criteriaIndex) =>
                         <Fade in={true} style={{transitionDelay: `${criteriaIndex * 100}ms`}}>
-                            <Grid item xs={6} className={classes.cellOptionTitle} key={criteria.id}>
-                                <Paper elevation={2} key={criteria.id}>
-                                    <div className={classes.paperDiv}>
+                            <Grid item xs={6} className={classes.gridItem_title} key={criteria.id}>
+                                <Paper className={classes.paper} elevation={2} key={criteria.id}>
+                                    <div>
                                         <Grid container spacing={16}>
                                             <Grid item xs={12}>
                                                 <Typography variant="h6">
@@ -261,31 +239,31 @@ class RateOptions extends React.Component {
                                             </Grid>
                                             {criteria.decisionOption.map((option, optionIndex) =>
                                                 <Grid container justify="center" alignItems="center"
-                                                      className={classes.cellOption} key={option.id}>
-                                                    <Grid item xs={4} className={classes.cellOptionText}>
+                                                      className={classes.gridItem_gridContainer} key={option.id}>
+                                                    <Grid item xs={4} className={classes.gridItem_gridContainer_title}>
                                                         {option.name}
                                                     </Grid>
                                                     <Grid item xs={8}>
                                                         <Grid container>
-                                                            <Grid item xs={6} className={classes.sliderText}>
+                                                            <Grid item xs={6} className={classes.slider_text}>
                                                                 <Typography variant="caption"
                                                                             style={{fontSize: 11, textAlign: "left"}}>
                                                                     Bad
                                                                 </Typography>
                                                             </Grid>
-                                                            <Grid item xs={6} className={classes.sliderText}>
+                                                            <Grid item xs={6} className={classes.slider_text}>
                                                                 <Typography variant="caption"
                                                                             style={{fontSize: 11, textAlign: "right"}}>
                                                                     Good
                                                                 </Typography>
                                                             </Grid>
-                                                            <Grid item xs={12} className={classes.sliderScale}>
+                                                            <Grid item xs={12} className={classes.slider_scale}>
                                                                 <Slider
                                                                     className={classes.slider}
                                                                     classes={{
-                                                                        trackAfter: classes.track,
-                                                                        trackBefore: classes.track,
-                                                                        container: classes.sliderContainer,
+                                                                        trackAfter: classes.slider_track,
+                                                                        trackBefore: classes.slider_track,
+                                                                        container: classes.slider_container,
                                                                     }}
                                                                     value={option.score}
                                                                     min={0}
@@ -308,7 +286,7 @@ class RateOptions extends React.Component {
                     )}
                 </Grid>
                 {/*Empty Line for Buttons*/}
-                <div className={classes.emptyLine}/>
+                <div className={classes.emptySpace}/>
                 {/*Info Dialogs*/}
                 <InfoDialog
                     title={"Rate Options"}

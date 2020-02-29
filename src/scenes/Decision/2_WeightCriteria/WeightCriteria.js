@@ -17,15 +17,12 @@ import ReactGA from 'react-ga';
 import Fade from "@material-ui/core/Fade";
 
 const styles = theme => ({
-    root: {
-        flexGrow: 1,
-        align: 'center',
-        overflowX: 'hidden', //Avoid negative margin from mainGrid
-    },
 
     mainDiv: {
         paddingTop: theme.spacing.unit * 2.5,
         paddingBottom: theme.spacing.unit * 5.5,
+        textAlign: "center",
+        alignContent: 'center',
     },
 
     infoButton: {
@@ -33,23 +30,14 @@ const styles = theme => ({
         left: theme.spacing.unit * 1.2,
     },
 
-    titleText: {
-        textAlign: "center",
-    },
-
-    paperDiv: {
+    paper: {
         paddingBottom: theme.spacing.unit * 1,
     },
 
-    cellTitle: {
-        width: theme.spacing.unit * 100,
-    },
 
-    cellCriteria: {
+    gridItem_criteria: {
         minWidth: theme.spacing.unit * 40,
         maxWidth: theme.spacing.unit * 50,
-        alignContent: 'center',
-        textAlign: 'center',
     },
 
     slider: {
@@ -58,7 +46,7 @@ const styles = theme => ({
         backgroundRepeat: 'noRepeat',
         backgroundPosition: 'center',
     },
-    sliderContainer: {
+    slider_container: {
         paddingTop: theme.spacing.unit * 2,
         paddingBottom: theme.spacing.unit * 2,
         paddingLeft: 0,
@@ -68,21 +56,18 @@ const styles = theme => ({
         backgroundRepeat: 'noRepeat',
         backgroundPosition: 'center',
     },
-    sliderScale: {
-
+    slider_scale: {
         marginTop: -theme.spacing.unit * 2,
         marginBottom: -theme.spacing.unit * 2,
         marginLeft: theme.spacing.unit,
         marginRight: theme.spacing.unit,
-        alignContent: 'center',
-        textAlign: 'center',
     },
-    track: {
+
+    slider_track: {
         opacity: 0.7,
     },
 
-
-    emptyLine: {
+    emptySpace: {
         height: theme.spacing.unit * 4,
     },
 
@@ -267,8 +252,8 @@ class WeightCriteria extends Component {
 
             <div className={classes.mainDiv}>
                 <Grid container justify="center" alignContent='center' spacing={24}>
-                    <Grid item xs={12} className={classes.cellTitle}>
-                        <Typography variant="h5" className={classes.titleText} gutterBottom>
+                    <Grid item xs={12}>
+                        <Typography variant="h5" gutterBottom>
                             Weight Criteria
                             <IconButton aria-label="Help" className={classes.infoButton} onClick={this.onShowInfo}>
                                 <InfoIcon color="secondary"/>
@@ -277,9 +262,8 @@ class WeightCriteria extends Component {
                     </Grid>
                     {this.state.weightedCriteria.map((criteria, index) =>
                         <Fade in={true} style={{transitionDelay: `${index * 100}ms`}}>
-                            <Grid item xs={6} className={classes.cellCriteria} key={criteria.id}>
-                                <Paper className={classes.paper} elevation={2}>
-                                    <div className={classes.paperDiv}>
+                            <Grid item xs={6} className={classes.gridItem_criteria} key={criteria.id}>
+                                <Paper elevation={2} className={classes.paper}>
                                         <Grid container spacing={16}>
                                             <Grid item xs={6}>
                                                 <Typography variant="body1">
@@ -291,13 +275,13 @@ class WeightCriteria extends Component {
                                                     {criteria.selectionCriteria2.name}
                                                 </Typography>
                                             </Grid>
-                                            <Grid item xs={12} zeroMinWidth className={classes.sliderScale}>
+                                            <Grid item xs={12} zeroMinWidth className={classes.slider_scale}>
                                                 <Slider
                                                     className={classes.slider}
                                                     classes={{
-                                                        trackAfter: classes.track,
-                                                        trackBefore: classes.track,
-                                                        container: classes.sliderContainer,
+                                                        trackAfter: classes.slider_track,
+                                                        trackBefore: classes.slider_track,
+                                                        container: classes.slider_container,
                                                     }}
                                                     value={criteria.weight}
                                                     min={-100}
@@ -313,14 +297,13 @@ class WeightCriteria extends Component {
                                                 </Typography>
                                             </Grid>
                                         </Grid>
-                                    </div>
                                 </Paper>
                             </Grid>
                         </Fade>
                     )}
                 </Grid>
                 {/*Empty Line for Buttons*/}
-                <div className={classes.emptyLine}/>
+                <div className={classes.pageBottomEmptySpace}/>
                 {/*Info Dialogs*/}
                 <InfoDialog
                     title={"Weight Criteria"}

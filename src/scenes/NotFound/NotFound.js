@@ -15,15 +15,16 @@ import ReactGA from "react-ga";
 const styles = theme => ({
 
     mainDiv: {
+        textAlign: "center",
+        textJustify: "center",
         marginTop: theme.spacing.unit * 8,
     },
 
-    titleText: {
-        textAlign: "center",
+    typography_title: {
         marginTop: theme.spacing.unit * 1,
     },
 
-    grid: {
+    gridContainer: {
         minWidth: theme.spacing.unit * 40,
         maxWidth: theme.spacing.unit * 63,
     },
@@ -32,15 +33,12 @@ const styles = theme => ({
         margin: theme.spacing.unit * 1,
     },
 
-    gridTopCell: {
-        textAlign: "center",
-        textJustify: "center",
+    gridItem_title: {
         paddingTop: theme.spacing.unit * 4,
     },
 
 
-    linkButton: {
-        textAlign: "center",
+    button: {
         textJustify: "bottom",
         paddingTop: theme.spacing.unit * 3,
         paddingBottom: theme.spacing.unit * 3,
@@ -83,10 +81,10 @@ class Login extends React.Component {
             <div className={classes.mainDiv}>
                 <Grid container justify = "center">
                     <Paper elevation={2} key="mainPaper" className={classes.paper} >
-                        <Grid container justify="center" alignItems="center" spacing={0} className={classes.grid}>
+                        <Grid container justify="center" alignItems="center" spacing={0} className={classes.gridContainer}>
 
                             {/*Title*/}
-                            <Grid item xs={12} className={classes.gridTopCell}>
+                            <Grid item xs={12} className={classes.gridItem_title}>
                                 <Typography variant="h4" gutterBottom>
                                     Oops!
                                 </Typography>
@@ -94,7 +92,7 @@ class Login extends React.Component {
                                     Page not found...
                                 </Typography>
                             </Grid>
-                            <Grid item xs={12} className={classes.linkButton} >
+                            <Grid item xs={12} className={classes.button} >
                                 <Button
                                     variant="contained"
                                     color="primary"

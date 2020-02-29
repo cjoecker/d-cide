@@ -1,4 +1,4 @@
-import { createMuiTheme } from '@material-ui/core/styles';
+import {createMuiTheme} from '@material-ui/core/styles';
 
 const theme = createMuiTheme({
 
@@ -10,7 +10,7 @@ const theme = createMuiTheme({
         ].join(','),
         caption: {
             fontSize: 12,
-            color: '#646464',
+            color: '#272727',
         },
         fontWeightLight: 3000,
         fontWeightRegular: 4000,
@@ -20,20 +20,13 @@ const theme = createMuiTheme({
     palette: {
         primary: {
             main: '#0f61a0',
-            contrastText: '#fff',
+            contrastText: '#fafafa',
         },
         secondary: {
-            main: '#8f8f8f',
-            contrastText: '#fff',
+            main: '#878787',
+            contrastText: '#fafafa',
         },
     },
-
-    // fontFamily: [
-    //     'Quicksand',
-    //     'sans-serif',
-    // ].join(','),
-
-
 });
 
 export default theme;

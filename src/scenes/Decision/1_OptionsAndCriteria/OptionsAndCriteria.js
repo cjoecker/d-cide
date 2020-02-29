@@ -18,6 +18,7 @@ const styles = theme => ({
     mainDiv: {
         paddingTop: theme.spacing.unit * 2.5,
         paddingBottom: theme.spacing.unit * 5.5,
+        textAlign: "center",
     },
 
     infoButton: {
@@ -25,21 +26,11 @@ const styles = theme => ({
         left: theme.spacing.unit * 1.2,
     },
 
-    titleText: {
-        textAlign: "center",
-    },
-
-    cell: {
-        textAlign: "Center",
+    gridItem: {
         maxWidth: theme.spacing.unit * 62,
-
     },
 
-    infoCell: {
-        width: theme.spacing.unit * 0.3,
-    },
-
-    emptyLine: {
+    emptySpace: {
         height: theme.spacing.unit * 4,
     },
 
@@ -84,6 +75,8 @@ class OptionsAndCriteria extends Component {
         const {isLoading} = this.props.app;
         const errorsPresent = Object.keys(this.props.errors).length === 0;
 
+        console.log(classes);
+
         const minItemsThere =
             (!isLoading &&
                 errorsPresent &&
@@ -95,8 +88,8 @@ class OptionsAndCriteria extends Component {
         return (
             <div className={classes.mainDiv} align="center">
                 <Grid container justify="center" alignContent='center' spacing={40}>
-                    <Grid item xs={6} className={classes.cell}>
-                        <Typography variant="h5" className={classes.titleText} gutterBottom>
+                    <Grid item xs={6} className={classes.gridItem}>
+                        <Typography variant="h5" gutterBottom>
                             Decision Options
                             <IconButton
                                 aria-label="Help"
@@ -110,7 +103,7 @@ class OptionsAndCriteria extends Component {
                             decisionId={this.props.decisionId}
                         />
                     </Grid>
-                    <Grid item xs={6} className={classes.cell}>
+                    <Grid item xs={6} className={classes.gridItem}>
                         <Typography variant="h5" className={classes.titleText} gutterBottom>
                             Selection Criteria
                             <IconButton
@@ -126,8 +119,8 @@ class OptionsAndCriteria extends Component {
                         />
                     </Grid>
                 </Grid>
-                {/*Empty Line for Buttons*/}
-                <div className={classes.emptyLine}/>
+                {/*Empty Space for Buttons*/}
+                <div className={classes.emptySpace}/>
                 {/*Info Dialogs*/}
                 <InfoDialog
                     text={LongStrings.DecisionOptionInfo}

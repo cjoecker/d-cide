@@ -1,3 +1,11 @@
+:root {
+  --black: #212121;
+  --blue: #0f61a0;
+  --darkGrey: #646464;
+  --lightGrey: #e6e6e6;
+  --white: #fafafa
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -6,9 +14,5 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: 'Quicksand', sans-serif;
-}
-input{
-  font-family: 'Quicksand', sans-serif;
-}
+
+

@@ -36,7 +36,6 @@ import Toolbar from "@material-ui/core/es/Toolbar/Toolbar";
 import Menu from "@material-ui/core/Menu/Menu";
 import MenuItem from "@material-ui/core/MenuItem/MenuItem";
 import {getValueSafe} from "./services/GeneralUtils";
-import ForgotPassword from "./scenes/ForgotPassword/ForgotPassword";
 import {POST_SESSION} from "./services/actions/types";
 import axios from "axios";
 
@@ -245,8 +244,6 @@ class App extends Component {
                             <Route exact path="/" component={LandingPage}/>
                             <Route exact path="/login" component={Login}/>
                             <Route exact path="/signUp" component={SignUp}/>
-                            <Route exact path="/forgotPassword" component={ForgotPassword}/>
-                            {/*<Route exact path="/resetPassword" component={ResetPassword}/>*/}
 
                             {/*Private Scenes*/}
                             <SecureRoute exact path="/decisions" component={Decisions}/>

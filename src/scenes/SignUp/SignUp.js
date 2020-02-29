@@ -19,19 +19,18 @@ import InfoDialog from "../../components/InfoDialog";
 const styles = theme => ({
 
     mainDiv: {
+        textAlign: "center",
+        textJustify: "center",
         paddingTop: theme.spacing.unit * 8,
     },
 
-    grid: {
+    gridContainer: {
         minWidth: theme.spacing.unit * 40,
         maxWidth: theme.spacing.unit * 63,
     },
 
-    gridTopCell: {
-        textAlign: "center",
-        textJustify: "center",
+    gridItem_title: {
         paddingTop: theme.spacing.unit * 6,
-
     },
 
     paper: {
@@ -42,26 +41,21 @@ const styles = theme => ({
         width: "90%",
     },
 
-    textFieldGrid: {
-        textAlign: "center",
+    gridItem_textField: {
         textJustify: "bottom",
         paddingTop: theme.spacing.unit * 1,
     },
 
-    textFieldPassword: {
-        textAlign: "center",
+    textField_password: {
         textJustify: "bottom",
         paddingTop: 0,
     },
 
-    legalLink: {
-        textAlign: "center",
-        textJustify: "center",
+    gridItem_legalLink: {
         paddingTop: theme.spacing.unit * 2,
     },
 
-    signUpButton:{
-        textAlign: "center",
+    button:{
         textJustify: "bottom",
         paddingTop: theme.spacing.unit * 3,
         paddingBottom: theme.spacing.unit * 4
@@ -157,16 +151,16 @@ class SignUp extends React.Component {
             <div className={classes.mainDiv}>
                 <Grid container justify = "center">
                     <Paper className={classes.paper} elevation={2} key="mainPaper"  >
-                        <Grid container justify="center" alignItems="center" spacing={0} className={classes.grid}>
+                        <Grid container justify="center" alignItems="center" spacing={0} className={classes.gridContainer}>
 
                             {/*Title*/}
-                            <Grid item xs={12} className={classes.gridTopCell}>
-                                <Typography variant="h4" className={classes.textFieldGrid} gutterBottom>
+                            <Grid item xs={12} className={classes.gridItem_title}>
+                                <Typography variant="h4" className={classes.gridItem_textField} gutterBottom>
                                     SIGN UP
                                 </Typography>
                             </Grid>
                             {/*Email*/}
-                            <Grid item xs={12} className={classes.textFieldGrid}>
+                            <Grid item xs={12} className={classes.gridItem_textField}>
                                 <TextField
                                     id="outlined-email-input"
                                     name="username"
@@ -190,7 +184,7 @@ class SignUp extends React.Component {
                                 />
                             </Grid>
                             {/*Full Name*/}
-                            <Grid item xs={12} className={classes.textFieldGrid}>
+                            <Grid item xs={12} className={classes.gridItem_textField}>
                                 <TextField
                                     id="outlined-fullName-input"
                                     name="fullName"
@@ -214,7 +208,7 @@ class SignUp extends React.Component {
                             </Grid>
 
                             {/*Password*/}
-                            <Grid item xs={12} className={classes.textFieldGrid}>
+                            <Grid item xs={12} className={classes.gridItem_textField}>
                                 <TextField
                                     id="outlined-password-input"
                                     name="password"
@@ -239,7 +233,7 @@ class SignUp extends React.Component {
                             </Grid>
 
                             {/*Confirm Password*/}
-                            <Grid item xs={12} className={classes.textFieldPassword} >
+                            <Grid item xs={12} className={classes.textField_password} >
                                 <TextField
                                     id="outlined-confirmPassword-input"
                                     name="confirmPassword"
@@ -264,7 +258,7 @@ class SignUp extends React.Component {
                             </Grid>
 
                             {/*Legal Link*/}
-                            <Grid item xs={12} className={classes.legalLink}>
+                            <Grid item xs={12} className={classes.gridItem_legalLink}>
                                 <Typography variant="caption" gutterBottom>
                                 By clicking Sign Up, you confirm that you have read and agree to the&nbsp;
                                 <Link
@@ -285,7 +279,7 @@ class SignUp extends React.Component {
                             </Grid>
 
                             {/*SignUp Button*/}
-                            <Grid item xs={12} className={classes.signUpButton}>
+                            <Grid item xs={12} className={classes.button}>
                                 <Fab
                                     color="primary"
                                     variant="extended"

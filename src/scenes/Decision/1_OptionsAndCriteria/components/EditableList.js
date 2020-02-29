@@ -16,8 +16,7 @@ import Fade from "@material-ui/core/Fade";
 
 
 const styles = theme => ({
-    root: {
-        flexGrow: 1,
+    mainDiv: {
         minWidth: theme.spacing.unit * 37,
     },
 
@@ -152,7 +151,7 @@ class EditableList extends Component {
         const {classes} = this.props;
 
         return (
-            <div className={classes.root}>
+            <div className={classes.mainDiv}>
                 <List>
                     <Paper className="floating" elevation={2} key="NewEntry">
                         <ListItem>

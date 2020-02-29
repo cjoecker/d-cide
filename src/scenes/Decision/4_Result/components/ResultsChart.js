@@ -16,12 +16,11 @@ import ReactGA from "react-ga";
 import Zoom from "@material-ui/core/Zoom";
 
 const styles = theme => ({
-    root: {
-        flexGrow: 1,
+    mainDiv: {
         padding: theme.spacing.unit * 0.8,
     },
 
-    rectangle: {
+    barChart_bar: {
         width: theme.spacing.unit * 19,
     },
 
@@ -85,7 +84,7 @@ class ResultsChart extends React.Component {
         const labelsWidth = 100 + this.state.labelsOffset;
 
         return (
-            <div className={classes.root}>
+            <div className={classes.mainDiv}>
                 <ResponsiveContainer height={items.length * 70 + 10} width="100%">
                     <BarChart
                         data={items}
@@ -118,7 +117,7 @@ class ResultsChart extends React.Component {
                             animationDuration={1000}
                             label={{position: 'right', backgroundColor: '#fff'}}
                             shape={<Rectangle
-                                className={classes.rectangle}
+                                className={classes.barChart_bar}
                                 radius={[0, 10, 10, 0]}
                             />}
                         >

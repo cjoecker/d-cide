@@ -28,14 +28,15 @@ const styles = theme => ({
 
     mainDiv: {
         paddingTop: theme.spacing.unit * 8,
+        textAlign: "center",
+        textJustify: "center",
     },
 
-    titleText: {
-        textAlign: "center",
+    typography_title: {
         marginTop: theme.spacing.unit * 1,
     },
 
-    grid: {
+    gridContainer: {
         minWidth: theme.spacing.unit * 40,
         maxWidth: theme.spacing.unit * 63,
     },
@@ -44,9 +45,7 @@ const styles = theme => ({
         margin: theme.spacing.unit * 1,
     },
 
-    gridTopCell: {
-        textAlign: "center",
-        textJustify: "center",
+    gridItem_title: {
         paddingTop: theme.spacing.unit * 6,
         paddingBottom: theme.spacing.unit * 3,
 
@@ -56,8 +55,7 @@ const styles = theme => ({
         width: "90%",
     },
 
-    textFieldGrid: {
-        textAlign: "center",
+    gridItem_textField: {
         textJustify: "bottom"
     },
 
@@ -66,13 +64,12 @@ const styles = theme => ({
         textJustify: "bottom"
     },
 
-    linkButton: {
-        textAlign: "center",
+    gridItem_button: {
         textJustify: "bottom",
         paddingTop: theme.spacing.unit * 3
     },
 
-    signUpText: {
+    typography_signUp: {
         padding: theme.spacing.unit * 3,
         textAlign: "center"
     },
@@ -234,16 +231,16 @@ class Login extends React.Component {
             <div className={classes.mainDiv}>
                 <Grid container justify="center">
                     <Paper elevation={2} key="mainPaper" className={classes.paper}>
-                        <Grid container justify="center" alignItems="center" spacing={0} className={classes.grid}>
+                        <Grid container justify="center" alignItems="center" spacing={0} className={classes.gridContainer}>
 
                             {/*Title*/}
-                            <Grid item xs={12} className={classes.gridTopCell}>
+                            <Grid item xs={12} className={classes.gridItem_title}>
                                 <Typography variant="h4" gutterBottom>
                                     LOGIN
                                 </Typography>
                             </Grid>
                             {/*Email*/}
-                            <Grid item xs={12} className={classes.textFieldGrid}>
+                            <Grid item xs={12} className={classes.gridItem_textField}>
                                 <TextField
                                     id="outlined-email-input"
                                     name="username"
@@ -267,7 +264,7 @@ class Login extends React.Component {
                             </Grid>
 
                             {/*Password*/}
-                            <Grid item xs={12} className={classes.textFieldGrid}>
+                            <Grid item xs={12} className={classes.gridItem_textField}>
                                 <TextField
                                     id="outlined-password-input"
                                     name="password"
@@ -330,7 +327,7 @@ class Login extends React.Component {
                             {/*</Grid>*/}
 
                             {/*Login Button*/}
-                            <Grid item xs={12} className={classes.linkButton}>
+                            <Grid item xs={12} className={classes.gridItem_button}>
                                 <Fab
                                     color="primary"
                                     variant="extended"
@@ -344,7 +341,7 @@ class Login extends React.Component {
 
                             {/*SignUp*/}
                             <Grid item xs={12} style={{textAlign: 'center'}}>
-                                <Typography variant="body1" className={classes.signUpText} gutterBottom>
+                                <Typography variant="body1" className={classes.typography_signUp} gutterBottom>
                                     Don't have an account? &nbsp;
                                     <Link href={'/signUp'}>
                                         Sign up!

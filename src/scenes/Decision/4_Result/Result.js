@@ -13,16 +13,13 @@ import ReactGA from 'react-ga';
 import connect from "react-redux/es/connect/connect";
 
 const styles = theme => ({
-    root: {
-        flexGrow: 1,
-    },
-
     mainDiv: {
         paddingTop: theme.spacing.unit * 2.5,
         paddingBottom: theme.spacing.unit * 5.5,
+        textAlign: "center",
     },
 
-    cell: {
+    gridItem: {
         maxWidth: theme.spacing.unit * 75,
         minWidth: theme.spacing.unit * 38,
         margin: theme.spacing.unit * 2,
@@ -33,9 +30,8 @@ const styles = theme => ({
         left: theme.spacing.unit * 1.2,
     },
 
-    titleText: {
+    gridItem_title: {
         margin: theme.spacing.unit * 1,
-        textAlign: "center",
         paddingTop: theme.spacing.unit * 1,
     },
 });
@@ -112,11 +108,10 @@ class Result extends Component {
 
             <div className={classes.mainDiv}>
                 <Grid container justify="center" alignContent='center' spacing={24}>
-                    <Grid className={classes.cell} key="1" item xs={12}>
+                    <Grid className={classes.gridItem} key="1" item xs={12}>
                         {this.state.showOptionsRanking &&
                         <Paper className={classes.paper} elevation={2} key={"Option"}>
-
-                            <Typography variant="h5" className={classes.titleText} gutterBottom>
+                            <Typography variant="h5" className={classes.gridItem_title} gutterBottom>
                                 Decision Options Ranking
                                 <IconButton
                                     aria-label="Help"
@@ -133,10 +128,10 @@ class Result extends Component {
                         </Paper>
                         }
                     </Grid>
-                    <Grid className={classes.cell} key="2" item xs={12}>
+                    <Grid className={classes.gridItem} key="2" item xs={12}>
                         {this.state.showCriteriaRanking &&
                         <Paper className={classes.paper} elevation={2} key={"Criteria"}>
-                            <Typography variant="h5" className={classes.titleText} gutterBottom>
+                            <Typography variant="h5" className={classes.gridItem_title} gutterBottom>
                                 Selection Criteria Ranking
                                 <IconButton
                                     aria-label="Help"

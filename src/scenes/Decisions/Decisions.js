@@ -23,35 +23,35 @@ import IconButton from "@material-ui/core/IconButton/IconButton";
 
 const styles = theme => ({
 
-    root: {
+    mainDiv: {
         paddingTop: theme.spacing.unit * 8,
+        textAlign: "center",
     },
 
-    titleText: {
-        textAlign: "center",
+    typography_title: {
+        
         marginTop: theme.spacing.unit * 1,
     },
 
     gridItem: {
-        textAlign: "center",
         maxWidth: theme.spacing.unit * 63
     },
 
-    firstPaper: {
+    paper_decisions_newDecision: {
         marginTop: theme.spacing.unit * 0.8,
         marginBottom: theme.spacing.unit * 4,
     },
 
-    paper: {
+    paper_decisions: {
         marginTop: theme.spacing.unit * 0.8,
     },
 
-    inputBaseNewEntry: {
+    inputBase_newEntry: {
         marginRight: theme.spacing.unit * 2,
         width: "100%",
     },
 
-    inputBaseItem: {
+    inputBase_existingItems: {
         marginRight: theme.spacing.unit * 9,
         width: "100%",
     },
@@ -218,19 +218,19 @@ class Decisions extends React.Component {
 
         return (
             isMounted &&
-            <div className={classes.root}>
-                <Typography variant="h3" className={classes.titleText} gutterBottom>
+            <div className={classes.mainDiv}>
+                <Typography variant="h3" className={classes.typography_title} gutterBottom>
                     Decisions
                 </Typography>
                 <Grid container justify="center">
                     <Grid item xs={12} className={classes.gridItem}>
                         <List>
 
-                            <Paper elevation={2} key="New Entry" className={classes.firstPaper}>
+                            <Paper elevation={2} key="New Entry" className={classes.paper_decisions_newDecision}>
                                 <ListItem>
                                     <InputBase
                                         name="newEntry"
-                                        className={classes.inputBaseNewEntry}
+                                        className={classes.inputBase_newEntry}
                                         placeholder="New Decision"
                                         value={this.state.newEntry}
                                         onKeyPress={(event) => {
@@ -255,11 +255,11 @@ class Decisions extends React.Component {
                                 </ListItem>
                             </Paper>
                             {decisions.map(decision =>
-                                <Paper elevation={2} key={decision.id} className={classes.paper}>
+                                <Paper elevation={2} key={decision.id} className={classes.paper_decisions}>
                                     <ListItem>
                                         <InputBase
                                             multiline
-                                            className={classes.inputBaseItem}
+                                            className={classes.inputBase_existingItems}
                                             value={decision.name}
                                             onChange={(event) => this.onChangeDecision(event, decision)}
                                             onBlur={() => this.editDecisionName(decision)}
