@@ -1,16 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {withStyles} from '@material-ui/core/styles';
-import Paper from "@material-ui/core/Paper/Paper";
-import Grid from "@material-ui/core/Grid/Grid";
-import Slider from "@material-ui/lab/Slider/Slider";
-import Typography from "@material-ui/core/Typography/Typography";
+import Paper from "@material-ui/core/Paper";
+import Grid from "@material-ui/core/Grid";
+import Slider from "@material-ui/core/Slider";
+import Typography from "@material-ui/core/Typography";
 import RateSlider_Scale from "../../../images/RateSlider_Scale.svg";
-import IconButton from "@material-ui/core/IconButton/IconButton";
+import IconButton from "@material-ui/core/IconButton";
 import InfoIcon from '@material-ui/icons/Info';
 import InfoDialog from "../../../components/InfoDialog";
 import * as LongStrings from "../../../components/LongStrings";
-
 import {connect} from "react-redux";
 import {getRatedOptions, postRatedOptions} from "../../../services/actions/RatedOptions_Action";
 import ReactGA from "react-ga";
@@ -19,69 +18,94 @@ import Fade from "@material-ui/core/Fade";
 
 const styles = theme => ({
 
-    mainDiv: {
-        paddingTop: theme.spacing.unit * 2.5,
-        paddingBottom: theme.spacing.unit * 5.5,
+    div_main: {
+        paddingTop: theme.spacing(2.5),
+        paddingBottom: theme.spacing(5.5),
         textAlign: "center",
         alignContent: 'center',
     },
 
     infoButton: {
-        bottom: theme.spacing.unit * 0.25,
-        left: theme.spacing.unit * 1,
+        bottom: theme.spacing(0.25),
+        left: theme.spacing(1),
     },
 
     paper: {
-        padding: theme.spacing.unit * 1,
+        padding: theme.spacing(1),
+        marginBottom: theme.spacing(2),
+        marginRight: theme.spacing(1),
+        marginLeft: theme.spacing(1),
     },
 
     gridItem_title: {
-        minWidth: theme.spacing.unit * 40,
-        maxWidth: theme.spacing.unit * 50,
+        minWidth: theme.spacing(40),
+        maxWidth: theme.spacing(50),
     },
 
     gridItem_gridContainer: {
-        paddingBottom: theme.spacing.unit * 1,
+        paddingBottom: theme.spacing(1),
     },
 
     gridItem_gridContainer_title: {
-        paddingLeft: theme.spacing.unit * 2,
+        paddingLeft: theme.spacing(2),
     },
 
 
-    slider_text: {
-        paddingLeft: theme.spacing.unit * 1.8,
-        paddingRight: theme.spacing.unit * 1.8,
-        marginTop: theme.spacing.unit * 1,
+    slider_textLeft: {
+        paddingLeft: theme.spacing(1.8),
+        paddingRight: theme.spacing(1.8),
+        marginTop: theme.spacing(1),
+        textAlign: "left",
+    },
+
+    slider_textRight: {
+        paddingLeft: theme.spacing(1.8),
+        paddingRight: theme.spacing(1.8),
+        marginTop: theme.spacing(1),
+        textAlign: "right",
+    },
+
+    gridItem_slider: {
+        marginTop: -theme.spacing(2),
+        marginLeft: theme.spacing(1),
+        marginRight: theme.spacing(1),
+    },
+
+    slider_mark: {
+        height: 8,
+        width: 1,
+        marginTop: -3,
+        backgroundColor: theme.palette.primary.main,
     },
 
     slider_track: {
-        opacity: 0.7,
-    },
-
-    slider_container: {
-        paddingTop: theme.spacing.unit * 2,
-        paddingBottom: theme.spacing.unit * 2,
-        paddingLeft: 0,
-        paddingRight: 0,
-        backgroundSize: '100% ',
-        backgroundImage: 'url(' + RateSlider_Scale + ')',
-        backgroundRepeat: 'noRepeat',
-        backgroundPosition: 'center',
-
-    },
-
-    slider_scale: {
-        marginTop: -theme.spacing.unit * 2,
-        marginLeft: theme.spacing.unit,
-        marginRight: theme.spacing.unit,
+        opacity: 100,
     },
 
     emptySpace: {
-        height: theme.spacing.unit * 4,
+        height: theme.spacing(4),
     },
 
 });
+
+const marks = [
+    {
+        value: 2,
+    },
+    {
+        value: 26,
+    },
+    {
+        value: 50,
+    },
+    {
+        value: 74,
+    },
+    {
+        value: 98,
+    },
+];
+
 
 class RateOptions extends React.Component {
 
@@ -216,7 +240,7 @@ class RateOptions extends React.Component {
 
         return (
 
-            <div className={classes.mainDiv}>
+            <div className={classes.div_main}>
                 <Grid container justify="center" alignContent='center' spacing={24}>
                     <Grid item xs={12}>
                         <Typography variant="h5" gutterBottom>
@@ -245,30 +269,31 @@ class RateOptions extends React.Component {
                                                     </Grid>
                                                     <Grid item xs={8}>
                                                         <Grid container>
-                                                            <Grid item xs={6} className={classes.slider_text}>
+                                                            <Grid item xs={6} className={classes.slider_textLeft}>
                                                                 <Typography variant="caption"
-                                                                            style={{fontSize: 11, textAlign: "left"}}>
+                                                                            style={{fontSize: 11}}>
                                                                     Bad
                                                                 </Typography>
                                                             </Grid>
-                                                            <Grid item xs={6} className={classes.slider_text}>
+                                                            <Grid item xs={6} className={classes.slider_textRight}>
                                                                 <Typography variant="caption"
-                                                                            style={{fontSize: 11, textAlign: "right"}}>
+                                                                            style={{fontSize: 11}}>
                                                                     Good
                                                                 </Typography>
                                                             </Grid>
-                                                            <Grid item xs={12} className={classes.slider_scale}>
+                                                            <Grid item xs={12} className={classes.gridItem_slider}>
                                                                 <Slider
-                                                                    className={classes.slider}
                                                                     classes={{
-                                                                        trackAfter: classes.slider_track,
-                                                                        trackBefore: classes.slider_track,
-                                                                        container: classes.slider_container,
+                                                                        track: classes.slider_track,
+                                                                        rail: classes.slider_track,
+                                                                        mark: classes.slider_mark,
+                                                                        markActive: classes.slider_mark,
                                                                     }}
                                                                     value={option.score}
                                                                     min={0}
                                                                     max={100}
                                                                     step={1}
+                                                                    marks={marks}
                                                                     onChange={(event, value) => this.onChange(event, criteriaIndex, optionIndex, value)}
                                                                     onDragEnd={(event) => this.onDragEnd(event, criteria, option)}
                                                                 />

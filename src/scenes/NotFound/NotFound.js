@@ -1,10 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {withStyles} from '@material-ui/core/styles/index';
-import Grid from "@material-ui/core/Grid/Grid";
-
-import Paper from "@material-ui/core/Paper/index";
-
+import {withStyles} from '@material-ui/core/styles';
+import Grid from "@material-ui/core/Grid";
+import Paper from "@material-ui/core/Paper";
 import {connect} from "react-redux";
 import {postSession} from "../../services/actions/Sessions_Action";
 import Typography from "@material-ui/core/Typography";
@@ -14,41 +12,41 @@ import ReactGA from "react-ga";
 
 const styles = theme => ({
 
-    mainDiv: {
+    div_main: {
         textAlign: "center",
         textJustify: "center",
-        marginTop: theme.spacing.unit * 8,
+        marginTop: theme.spacing(8),
     },
 
     typography_title: {
-        marginTop: theme.spacing.unit * 1,
+        marginTop: theme.spacing(1),
     },
 
     gridContainer: {
-        minWidth: theme.spacing.unit * 40,
-        maxWidth: theme.spacing.unit * 63,
+        minWidth: theme.spacing(40),
+        maxWidth: theme.spacing(63),
     },
 
     paper: {
-        margin: theme.spacing.unit * 1,
+        margin: theme.spacing(1),
     },
 
     gridItem_title: {
-        paddingTop: theme.spacing.unit * 4,
+        paddingTop: theme.spacing(4),
     },
 
 
     button: {
         textJustify: "bottom",
-        paddingTop: theme.spacing.unit * 3,
-        paddingBottom: theme.spacing.unit * 3,
+        paddingTop: theme.spacing(3),
+        paddingBottom: theme.spacing(3),
     },
 
 
 });
 
 
-class Login extends React.Component {
+class NotFound extends React.Component {
 
 
     constructor(props) {
@@ -78,7 +76,7 @@ class Login extends React.Component {
         const {classes} = this.props;
 
         return (
-            <div className={classes.mainDiv}>
+            <div className={classes.div_main}>
                 <Grid container justify = "center">
                     <Paper elevation={2} key="mainPaper" className={classes.paper} >
                         <Grid container justify="center" alignItems="center" spacing={0} className={classes.gridContainer}>
@@ -110,7 +108,7 @@ class Login extends React.Component {
     }
 }
 
-Login.propTypes = {
+NotFound.propTypes = {
     classes: PropTypes.object.isRequired,
     postSession: PropTypes.func.isRequired,
     errors: PropTypes.object.isRequired,
@@ -123,4 +121,4 @@ const mapStateToProps = state => ({
 });
 
 
-export default connect(mapStateToProps, {postSession})(withStyles(styles)(Login));
+export default connect(mapStateToProps, {postSession})(withStyles(styles)(NotFound));

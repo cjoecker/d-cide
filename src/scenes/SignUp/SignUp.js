@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {withStyles} from '@material-ui/core/styles/index';
-import Grid from "@material-ui/core/Grid/Grid";
-import TextField from "@material-ui/core/TextField/index";
-import Paper from "@material-ui/core/Paper/index";
-import Link from "@material-ui/core/Link/index";
-import Fab from "@material-ui/core/Fab/index";
-import Typography from "@material-ui/core/Typography/index";
+import {withStyles} from '@material-ui/core/styles';
+import Grid from "@material-ui/core/Grid";
+import TextField from "@material-ui/core/TextField";
+import Paper from "@material-ui/core/Paper";
+import Link from "@material-ui/core/Link";
+import Fab from "@material-ui/core/Fab";
+import Typography from "@material-ui/core/Typography";
 import * as LongStrings from "../../components/LongStrings";
 import {connect} from "react-redux";
 import {postSession, postUser} from "../../services/actions/Sessions_Action";
@@ -18,23 +18,23 @@ import InfoDialog from "../../components/InfoDialog";
 
 const styles = theme => ({
 
-    mainDiv: {
+    div_main: {
         textAlign: "center",
         textJustify: "center",
-        paddingTop: theme.spacing.unit * 8,
+        paddingTop: theme.spacing(8),
     },
 
     gridContainer: {
-        minWidth: theme.spacing.unit * 40,
-        maxWidth: theme.spacing.unit * 63,
+        minWidth: theme.spacing(40),
+        maxWidth: theme.spacing(63),
     },
 
     gridItem_title: {
-        paddingTop: theme.spacing.unit * 6,
+        paddingTop: theme.spacing(6),
     },
 
     paper: {
-        margin: theme.spacing.unit * 1,
+        margin: theme.spacing(1),
     },
 
     textField: {
@@ -43,7 +43,7 @@ const styles = theme => ({
 
     gridItem_textField: {
         textJustify: "bottom",
-        paddingTop: theme.spacing.unit * 1,
+        paddingTop: theme.spacing(1),
     },
 
     textField_password: {
@@ -52,13 +52,13 @@ const styles = theme => ({
     },
 
     gridItem_legalLink: {
-        paddingTop: theme.spacing.unit * 2,
+        paddingTop: theme.spacing(2),
     },
 
     button:{
         textJustify: "bottom",
-        paddingTop: theme.spacing.unit * 3,
-        paddingBottom: theme.spacing.unit * 4
+        paddingTop: theme.spacing(3),
+        paddingBottom: theme.spacing(4),
     }
 
 
@@ -148,7 +148,7 @@ class SignUp extends React.Component {
 
 
         return (
-            <div className={classes.mainDiv}>
+            <div className={classes.div_main}>
                 <Grid container justify = "center">
                     <Paper className={classes.paper} elevation={2} key="mainPaper"  >
                         <Grid container justify="center" alignItems="center" spacing={0} className={classes.gridContainer}>

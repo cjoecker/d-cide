@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
 import {withStyles} from "@material-ui/core";
 import PropTypes from "prop-types";
-import Grid from "@material-ui/core/Grid/Grid";
-import Paper from "@material-ui/core/Paper/Paper";
+import Grid from "@material-ui/core/Grid";
+import Paper from "@material-ui/core/Paper";
 import ResultsChart from "./components/ResultsChart";
 import InfoIcon from '@material-ui/icons/Info';
-import IconButton from "@material-ui/core/IconButton/IconButton";
+import IconButton from "@material-ui/core/IconButton";
 import InfoDialog from "../../../components/InfoDialog";
 import Typography from "@material-ui/core/Typography";
 import * as LongStrings from "../../../components/LongStrings";
@@ -13,26 +13,26 @@ import ReactGA from 'react-ga';
 import connect from "react-redux/es/connect/connect";
 
 const styles = theme => ({
-    mainDiv: {
-        paddingTop: theme.spacing.unit * 2.5,
-        paddingBottom: theme.spacing.unit * 5.5,
+    div_main: {
+        paddingTop: theme.spacing(2.5),
+        paddingBottom: theme.spacing(5.5),
         textAlign: "center",
     },
 
     gridItem: {
-        maxWidth: theme.spacing.unit * 75,
-        minWidth: theme.spacing.unit * 38,
-        margin: theme.spacing.unit * 2,
+        maxWidth: theme.spacing(75),
+        minWidth: theme.spacing(38),
+        margin: theme.spacing(2),
     },
 
     infoButton: {
-        bottom: theme.spacing.unit * 0.25,
-        left: theme.spacing.unit * 1.2,
+        bottom: theme.spacing(0.25),
+        left: theme.spacing(1.2),
     },
 
     gridItem_title: {
-        margin: theme.spacing.unit * 1,
-        paddingTop: theme.spacing.unit * 1,
+        margin: theme.spacing(1),
+        paddingTop: theme.spacing(1),
     },
 });
 
@@ -106,7 +106,7 @@ class Result extends Component {
 
         return (
 
-            <div className={classes.mainDiv}>
+            <div className={classes.div_main}>
                 <Grid container justify="center" alignContent='center' spacing={24}>
                     <Grid className={classes.gridItem} key="1" item xs={12}>
                         {this.state.showOptionsRanking &&

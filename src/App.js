@@ -1,13 +1,13 @@
-import React, {Component} from 'react';
+import React from 'react';
 import './index.css';
-import AppBar from "@material-ui/core/AppBar/AppBar";
-import Typography from "@material-ui/core/Typography/Typography";
+import AppBar from "@material-ui/core/AppBar";
+import Typography from "@material-ui/core/Typography";
 import PropTypes from "prop-types";
-import {withStyles} from "@material-ui/core";
-import CardMedia from "@material-ui/core/CardMedia/CardMedia";
+import {withStyles} from '@material-ui/core/styles';
+import CardMedia from "@material-ui/core/CardMedia";
 import dcide_Logo from "./images/d-cide_Logo.svg"
 import theme from "./muiTheme"
-import MuiThemeProvider from "@material-ui/core/es/styles/MuiThemeProvider";
+import {ThemeProvider } from '@material-ui/core/styles';
 import LinearProgress from "@material-ui/core/LinearProgress";
 import {Router, Route, Switch} from "react-router-dom";
 import {connect} from "react-redux";
@@ -17,7 +17,7 @@ import SignUp from "./scenes/SignUp/SignUp";
 import jwt_decode from "jwt-decode";
 import Decision from "./scenes/Decision/Decision";
 import Decisions from "./scenes/Decisions/Decisions";
-import {logout, setJWT} from "./services/actions/Sessions_Action";
+import {logout, postSession, setJWT} from "./services/actions/Sessions_Action";
 import SecureRoute from "./services/SecureRoute";
 import LandingPage from "./scenes/LandingPage";
 import Banner from "./components/Banner";
@@ -31,13 +31,15 @@ import Divider from "@material-ui/core/Divider";
 import ListAltIcon from "@material-ui/icons/Assignment";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
-import IconButton from "@material-ui/core/IconButton/IconButton";
-import Toolbar from "@material-ui/core/es/Toolbar/Toolbar";
-import Menu from "@material-ui/core/Menu/Menu";
-import MenuItem from "@material-ui/core/MenuItem/MenuItem";
+import IconButton from "@material-ui/core/IconButton";
+import Toolbar from "@material-ui/core/Toolbar";
+import Menu from "@material-ui/core/Menu";
+import MenuItem from "@material-ui/core/MenuItem";
 import {getValueSafe} from "./services/GeneralUtils";
 import {POST_SESSION} from "./services/actions/types";
 import axios from "axios";
+import Fab from "@material-ui/core/Fab";
+import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 
 const jwtToken = localStorage.jwtToken;
 
@@ -76,53 +78,50 @@ history.listen(location => {
 });
 
 const styles = theme => ({
-        root: {
+        div_main: {
             flexGrow: 1,
             width: '100%',
             overflowX: 'hidden', //Avoid negative margin from mainGrid
         },
 
-        appTopBar: {
+        appBar: {
             position: 'fixed',
             Top: 0,
-            height: theme.spacing.unit * 6,
+            height: theme.spacing(6),
             width: '100%',
             justifyContent: 'center',
             justifyItems: 'center',
         },
 
-        loadingBar: {
+        linearProgress: {
             position: 'fixed',
             Top: 0,
-            marginTop: theme.spacing.unit * 6,
+            marginTop: theme.spacing(6),
             width: '100%',
-            height: theme.spacing.unit * 1.5,
+            height: theme.spacing(1.5),
         },
 
 
-        logoDiv: {
+        div_logo: {
             flex: 1,
             flexGrow: 1,
             height: "100%",
             overflow: 'hidden',
             float: 'left',
-            marginLeft: theme.spacing.unit * -1,
+            marginLeft: theme.spacing(-1),
         },
 
         logo: {
-            width: theme.spacing.unit * 17,
+            width: theme.spacing(17),
             height: '100%',
         },
 
         icon: {
-            marginRight: theme.spacing.unit * -2
+            marginRight: theme.spacing(-2),
         },
+});
 
-
-    })
-;
-
-class App extends Component {
+class App extends React.Component {
 
 
     constructor(props) {
@@ -169,7 +168,6 @@ class App extends Component {
 
         const errorsPresent = Object.keys(this.props.errors).length !== 0;
 
-
         let userMenu = (
                 <Menu
                     id="simple-menu"
@@ -202,17 +200,17 @@ class App extends Component {
 
 
         return (
-            <MuiThemeProvider theme={theme}>
+            <ThemeProvider theme={theme}>
                 <Router history={history}>
-                    <div className={classes.root}>
+                    <div className={classes.div_main}>
                         {/*Title Bar*/}
                         <AppBar position="static"
                                 color="primary"
-                                className={classes.appTopBar}
+                                className={classes.appBar}
                         >
                             <Toolbar>
 
-                                <div className={classes.logoDiv}>
+                                <div className={classes.div_logo}>
                                     <Link href={'/'} style={{textDecoration: 'none'}}>
                                     <CardMedia
                                         className={classes.logo}
@@ -233,8 +231,9 @@ class App extends Component {
                             </Toolbar>
                         </AppBar>
 
+
                         {/*Loading Bar*/}
-                        <div className={classes.loadingBar}>
+                        <div className={classes.linearProgress}>
                             {isLoading > 0 &&
                             <LinearProgress color="secondary"/>
                             }
@@ -251,8 +250,7 @@ class App extends Component {
                             <Route component={NotFound}/>
                         </Switch>
 
-
-                        {/*Connection Errors*/}
+                        {/*/!*Connection Errors*!/*/}
                         <Banner
                             show={errorsPresent}
                             variant="error"
@@ -262,7 +260,7 @@ class App extends Component {
                         />
                     </div>
                 </Router>
-            </MuiThemeProvider>
+            </ThemeProvider>
         );
     }
 }
@@ -286,7 +284,7 @@ const mapStateToProps = state => ({
 });
 
 
-export default connect(mapStateToProps, {
-    logout,
-    setJWT,
-})(withStyles(styles)(App));
+
+
+export default connect(mapStateToProps, {logout,setJWT})(withStyles(styles)(App));
+

@@ -1,20 +1,20 @@
 import React from 'react';
 import {withStyles} from '@material-ui/core/styles';
 import Dialog from '@material-ui/core/Dialog';
-import DialogTitle from "@material-ui/core/DialogTitle/DialogTitle";
-import DialogContent from "@material-ui/core/DialogContent/DialogContent";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import DialogContent from "@material-ui/core/DialogContent";
 import PropTypes from "prop-types";
-import DialogActions from "@material-ui/core/DialogActions/DialogActions";
-import Button from "@material-ui/core/Button/Button";
-import DialogContentText from "@material-ui/core/DialogContentText/DialogContentText";
-import Slide from "@material-ui/core/Slide/Slide";
+import DialogActions from "@material-ui/core/DialogActions";
+import Button from "@material-ui/core/Button";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import Slide from "@material-ui/core/Slide";
 
 
 const styles = theme => ({
     closeButton: {
         position: 'absolute',
-        right: theme.spacing.unit,
-        top: theme.spacing.unit,
+        right: theme.spacing(1),
+        top: theme.spacing(1),
     },
     text: {
         textAlign: 'justify',

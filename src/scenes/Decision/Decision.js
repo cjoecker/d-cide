@@ -1,19 +1,17 @@
 import React, {Component} from 'react';
 import OptionsAndCriteria from "./1_OptionsAndCriteria/OptionsAndCriteria";
 import Result from "./4_Result/Result";
-import Typography from "@material-ui/core/Typography/Typography";
+import Typography from "@material-ui/core/Typography";
 import PropTypes from "prop-types";
 import {withStyles} from "@material-ui/core";
-import Step from "@material-ui/core/Step/Step";
-import Stepper from "@material-ui/core/Stepper/Stepper";
-import StepButton from "@material-ui/core/es/StepButton/StepButton";
-import Fab from "@material-ui/core/Fab/Fab";
+import Step from "@material-ui/core/Step";
+import Stepper from "@material-ui/core/Stepper";
+import StepButton from "@material-ui/core/StepButton";
+import Fab from '@material-ui/core/Fab';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-
 import OptionsRating from "./3_RateOptions/RateOptions";
 import WeightCriteria from "./2_WeightCriteria/WeightCriteria";
-
 import {connect} from "react-redux";
 import ReactGA from "react-ga";
 
@@ -31,14 +29,14 @@ TabContainer.propTypes = {
 };
 
 const styles = theme => ({
-        mainDiv: {
+        div_main: {
             flexGrow: 1,
             width: '100%',
             overflowX: 'hidden', //Avoid negative margin from mainGrid
         },
 
         stepper: {
-            marginTop: theme.spacing.unit * 6,
+            marginTop: theme.spacing(6),
             backgroundColor: 'transparent',
         },
 
@@ -47,14 +45,14 @@ const styles = theme => ({
             position: 'fixed',
             bottom: 0,
             right: 0,
-            margin: theme.spacing.unit * 1,
+            margin: theme.spacing(1),
         },
 
         button_back: {
             position: 'fixed',
             bottom: 0,
             left: 0,
-            margin: theme.spacing.unit * 1,
+            margin: theme.spacing(1),
         },
 
 
@@ -199,7 +197,7 @@ class Decision extends Component {
         ];
 
         return (
-            <div className={classes.mainDiv}>
+            <div className={classes.div_main}>
                 <Stepper className={classes.stepper} alternativeLabel nonLinear activeStep={activeStep}>
                     {steps.map((label, index) => {
                         return (

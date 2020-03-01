@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import Grid from "@material-ui/core/Grid/Grid";
+import Grid from "@material-ui/core/Grid";
 import EditableList from "./components/EditableList";
 import InfoIcon from '@material-ui/icons/Info';
-import IconButton from "@material-ui/core/IconButton/IconButton";
+import IconButton from "@material-ui/core/IconButton";
 import InfoDialog from "../../../components/InfoDialog";
 import PropTypes from "prop-types";
 import {withStyles} from "@material-ui/core";
@@ -15,23 +15,23 @@ import ReactGA from 'react-ga';
 
 const styles = theme => ({
 
-    mainDiv: {
-        paddingTop: theme.spacing.unit * 2.5,
-        paddingBottom: theme.spacing.unit * 5.5,
+    div_main: {
+        paddingTop: theme.spacing( 2.5),
+        paddingBottom: theme.spacing(5.5),
         textAlign: "center",
     },
 
     infoButton: {
-        bottom: theme.spacing.unit * 0.25,
-        left: theme.spacing.unit * 1.2,
+        bottom: theme.spacing(0.25),
+        left: theme.spacing(1.2),
     },
 
     gridItem: {
-        maxWidth: theme.spacing.unit * 62,
+        maxWidth: theme.spacing(62),
     },
 
     emptySpace: {
-        height: theme.spacing.unit * 4,
+        height: theme.spacing(4),
     },
 
 
@@ -75,7 +75,6 @@ class OptionsAndCriteria extends Component {
         const {isLoading} = this.props.app;
         const errorsPresent = Object.keys(this.props.errors).length === 0;
 
-        console.log(classes);
 
         const minItemsThere =
             (!isLoading &&
@@ -86,7 +85,7 @@ class OptionsAndCriteria extends Component {
         const minItemsWarningText = "At least two Decision Options and two Selection Criteria are necessary! ";
 
         return (
-            <div className={classes.mainDiv} align="center">
+            <div className={classes.div_main} align="center">
                 <Grid container justify="center" alignContent='center' spacing={40}>
                     <Grid item xs={6} className={classes.gridItem}>
                         <Typography variant="h5" gutterBottom>

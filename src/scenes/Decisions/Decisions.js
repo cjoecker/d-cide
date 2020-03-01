@@ -1,16 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {withStyles} from '@material-ui/core/styles/index';
-import Paper from "@material-ui/core/Paper/index";
-import InputBase from "@material-ui/core/es/InputBase";
+import {withStyles} from '@material-ui/core/styles';
+import Paper from "@material-ui/core/Paper";
+import InputBase from "@material-ui/core/InputBase";
 import AddIcon from '@material-ui/icons/Add';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import DeleteIcon from '@material-ui/icons/Delete';
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
-
-
 import {connect} from "react-redux";
 import {getDecisions, postDecision, deleteDecision, putDecision} from "../../services/actions/Decisions_Action";
 import Fab from "@material-ui/core/Fab";
@@ -23,36 +21,36 @@ import IconButton from "@material-ui/core/IconButton/IconButton";
 
 const styles = theme => ({
 
-    mainDiv: {
-        paddingTop: theme.spacing.unit * 8,
+    div_main: {
+        paddingTop: theme.spacing(8),
         textAlign: "center",
     },
 
     typography_title: {
         
-        marginTop: theme.spacing.unit * 1,
+        marginTop: theme.spacing(1),
     },
 
     gridItem: {
-        maxWidth: theme.spacing.unit * 63
+        maxWidth: theme.spacing(63)
     },
 
     paper_decisions_newDecision: {
-        marginTop: theme.spacing.unit * 0.8,
-        marginBottom: theme.spacing.unit * 4,
+        marginTop: theme.spacing(0.8),
+        marginBottom: theme.spacing(4),
     },
 
     paper_decisions: {
-        marginTop: theme.spacing.unit * 0.8,
+        marginTop: theme.spacing(0.8),
     },
 
     inputBase_newEntry: {
-        marginRight: theme.spacing.unit * 2,
+        marginRight: theme.spacing(2),
         width: "100%",
     },
 
     inputBase_existingItems: {
-        marginRight: theme.spacing.unit * 9,
+        marginRight: theme.spacing(9),
         width: "100%",
     },
 
@@ -218,7 +216,7 @@ class Decisions extends React.Component {
 
         return (
             isMounted &&
-            <div className={classes.mainDiv}>
+            <div className={classes.div_main}>
                 <Typography variant="h3" className={classes.typography_title} gutterBottom>
                     Decisions
                 </Typography>

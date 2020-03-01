@@ -1,23 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {withStyles} from '@material-ui/core/styles/index';
-import Grid from "@material-ui/core/Grid/Grid";
-
-import TextField from "@material-ui/core/TextField/index";
-import Paper from "@material-ui/core/Paper/index";
-import InputAdornment from "@material-ui/core/InputAdornment/index";
-import IconButton from "@material-ui/core/IconButton/index";
+import {withStyles} from '@material-ui/core/styles';
+import Grid from "@material-ui/core/Grid";
+import TextField from "@material-ui/core/TextField";
+import Paper from "@material-ui/core/Paper";
+import InputAdornment from "@material-ui/core/InputAdornment";
+import IconButton from "@material-ui/core/IconButton";
 import Visibility from '@material-ui/icons/Visibility';
 import VisibilityOff from '@material-ui/icons/VisibilityOff';
-import Link from "@material-ui/core/Link/index";
-import Fab from "@material-ui/core/Fab/index";
-
+import Link from "@material-ui/core/Link";
+import Fab from "@material-ui/core/Fab";
 import {connect} from "react-redux";
 import {postSession,setJWT} from "../../services/actions/Sessions_Action";
-
 import Typography from "@material-ui/core/Typography";
 import TwoButtonsDialog from "../../components/TwoButtonsDialog";
-
 import ReactGA from "react-ga";
 import {getDecisions, putDecision} from "../../services/actions/Decisions_Action";
 import {getValueSafe} from "../../services/GeneralUtils";
@@ -26,28 +22,28 @@ import {getValueSafe} from "../../services/GeneralUtils";
 
 const styles = theme => ({
 
-    mainDiv: {
-        paddingTop: theme.spacing.unit * 8,
+    div_main: {
+        paddingTop: theme.spacing(8),
         textAlign: "center",
         textJustify: "center",
     },
 
     typography_title: {
-        marginTop: theme.spacing.unit * 1,
+        marginTop: theme.spacing(1),
     },
 
     gridContainer: {
-        minWidth: theme.spacing.unit * 40,
-        maxWidth: theme.spacing.unit * 63,
+        minWidth: theme.spacing(40),
+        maxWidth: theme.spacing(63),
     },
 
     paper: {
-        margin: theme.spacing.unit * 1,
+        margin: theme.spacing(1),
     },
 
     gridItem_title: {
-        paddingTop: theme.spacing.unit * 6,
-        paddingBottom: theme.spacing.unit * 3,
+        paddingTop: theme.spacing(6),
+        paddingBottom: theme.spacing(3),
 
     },
 
@@ -60,17 +56,17 @@ const styles = theme => ({
     },
 
     passwordLink: {
-        marginLeft: theme.spacing.unit * 3,
+        marginLeft: theme.spacing(3),
         textJustify: "bottom"
     },
 
     gridItem_button: {
         textJustify: "bottom",
-        paddingTop: theme.spacing.unit * 3
+        paddingTop: theme.spacing(3)
     },
 
     typography_signUp: {
-        padding: theme.spacing.unit * 3,
+        padding: theme.spacing(3),
         textAlign: "center"
     },
 
@@ -228,7 +224,7 @@ class Login extends React.Component {
         const {errors} = this.state;
 
         return (
-            <div className={classes.mainDiv}>
+            <div className={classes.div_main}>
                 <Grid container justify="center">
                     <Paper elevation={2} key="mainPaper" className={classes.paper}>
                         <Grid container justify="center" alignItems="center" spacing={0} className={classes.gridContainer}>

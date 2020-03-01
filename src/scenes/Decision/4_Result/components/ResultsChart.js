@@ -8,7 +8,6 @@ import YAxis from "recharts/es6/cartesian/YAxis";
 import Bar from "recharts/es6/cartesian/Bar";
 import Rectangle from "recharts/es6/shape/Rectangle";
 import Cell from "recharts/es6/component/Cell";
-
 import {connect} from "react-redux";
 import {getItems} from "../../../../services/actions/OptionsAndCriteria_Action";
 import CartesianGrid from "recharts/es6/cartesian/CartesianGrid";
@@ -16,12 +15,12 @@ import ReactGA from "react-ga";
 import Zoom from "@material-ui/core/Zoom";
 
 const styles = theme => ({
-    mainDiv: {
-        padding: theme.spacing.unit * 0.8,
+    div_main: {
+        padding: theme.spacing(0.8),
     },
 
     barChart_bar: {
-        width: theme.spacing.unit * 19,
+        width: theme.spacing(19),
     },
 
 
@@ -84,7 +83,7 @@ class ResultsChart extends React.Component {
         const labelsWidth = 100 + this.state.labelsOffset;
 
         return (
-            <div className={classes.mainDiv}>
+            <div className={classes.div_main}>
                 <ResponsiveContainer height={items.length * 70 + 10} width="100%">
                     <BarChart
                         data={items}

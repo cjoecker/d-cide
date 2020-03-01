@@ -5,10 +5,10 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import IconButton from '@material-ui/core/IconButton';
-import CloseIcon from '@material-ui/icons/Close';
+import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
-import InputBase from "@material-ui/core/es/InputBase/InputBase";
-import Paper from "@material-ui/core/Paper/Paper";
+import InputBase from "@material-ui/core/InputBase";
+import Paper from "@material-ui/core/Paper";
 import ReactGA from 'react-ga';
 import {connect} from "react-redux";
 import {getItems, postItem, deleteItem, putItem} from "../../../../services/actions/OptionsAndCriteria_Action";
@@ -16,16 +16,24 @@ import Fade from "@material-ui/core/Fade";
 
 
 const styles = theme => ({
-    mainDiv: {
-        minWidth: theme.spacing.unit * 37,
+    div_main: {
+        minWidth: theme.spacing(37),
     },
 
-    paper: {
-        marginTop: theme.spacing.unit * 0.4
+    paper_title: {
+        marginBottom: theme.spacing(2),
+        marginRight: theme.spacing(1.5),
+        marginLeft: theme.spacing(1.5),
+    },
+
+    paper_items: {
+        marginTop: theme.spacing(0.5),
+        marginRight: theme.spacing(1.5),
+        marginLeft: theme.spacing(1.5),
     },
 
     inputBase: {
-        marginRight: theme.spacing.unit * 2,
+        marginRight: theme.spacing(2),
         width: "100%",
         wordWrap: "break-word"
     },
@@ -151,9 +159,9 @@ class EditableList extends Component {
         const {classes} = this.props;
 
         return (
-            <div className={classes.mainDiv}>
+            <div className={classes.div_main}>
                 <List>
-                    <Paper className="floating" elevation={2} key="NewEntry">
+                    <Paper className={classes.paper_title}  elevation={2} key="NewEntry">
                         <ListItem>
                             <InputBase
                                 className={classes.inputBase}
@@ -182,7 +190,7 @@ class EditableList extends Component {
                     </Paper>
                     {this.state.items.map((item, index) =>
                         <Fade in={true} style={{transitionDelay: `${index * 100}ms`}}>
-                            <Paper className={classes.paper} elevation={2} key={item.id}>
+                            <Paper className={classes.paper_items} elevation={2} key={item.id}>
                                 <ListItem>
                                     <InputBase
                                         className={classes.inputBase}
@@ -200,8 +208,9 @@ class EditableList extends Component {
                                     <ListItemSecondaryAction>
                                         <IconButton
                                             aria-label="Delete"
-                                            onClick={() => this.onDeleteItem(item.id)}>
-                                            <CloseIcon/>
+                                            onClick={() => this.onDeleteItem(item.id)}
+                                        >
+                                            <DeleteIcon/>
                                         </IconButton>
                                     </ListItemSecondaryAction>
                                 </ListItem>

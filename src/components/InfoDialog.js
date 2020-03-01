@@ -10,8 +10,8 @@ import PropTypes from "prop-types";
 const styles = theme => ({
     closeButton: {
         position: 'absolute',
-        right: theme.spacing.unit,
-        top: theme.spacing.unit,
+        right: theme.spacing(1),
+        top: theme.spacing(1),
     },
     text: {
         textAlign: 'justify',
