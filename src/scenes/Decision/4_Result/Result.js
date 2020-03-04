@@ -10,7 +10,7 @@ import InfoDialog from "../../../components/InfoDialog";
 import Typography from "@material-ui/core/Typography";
 import * as LongStrings from "../../../components/LongStrings";
 import ReactGA from 'react-ga';
-import connect from "react-redux/es/connect/connect";
+import {connect} from "react-redux";
 
 const styles = theme => ({
     div_main: {
