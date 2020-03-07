@@ -40,7 +40,7 @@ const styles = theme => ({
 });
 
 
-class EditableList extends Component {
+export class EditableList extends React.Component {
 
     constructor(props) {
         super(props);
@@ -121,7 +121,7 @@ class EditableList extends Component {
     }
 
 
-    onChangeNewEntry = (event) => {
+    onChangeNewEntry = event => {
         this.setState({newEntry: event.target.value});
     };
 
@@ -164,6 +164,7 @@ class EditableList extends Component {
                     <Paper className={classes.paper_title}  elevation={2} key="NewEntry">
                         <ListItem>
                             <InputBase
+                                data-testid='input-base'
                                 className={classes.inputBase}
                                 placeholder="New Entry"
                                 value={this.state.newEntry}
@@ -173,13 +174,13 @@ class EditableList extends Component {
                                         this.onCreateItem();
                                     }
                                 }}
-
                                 onChange={this.onChangeNewEntry}
                                 multiline
                             />
 
                             <ListItemSecondaryAction>
                                 <IconButton
+                                    test-data='button-add-item'
                                     aria-label="Add"
                                     className={classes.margin}
                                     onClick={this.onCreateItem}>
