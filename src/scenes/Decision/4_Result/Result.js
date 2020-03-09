@@ -11,6 +11,7 @@ import Typography from "@material-ui/core/Typography";
 import * as LongStrings from "../../../components/LongStrings";
 import ReactGA from 'react-ga';
 import {connect} from "react-redux";
+import Zoom from "@material-ui/core/Zoom";
 
 const styles = theme => ({
     div_main: {
@@ -49,36 +50,9 @@ class Result extends Component {
             optionsInfo: false,
             criteriaInfo: false,
             isLoading: true,
-            showOptionsRanking: true,
-            showCriteriaRanking: true,
         };
     }
 
-    //Refresh when redux state changes
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        if (prevProps.app.isFetchingDataPackage !== this.props.app.isFetchingDataPackage) {
-
-            if (this.props.app.isFetchingDataPackage > 0){
-                this.setState({
-                    showOptionsRanking: false,
-                    showCriteriaRanking: false,
-                });
-            }else {
-
-                this.setState({
-                    showOptionsRanking: true,
-                });
-
-                //Timer to avoid chrome breaking animations
-                setTimeout(() => {
-                    this.setState({showCriteriaRanking: true});
-                }, 1000);
-
-            }
-
-
-        }
-    }
 
 
     hideInfo(e, name) {
@@ -103,13 +77,15 @@ class Result extends Component {
     render() {
 
         const {classes} = this.props;
+        const decisionOptions = this.props.optionsAndCriteria["decisionOptions"];
+        const selectionCriteria = this.props.optionsAndCriteria["selectionCriteria"];
 
         return (
 
             <div className={classes.div_main}>
                 <Grid container justify="center" alignContent='center' spacing={24}>
                     <Grid className={classes.gridItem} key="1" item xs={12}>
-                        {this.state.showOptionsRanking &&
+                        <Zoom in={decisionOptions} style={{ transitionDelay: decisionOptions ? '200ms' : '0ms' }}>
                         <Paper className={classes.paper} elevation={2} key={"Option"}>
                             <Typography variant="h5" className={classes.gridItem_title} gutterBottom>
                                 Decision Options Ranking
@@ -126,10 +102,10 @@ class Result extends Component {
                                 decisionId={this.props.decisionId}
                                 YKey={"name"}/>
                         </Paper>
-                        }
+                        </Zoom>
                     </Grid>
                     <Grid className={classes.gridItem} key="2" item xs={12}>
-                        {this.state.showCriteriaRanking &&
+                        <Zoom in={selectionCriteria} style={{ transitionDelay: decisionOptions ? '500ms' : '0ms' }}>
                         <Paper className={classes.paper} elevation={2} key={"Criteria"}>
                             <Typography variant="h5" className={classes.gridItem_title} gutterBottom>
                                 Selection Criteria Ranking
@@ -146,7 +122,7 @@ class Result extends Component {
                                 decisionId={this.props.decisionId}
                                 YKey={"name"}/>
                         </Paper>
-                        }
+                        </Zoom>
                     </Grid>
                 </Grid>
                 {/*Info Dialogs*/}
@@ -169,11 +145,13 @@ class Result extends Component {
 
 Result.propTypes = {
     classes: PropTypes.object.isRequired,
-    app: PropTypes.object.isRequired
+    app: PropTypes.object.isRequired,
+    optionsAndCriteria: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
-    app: state.app
+    app: state.app,
+    optionsAndCriteria: state.optionsAndCriteria
 });
 
 export default connect(mapStateToProps, {})(withStyles(styles)(Result));

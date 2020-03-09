@@ -1,4 +1,4 @@
-import { START_LOADING, END_LOADING,START_FETCHING_DATA_PACKAGE, END_FETCHING_DATA_PACKAGE} from "../actions/types";
+import { START_LOADING, END_LOADING,} from "../actions/types";
 
 const initialState = {
     app: [],
@@ -19,17 +19,6 @@ export default function(state = initialState, action) {
             return {
                 ...state,
                 isLoading: state.isLoading - 1
-            };
-        case START_FETCHING_DATA_PACKAGE:
-            return {
-                ...state,
-                isFetchingDataPackage: state.isFetchingDataPackage + 1
-            };
-
-        case END_FETCHING_DATA_PACKAGE:
-            return {
-                ...state,
-                isFetchingDataPackage: state.isFetchingDataPackage - 1
             };
         default:
             return state;

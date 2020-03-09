@@ -5,8 +5,6 @@ import {
     START_LOADING,
     POST_SESSION,
     POST_USER,
-    START_FETCHING_DATA_PACKAGE,
-    END_FETCHING_DATA_PACKAGE,
     SAVE_JWT,
     DELETE_JWT,
 } from "./types";
@@ -17,7 +15,6 @@ export const postUser = (newUser, history) => async dispatch => {
 
     //Show Loading Bar
     dispatch({type: START_LOADING});
-    dispatch({type: START_FETCHING_DATA_PACKAGE});
 
     let signUpSuccessful = false;
 
@@ -44,7 +41,6 @@ export const postUser = (newUser, history) => async dispatch => {
     });
 
     //Show Loading Bar
-    dispatch({type: END_FETCHING_DATA_PACKAGE});
     dispatch({type: END_LOADING});
 };
 
@@ -52,7 +48,6 @@ export const postSession = LoginRequest => async dispatch => {
 
     //Show Loading Bar
     dispatch({type: START_LOADING});
-    dispatch({type: START_FETCHING_DATA_PACKAGE});
 
 
     try {
@@ -78,7 +73,6 @@ export const postSession = LoginRequest => async dispatch => {
     }
 
     //Show Loading Bar
-    dispatch({type: END_FETCHING_DATA_PACKAGE});
     dispatch({type: END_LOADING});
 };
 
@@ -98,7 +92,6 @@ export const get_unregisteredUser = () => async dispatch => {
 
     //Show Loading Bar
     dispatch({type: START_LOADING});
-    dispatch({type: START_FETCHING_DATA_PACKAGE});
 
     try {
         const res = await axios.post("/api/sessions/unregistered");
@@ -118,7 +111,6 @@ export const get_unregisteredUser = () => async dispatch => {
     }
 
     //Show Loading Bar
-    dispatch({type: END_FETCHING_DATA_PACKAGE});
     dispatch({type: END_LOADING});
 
 };

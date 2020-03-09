@@ -5,8 +5,6 @@ import {
     GET_RATED_OPTIONS,
     GET_ERRORS,
     PUT_RATED_OPTION,
-    START_FETCHING_DATA_PACKAGE,
-    END_FETCHING_DATA_PACKAGE,
 } from "./types";
 
 
@@ -38,7 +36,6 @@ export const putRatedOption = (decisionId, options) => async dispatch => {
 
     //Show Loading Bar
     dispatch({type: START_LOADING});
-    dispatch({type: START_FETCHING_DATA_PACKAGE});
     //Get Information
     try {
         const res = await axios.put(`/api/decisions/${decisionId}/ratedOptions`, options);
@@ -53,7 +50,6 @@ export const putRatedOption = (decisionId, options) => async dispatch => {
     }
 
     //Show Loading Bar
-    dispatch({type: END_FETCHING_DATA_PACKAGE});
     dispatch({type: END_LOADING});
 
 };

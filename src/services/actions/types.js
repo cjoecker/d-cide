@@ -1,8 +1,6 @@
 //Main Page
 export const START_LOADING = "START_LOADING";
 export const END_LOADING = "END_LOADING";
-export const START_FETCHING_DATA_PACKAGE = "START_FETCHING_DATA_PACKAGE";
-export const END_FETCHING_DATA_PACKAGE = "END_FETCHING_DATA_PACKAGE";
 export const GET_ERRORS  = "GET_ERRORS";
 
 //Decisions

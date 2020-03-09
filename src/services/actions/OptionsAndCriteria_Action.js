@@ -7,8 +7,6 @@ import {
     DELETE_ITEM,
     PUT_ITEM,
     GET_ERRORS,
-    START_FETCHING_DATA_PACKAGE,
-    END_FETCHING_DATA_PACKAGE,
 } from "./types";
 
 
@@ -49,7 +47,6 @@ export const postItem = (newEntry, itemsKey, decisionId) => async dispatch => {
 
     //Show Loading Bar
     dispatch({type: START_LOADING});
-    dispatch({type: START_FETCHING_DATA_PACKAGE});
 
     //Get Information
     try {
@@ -67,7 +64,6 @@ export const postItem = (newEntry, itemsKey, decisionId) => async dispatch => {
     }
 
     //Show Loading Bar
-    dispatch({type: END_FETCHING_DATA_PACKAGE});
     dispatch({type: END_LOADING});
 
 };
@@ -76,7 +72,6 @@ export const deleteItem = (id, itemsKey, decisionId) => async dispatch => {
 
     //Show Loading Bar
     dispatch({type: START_LOADING});
-    dispatch({type: START_FETCHING_DATA_PACKAGE});
 
     //Get Information
     try {
@@ -94,7 +89,6 @@ export const deleteItem = (id, itemsKey, decisionId) => async dispatch => {
     }
 
     //Show Loading Bar
-    dispatch({type: END_FETCHING_DATA_PACKAGE});
     dispatch({type: END_LOADING});
 
 };
@@ -103,7 +97,6 @@ export const putItem = (newEntry, itemsKey, decisionId) => async dispatch => {
 
     //Show Loading Bar
     dispatch({type: START_LOADING});
-    dispatch({type: START_FETCHING_DATA_PACKAGE});
 
     //Get Information
     try {
@@ -121,7 +114,6 @@ export const putItem = (newEntry, itemsKey, decisionId) => async dispatch => {
     }
 
     //Show Loading Bar
-    dispatch({type: END_FETCHING_DATA_PACKAGE});
     dispatch({type: END_LOADING});
 
 };

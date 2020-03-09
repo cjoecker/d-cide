@@ -5,8 +5,6 @@ import {
     GET_WEIGHTED_CRITERIA,
     PUT_WEIGHTED_CRITERIA,
     GET_ERRORS,
-    START_FETCHING_DATA_PACKAGE,
-    END_FETCHING_DATA_PACKAGE,
 } from "./types";
 
 
@@ -38,7 +36,6 @@ export const putWeightedCriteria = (decisionId, criteria) => async dispatch => {
 
     //Show Loading Bar
     dispatch({type: START_LOADING});
-    dispatch({type: START_FETCHING_DATA_PACKAGE});
 
     //Get Information
     try {
@@ -54,7 +51,6 @@ export const putWeightedCriteria = (decisionId, criteria) => async dispatch => {
     }
 
     //Show Loading Bar
-    dispatch({type: END_FETCHING_DATA_PACKAGE});
     dispatch({type: END_LOADING});
 
 };
