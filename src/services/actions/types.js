@@ -23,7 +23,7 @@ export const PUT_WEIGHTED_CRITERIA = "PUT_WEIGHTED_CRITERIA";
 
 //RateOptions
 export const GET_RATED_OPTIONS = "GET_RATED_OPTIONS";
-export const POST_RATED_OPTIONS = "POST_RATED_OPTIONS";
+export const PUT_RATED_OPTION = "PUT_RATED_OPTION";
 
 //Sessions
 export const POST_SESSION = "POST_SESSION";

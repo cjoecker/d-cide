@@ -11,10 +11,13 @@ import InfoIcon from '@material-ui/icons/Info';
 import InfoDialog from "../../../components/InfoDialog";
 import * as LongStrings from "../../../components/LongStrings";
 import {connect} from "react-redux";
-import {getRatedOptions, postRatedOptions} from "../../../services/actions/RatedOptions_Action";
+import {getRatedOptions, putRatedOption} from "../../../services/actions/RatedOptions_Action";
 import ReactGA from "react-ga";
 import Fade from "@material-ui/core/Fade";
+import {Subject} from "rxjs";
+import {debounceTime} from 'rxjs/operators';
 
+let onChange$ = new Subject();
 
 const styles = theme => ({
 
@@ -117,7 +120,6 @@ class RateOptions extends React.Component {
         };
 
         this.onChange = this.onChange.bind(this);
-        this.onDragEnd = this.onDragEnd.bind(this);
         this.onHideInfo = this.onHideInfo.bind(this);
         this.onShowInfo = this.onShowInfo.bind(this);
     }
@@ -126,26 +128,23 @@ class RateOptions extends React.Component {
     //Load Data from Server
     componentDidMount() {
         this.props.getRatedOptions(this.props.decisionId);
+
+        const subscription = onChange$
+            .pipe(
+                debounceTime(500)
+            )
+            .subscribe(
+                data => this.fetchSliderValues(data)
+            );
+
+        // prevent memory leaks
+        this.setState((prevState) => ({...prevState, subscription}));
     }
 
     componentWillUnmount() {
 
-        let ratedOptions = [];
-
-        this.state.ratedCriteria.forEach(function (criteria) {
-
-            criteria.decisionOption.forEach(function (option) {
-                const ratedOption = {
-                    score: option.score,
-                    decisionOptionId: option.id,
-                    selectionCriteriaId: criteria.id,
-                };
-
-                ratedOptions = [...ratedOptions, ratedOption];
-            });
-        });
-
-        this.props.postRatedOptions(this.props.decisionId, ratedOptions);
+        // prevent memory leaks
+        this.state.subscription.unsubscribe();
     }
 
 
@@ -157,17 +156,17 @@ class RateOptions extends React.Component {
     }
 
 
-    onDragEnd = (event, criteriaLocal, optionLocal) => {
-
-        ReactGA.event({
-            category: 'Rate Options',
-            action: 'Drag End'
-        });
-    };
-
-
     onChange = (event, criteriaIndex, optionIndex, score) => {
+        //send data to fetch
+        const ratedOption = {
+            score: score,
+            decisionOptionId: this.state.ratedCriteria[criteriaIndex].decisionOption[optionIndex].id,
+            selectionCriteriaId: this.state.ratedCriteria[criteriaIndex].id,
+        };
 
+        onChange$.next(ratedOption);
+
+        //Update State
         let ratedCriteriaLocal = this.state.ratedCriteria;
 
         ratedCriteriaLocal[criteriaIndex].decisionOption[optionIndex].score = score;
@@ -177,6 +176,10 @@ class RateOptions extends React.Component {
         });
 
     };
+
+    fetchSliderValues(ratedOption){
+        this.props.putRatedOption(this.props.decisionId, ratedOption);
+    }
 
     onHideInfo() {
         this.setState({showInfo: false,});
@@ -295,7 +298,6 @@ class RateOptions extends React.Component {
                                                                     step={1}
                                                                     marks={marks}
                                                                     onChange={(event, value) => this.onChange(event, criteriaIndex, optionIndex, value)}
-                                                                    onDragEnd={(event) => this.onDragEnd(event, criteria, option)}
                                                                 />
                                                             </Grid>
                                                         </Grid>
@@ -328,7 +330,7 @@ RateOptions.propTypes = {
     classes: PropTypes.object.isRequired,
     rateOptions: PropTypes.object.isRequired,
     getRatedOptions: PropTypes.func.isRequired,
-    postRatedOptions: PropTypes.func.isRequired,
+    putRatedOption: PropTypes.func.isRequired,
     optionsAndCriteria: PropTypes.object.isRequired,
     weightCriteria: PropTypes.object.isRequired
 };
@@ -340,4 +342,4 @@ const mapStateToProps = state => ({
 });
 
 
-export default connect(mapStateToProps, {getRatedOptions, postRatedOptions})(withStyles(styles)(RateOptions));
+export default connect(mapStateToProps, {getRatedOptions, putRatedOption})(withStyles(styles)(RateOptions));
