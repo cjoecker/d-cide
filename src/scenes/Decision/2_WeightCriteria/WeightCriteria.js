@@ -15,6 +15,10 @@ import {getWeightedCriteria, putWeightedCriteria} from "../../../services/action
 import * as LongStrings from "../../../components/LongStrings";
 import ReactGA from 'react-ga';
 import Fade from "@material-ui/core/Fade";
+import {Subject} from "rxjs";
+import {debounceTime} from 'rxjs/operators';
+
+let onChange$ = new Subject();
 
 const styles = theme => ({
 
@@ -104,7 +108,6 @@ class WeightCriteria extends Component {
 
 
         this.onChange = this.onChange.bind(this);
-        this.onDragEnd = this.onDragEnd.bind(this);
         this.onHideInfo = this.onHideInfo.bind(this);
         this.onShowInfo = this.onShowInfo.bind(this);
 
@@ -114,22 +117,22 @@ class WeightCriteria extends Component {
     //GET_CRITERIA
     componentDidMount() {
         this.props.getWeightedCriteria(this.props.decisionId);
+
+        const subscription = onChange$
+            .pipe(
+                debounceTime(500)
+            )
+            .subscribe(
+                data => this.fetchSliderValues(data)
+            );
+
+        // prevent memory leaks
+        this.setState((prevState) => ({...prevState, subscription}));
     }
 
     componentWillUnmount() {
-
-        let weightedCriteriaArray = [];
-
-        this.state.weightedCriteria.forEach(function (criteria, index) {
-            const weightedCriteria = {
-                id: criteria.id,
-                weight: criteria.weight,
-            };
-
-            weightedCriteriaArray = [...weightedCriteriaArray, weightedCriteria];
-        });
-
-        this.props.putWeightedCriteria(this.props.decisionId, weightedCriteriaArray);
+        // prevent memory leaks
+        this.state.subscription.unsubscribe();
     }
 
     //Refresh when redux state changes
@@ -146,26 +149,24 @@ class WeightCriteria extends Component {
 
 
     //CHANGE_CRITERIA
-    onDragEnd(itemLocal) {
-
-        ReactGA.event({
-            category: 'Weight Criteria',
-            action: 'Drag End'
-        });
-    }
-
-
     onChange = (event, value, itemLocal, index) => {
 
-        let weightInfoArray = this.state.weightInfo;
+        //send data to fetch
+        const weightedCriteria = {
+            id: itemLocal.id,
+            weight: value,
+        };
+
+        onChange$.next(weightedCriteria);
 
         //Update State
+        let weightInfoArray = this.state.weightInfo;
+
         let newState = update(this.state.weightedCriteria, {
             [index]: {
                 weight: {$set: value},
             }
         });
-
 
         //Show InfoText
         weightInfoArray[index] = WeightCriteria.getWeightInfoText(itemLocal);
@@ -174,9 +175,11 @@ class WeightCriteria extends Component {
             weightedCriteria: newState,
             weightInfo: weightInfoArray,
         });
-
-
     };
+
+    fetchSliderValues(weightedCriteria){
+        this.props.putWeightedCriteria(this.props.decisionId, weightedCriteria);
+    }
 
     onHideInfo() {
         this.setState({showInfo: false,});
@@ -304,7 +307,6 @@ class WeightCriteria extends Component {
                                                     step={1}
                                                     marks={marks}
                                                     onChange={(event, value) => this.onChange(event, value, criteria, index)}
-                                                    onDragEnd={() => this.onDragEnd(criteria)}
                                                 />
                                             </Grid>
                                             <Grid item xs={12}  >

@@ -42,7 +42,7 @@ export const putWeightedCriteria = (decisionId, criteria) => async dispatch => {
 
     //Get Information
     try {
-        const res = await axios.put(`/api/decisions/${decisionId}/weightedCriteria`, criteria);
+        const res = await axios.put(`/api/decisions/${decisionId}/weightedCriteria/`, criteria);
         dispatch({
             type: PUT_WEIGHTED_CRITERIA,
         });
