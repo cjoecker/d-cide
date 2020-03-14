@@ -1,119 +1,41 @@
 import axios from "axios";
-import {
-    GET_ITEMS,
-    POST_ITEM,
-    START_LOADING,
-    END_LOADING,
-    DELETE_ITEM,
-    PUT_ITEM,
-    GET_ERRORS,
-} from "./types";
+import {GET_DECISION_OPTIONS, POST_DECISION_OPTION, DELETE_DECISION_OPTION, PUT_DECISION_OPTION} from "../actions/types";
+import {GET_SELECTION_CRITERIA, POST_SELECTION_CRITERIA, DELETE_SELECTION_CRITERIA, PUT_SELECTION_CRITERIA} from "../actions/types";
+import {httpRequest} from "./HttpDispatcher";
 
 
 export const getItems = (itemsKey, decisionId, calculatedScore) => async dispatch => {
 
-    //Show Loading Bar
-    dispatch({type: START_LOADING});
+    let action = itemsKey === "decisionOptions" ? GET_DECISION_OPTIONS : GET_SELECTION_CRITERIA;
 
-    //Get Information
-    try {
-        const res = await axios.get(`/api/decisions/${decisionId}/${itemsKey}`, {
+    httpRequest(axios.get(`/api/decisions/${decisionId}/${itemsKey}`, {
             params: {
                 calculatedScore: calculatedScore
             }
-        });
-
-        dispatch({
-            type: GET_ITEMS,
-            payload: res.data,
-            itemsKey: itemsKey
-        });
-
-    } catch (error) {
-        dispatch({
-            type: GET_ERRORS,
-            payload: `${error.response.statusText} (${error.response.status})`
-        });
-    }
-
-
-    //Show Loading Bar
-    dispatch({type: END_LOADING});
-
+        }), action);
 
 };
 
 export const postItem = (newEntry, itemsKey, decisionId) => async dispatch => {
 
-    //Show Loading Bar
-    dispatch({type: START_LOADING});
+    let action = itemsKey === "decisionOptions" ? POST_DECISION_OPTION : POST_SELECTION_CRITERIA;
 
-    //Get Information
-    try {
-        const res = await axios.post(`/api/decisions/${decisionId}/${itemsKey}/`, newEntry);
-        dispatch({
-            type: POST_ITEM,
-            payload: res.data,
-            itemsKey: itemsKey
-        });
-    } catch (error) {
-        dispatch({
-            type: GET_ERRORS,
-            payload: `${error.response.statusText} (${error.response.status})`
-        });
-    }
-
-    //Show Loading Bar
-    dispatch({type: END_LOADING});
+    dispatch(httpRequest(axios.post(`/api/decisions/${decisionId}/${itemsKey}/`, newEntry), action));
 
 };
 
 export const deleteItem = (id, itemsKey, decisionId) => async dispatch => {
 
-    //Show Loading Bar
-    dispatch({type: START_LOADING});
+    let action = itemsKey === "decisionOptions" ? DELETE_DECISION_OPTION : DELETE_SELECTION_CRITERIA;
 
-    //Get Information
-    try {
-        const res = await axios.delete(`/api/decisions/${decisionId}/${itemsKey}/${id}`);
-        dispatch({
-            type: DELETE_ITEM,
-            payload: id,
-            itemsKey: itemsKey,
-        });
-    } catch (error) {
-        dispatch({
-            type: GET_ERRORS,
-            payload: `${error.response.statusText} (${error.response.status})`
-        });
-    }
-
-    //Show Loading Bar
-    dispatch({type: END_LOADING});
+    dispatch(httpRequest(axios.delete(`/api/decisions/${decisionId}/${itemsKey}/${id}`), action));
 
 };
 
 export const putItem = (newEntry, itemsKey, decisionId) => async dispatch => {
 
-    //Show Loading Bar
-    dispatch({type: START_LOADING});
+    let action = itemsKey === "decisionOptions" ? PUT_DECISION_OPTION : PUT_SELECTION_CRITERIA;
 
-    //Get Information
-    try {
-        const res = await axios.put(`/api/decisions/${decisionId}/${itemsKey}/`, newEntry);
-        dispatch({
-            type: PUT_ITEM,
-            payload: res.data,
-            itemsKey: itemsKey
-        });
-    } catch (error) {
-        dispatch({
-            type: GET_ERRORS,
-            payload: `${error.response.statusText} (${error.response.status})`
-        });
-    }
-
-    //Show Loading Bar
-    dispatch({type: END_LOADING});
+    dispatch(httpRequest(axios.put(`/api/decisions/${decisionId}/${itemsKey}/`, newEntry), action));
 
 };

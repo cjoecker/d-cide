@@ -8,7 +8,7 @@ import InfoIcon from '@material-ui/icons/Info';
 import IconButton from "@material-ui/core/IconButton";
 import InfoDialog from "../../../components/InfoDialog";
 import Typography from "@material-ui/core/Typography";
-import * as LongStrings from "../../../components/LongStrings";
+import * as LongStrings from "../../../services/LongTexts";
 import ReactGA from 'react-ga';
 import {connect} from "react-redux";
 import Zoom from "@material-ui/core/Zoom";

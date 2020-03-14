@@ -15,8 +15,6 @@ class LandingPage extends Component {
             await this.props.get_unregisteredUser();
         }
 
-
-
         if(this.props.security.user.registeredUser){
 
             //Registered User
@@ -28,6 +26,8 @@ class LandingPage extends Component {
             this.props.history.push("/decisions");
 
         }else{
+
+
             //Unregistered User
             ReactGA.event({
                 category: 'Landing page',

@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import PropTypes from "prop-types";
-import {Slide, withStyles} from "@material-ui/core";
+import { withStyles} from "@material-ui/core";
 import Slider from "@material-ui/core/Slider";
 import update from 'immutability-helper';
 import WeightSlider_Scale from "../../../images/WeightSlider_Scale.svg"
@@ -12,7 +12,7 @@ import IconButton from "@material-ui/core/IconButton";
 import InfoDialog from "../../../components/InfoDialog";
 import {connect} from "react-redux";
 import {getWeightedCriteria, putWeightedCriteria} from "../../../services/actions/WeightCriteria_Action";
-import * as LongStrings from "../../../components/LongStrings";
+import * as LongStrings from "../../../services/LongTexts";
 import ReactGA from 'react-ga';
 import Fade from "@material-ui/core/Fade";
 import {Subject} from "rxjs";

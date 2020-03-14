@@ -7,7 +7,7 @@ import Paper from "@material-ui/core/Paper";
 import Link from "@material-ui/core/Link";
 import Fab from "@material-ui/core/Fab";
 import Typography from "@material-ui/core/Typography";
-import * as LongStrings from "../../components/LongStrings";
+import * as LongStrings from "../../services/LongTexts";
 import {connect} from "react-redux";
 import {postSession, postUser} from "../../services/actions/Sessions_Action";
 import ReactGA from "react-ga";

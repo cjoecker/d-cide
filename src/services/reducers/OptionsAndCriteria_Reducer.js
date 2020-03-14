@@ -1,4 +1,6 @@
-import { GET_ITEMS, POST_ITEM, DELETE_ITEM, PUT_ITEM} from "../actions/types";
+import {GET_DECISION_OPTIONS, POST_DECISION_OPTION, DELETE_DECISION_OPTION, PUT_DECISION_OPTION} from "../actions/types";
+import {GET_SELECTION_CRITERIA, POST_SELECTION_CRITERIA, DELETE_SELECTION_CRITERIA, PUT_SELECTION_CRITERIA} from "../actions/types";
+
 
 const initialState = {
     optionsAndCriteria: {},
@@ -8,26 +10,48 @@ const initialState = {
 
 export default function(state = initialState, action) {
     switch (action.type) {
-
-        case GET_ITEMS:
+        case GET_DECISION_OPTIONS:
             return {
                 ...state,
-                [action.itemsKey]: action.payload
+                decisionOptions: action.payload
             };
 
-        case POST_ITEM:
+        case POST_DECISION_OPTION:
             return {
                 ...state,
-                [action.itemsKey]: [action.payload, ...state[action.itemsKey]]
+                decisionOptions: [action.payload, ...state[action.itemsKey]]
             };
 
-        case DELETE_ITEM:
+        case DELETE_DECISION_OPTION:
             return {
                 ...state,
-                [action.itemsKey]: state[action.itemsKey].filter(item => item.id !== action.payload)
+                decisionOptions: state[action.itemsKey].filter(item => item.id !== action.payload)
             };
 
-        case PUT_ITEM:
+        case PUT_DECISION_OPTION:
+            return {
+                ...state
+            };
+
+        case GET_SELECTION_CRITERIA:
+            return {
+                ...state,
+                selectionCriteria: action.payload
+            };
+
+        case POST_SELECTION_CRITERIA:
+            return {
+                ...state,
+                selectionCriteria: [action.payload, ...state[action.itemsKey]]
+            };
+
+        case DELETE_SELECTION_CRITERIA:
+            return {
+                ...state,
+                selectionCriteria: state[action.itemsKey].filter(item => item.id !== action.payload)
+            };
+
+        case PUT_SELECTION_CRITERIA:
             return {
                 ...state
             };

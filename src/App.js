@@ -20,7 +20,7 @@ import Decisions from "./scenes/Decisions/Decisions";
 import {logout, postSession, setJWT} from "./services/actions/Sessions_Action";
 import SecureRoute from "./services/SecureRoute";
 import LandingPage from "./scenes/LandingPage";
-import Banner from "./components/Banner";
+import Banner from "./components/MessagesBanner";
 import NotFound from "./scenes/NotFound/NotFound";
 import {createBrowserHistory} from "history";
 import ReactGA from 'react-ga';
@@ -38,8 +38,8 @@ import MenuItem from "@material-ui/core/MenuItem";
 import {getValueSafe} from "./services/GeneralUtils";
 import {POST_SESSION} from "./services/actions/types";
 import axios from "axios";
-import Fab from "@material-ui/core/Fab";
-import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
+import MessagesBanner from "./components/MessagesBanner";
+
 
 const jwtToken = localStorage.jwtToken;
 
@@ -166,8 +166,6 @@ class App extends React.Component {
         const {classes} = this.props;
         const {isLoading} = this.props.app;
 
-        const errorsPresent = Object.keys(this.props.errors).length !== 0;
-
         let userMenu = (
                 <Menu
                     id="simple-menu"
@@ -249,15 +247,7 @@ class App extends React.Component {
                             <SecureRoute exact path="/decisions/:decisionId" component={Decision}/>
                             <Route component={NotFound}/>
                         </Switch>
-
-                        {/*/!*Connection Errors*!/*/}
-                        <Banner
-                            show={errorsPresent}
-                            variant="error"
-                            message={this.props.errors}
-                            allowClose={true}
-                            autoHide={false}
-                        />
+                        <MessagesBanner/>
                     </div>
                 </Router>
             </ThemeProvider>
@@ -270,7 +260,7 @@ App.propTypes = {
     classes: PropTypes.object.isRequired,
     app: PropTypes.object.isRequired,
     security: PropTypes.object.isRequired,
-    errors: PropTypes.object.isRequired,
+    messages: PropTypes.object.isRequired,
     optionsAndCriteria: PropTypes.object.isRequired,
     logout: PropTypes.func.isRequired,
     setJWT: PropTypes.func.isRequired,
@@ -278,7 +268,7 @@ App.propTypes = {
 
 const mapStateToProps = state => ({
     app: state.app,
-    errors: state.errors,
+    messages: state.messages,
     security: state.security,
     optionsAndCriteria: state.optionsAndCriteria,
 });

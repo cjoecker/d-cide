@@ -9,7 +9,7 @@ import RateSlider_Scale from "../../../images/RateSlider_Scale.svg";
 import IconButton from "@material-ui/core/IconButton";
 import InfoIcon from '@material-ui/icons/Info';
 import InfoDialog from "../../../components/InfoDialog";
-import * as LongStrings from "../../../components/LongStrings";
+import * as LongStrings from "../../../services/LongTexts";
 import {connect} from "react-redux";
 import {getRatedOptions, putRatedOption} from "../../../services/actions/RatedOptions_Action";
 import ReactGA from "react-ga";

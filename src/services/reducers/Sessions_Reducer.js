@@ -1,5 +1,6 @@
 import {POST_SESSION, POST_USER, SAVE_JWT, DELETE_JWT} from "../actions/types";
 
+
 const initialState = {
     validToken: false,
     signUpSuccessful: false,

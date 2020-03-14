@@ -7,16 +7,18 @@ import InfoDialog from "../../../components/InfoDialog";
 import PropTypes from "prop-types";
 import {withStyles} from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
-import Banner from "../../../components/Banner";
+import Banner from "../../../components/MessagesBanner";
 import {connect} from "react-redux";
-import * as LongStrings from "../../../components/LongStrings";
+import * as LongStrings from "../../../services/LongTexts";
 import ReactGA from 'react-ga';
+import {deleteMessage, showMessage} from "../../../services/actions/Messages_Action";
+import {NOT_ENOUGH_CRITERIA, NOT_ENOUGH_OPTIONS} from "../../../services/Messages";
 
 
 const styles = theme => ({
 
     div_main: {
-        paddingTop: theme.spacing( 2.5),
+        paddingTop: theme.spacing(2.5),
         paddingBottom: theme.spacing(5.5),
         textAlign: "center",
     },
@@ -53,6 +55,23 @@ class OptionsAndCriteria extends Component {
         this.hideInfo = this.hideInfo.bind(this);
     }
 
+    componentDidUpdate(prevProps, prevState, snapshot) {
+
+        if (prevProps.optionsAndCriteria.decisionOptions !== this.props.optionsAndCriteria.decisionOptions) {
+            this.props.optionsAndCriteria.decisionOptions.length < 2 ?
+                this.props.showMessage(NOT_ENOUGH_OPTIONS)
+                :
+                this.props.deleteMessage(NOT_ENOUGH_OPTIONS)
+        }
+
+        if (prevProps.optionsAndCriteria.selectionCriteria !== this.props.optionsAndCriteria.selectionCriteria) {
+            this.props.optionsAndCriteria.selectionCriteria.length < 2 ?
+                this.props.showMessage(NOT_ENOUGH_CRITERIA)
+                :
+                this.props.deleteMessage(NOT_ENOUGH_CRITERIA)
+        }
+    }
+
     showInfo(e, name) {
         this.setState({[name]: true});
         ReactGA.event({
@@ -73,16 +92,12 @@ class OptionsAndCriteria extends Component {
 
         const {classes} = this.props;
         const {isLoading} = this.props.app;
-        const errorsPresent = Object.keys(this.props.errors).length === 0;
 
 
         const minItemsThere =
             (!isLoading &&
-                errorsPresent &&
                 !(this.props.optionsAndCriteria.decisionOptions.length >= 2 &&
                     this.props.optionsAndCriteria.selectionCriteria.length >= 2));
-
-        const minItemsWarningText = "At least two Decision Options and two Selection Criteria are necessary! ";
 
         return (
             <div className={classes.div_main} align="center">
@@ -131,34 +146,23 @@ class OptionsAndCriteria extends Component {
                     show={this.state.criteriaInfo}
                     hide={(e) => this.hideInfo(e, "criteriaInfo")}
                 />
-
-                {/*Warning MinItemsThere*/}
-                <Banner
-                    show={minItemsThere}
-                    variant="warning"
-                    message={minItemsWarningText}
-                    allowClose={false}
-                    autoHide={false}
-                />
-
             </div>
         )
     }
 }
 
 
-
 OptionsAndCriteria.propTypes = {
     app: PropTypes.object.isRequired,
-    errors: PropTypes.object.isRequired,
     optionsAndCriteria: PropTypes.object.isRequired,
+    showMessage: PropTypes.func.isRequired,
+    deleteMessage: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
     app: state.app,
-    errors: state.errors,
     optionsAndCriteria: state.optionsAndCriteria
 });
 
 
-export default connect(mapStateToProps, null)(withStyles(styles)(OptionsAndCriteria));
+export default connect(mapStateToProps, {showMessage, deleteMessage})(withStyles(styles)(OptionsAndCriteria));
