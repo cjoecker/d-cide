@@ -33,6 +33,8 @@ export const POST_SESSION = "POST_SESSION";
 export const POST_USER = "POST_USER";
 export const SAVE_JWT = "SAVE_JWT";
 export const DELETE_JWT = "DELETE_JWT";
+export const SHOW_WRONG_PASSWORD = "SHOW_WRONG_PASSWORD";
+export const RESET_WRONG_PASSWORD = "RESET_WRONG_PASSWORD";
 
 //Messages
 export const SHOW_MESSAGE  = "SHOW_MESSAGE";

@@ -53,9 +53,9 @@ const styles = theme => ({
         marginRight: theme.spacing(9),
         width: "100%",
     },
-
-
 });
+
+
 
 
 class Decisions extends React.Component {
@@ -88,9 +88,6 @@ class Decisions extends React.Component {
 
         this.setState({isMounted: true});
     }
-
-
-
 
 
     //Refresh when redux state changes

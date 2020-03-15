@@ -1,4 +1,11 @@
-import {POST_SESSION, POST_USER, SAVE_JWT, DELETE_JWT} from "../actions/types";
+import {
+    POST_SESSION,
+    POST_USER,
+    SAVE_JWT,
+    DELETE_JWT,
+    SHOW_WRONG_PASSWORD,
+    RESET_WRONG_PASSWORD
+} from "../actions/types";
 
 
 const initialState = {
@@ -6,6 +13,7 @@ const initialState = {
     signUpSuccessful: false,
     jwt: "",
     user: {},
+    wrongPassword: false,
 };
 
 export default function(state = initialState, action) {
@@ -15,7 +23,8 @@ export default function(state = initialState, action) {
             return {
                 ...state,
                 validToken: !!action.payload,
-                user: action.payload
+                user: action.payload,
+                wrongPassword: false,
             };
         case SAVE_JWT:
             return {
@@ -30,7 +39,17 @@ export default function(state = initialState, action) {
         case POST_USER:
             return {
                 ...state,
-                signUpSuccessful: action.payload
+                signUpSuccessful: action.payload,
+            };
+        case SHOW_WRONG_PASSWORD:
+            return {
+                ...state,
+                wrongPassword: true,
+            };
+        case RESET_WRONG_PASSWORD:
+            return {
+                ...state,
+                wrongPassword: false,
             };
         default:
             return state;

@@ -6,7 +6,7 @@ import {
     POST_SESSION,
     POST_USER,
     SAVE_JWT,
-    DELETE_JWT,
+    DELETE_JWT, SHOW_WRONG_PASSWORD, RESET_WRONG_PASSWORD,
 } from "./types";
 import jwt_decode from "jwt-decode";
 
@@ -54,7 +54,7 @@ export const postSession = LoginRequest => async dispatch => {
         // post => Login Request
         const res = await axios.post("/api/sessions/", LoginRequest);
 
-        //save jwt in redux before saving it
+        //save jwt in redux before saving user
         await dispatch({
             type: SAVE_JWT,
             payload: res.data.token,
@@ -66,10 +66,21 @@ export const postSession = LoginRequest => async dispatch => {
             payload: jwt_decode(res.data.token),
         });
     } catch (err) {
-        dispatch({
-            type: SHOW_MESSAGE,
-            payload: err.response.data
-        });
+
+        if(err.response.data.error !== undefined){
+            await dispatch({
+                type: RESET_WRONG_PASSWORD
+            });
+
+            dispatch({
+                type: SHOW_WRONG_PASSWORD
+            });
+        }else{
+            dispatch({
+                type: SHOW_MESSAGE,
+                payload: err.response.data
+            });
+        }
     }
 
     //Show Loading Bar

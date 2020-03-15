@@ -17,6 +17,7 @@ import TwoButtonsDialog from "../../components/TwoButtonsDialog";
 import ReactGA from "react-ga";
 import {getDecisions, putDecision} from "../../services/actions/Decisions_Action";
 import {getValueSafe} from "../../services/GeneralUtils";
+import clsx from "clsx";
 
 
 
@@ -70,6 +71,36 @@ const styles = theme => ({
         textAlign: "center"
     },
 
+    animatedItem: {
+        animation: `$shake 500ms ${theme.transitions.easing.sharp}`
+    },
+
+    "@keyframes shake": {
+        "0%": {
+            transform: "translateX(0)"
+        },
+        "8%": {
+            transform: "translateX(-7%)"
+        },
+        "25%": {
+            transform: "translateX(7%)"
+        },
+        "41%": {
+            transform: "translateX(-7%)"
+        },
+        "58%": {
+            transform: "translateX(7%)"
+        },
+        "75%": {
+            transform: "translateX(-4%)"
+        },
+        "92%": {
+            transform: "translateX(4%)"
+        },
+        "100%": {
+            transform: "translateX(0)"
+        },
+    },
 
 });
 
@@ -85,9 +116,9 @@ class Login extends React.Component {
             password: '',
             showPassword: false,
             rememberMe: false,
-            errors: {},
             showSaveDecision: false,
             unregisteredUsername: '',
+            wrongPassword: false,
         };
         this.onChange = this.onChange.bind(this);
         this.onToggleShowPass = this.onToggleShowPass.bind(this);
@@ -96,6 +127,53 @@ class Login extends React.Component {
 
         this.saveDecision = this.saveDecision.bind(this);
         this.dismissDecision = this.dismissDecision.bind(this);
+
+        this.passwordInput = React.createRef();
+    }
+
+    componentDidMount() {
+        if (this.props.security.validToken && this.props.security.user.registeredUser) {
+            this.props.history.push("/decisions");
+        }
+
+        if (this.props.security.user !== null) {
+            if (!this.props.security.user.registeredUser) {
+                this.setState({unregisteredUsername: this.props.security.user.username});
+            }
+        }
+
+    }
+
+
+    async componentDidUpdate(prevProps, prevState, snapshot) {
+        //Show form to transfer decision to user
+        if (getValueSafe(() => prevProps.security.user.registeredUser) === false && getValueSafe(() => this.props.security.user.registeredUser) === true) {
+            this.setState({showSaveDecision: true});
+        }
+
+        //Go to decisions after asking to save decision
+        if (prevState.showSaveDecision && !this.state.showSaveDecision) {
+            this.props.history.push("/decisions");
+        }
+
+        //Go to decisions after asking to save decision
+        if (getValueSafe(() => prevProps.security.user.registeredUser) === null
+            && getValueSafe(() => this.props.security.user.registeredUser) === true
+        ) {
+            await this.props.setJWT(this.props.security.jwt);
+
+            this.props.history.push("/decisions");
+        }
+
+        //wrong password
+        if (!prevProps.security.wrongPassword && this.props.security.wrongPassword) {
+            this.setState({
+                wrongPassword: true,
+                password: "",
+            });
+            this.passwordInput.current.focus();
+        }
+
     }
 
 
@@ -112,46 +190,16 @@ class Login extends React.Component {
         this.setState({showPassword: !this.state.showPassword});
     }
 
+    onSubmit() {
 
-    async componentDidUpdate(prevProps, prevState, snapshot) {
+        this.setState({wrongPassword: false});
 
-        //show errors
-        if (prevProps.errors !== this.props.errors) {
-            this.setState({errors: this.props.errors});
-        }
-
-
-        //Show form to transfer decision to user
-        if (getValueSafe(() => prevProps.security.user.registeredUser) === false && getValueSafe(() => this.props.security.user.registeredUser) === true) {
-            this.setState({showSaveDecision: true});
-        }
-
-        //Go to decisions after asking to save decision
-        if (prevState.showSaveDecision && !this.state.showSaveDecision) {
-
-            this.props.history.push("/decisions");
-        }
-
-        //Go to decisions after asking to save decision
-        if (getValueSafe(() => prevProps.security.user.registeredUser) === null
-            && getValueSafe(() => this.props.security.user.registeredUser) === true
-        ) {
-            await this.props.setJWT(this.props.security.jwt);
-
-            this.props.history.push("/decisions");
-        }
-
-
-    }
-
-
-    async onSubmit() {
         const user = {
             username: this.state.username,
             password: this.state.password
         };
 
-        await this.props.postSession(user);
+        this.props.postSession(user);
 
 
     }
@@ -165,15 +213,12 @@ class Login extends React.Component {
     };
 
 
-    async saveDecision(e) {
+    async saveDecision() {
 
         const user = {
             username: this.state.username,
             password: this.state.password
         };
-
-        //get unregistered decisions
-        await this.props.getDecisions;
 
         const decision = {
             id: this.props.decision.decisions[0].id,
@@ -206,29 +251,17 @@ class Login extends React.Component {
         });
     };
 
-    componentDidMount() {
-        if (this.props.security.validToken && this.props.security.user.registeredUser) {
-            this.props.history.push("/decisions");
-        }
-
-        if (this.props.security.user !== null) {
-            if (!this.props.security.user.registeredUser) {
-                this.setState({unregisteredUsername: this.props.security.user.username});
-            }
-        }
-
-    }
-
     render() {
         const {classes} = this.props;
-        const {errors} = this.state;
 
         return (
             <div className={classes.div_main}>
                 <Grid container justify="center">
-                    <Paper elevation={2} key="mainPaper" className={classes.paper}>
+                    <Paper elevation={2} key="mainPaper" className={clsx(
+                        classes.paper,
+                        {[classes.animatedItem]: this.state.wrongPassword}
+                    )}>
                         <Grid container justify="center" alignItems="center" spacing={0} className={classes.gridContainer}>
-
                             {/*Title*/}
                             <Grid item xs={12} className={classes.gridItem_title}>
                                 <Typography variant="h4" gutterBottom>
@@ -240,8 +273,6 @@ class Login extends React.Component {
                                 <TextField
                                     id="outlined-email-input"
                                     name="username"
-                                    error={errors.username}
-                                    helperText={errors.username}
                                     value={this.state.username}
                                     onChange={this.onChange}
                                     label="Email"
@@ -264,8 +295,6 @@ class Login extends React.Component {
                                 <TextField
                                     id="outlined-password-input"
                                     name="password"
-                                    error={errors.password}
-                                    helperText={errors.password}
                                     value={this.state.password}
                                     onChange={this.onChange}
                                     label="Password"
@@ -280,6 +309,7 @@ class Login extends React.Component {
                                             this.onSubmit();
                                         }
                                     }}
+                                    inputRef={this.passwordInput}
                                     InputProps={{
                                         endAdornment: (
                                             <InputAdornment position="end">
