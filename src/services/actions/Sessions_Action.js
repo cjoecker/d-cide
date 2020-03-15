@@ -1,30 +1,94 @@
 import axios from "axios";
 import {
+    END_LOADING,
     SHOW_MESSAGE,
+    START_LOADING,
     POST_SESSION,
+    POST_USER,
     SAVE_JWT,
-    DELETE_JWT, POST_USER, START_LOADING, END_LOADING,
+    DELETE_JWT,
 } from "./types";
-import {httpRequest} from "./HttpDispatcher";
 import jwt_decode from "jwt-decode";
 
 
-export const postUser = (newUser) => async dispatch => {
+export const postUser = (newUser, history) => async dispatch => {
 
-    dispatch(httpRequest(axios.post("/api/users/", newUser), SHOW_MESSAGE));
+    //Show Loading Bar
+    dispatch({type: START_LOADING});
 
+    let signUpSuccessful = false;
+
+    try {
+        await axios.post("/api/users/", newUser);
+        dispatch({
+            type: SHOW_MESSAGE,
+            payload: {}
+        });
+
+        signUpSuccessful = true;
+
+    } catch (err) {
+        dispatch({
+            type: SHOW_MESSAGE,
+            payload: err.response.data
+        });
+    }
+
+    //SignUp Successful
+    dispatch({
+        type: POST_USER,
+        payload: signUpSuccessful
+    });
+
+    //Show Loading Bar
+    dispatch({type: END_LOADING});
 };
 
 export const postSession = LoginRequest => async dispatch => {
 
-    dispatch(httpRequest(axios.post("/api/sessions/", LoginRequest), SAVE_JWT));
+    //Show Loading Bar
+    dispatch({type: START_LOADING});
 
+
+    try {
+        // post => Login Request
+        const res = await axios.post("/api/sessions/", LoginRequest);
+
+        //save jwt in redux before saving it
+        dispatch({
+            type: SAVE_JWT,
+            payload: res.data.token,
+        });
+
+        //set new user
+        dispatch({
+            type: POST_SESSION,
+            payload: jwt_decode(res.data.token),
+        });
+    } catch (err) {
+        dispatch({
+            type: SHOW_MESSAGE,
+            payload: err.response.data
+        });
+    }
+
+    //Show Loading Bar
+    dispatch({type: END_LOADING});
+};
+
+
+
+export const logout = () => async dispatch => {
+
+    await dispatch(setJWT(false));
+
+    dispatch({
+        type: POST_SESSION,
+        payload: null
+    });
 };
 
 export const get_unregisteredUser = () => async dispatch => {
-
-    dispatch(httpRequest(axios.post("/api/sessions/", LoginRequest), SAVE_JWT));
-
 
     //Show Loading Bar
     dispatch({type: START_LOADING});
@@ -32,12 +96,12 @@ export const get_unregisteredUser = () => async dispatch => {
     try {
         const res = await axios.post("/api/sessions/unregistered");
 
+        await dispatch(setJWT(res.data.token));
+
         dispatch({
             type: POST_SESSION,
             payload: jwt_decode(res.data.token),
         });
-
-        dispatch(setJWT(res.data.token));
 
     } catch (err) {
         dispatch({
@@ -49,17 +113,6 @@ export const get_unregisteredUser = () => async dispatch => {
     //Show Loading Bar
     dispatch({type: END_LOADING});
 
-};
-
-
-export const logout = () => dispatch => {
-
-    dispatch(setJWT(false));
-
-    dispatch({
-        type: POST_SESSION,
-        payload: null
-    });
 };
 
 export const setJWT = token => async dispatch => {

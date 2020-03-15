@@ -2,71 +2,51 @@ import {Component} from "react";
 import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import {postSession, postUser, logout, get_unregisteredUser} from "../services/actions/Sessions_Action";
-import {postDecision, getDecisions} from "../services/actions/Decisions_Action";
-import ReactGA from 'react-ga';
-import axios from "axios";
+import {getDecisions} from "../services/actions/Decisions_Action";
 
 class LandingPage extends Component {
-    async componentDidMount() {
 
-        //Unregistered User
+    componentDidMount() {
         if (!this.props.security.validToken) {
-            //Get Decisions
-            await this.props.get_unregisteredUser();
-        }
-
-        if(this.props.security.user.registeredUser){
-
-            //Registered User
-            ReactGA.event({
-                category: 'Landing page',
-                action: 'Registered User',
-            });
-
-            this.props.history.push("/decisions");
-
+            this.props.get_unregisteredUser();
         }else{
-
-
-            //Unregistered User
-            ReactGA.event({
-                category: 'Landing page',
-                action: 'Unregistered User',
-            });
-
-            //Get Decisions
-            await this.props.getDecisions();
-
-            //Open Decision
-            if(this.props.decision.decisions.length > 0) {
-                this.props.history.push("/decisions/" + this.props.decision.decisions[0].id);
+            if(this.props.security.user.registeredUser){
+                this.props.history.push("/decisions");
             }else{
-                this.props.logout();
-                this.props.history.push("/");
+                this.props.getDecisions();
             }
-
         }
     }
 
+    componentDidUpdate(prevProps, prevState, snapshot) {
+
+        //change of user
+        if(prevProps.security.user !== this.props.security.user){
+            this.props.getDecisions();
+        }
+
+        if(prevProps.decision.decisions !== this.props.decision.decisions) {
+            const decisionsNumber = this.props.decision.decisions.length;
+            if(decisionsNumber > 0) {
+                this.props.history.push("/decisions/" + this.props.decision.decisions[decisionsNumber - 1].id);
+            }
+        }
+
+    }
+
+
     render() {
-        return (null);
+        return null;
     }
 }
 
 LandingPage.propTypes = {
-    LandingPage: PropTypes.object.isRequired,
     security: PropTypes.object.isRequired,
     decision: PropTypes.object.isRequired,
-    postSession: PropTypes.func.isRequired,
-    logout: PropTypes.func.isRequired,
-    postUser: PropTypes.func.isRequired,
-    get_unregisteredUsersNum: PropTypes.func.isRequired,
     getDecisions: PropTypes.func.isRequired,
-    create_exampleData: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
-    LandingPage: state.app,
     security: state.security,
     decision: state.decision
 });
@@ -74,9 +54,6 @@ const mapStateToProps = state => ({
 
 export default connect(
     mapStateToProps, {
-        postSession,
-        logout,
-        postUser,
         get_unregisteredUser,
         getDecisions
     })(LandingPage);
