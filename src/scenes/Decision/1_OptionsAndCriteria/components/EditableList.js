@@ -32,6 +32,10 @@ const styles = theme => ({
         marginLeft: theme.spacing(1.5),
     },
 
+    paper_buttons: {
+        marginRight: -theme.spacing(1.5),
+    },
+
     inputBase: {
         marginRight: theme.spacing(2),
         width: "100%",
@@ -182,7 +186,7 @@ export class EditableList extends React.Component {
                                 <IconButton
                                     test-data='button-add-item'
                                     aria-label="Add"
-                                    className={classes.margin}
+                                    className={classes.paper_buttons}
                                     onClick={this.onCreateItem}>
                                     <AddIcon/>
                                 </IconButton>
@@ -210,6 +214,7 @@ export class EditableList extends React.Component {
                                         <IconButton
                                             aria-label="Delete"
                                             onClick={() => this.onDeleteItem(item.id)}
+                                            className={classes.paper_buttons}
                                         >
                                             <DeleteIcon/>
                                         </IconButton>
