@@ -42,8 +42,6 @@ export const httpRequest = (requestType, path, object, reduxType, payload = null
 
     } catch (error) {
 
-        console.log(error);
-
         let httpError = HTTP_ERROR;
 
         httpError.text = `${error.response.statusText} (${error.response.status})`;

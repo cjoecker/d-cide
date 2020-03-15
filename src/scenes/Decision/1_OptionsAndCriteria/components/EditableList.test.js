@@ -38,7 +38,5 @@ it('allow user to write input for new item', () => {
 
     expect(inputBase.prop('value')).toBe(value);
 
-    console.log(inputBase.prop('value'));
-
 });
 

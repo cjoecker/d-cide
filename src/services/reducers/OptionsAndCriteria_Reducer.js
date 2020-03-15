@@ -23,7 +23,6 @@ export default function(state = initialState, action) {
             };
 
         case DELETE_DECISION_OPTION:
-            console.log(action.payload);
             return {
                 ...state,
                 decisionOptions: state.decisionOptions.filter(item => item.id !== action.payload)

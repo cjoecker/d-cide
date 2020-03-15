@@ -63,11 +63,9 @@ class MessagesBanner extends Component {
 
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-
         if (prevProps.messages !== this.props.messages) {
             this.setMessage(this.filterMessages(this.props.messages));
         }
-
     }
 
 
@@ -144,13 +142,12 @@ class MessagesBanner extends Component {
                     open={this.state.open}
                     autoHideDuration={autoHide} >
                     <Alert
-                        onClose={this.handleClose}
+                        onClose={this.state.actualMessage.allowDelete ? this.handleClose : null}
                         variant="filled"
                         severity={this.state.actualMessage.type}>
                         {this.state.actualMessage.text}
                     </Alert>
                 </Snackbar>
-                {/*TODO: allow close*/}
             </div>
         );
     }
