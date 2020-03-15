@@ -7,13 +7,9 @@ import {httpRequest} from "./HttpDispatcher";
 
 
 export const getWeightedCriteria = (decisionId) => async dispatch => {
-
-    dispatch(httpRequest(axios.get(`/api/decisions/${decisionId}/weightedCriteria`), GET_WEIGHTED_CRITERIA));
-
+    dispatch(httpRequest("get",`/api/decisions/${decisionId}/weightedCriteria`, null ,GET_WEIGHTED_CRITERIA));
 };
 
 export const putWeightedCriteria = (decisionId, criteria) => async dispatch => {
-
-    dispatch(httpRequest(axios.put(`/api/decisions/${decisionId}/weightedCriteria/`, criteria), PUT_WEIGHTED_CRITERIA));
-
+    dispatch(httpRequest("put",`/api/decisions/${decisionId}/weightedCriteria/`, criteria ,PUT_WEIGHTED_CRITERIA));
 };

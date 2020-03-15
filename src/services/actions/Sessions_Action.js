@@ -55,7 +55,7 @@ export const postSession = LoginRequest => async dispatch => {
         const res = await axios.post("/api/sessions/", LoginRequest);
 
         //save jwt in redux before saving it
-        dispatch({
+        await dispatch({
             type: SAVE_JWT,
             payload: res.data.token,
         });

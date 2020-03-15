@@ -19,13 +19,14 @@ export default function(state = initialState, action) {
         case POST_DECISION_OPTION:
             return {
                 ...state,
-                decisionOptions: [action.payload, ...state[action.itemsKey]]
+                decisionOptions: [action.payload, ...state.decisionOptions]
             };
 
         case DELETE_DECISION_OPTION:
+            console.log(action.payload);
             return {
                 ...state,
-                decisionOptions: state[action.itemsKey].filter(item => item.id !== action.payload)
+                decisionOptions: state.decisionOptions.filter(item => item.id !== action.payload)
             };
 
         case PUT_DECISION_OPTION:
@@ -42,13 +43,13 @@ export default function(state = initialState, action) {
         case POST_SELECTION_CRITERIA:
             return {
                 ...state,
-                selectionCriteria: [action.payload, ...state[action.itemsKey]]
+                selectionCriteria: [action.payload, ...state.selectionCriteria]
             };
 
         case DELETE_SELECTION_CRITERIA:
             return {
                 ...state,
-                selectionCriteria: state[action.itemsKey].filter(item => item.id !== action.payload)
+                selectionCriteria: state.selectionCriteria.filter(item => item.id !== action.payload)
             };
 
         case PUT_SELECTION_CRITERIA:
