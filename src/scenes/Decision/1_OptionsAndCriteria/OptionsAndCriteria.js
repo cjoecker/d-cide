@@ -7,7 +7,6 @@ import InfoDialog from "../../../components/InfoDialog";
 import PropTypes from "prop-types";
 import {withStyles} from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
-import Banner from "../../../components/AlertsBanner";
 import {connect} from "react-redux";
 import * as LongStrings from "../../../services/LongTexts";
 import ReactGA from 'react-ga';

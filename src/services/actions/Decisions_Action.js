@@ -1,11 +1,10 @@
-import axios from "axios";
 import {
     GET_DECISIONS,
     POST_DECISION,
     DELETE_DECISION,
     PUT_DECISION,
 } from "./types";
-import {httpRequest} from "./HttpDispatcher";
+import {httpRequest} from "../HttpDispatcher";
 
 export const getDecisions = () => async dispatch => {
    dispatch(httpRequest("get",`/api/decisions`, null ,GET_DECISIONS));

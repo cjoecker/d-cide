@@ -1,5 +1,5 @@
-import {END_LOADING, GET_DECISIONS, POST_DECISION, SHOW_ALERT, START_LOADING} from "./types";
-import {HTTP_ERROR} from "../Alerts";
+import {END_LOADING, GET_DECISIONS, POST_DECISION, SHOW_ALERT, START_LOADING} from "./actions/types";
+import {HTTP_ERROR} from "./Alerts";
 import axios from "axios";
 
 

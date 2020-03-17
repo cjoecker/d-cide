@@ -39,3 +39,6 @@ export const RESET_WRONG_PASSWORD = "RESET_WRONG_PASSWORD";
 //Alerts
 export const SHOW_ALERT  = "SHOW_ALERT";
 export const DELETE_ALERT  = "DELETE_ALERT";
+
+//Errors
+export const SET_ERRORS  = "SET_ERRORS";

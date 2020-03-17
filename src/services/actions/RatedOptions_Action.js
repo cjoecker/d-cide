@@ -3,7 +3,7 @@ import {
     GET_RATED_OPTIONS, GET_WEIGHTED_CRITERIA,
     PUT_RATED_OPTION,
 } from "./types";
-import {httpRequest} from "./HttpDispatcher";
+import {httpRequest} from "../HttpDispatcher";
 
 
 export const getRatedOptions = (decisionId) => async dispatch => {

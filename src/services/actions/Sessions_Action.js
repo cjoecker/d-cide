@@ -6,7 +6,7 @@ import {
     POST_SESSION,
     POST_USER,
     SAVE_JWT,
-    DELETE_JWT, SHOW_WRONG_PASSWORD, RESET_WRONG_PASSWORD,
+    DELETE_JWT, SHOW_WRONG_PASSWORD, RESET_WRONG_PASSWORD, SET_ERRORS,
 } from "./types";
 import jwt_decode from "jwt-decode";
 
@@ -28,8 +28,9 @@ export const postUser = (newUser, history) => async dispatch => {
         signUpSuccessful = true;
 
     } catch (err) {
+
         dispatch({
-            type: SHOW_ALERT,
+            type: SET_ERRORS,
             payload: err.response.data
         });
     }

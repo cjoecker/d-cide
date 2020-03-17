@@ -3,7 +3,7 @@ import {
     GET_WEIGHTED_CRITERIA,
     PUT_WEIGHTED_CRITERIA,
 } from "./types";
-import {httpRequest} from "./HttpDispatcher";
+import {httpRequest} from "../HttpDispatcher";
 
 
 export const getWeightedCriteria = (decisionId) => async dispatch => {
