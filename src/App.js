@@ -20,7 +20,7 @@ import Decisions from "./scenes/Decisions/Decisions";
 import {logout, postSession, setJWT} from "./services/actions/Sessions_Action";
 import SecureRoute from "./services/SecureRoute";
 import LandingPage from "./scenes/LandingPage";
-import Banner from "./components/MessagesBanner";
+import Banner from "./components/AlertsBanner";
 import NotFound from "./scenes/NotFound/NotFound";
 import {createBrowserHistory} from "history";
 import ReactGA from 'react-ga';
@@ -38,7 +38,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import {getValueSafe} from "./services/GeneralUtils";
 import {POST_SESSION} from "./services/actions/types";
 import axios from "axios";
-import MessagesBanner from "./components/MessagesBanner";
+import AlertsBanner from "./components/AlertsBanner";
 
 
 const jwtToken = localStorage.jwtToken;
@@ -247,7 +247,7 @@ class App extends React.Component {
                             <SecureRoute exact path="/decisions/:decisionId" component={Decision}/>
                             <Route component={NotFound}/>
                         </Switch>
-                        <MessagesBanner/>
+                        <AlertsBanner/>
                     </div>
                 </Router>
             </ThemeProvider>
@@ -260,7 +260,7 @@ App.propTypes = {
     classes: PropTypes.object.isRequired,
     app: PropTypes.object.isRequired,
     security: PropTypes.object.isRequired,
-    messages: PropTypes.object.isRequired,
+    alerts: PropTypes.object.isRequired,
     optionsAndCriteria: PropTypes.object.isRequired,
     logout: PropTypes.func.isRequired,
     setJWT: PropTypes.func.isRequired,
@@ -268,7 +268,7 @@ App.propTypes = {
 
 const mapStateToProps = state => ({
     app: state.app,
-    messages: state.messages,
+    alerts: state.alerts,
     security: state.security,
     optionsAndCriteria: state.optionsAndCriteria,
 });

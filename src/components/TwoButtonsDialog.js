@@ -54,7 +54,7 @@ class TwoButtonsDialog extends React.Component {
                     </DialogTitle>
                     <DialogContent>
                         <DialogContentText id="alert-dialog-slide-description">
-                            {this.props.message}
+                            {this.props.alert}
                         </DialogContentText>
                     </DialogContent>
                     <DialogActions>

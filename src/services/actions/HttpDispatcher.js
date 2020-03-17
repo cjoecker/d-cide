@@ -1,5 +1,5 @@
-import {END_LOADING, GET_DECISIONS, POST_DECISION, SHOW_MESSAGE, START_LOADING} from "./types";
-import {HTTP_ERROR} from "../Messages";
+import {END_LOADING, GET_DECISIONS, POST_DECISION, SHOW_ALERT, START_LOADING} from "./types";
+import {HTTP_ERROR} from "../Alerts";
 import axios from "axios";
 
 
@@ -47,7 +47,7 @@ export const httpRequest = (requestType, path, object, reduxType, payload = null
         httpError.text = `${error.response.statusText} (${error.response.status})`;
 
         dispatch({
-            type: SHOW_MESSAGE,
+            type: SHOW_ALERT,
             payload: httpError,
         });
     }

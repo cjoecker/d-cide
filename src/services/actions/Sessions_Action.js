@@ -1,7 +1,7 @@
 import axios from "axios";
 import {
     END_LOADING,
-    SHOW_MESSAGE,
+    SHOW_ALERT,
     START_LOADING,
     POST_SESSION,
     POST_USER,
@@ -21,7 +21,7 @@ export const postUser = (newUser, history) => async dispatch => {
     try {
         await axios.post("/api/users/", newUser);
         dispatch({
-            type: SHOW_MESSAGE,
+            type: SHOW_ALERT,
             payload: {}
         });
 
@@ -29,7 +29,7 @@ export const postUser = (newUser, history) => async dispatch => {
 
     } catch (err) {
         dispatch({
-            type: SHOW_MESSAGE,
+            type: SHOW_ALERT,
             payload: err.response.data
         });
     }
@@ -77,7 +77,7 @@ export const postSession = LoginRequest => async dispatch => {
             });
         }else{
             dispatch({
-                type: SHOW_MESSAGE,
+                type: SHOW_ALERT,
                 payload: err.response.data
             });
         }
@@ -116,7 +116,7 @@ export const get_unregisteredUser = () => async dispatch => {
 
     } catch (err) {
         dispatch({
-            type: SHOW_MESSAGE,
+            type: SHOW_ALERT,
             payload: err.response.data
         });
     }

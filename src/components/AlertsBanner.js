@@ -13,7 +13,7 @@ import IconButton from "@material-ui/core/IconButton";
 import {green} from "@material-ui/core/colors";
 import ReactGA from "react-ga";
 import {connect} from "react-redux";
-import {deleteMessage} from "../services/actions/Messages_Action";
+import {deleteAlert} from "../services/actions/Alerts_Action";
 import Alert from "@material-ui/lab/Alert";
 
 
@@ -38,7 +38,7 @@ const styles = theme => ({
         opacity: 0.9,
         marginRight: theme.spacing(1),
     },
-    message: {
+    alert: {
         display: 'flex',
         alignItems: 'center',
     },
@@ -46,13 +46,13 @@ const styles = theme => ({
 
 
 
-class MessagesBanner extends Component {
+class AlertsBanner extends Component {
 
     constructor(props) {
         super(props);
 
         this.state = {
-            actualMessage:"",
+            actualAlert:"",
             open: false,
             autoHideTime: 0,
         };
@@ -63,8 +63,8 @@ class MessagesBanner extends Component {
 
 
     componentDidUpdate(prevProps, prevState, snapshot) {
-        if (prevProps.messages !== this.props.messages) {
-            this.setMessage(this.filterMessages(this.props.messages));
+        if (prevProps.alerts !== this.props.alerts) {
+            this.setAlert(this.filterAlerts(this.props.alerts));
         }
     }
 
@@ -77,12 +77,12 @@ class MessagesBanner extends Component {
 
         this.setState({open: false,});
 
-        this.props.deleteMessage(this.state.actualMessage);
+        this.props.deleteAlert(this.state.actualAlert);
 
     };
 
-    calculateHideTime(message) {
-        const matches = String(message).match(/[\w\d’-]+/gi);
+    calculateHideTime(alert) {
+        const matches = String(alert).match(/[\w\d’-]+/gi);
         const wordsNum = matches ? matches.length : 0;
 
         //200 Words per minute
@@ -91,42 +91,42 @@ class MessagesBanner extends Component {
         this.setState({autoHideTime: autoHideTime});
     }
 
-    filterMessages(messages){
-        let message;
+    filterAlerts(alerts){
+        let alert;
         let errors;
         let warnings;
 
-        errors = messages.filter(message => message.type === "error");
+        errors = alerts.filter(alert => alert.type === "error");
 
         if(errors.length > 0){
-            message = errors[0];
+            alert = errors[0];
         }else{
-            warnings = messages.filter(message => message.type === "warning");
+            warnings = alerts.filter(alert => alert.type === "warning");
             if(warnings.length > 0){
-                message = warnings[0];
+                alert = warnings[0];
             }
         }
-        return message;
+        return alert;
     }
 
-    setMessage(message){
+    setAlert(alert){
 
-        if (message !== undefined && message !== null){
-            this.calculateHideTime(message.text);
+        if (alert !== undefined && alert !== null){
+            this.calculateHideTime(alert.text);
             this.setState({
-                actualMessage: message,
+                actualAlert: alert,
                 open: true,
             });
 
             ReactGA.event({
-                category: 'Message Banner',
-                action: `${message.type}: ${message.text}`,
+                category: 'Alert Banner',
+                action: `${alert.type}: ${alert.text}`,
             });
 
         }else{
             this.setState({
                 open: false,
-                //don`t reset actual message
+                //don`t reset actual alert
             });
         }
     }
@@ -142,10 +142,10 @@ class MessagesBanner extends Component {
                     open={this.state.open}
                     autoHideDuration={autoHide} >
                     <Alert
-                        onClose={this.state.actualMessage.allowDelete ? this.handleClose : null}
+                        onClose={this.state.actualAlert.allowDelete ? this.handleClose : null}
                         variant="filled"
-                        severity={this.state.actualMessage.type}>
-                        {this.state.actualMessage.text}
+                        severity={this.state.actualAlert.type}>
+                        {this.state.actualAlert.text}
                     </Alert>
                 </Snackbar>
             </div>
@@ -153,14 +153,14 @@ class MessagesBanner extends Component {
     }
 }
 
-MessagesBanner.propTypes = {
+AlertsBanner.propTypes = {
     classes: PropTypes.object.isRequired,
-    messages:PropTypes.object.isRequired,
-    deleteMessage: PropTypes.func.isRequired,
+    alerts:PropTypes.object.isRequired,
+    deleteAlert: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
-    messages: state.messages,
+    alerts: state.alerts,
 });
 
-export default connect(mapStateToProps, {deleteMessage})(withStyles(styles)(MessagesBanner));
+export default connect(mapStateToProps, {deleteAlert})(withStyles(styles)(AlertsBanner));

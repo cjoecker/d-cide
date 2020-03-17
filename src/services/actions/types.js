@@ -36,6 +36,6 @@ export const DELETE_JWT = "DELETE_JWT";
 export const SHOW_WRONG_PASSWORD = "SHOW_WRONG_PASSWORD";
 export const RESET_WRONG_PASSWORD = "RESET_WRONG_PASSWORD";
 
-//Messages
-export const SHOW_MESSAGE  = "SHOW_MESSAGE";
-export const DELETE_MESSAGE  = "DELETE_MESSAGE";
+//Alerts
+export const SHOW_ALERT  = "SHOW_ALERT";
+export const DELETE_ALERT  = "DELETE_ALERT";

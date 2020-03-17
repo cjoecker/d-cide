@@ -7,12 +7,12 @@ import InfoDialog from "../../../components/InfoDialog";
 import PropTypes from "prop-types";
 import {withStyles} from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
-import Banner from "../../../components/MessagesBanner";
+import Banner from "../../../components/AlertsBanner";
 import {connect} from "react-redux";
 import * as LongStrings from "../../../services/LongTexts";
 import ReactGA from 'react-ga';
-import {deleteMessage, showMessage} from "../../../services/actions/Messages_Action";
-import {NOT_ENOUGH_CRITERIA, NOT_ENOUGH_OPTIONS} from "../../../services/Messages";
+import {deleteAlert, showAlert} from "../../../services/actions/Alerts_Action";
+import {NOT_ENOUGH_CRITERIA, NOT_ENOUGH_OPTIONS} from "../../../services/Alerts";
 
 
 const styles = theme => ({
@@ -59,16 +59,16 @@ class OptionsAndCriteria extends Component {
 
         if (prevProps.optionsAndCriteria.decisionOptions !== this.props.optionsAndCriteria.decisionOptions) {
             this.props.optionsAndCriteria.decisionOptions.length < 2 ?
-                this.props.showMessage(NOT_ENOUGH_OPTIONS)
+                this.props.showAlert(NOT_ENOUGH_OPTIONS)
                 :
-                this.props.deleteMessage(NOT_ENOUGH_OPTIONS)
+                this.props.deleteAlert(NOT_ENOUGH_OPTIONS)
         }
 
         if (prevProps.optionsAndCriteria.selectionCriteria !== this.props.optionsAndCriteria.selectionCriteria) {
             this.props.optionsAndCriteria.selectionCriteria.length < 2 ?
-                this.props.showMessage(NOT_ENOUGH_CRITERIA)
+                this.props.showAlert(NOT_ENOUGH_CRITERIA)
                 :
-                this.props.deleteMessage(NOT_ENOUGH_CRITERIA)
+                this.props.deleteAlert(NOT_ENOUGH_CRITERIA)
         }
     }
 
@@ -155,8 +155,8 @@ class OptionsAndCriteria extends Component {
 OptionsAndCriteria.propTypes = {
     app: PropTypes.object.isRequired,
     optionsAndCriteria: PropTypes.object.isRequired,
-    showMessage: PropTypes.func.isRequired,
-    deleteMessage: PropTypes.func.isRequired,
+    showAlert: PropTypes.func.isRequired,
+    deleteAlert: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -165,4 +165,4 @@ const mapStateToProps = state => ({
 });
 
 
-export default connect(mapStateToProps, {showMessage, deleteMessage})(withStyles(styles)(OptionsAndCriteria));
+export default connect(mapStateToProps, {showAlert, deleteAlert})(withStyles(styles)(OptionsAndCriteria));
