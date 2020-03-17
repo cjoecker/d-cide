@@ -68,13 +68,15 @@ export const postSession = LoginRequest => async dispatch => {
         });
     } catch (err) {
 
-        if(err.response.data.error !== undefined){
+        if(err.response.data.password !== undefined){
             await dispatch({
-                type: RESET_WRONG_PASSWORD
+                type: SET_ERRORS,
+                payload: null,
             });
 
             dispatch({
-                type: SHOW_WRONG_PASSWORD
+                type: SET_ERRORS,
+                payload: err.response.data,
             });
         }else{
             dispatch({

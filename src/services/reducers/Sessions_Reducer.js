@@ -3,8 +3,6 @@ import {
     POST_USER,
     SAVE_JWT,
     DELETE_JWT,
-    SHOW_WRONG_PASSWORD,
-    RESET_WRONG_PASSWORD
 } from "../actions/types";
 
 
@@ -40,16 +38,6 @@ export default function(state = initialState, action) {
             return {
                 ...state,
                 signUpSuccessful: action.payload,
-            };
-        case SHOW_WRONG_PASSWORD:
-            return {
-                ...state,
-                wrongPassword: true,
-            };
-        case RESET_WRONG_PASSWORD:
-            return {
-                ...state,
-                wrongPassword: false,
             };
         default:
             return state;

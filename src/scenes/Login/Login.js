@@ -166,7 +166,9 @@ class Login extends React.Component {
         }
 
         //wrong password
-        if (!prevProps.security.wrongPassword && this.props.security.wrongPassword) {
+        if (getValueSafe(() => prevProps.errors.password) === null
+            && getValueSafe(() => this.props.errors.password) !== null
+        ){
             this.setState({
                 wrongPassword: true,
                 password: "",
@@ -408,8 +410,8 @@ Login.propTypes = {
 };
 
 const mapStateToProps = state => ({
-    errors: state.errors,
     security: state.security,
+    errors: state.errors,
     decision: state.decision,
 });
 
