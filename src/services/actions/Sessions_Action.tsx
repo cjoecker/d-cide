@@ -9,25 +9,24 @@ import {
     DELETE_TOKEN,
     SET_ERRORS,
 } from "./types";
-import {User} from "../types/Session";
 import {AppActions} from "../types/actions";
 import {Dispatch} from "redux";
+import {User} from "../reducers/Sessions_Reducer";
 
 export type SessionActionTypes =
-    | ReturnType<typeof postSession>
-    | ReturnType<typeof postUser>
+    | ReturnType<typeof setSession>
+    | ReturnType<typeof setUser>
     | ReturnType<typeof saveToken>
     | ReturnType<typeof deleteToken>;
 
 
-export const postSession = (user: User) =>
+export const setSession = (user: User) =>
     ({
         type: "POST_SESSION",
         user
     } as const);
 
-
-export const postUser = (signUpSuccessful: boolean) =>
+export const setUser = (signUpSuccessful: boolean) =>
     ({
     type: "POST_USER",
     signUpSuccessful
@@ -46,43 +45,40 @@ export const deleteToken = () =>
 
 
 
-function startPostUser(newUser:User) {
+function postUser(newUser:User) {
     return async (dispatch: Dispatch<AppActions>) => {
 
         //Show Loading Bar
-        dispatch({type: START_LOADING});
+        // dispatch({type: START_LOADING});
+        //TODO
 
         let signUpSuccessful = false;
 
         try {
             await axios.post("/api/users/", newUser);
-            dispatch({
-                type: SHOW_ALERT,
-                payload: {}
-            });
+            // dispatch({
+            //     type: SHOW_ALERT,
+            //     payload: {}
+            // });
+            //TODO
 
             signUpSuccessful = true;
 
         } catch (err) {
 
-            dispatch({
-                type: SET_ERRORS,
-                payload: err.response.data
-            });
+            // dispatch({
+            //     type: SET_ERRORS,
+            //     payload: err.response.data
+            // });
+            //TODO
         }
 
         //SignUp Successful
-        dispatch(
-            PostUserAction({
-                type: POST_USER,
-                signUpSuccessful: signUpSuccessful,
-            })
-        );
-
-        dispatch(postUser(signUpSuccessful));
+        dispatch(setUser(signUpSuccessful));
 
         //Show Loading Bar
-        dispatch({type: END_LOADING});
+        // dispatch({type: END_LOADING});
+        //TODO
     }
 }
     //
