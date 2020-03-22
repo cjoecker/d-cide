@@ -41,20 +41,20 @@ import axios from "axios";
 import AlertsBanner from "./components/AlertsBanner";
 
 
-const jwtToken = localStorage.jwtToken;
+const token = localStorage.token;
 
 //Security
-if (jwtToken) {
+if (token) {
 
-    axios.defaults.headers.common["Authorization"] = jwtToken;
+    axios.defaults.headers.common["Authorization"] = token;
 
-    const decoded_jwtToken = jwt_decode(jwtToken);
+    const decoded_TOKENToken = jwt_decode(token);
     store.dispatch({
         type: POST_SESSION,
-        payload: decoded_jwtToken
+        payload: decoded_TOKENToken
     });
     const currentTime = Date.now() / 1000;
-    if (decoded_jwtToken.exp < currentTime) {
+    if (decoded_TOKENToken.exp < currentTime) {
         store.dispatch(logout());
     }
 }

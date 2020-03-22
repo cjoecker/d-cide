@@ -31,8 +31,8 @@ export const PUT_RATED_OPTION = "PUT_RATED_OPTION";
 //Sessions
 export const POST_SESSION = "POST_SESSION";
 export const POST_USER = "POST_USER";
-export const SAVE_JWT = "SAVE_JWT";
-export const DELETE_JWT = "DELETE_JWT";
+export const SAVE_TOKEN = "SAVE_TOKEN";
+export const DELETE_TOKEN = "DELETE_TOKEN";
 
 //Alerts
 export const SHOW_ALERT  = "SHOW_ALERT";

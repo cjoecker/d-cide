@@ -160,7 +160,7 @@ class Login extends React.Component {
         if (getValueSafe(() => prevProps.security.user.registeredUser) === null
             && getValueSafe(() => this.props.security.user.registeredUser) === true
         ) {
-            await this.props.setJWT(this.props.security.jwt);
+            await this.props.setJWT(this.props.security.token);
 
             this.props.history.push("/decisions");
         }
@@ -231,7 +231,7 @@ class Login extends React.Component {
         //transfer decision to user
         await this.props.putDecision(decision);
 
-        await this.props.setJWT(this.props.security.jwt);
+        await this.props.setJWT(this.props.security.token);
 
         this.setState({showSaveDecision: false,});
 
@@ -243,7 +243,7 @@ class Login extends React.Component {
 
     async dismissDecision(e) {
 
-        await this.props.setJWT(this.props.security.jwt);
+        await this.props.setJWT(this.props.security.token);
 
         this.setState({showSaveDecision: false,});
 

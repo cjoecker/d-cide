@@ -8,7 +8,7 @@ import Errors_Reducer from "./Errors_Reducer";
 import Security_Reducer from "./Sessions_Reducer";
 import Decisions_Reducer from "./Decisions_Reducer";
 
-export default combineReducers({
+export const rootReducer = combineReducers({
     app: app_Reducer,
     decision: Decisions_Reducer,
     optionsAndCriteria: OptionsAndCriteria_Reducer,
@@ -18,3 +18,5 @@ export default combineReducers({
     alerts: Alerts_Reducer,
     errors: Errors_Reducer
 });
+
+export type AppState = ReturnType<typeof rootReducer>;
