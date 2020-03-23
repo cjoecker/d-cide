@@ -1,10 +1,9 @@
 import axios from "axios";
-import { DELETE_TOKEN, POST_SESSION, POST_USER, SAVE_TOKEN } from "./types";
-import { AppActions } from "../types/actions";
 import { Dispatch } from "redux";
 import { User } from "../reducers/Sessions_Reducer";
+import {AppActions} from "../reducers";
 
-export type SessionActionTypes =
+export type SessionsActionsTypes =
   | ReturnType<typeof setSession>
   | ReturnType<typeof setUser>
   | ReturnType<typeof saveToken>

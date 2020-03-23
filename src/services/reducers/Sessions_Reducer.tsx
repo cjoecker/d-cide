@@ -1,10 +1,4 @@
-import {
-  POST_SESSION,
-  POST_USER,
-  SAVE_TOKEN,
-  DELETE_TOKEN,
-} from "../actions/types";
-import { SessionActionTypes } from "../actions/Sessions_Action";
+import { SessionsActionsTypes } from "../actions/Sessions_Actions";
 
 //TODO: remove valid token and use user instead
 export class Session {
@@ -25,27 +19,27 @@ export class User {
 
 export default function (
   state = new Session(),
-  action: SessionActionTypes
+  action: SessionsActionsTypes
 ): Session {
   switch (action.type) {
-    case POST_SESSION:
+    case "POST_SESSION":
       return {
         ...state,
         validToken: !!action.user,
         user: action.user,
         wrongPassword: false,
       };
-    case SAVE_TOKEN:
+    case "SAVE_TOKEN":
       return {
         ...state,
         token: action.token,
       };
-    case DELETE_TOKEN:
+    case "DELETE_TOKEN":
       return {
         ...state,
         token: "",
       };
-    case POST_USER:
+    case "POST_USER":
       return {
         ...state,
         signUpSuccessful: action.signUpSuccessful,

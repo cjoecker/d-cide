@@ -7,6 +7,7 @@ import Alerts_Reducer from "./Alerts_Reducer";
 import Errors_Reducer from "./Errors_Reducer";
 import Security_Reducer from "./Sessions_Reducer";
 import Decisions_Reducer from "./Decisions_Reducer";
+import {SessionsActionsTypes} from "../actions/Sessions_Actions";
 
 export const rootReducer = combineReducers({
   app: app_Reducer,
@@ -20,3 +21,5 @@ export const rootReducer = combineReducers({
 });
 
 export type AppState = ReturnType<typeof rootReducer>;
+
+export type AppActions = SessionsActionsTypes;

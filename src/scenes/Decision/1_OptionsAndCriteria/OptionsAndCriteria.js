@@ -13,7 +13,7 @@ import ReactGA from "react-ga";
 import {
   deleteAlert,
   showAlert,
-} from "../../../services/actions/Alerts_Action";
+} from "../../../services/actions/Alerts_Actions";
 import {
   NOT_ENOUGH_CRITERIA,
   NOT_ENOUGH_OPTIONS,

@@ -21,7 +21,7 @@ import {
   logout,
   postSession,
   setJWT,
-} from "./services/actions/Sessions_Action";
+} from "./services/actions/Sessions_Actions";
 import SecureRoute from "./services/SecureRoute";
 import LandingPage from "./scenes/LandingPage";
 import Banner from "./components/AlertsBanner";

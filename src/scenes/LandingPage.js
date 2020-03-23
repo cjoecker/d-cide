@@ -6,7 +6,7 @@ import {
   postUser,
   logout,
   get_unregisteredUser,
-} from "../services/actions/Sessions_Action";
+} from "../services/actions/Sessions_Actions";
 import { getDecisions } from "../services/actions/Decisions_Action";
 
 class LandingPage extends Component {
