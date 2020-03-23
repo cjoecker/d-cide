@@ -19,7 +19,6 @@ export const POST_SELECTION_CRITERIA = "POST_SELECTION_CRITERIA";
 export const DELETE_SELECTION_CRITERIA = "DELETE_SELECTION_CRITERIA";
 export const PUT_SELECTION_CRITERIA = "PUT_SELECTION_CRITERIA";
 
-
 //WeightCriteria
 export const GET_WEIGHTED_CRITERIA = "GET_WEIGHTED_CRITERIA";
 export const PUT_WEIGHTED_CRITERIA = "PUT_WEIGHTED_CRITERIA";
@@ -35,8 +34,8 @@ export const SAVE_TOKEN = "SAVE_TOKEN";
 export const DELETE_TOKEN = "DELETE_TOKEN";
 
 //Alerts
-export const SHOW_ALERT  = "SHOW_ALERT";
-export const DELETE_ALERT  = "DELETE_ALERT";
+export const SHOW_ALERT = "SHOW_ALERT";
+export const DELETE_ALERT = "DELETE_ALERT";
 
 //Errors
-export const SET_ERRORS  = "SET_ERRORS";
+export const SET_ERRORS = "SET_ERRORS";

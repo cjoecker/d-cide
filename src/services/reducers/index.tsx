@@ -9,14 +9,14 @@ import Security_Reducer from "./Sessions_Reducer";
 import Decisions_Reducer from "./Decisions_Reducer";
 
 export const rootReducer = combineReducers({
-    app: app_Reducer,
-    decision: Decisions_Reducer,
-    optionsAndCriteria: OptionsAndCriteria_Reducer,
-    weightCriteria: WeightCriteria_Reducer,
-    rateOptions: RateOptions_Reducer,
-    security: Security_Reducer,
-    alerts: Alerts_Reducer,
-    errors: Errors_Reducer
+  app: app_Reducer,
+  decision: Decisions_Reducer,
+  optionsAndCriteria: OptionsAndCriteria_Reducer,
+  weightCriteria: WeightCriteria_Reducer,
+  rateOptions: RateOptions_Reducer,
+  security: Security_Reducer,
+  alerts: Alerts_Reducer,
+  errors: Errors_Reducer,
 });
 
 export type AppState = ReturnType<typeof rootReducer>;

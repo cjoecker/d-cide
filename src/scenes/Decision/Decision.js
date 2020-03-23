@@ -1,258 +1,243 @@
-import React, {Component} from 'react';
+import React, { Component } from "react";
 import OptionsAndCriteria from "./1_OptionsAndCriteria/OptionsAndCriteria";
 import Result from "./4_Result/Result";
 import Typography from "@material-ui/core/Typography";
 import PropTypes from "prop-types";
-import {withStyles} from "@material-ui/core";
+import { withStyles } from "@material-ui/core";
 import Step from "@material-ui/core/Step";
 import Stepper from "@material-ui/core/Stepper";
 import StepButton from "@material-ui/core/StepButton";
-import Fab from '@material-ui/core/Fab';
-import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import Fab from "@material-ui/core/Fab";
+import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
+import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import OptionsRating from "./3_RateOptions/RateOptions";
 import WeightCriteria from "./2_WeightCriteria/WeightCriteria";
-import {connect} from "react-redux";
+import { connect } from "react-redux";
 import ReactGA from "react-ga";
 
-
 function TabContainer(props) {
-    return (
-        <Typography component="div" style={{padding: 8 * 3}}>
-            {props.children}
-        </Typography>
-    );
+  return (
+    <Typography component="div" style={{ padding: 8 * 3 }}>
+      {props.children}
+    </Typography>
+  );
 }
 
 TabContainer.propTypes = {
-    children: PropTypes.node.isRequired,
+  children: PropTypes.node.isRequired,
 };
 
-const styles = theme => ({
-        div_main: {
-            flexGrow: 1,
-            width: '100%',
-            overflowX: 'hidden', //Avoid negative margin from mainGrid
-        },
+const styles = (theme) => ({
+  div_main: {
+    flexGrow: 1,
+    width: "100%",
+    overflowX: "hidden", //Avoid negative margin from mainGrid
+  },
 
-        stepper: {
-            marginTop: theme.spacing(6),
-            backgroundColor: 'transparent',
-        },
+  stepper: {
+    marginTop: theme.spacing(6),
+    backgroundColor: "transparent",
+  },
 
+  button_next: {
+    position: "fixed",
+    bottom: 0,
+    right: 0,
+    margin: theme.spacing(1),
+  },
 
-        button_next: {
-            position: 'fixed',
-            bottom: 0,
-            right: 0,
-            margin: theme.spacing(1),
-        },
-
-        button_back: {
-            position: 'fixed',
-            bottom: 0,
-            left: 0,
-            margin: theme.spacing(1),
-        },
-
-
-    })
-;
-
+  button_back: {
+    position: "fixed",
+    bottom: 0,
+    left: 0,
+    margin: theme.spacing(1),
+  },
+});
 function getSteps() {
-    return ['Write options and criteria', 'Weight criteria', 'Rate options', 'Result'];
+  return [
+    "Write options and criteria",
+    "Weight criteria",
+    "Rate options",
+    "Result",
+  ];
 }
-
 
 class Decision extends Component {
+  constructor(props) {
+    super(props);
 
+    this.getStepContent = this.getStepContent.bind(this);
 
-    constructor(props) {
-        super(props);
-
-        this.getStepContent = this.getStepContent.bind(this);
-
-        this.state = {
-            activeStep: 0,
-            stepComplete: {},
-            decisionId: 0,
-        };
-    }
-
-    componentDidMount() {
-        this.setState({decisionId: this.props.match.params.decisionId});
-    }
-
-
-    handleNext = () => {
-        if (!isNaN(this.state.activeStep)) {
-            ReactGA.event({
-                category: 'Decision',
-                action: 'Go To Next Step',
-                value: this.state.activeStep + 1
-            });
-        }
-
-
-        //Mark Step as Done
-        this.changeStepDone();
-
-        //Change Step
-        this.setState(state => ({
-            activeStep: state.activeStep + 1,
-        }));
-
+    this.state = {
+      activeStep: 0,
+      stepComplete: {},
+      decisionId: 0,
     };
+  }
 
-    handleBack = () => {
+  componentDidMount() {
+    this.setState({ decisionId: this.props.match.params.decisionId });
+  }
 
-        if (!isNaN(this.state.activeStep)) {
-            ReactGA.event({
-                category: 'Decision',
-                action: 'Go To Prev Step',
-                value: this.state.activeStep - 1
-            });
-        }
-
-        //Mark Step as Done
-        this.changeStepDone();
-
-        //Change Step
-        this.setState(state => ({
-            activeStep: state.activeStep - 1,
-        }));
-
-
-    };
-
-
-    handleStep = step => () => {
-
-        if (!isNaN(step)) {
-            ReactGA.event({
-                category: 'Decision',
-                action: 'Jump To Step',
-                value: step
-            });
-        }
-
-
-        //Mark Step as Done
-        this.changeStepDone();
-
-        //Change Step
-        this.setState({
-            activeStep: step,
-        });
-    };
-
-    changeStepDone() {
-
-        let stepComplete = this.state.stepComplete;
-        stepComplete[this.state.activeStep] = true;
-
-        this.setState({
-            stepComplete: stepComplete,
-        });
+  handleNext = () => {
+    if (!isNaN(this.state.activeStep)) {
+      ReactGA.event({
+        category: "Decision",
+        action: "Go To Next Step",
+        value: this.state.activeStep + 1,
+      });
     }
 
-    getStepContent(stepIndex) {
-        switch (stepIndex) {
-            case 0:
-                return <OptionsAndCriteria
-                    decisionId={this.props.match.params.decisionId}
-                />;
-            case 1:
-                return <WeightCriteria
-                    decisionId={this.props.match.params.decisionId}
-                />;
-            case 2:
-                return <OptionsRating
-                    decisionId={this.props.match.params.decisionId}
-                />;
-            case 3:
-                return <Result
-                    decisionId={this.props.match.params.decisionId}
-                />;
-            default:
-                return 'Unknown stepIndex';
-        }
+    //Mark Step as Done
+    this.changeStepDone();
+
+    //Change Step
+    this.setState((state) => ({
+      activeStep: state.activeStep + 1,
+    }));
+  };
+
+  handleBack = () => {
+    if (!isNaN(this.state.activeStep)) {
+      ReactGA.event({
+        category: "Decision",
+        action: "Go To Prev Step",
+        value: this.state.activeStep - 1,
+      });
     }
 
-    render() {
+    //Mark Step as Done
+    this.changeStepDone();
 
-        const {classes} = this.props;
-        const steps = getSteps();
-        const {activeStep} = this.state;
+    //Change Step
+    this.setState((state) => ({
+      activeStep: state.activeStep - 1,
+    }));
+  };
 
-        const minItemsThere =
-            !(this.props.optionsAndCriteria.decisionOptions.length >= 2 &&
-                this.props.optionsAndCriteria.selectionCriteria.length >= 2);
+  handleStep = (step) => () => {
+    if (!isNaN(step)) {
+      ReactGA.event({
+        category: "Decision",
+        action: "Jump To Step",
+        value: step,
+      });
+    }
 
-        const stepDisabled = [
-            false,
-            minItemsThere,
-            minItemsThere,
-            minItemsThere,
-        ];
+    //Mark Step as Done
+    this.changeStepDone();
 
+    //Change Step
+    this.setState({
+      activeStep: step,
+    });
+  };
+
+  changeStepDone() {
+    let stepComplete = this.state.stepComplete;
+    stepComplete[this.state.activeStep] = true;
+
+    this.setState({
+      stepComplete: stepComplete,
+    });
+  }
+
+  getStepContent(stepIndex) {
+    switch (stepIndex) {
+      case 0:
         return (
-            <div className={classes.div_main}>
-                <Stepper className={classes.stepper} alternativeLabel nonLinear activeStep={activeStep}>
-                    {steps.map((label, index) => {
-                        return (
-                            <Step key={label}>
-                                <StepButton
-                                    onClick={this.handleStep(index)}
-                                    completed={this.state.stepComplete[index]}
-                                    disabled={stepDisabled[index]}>
-                                    {label}
-                                </StepButton>
-                            </Step>
-                        );
-                    })}
-                </Stepper>
-
-                {this.getStepContent(activeStep)}
-
-
-                {/*Navigation Buttons*/}
-                {activeStep !== 0 ?
-                    <Fab color="secondary"
-                         aria-label="Previous Step"
-                         size="medium"
-                         className={classes.button_back}
-                         onClick={this.handleBack}
-                    >
-                        <ArrowBackIcon/>
-                    </Fab> : null}
-
-                {activeStep !== 3 ?
-                    <Fab color="primary"
-                         aria-label="Next Step"
-                         size="medium"
-                         className={classes.button_next}
-                         onClick={this.handleNext}
-                         disabled={minItemsThere}
-                    >
-                        <ArrowForwardIcon/>
-                    </Fab> : null}
-            </div>
+          <OptionsAndCriteria decisionId={this.props.match.params.decisionId} />
         );
+      case 1:
+        return (
+          <WeightCriteria decisionId={this.props.match.params.decisionId} />
+        );
+      case 2:
+        return (
+          <OptionsRating decisionId={this.props.match.params.decisionId} />
+        );
+      case 3:
+        return <Result decisionId={this.props.match.params.decisionId} />;
+      default:
+        return "Unknown stepIndex";
     }
+  }
+
+  render() {
+    const { classes } = this.props;
+    const steps = getSteps();
+    const { activeStep } = this.state;
+
+    const minItemsThere = !(
+      this.props.optionsAndCriteria.decisionOptions.length >= 2 &&
+      this.props.optionsAndCriteria.selectionCriteria.length >= 2
+    );
+
+    const stepDisabled = [false, minItemsThere, minItemsThere, minItemsThere];
+
+    return (
+      <div className={classes.div_main}>
+        <Stepper
+          className={classes.stepper}
+          alternativeLabel
+          nonLinear
+          activeStep={activeStep}
+        >
+          {steps.map((label, index) => {
+            return (
+              <Step key={label}>
+                <StepButton
+                  onClick={this.handleStep(index)}
+                  completed={this.state.stepComplete[index]}
+                  disabled={stepDisabled[index]}
+                >
+                  {label}
+                </StepButton>
+              </Step>
+            );
+          })}
+        </Stepper>
+
+        {this.getStepContent(activeStep)}
+
+        {/*Navigation Buttons*/}
+        {activeStep !== 0 ? (
+          <Fab
+            color="secondary"
+            aria-label="Previous Step"
+            size="medium"
+            className={classes.button_back}
+            onClick={this.handleBack}
+          >
+            <ArrowBackIcon />
+          </Fab>
+        ) : null}
+
+        {activeStep !== 3 ? (
+          <Fab
+            color="primary"
+            aria-label="Next Step"
+            size="medium"
+            className={classes.button_next}
+            onClick={this.handleNext}
+            disabled={minItemsThere}
+          >
+            <ArrowForwardIcon />
+          </Fab>
+        ) : null}
+      </div>
+    );
+  }
 }
 
-
 Decision.propTypes = {
-    classes: PropTypes.object.isRequired,
-    optionsAndCriteria: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired,
+  optionsAndCriteria: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = state => ({
-    app: state.app,
-    optionsAndCriteria: state.optionsAndCriteria
+const mapStateToProps = (state) => ({
+  app: state.app,
+  optionsAndCriteria: state.optionsAndCriteria,
 });
 
-
 export default connect(mapStateToProps, null)(withStyles(styles)(Decision));
-
