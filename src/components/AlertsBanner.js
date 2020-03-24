@@ -17,139 +17,139 @@ import { deleteAlert } from "../services/actions/Alerts_Actions";
 import Alert from "@material-ui/lab/Alert";
 
 const styles = (theme) => ({
-  success: {
-    backgroundColor: green[600],
-  },
-  error: {
-    backgroundColor: theme.palette.error.dark,
-  },
-  info: {
-    backgroundColor: theme.palette.primary.dark,
-  },
-  warning: {
-    backgroundColor: amber[600],
-  },
-  icon: {
-    fontSize: 20,
-  },
-  iconVariant: {
-    opacity: 0.9,
-    marginRight: theme.spacing(1),
-  },
-  alert: {
-    display: "flex",
-    alignItems: "center",
-  },
+	success: {
+		backgroundColor: green[600],
+	},
+	error: {
+		backgroundColor: theme.palette.error.dark,
+	},
+	info: {
+		backgroundColor: theme.palette.primary.dark,
+	},
+	warning: {
+		backgroundColor: amber[600],
+	},
+	icon: {
+		fontSize: 20,
+	},
+	iconVariant: {
+		opacity: 0.9,
+		marginRight: theme.spacing(1),
+	},
+	alert: {
+		display: "flex",
+		alignItems: "center",
+	},
 });
 
 class AlertsBanner extends Component {
-  constructor(props) {
-    super(props);
+	constructor(props) {
+		super(props);
 
-    this.state = {
-      actualAlert: "",
-      open: false,
-      autoHideTime: 0,
-    };
+		this.state = {
+			actualAlert: "",
+			open: false,
+			autoHideTime: 0,
+		};
 
-    this.handleClose = this.handleClose.bind(this);
-  }
+		this.handleClose = this.handleClose.bind(this);
+	}
 
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    if (prevProps.alerts !== this.props.alerts) {
-      this.setAlert(this.filterAlerts(this.props.alerts));
-    }
-  }
+	componentDidUpdate(prevProps, prevState, snapshot) {
+		if (prevProps.alerts !== this.props.alerts) {
+			this.setAlert(this.filterAlerts(this.props.alerts));
+		}
+	}
 
-  handleClose = (event, reason) => {
-    if (reason === "clickaway") {
-      return;
-    }
+	handleClose = (event, reason) => {
+		if (reason === "clickaway") {
+			return;
+		}
 
-    this.setState({ open: false });
+		this.setState({ open: false });
 
-    this.props.deleteAlert(this.state.actualAlert);
-  };
+		this.props.deleteAlert(this.state.actualAlert);
+	};
 
-  calculateHideTime(alert) {
-    const matches = String(alert).match(/[\w\d’-]+/gi);
-    const wordsNum = matches ? matches.length : 0;
+	calculateHideTime(alert) {
+		const matches = String(alert).match(/[\w\d’-]+/gi);
+		const wordsNum = matches ? matches.length : 0;
 
-    //200 Words per minute
-    const autoHideTime = (wordsNum / 3.3) * 1000;
+		//200 Words per minute
+		const autoHideTime = (wordsNum / 3.3) * 1000;
 
-    this.setState({ autoHideTime: autoHideTime });
-  }
+		this.setState({ autoHideTime: autoHideTime });
+	}
 
-  filterAlerts(alerts) {
-    let alert;
-    let errors;
-    let warnings;
+	filterAlerts(alerts) {
+		let alert;
+		let errors;
+		let warnings;
 
-    errors = alerts.filter((alert) => alert.type === "error");
+		errors = alerts.filter((alert) => alert.type === "error");
 
-    if (errors.length > 0) {
-      alert = errors[0];
-    } else {
-      warnings = alerts.filter((alert) => alert.type === "warning");
-      if (warnings.length > 0) {
-        alert = warnings[0];
-      }
-    }
-    return alert;
-  }
+		if (errors.length > 0) {
+			alert = errors[0];
+		} else {
+			warnings = alerts.filter((alert) => alert.type === "warning");
+			if (warnings.length > 0) {
+				alert = warnings[0];
+			}
+		}
+		return alert;
+	}
 
-  setAlert(alert) {
-    if (alert !== undefined && alert !== null) {
-      this.calculateHideTime(alert.text);
-      this.setState({
-        actualAlert: alert,
-        open: true,
-      });
+	setAlert(alert) {
+		if (alert !== undefined && alert !== null) {
+			this.calculateHideTime(alert.text);
+			this.setState({
+				actualAlert: alert,
+				open: true,
+			});
 
-      ReactGA.event({
-        category: "Alert Banner",
-        action: `${alert.type}: ${alert.text}`,
-      });
-    } else {
-      this.setState({
-        open: false,
-        //don`t reset actual alert
-      });
-    }
-  }
+			ReactGA.event({
+				category: "Alert Banner",
+				action: `${alert.type}: ${alert.text}`,
+			});
+		} else {
+			this.setState({
+				open: false,
+				//don`t reset actual alert
+			});
+		}
+	}
 
-  render() {
-    const autoHide = this.props.autoHide ? this.state.autoHideTime : null;
+	render() {
+		const autoHide = this.props.autoHide ? this.state.autoHideTime : null;
 
-    return (
-      <div>
-        <Snackbar open={this.state.open} autoHideDuration={autoHide}>
-          <Alert
-            onClose={
-              this.state.actualAlert.allowDelete ? this.handleClose : null
-            }
-            variant="filled"
-            severity={this.state.actualAlert.type}
-          >
-            {this.state.actualAlert.text}
-          </Alert>
-        </Snackbar>
-      </div>
-    );
-  }
+		return (
+			<div>
+				<Snackbar open={this.state.open} autoHideDuration={autoHide}>
+					<Alert
+						onClose={
+							this.state.actualAlert.allowDelete ? this.handleClose : null
+						}
+						variant="filled"
+						severity={this.state.actualAlert.type}
+					>
+						{this.state.actualAlert.text}
+					</Alert>
+				</Snackbar>
+			</div>
+		);
+	}
 }
 
 AlertsBanner.propTypes = {
-  classes: PropTypes.object.isRequired,
-  alerts: PropTypes.object.isRequired,
-  deleteAlert: PropTypes.func.isRequired,
+	classes: PropTypes.object.isRequired,
+	alerts: PropTypes.object.isRequired,
+	deleteAlert: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  alerts: state.alerts,
+	alerts: state.alerts,
 });
 
 export default connect(mapStateToProps, { deleteAlert })(
-  withStyles(styles)(AlertsBanner)
+	withStyles(styles)(AlertsBanner)
 );

@@ -9,34 +9,36 @@ let mount;
 let wrapper;
 
 beforeEach(() => {
-  mount = createMount();
+	mount = createMount();
 
-  wrapper = mount(
-    <Provider store={store}>
-      <EditableList />
-    </Provider>
-  );
+	wrapper = mount(
+		<Provider store={store}>
+			<EditableList />
+		</Provider>
+	);
 });
 
 afterEach(() => {
-  mount.cleanUp();
+	mount.cleanUp();
 });
 
 const findComponent = (value) => {
-  return wrapper.find(`[data-testid='${value}']`).first();
+	return wrapper.find(`[data-testid='${value}']`).first();
 };
 
 it("allow user to write input for new item", () => {
-  const inputBase = findComponent("input-base");
-  const value = "New item";
+	const inputBase = findComponent("input-base");
+	const value = "New item";
 
-  wrapper
-    .find(InputBase)
-    .at(0)
-    .props()
-    .onChange({ target: { name: "InputBase", value: value } });
+	wrapper
+		.find(InputBase)
+		.at(0)
+		.props()
+		.onChange({ target: { name: "InputBase", value: value } });
 
-  inputBase.simulate("change", { target: { name: "InputBase", value: value } });
+	inputBase.simulate("change", {
+		target: { name: "InputBase", value: value },
+	});
 
-  expect(inputBase.prop("value")).toBe(value);
+	expect(inputBase.prop("value")).toBe(value);
 });

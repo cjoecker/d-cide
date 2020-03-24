@@ -1,7 +1,7 @@
 export function getValueSafe(fn) {
-  try {
-    return fn();
-  } catch (e) {
-    return null;
-  }
+	try {
+		return fn();
+	} catch (e) {
+		return null;
+	}
 }

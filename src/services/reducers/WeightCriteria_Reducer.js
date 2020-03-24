@@ -1,28 +1,28 @@
 import {
-  GET_WEIGHTED_CRITERIA,
-  PUT_WEIGHTED_CRITERIA,
-  POST_CRITERIA,
+	GET_WEIGHTED_CRITERIA,
+	PUT_WEIGHTED_CRITERIA,
+	POST_CRITERIA,
 } from "../actions/types";
 
 const initialState = {
-  weightCriteria: [],
-  weightedCriteria: [],
+	weightCriteria: [],
+	weightedCriteria: [],
 };
 
 export default function (state = initialState, action) {
-  switch (action.type) {
-    case GET_WEIGHTED_CRITERIA:
-      return {
-        ...state,
-        weightedCriteria: action.payload,
-      };
+	switch (action.type) {
+		case GET_WEIGHTED_CRITERIA:
+			return {
+				...state,
+				weightedCriteria: action.payload,
+			};
 
-    case PUT_WEIGHTED_CRITERIA:
-      return {
-        ...state,
-      };
+		case PUT_WEIGHTED_CRITERIA:
+			return {
+				...state,
+			};
 
-    default:
-      return state;
-  }
+		default:
+			return state;
+	}
 }

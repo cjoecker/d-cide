@@ -8,55 +8,55 @@ import DialogContent from "@material-ui/core/DialogContent/DialogContent";
 import PropTypes from "prop-types";
 
 const styles = (theme) => ({
-  closeButton: {
-    position: "absolute",
-    right: theme.spacing(1),
-    top: theme.spacing(1),
-  },
-  text: {
-    textAlign: "justify",
-  },
+	closeButton: {
+		position: "absolute",
+		right: theme.spacing(1),
+		top: theme.spacing(1),
+	},
+	text: {
+		textAlign: "justify",
+	},
 });
 
 class InfoDialog extends React.Component {
-  handleClose = () => {
-    this.props.hide(false);
-  };
+	handleClose = () => {
+		this.props.hide(false);
+	};
 
-  render() {
-    const { classes } = this.props;
+	render() {
+		const { classes } = this.props;
 
-    return (
-      <div>
-        <Dialog
-          onClose={this.handleClose}
-          aria-labelledby="customized-dialog-title"
-          open={this.props.show}
-        >
-          <DialogContent>
-            <Typography
-              component={"span"}
-              variant="body2"
-              className={classes.text}
-            >
-              {this.props.text}
-            </Typography>
-            <IconButton
-              aria-label="Close"
-              className={classes.closeButton}
-              onClick={this.handleClose}
-            >
-              <CloseIcon />
-            </IconButton>
-          </DialogContent>
-        </Dialog>
-      </div>
-    );
-  }
+		return (
+			<div>
+				<Dialog
+					onClose={this.handleClose}
+					aria-labelledby="customized-dialog-title"
+					open={this.props.show}
+				>
+					<DialogContent>
+						<Typography
+							component={"span"}
+							variant="body2"
+							className={classes.text}
+						>
+							{this.props.text}
+						</Typography>
+						<IconButton
+							aria-label="Close"
+							className={classes.closeButton}
+							onClick={this.handleClose}
+						>
+							<CloseIcon />
+						</IconButton>
+					</DialogContent>
+				</Dialog>
+			</div>
+		);
+	}
 }
 
 InfoDialog.propTypes = {
-  classes: PropTypes.object.isRequired,
+	classes: PropTypes.object.isRequired,
 };
 
 export default withStyles(styles)(InfoDialog);

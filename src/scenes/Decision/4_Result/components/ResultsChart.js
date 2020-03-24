@@ -15,144 +15,147 @@ import ReactGA from "react-ga";
 import Zoom from "@material-ui/core/Zoom";
 
 const styles = (theme) => ({
-  div_main: {
-    padding: theme.spacing(0.8),
-  },
+	div_main: {
+		padding: theme.spacing(0.8),
+	},
 
-  barChart_bar: {
-    width: theme.spacing(19),
-  },
+	barChart_bar: {
+		width: theme.spacing(19),
+	},
 });
 
 class ResultsChart extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      items: [],
-      labelsOffset: 0,
-    };
-  }
+	constructor(props) {
+		super(props);
+		this.state = {
+			items: [],
+			labelsOffset: 0,
+		};
+	}
 
-  //Load Data from Server
-  componentDidMount() {
-    this.props.getItems(this.props.itemsKey, this.props.decisionId, true);
-  }
+	//Load Data from Server
+	componentDidMount() {
+		this.props.getItems(this.props.itemsKey, this.props.decisionId, true);
+	}
 
-  //Refresh when redux state changes
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    if (
-      prevProps.optionsAndCriteria[this.props.itemsKey] !==
-      this.props.optionsAndCriteria[this.props.itemsKey]
-    ) {
-      this.setResults();
-    }
-  }
+	//Refresh when redux state changes
+	componentDidUpdate(prevProps, prevState, snapshot) {
+		if (
+			prevProps.optionsAndCriteria[this.props.itemsKey] !==
+			this.props.optionsAndCriteria[this.props.itemsKey]
+		) {
+			this.setResults();
+		}
+	}
 
-  setResults() {
-    //Get items
-    const items = this.props.optionsAndCriteria[this.props.itemsKey];
+	setResults() {
+		//Get items
+		const items = this.props.optionsAndCriteria[this.props.itemsKey];
 
-    this.setState({ items: items });
+		this.setState({ items: items });
 
-    //Set labels offset for long items
-    const labelsMaxNumChars = 18;
-    const maxNumOffset = 35;
+		//Set labels offset for long items
+		const labelsMaxNumChars = 18;
+		const maxNumOffset = 35;
 
-    let longest = Math.max(...items.map((movie) => movie.name.length));
+		let longest = Math.max(...items.map((movie) => movie.name.length));
 
-    const totalOffset = parseInt(longest / labelsMaxNumChars) * maxNumOffset;
+		const totalOffset = parseInt(longest / labelsMaxNumChars) * maxNumOffset;
 
-    this.setState({ labelsOffset: totalOffset });
+		this.setState({ labelsOffset: totalOffset });
 
-    if (this.props.optionsAndCriteria[this.props.itemsKey] !== null) {
-      ReactGA.event({
-        category: "Result",
-        action: "Items number from " + this.props.itemsKey,
-        value: this.props.optionsAndCriteria[this.props.itemsKey].length,
-      });
-    }
-  }
+		if (this.props.optionsAndCriteria[this.props.itemsKey] !== null) {
+			ReactGA.event({
+				category: "Result",
+				action: "Items number from " + this.props.itemsKey,
+				value: this.props.optionsAndCriteria[this.props.itemsKey].length,
+			});
+		}
+	}
 
-  render() {
-    const { classes } = this.props;
-    const { items } = this.state;
+	render() {
+		const { classes } = this.props;
+		const { items } = this.state;
 
-    const labelsWidth = 100 + this.state.labelsOffset;
+		const labelsWidth = 100 + this.state.labelsOffset;
 
-    return (
-      <div className={classes.div_main}>
-        <ResponsiveContainer height={items.length * 70 + 10} width="100%">
-          <BarChart
-            data={items}
-            margin={{ top: 5, right: 40, left: 40, bottom: 20 }}
-            layout="vertical"
-            barCategoryGap="20%"
-            barGap={2}
-            maxBarSize={10}
-          >
-            <CartesianGrid
-              horizontal={false}
-              stroke="#a0a0a0"
-              strokeWidth={0.5}
-            />
-            <XAxis
-              type="number"
-              axisLine={false}
-              stroke="#a0a0a0"
-              domain={[0, 10]}
-              ticks={[0, 2.5, 5, 7.5, 10]}
-              strokeWidth={0.5}
-            />
-            <YAxis
-              type="category"
-              dataKey={this.props.YKey}
-              width={labelsWidth}
-            />
-            <Bar
-              dataKey="score"
-              animationDuration={1000}
-              label={{ position: "right", backgroundColor: "#fff" }}
-              shape={
-                <Rectangle
-                  className={classes.barChart_bar}
-                  radius={[0, 10, 10, 0]}
-                />
-              }
-            >
-              {items.map((entry, index) => (
-                <Cell
-                  key={`cell-${index}`}
-                  fill={(function () {
-                    switch (index) {
-                      case 0:
-                        return "#0f61a0";
-                      case 1:
-                        return "#646464";
-                      default:
-                        return "#a0a0a0";
-                    }
-                  })()}
-                />
-              ))}
-            </Bar>
-          </BarChart>
-        </ResponsiveContainer>
-      </div>
-    );
-  }
+		return (
+			<div className={classes.div_main}>
+				<ResponsiveContainer height={items.length * 70 + 10} width="100%">
+					<BarChart
+						data={items}
+						margin={{ top: 5, right: 40, left: 40, bottom: 20 }}
+						layout="vertical"
+						barCategoryGap="20%"
+						barGap={2}
+						maxBarSize={10}
+					>
+						<CartesianGrid
+							horizontal={false}
+							stroke="#a0a0a0"
+							strokeWidth={0.5}
+						/>
+						<XAxis
+							type="number"
+							axisLine={false}
+							stroke="#a0a0a0"
+							domain={[0, 10]}
+							ticks={[0, 2.5, 5, 7.5, 10]}
+							strokeWidth={0.5}
+						/>
+						<YAxis
+							type="category"
+							dataKey={this.props.YKey}
+							width={labelsWidth}
+						/>
+						<Bar
+							dataKey="score"
+							animationDuration={1000}
+							label={{
+								position: "right",
+								backgroundColor: "#fff",
+							}}
+							shape={
+								<Rectangle
+									className={classes.barChart_bar}
+									radius={[0, 10, 10, 0]}
+								/>
+							}
+						>
+							{items.map((entry, index) => (
+								<Cell
+									key={`cell-${index}`}
+									fill={(function () {
+										switch (index) {
+											case 0:
+												return "#0f61a0";
+											case 1:
+												return "#646464";
+											default:
+												return "#a0a0a0";
+										}
+									})()}
+								/>
+							))}
+						</Bar>
+					</BarChart>
+				</ResponsiveContainer>
+			</div>
+		);
+	}
 }
 
 ResultsChart.propTypes = {
-  classes: PropTypes.object.isRequired,
-  optionsAndCriteria: PropTypes.object.isRequired,
-  getItems: PropTypes.func.isRequired,
+	classes: PropTypes.object.isRequired,
+	optionsAndCriteria: PropTypes.object.isRequired,
+	getItems: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  app: state.app,
-  optionsAndCriteria: state.optionsAndCriteria,
+	app: state.app,
+	optionsAndCriteria: state.optionsAndCriteria,
 });
 
 export default connect(mapStateToProps, { getItems })(
-  withStyles(styles)(ResultsChart)
+	withStyles(styles)(ResultsChart)
 );

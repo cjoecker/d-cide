@@ -18,9 +18,9 @@ import jwt_decode from "jwt-decode";
 import Decision from "./scenes/Decision/Decision";
 import Decisions from "./scenes/Decisions/Decisions";
 import {
-  logout,
-  postSession,
-  setJWT,
+	logout,
+	postSession,
+	setJWT,
 } from "./services/actions/Sessions_Actions";
 import SecureRoute from "./services/SecureRoute";
 import LandingPage from "./scenes/LandingPage";
@@ -48,227 +48,227 @@ const token = localStorage.token;
 
 //Security
 if (token) {
-  axios.defaults.headers.common["Authorization"] = token;
+	axios.defaults.headers.common["Authorization"] = token;
 
-  const decoded_TOKENToken = jwt_decode(token);
-  store.dispatch({
-    type: POST_SESSION,
-    payload: decoded_TOKENToken,
-  });
-  const currentTime = Date.now() / 1000;
-  if (decoded_TOKENToken.exp < currentTime) {
-    store.dispatch(logout());
-  }
+	const decoded_TOKENToken = jwt_decode(token);
+	store.dispatch({
+		type: POST_SESSION,
+		payload: decoded_TOKENToken,
+	});
+	const currentTime = Date.now() / 1000;
+	if (decoded_TOKENToken.exp < currentTime) {
+		store.dispatch(logout());
+	}
 }
 
 function TabContainer(props) {
-  return (
-    <Typography component="div" style={{ padding: 8 * 3 }}>
-      {props.children}
-    </Typography>
-  );
+	return (
+		<Typography component="div" style={{ padding: 8 * 3 }}>
+			{props.children}
+		</Typography>
+	);
 }
 
 TabContainer.propTypes = {
-  children: PropTypes.node.isRequired,
+	children: PropTypes.node.isRequired,
 };
 
 const history = createBrowserHistory();
 history.listen((location) => {
-  ReactGA.set({ page: location.pathname });
-  ReactGA.pageview(location.pathname);
+	ReactGA.set({ page: location.pathname });
+	ReactGA.pageview(location.pathname);
 });
 
 const styles = (theme) => ({
-  div_main: {
-    flexGrow: 1,
-    width: "100%",
-    overflowX: "hidden", //Avoid negative margin from mainGrid
-  },
+	div_main: {
+		flexGrow: 1,
+		width: "100%",
+		overflowX: "hidden", //Avoid negative margin from mainGrid
+	},
 
-  appBar: {
-    position: "fixed",
-    Top: 0,
-    height: theme.spacing(6),
-    width: "100%",
-    justifyContent: "center",
-    justifyItems: "center",
-  },
+	appBar: {
+		position: "fixed",
+		Top: 0,
+		height: theme.spacing(6),
+		width: "100%",
+		justifyContent: "center",
+		justifyItems: "center",
+	},
 
-  linearProgress: {
-    position: "fixed",
-    Top: 0,
-    marginTop: theme.spacing(6),
-    width: "100%",
-    height: theme.spacing(1.5),
-  },
+	linearProgress: {
+		position: "fixed",
+		Top: 0,
+		marginTop: theme.spacing(6),
+		width: "100%",
+		height: theme.spacing(1.5),
+	},
 
-  div_logo: {
-    flex: 1,
-    flexGrow: 1,
-    height: "100%",
-    overflow: "hidden",
-    float: "left",
-    marginLeft: theme.spacing(-1),
-  },
+	div_logo: {
+		flex: 1,
+		flexGrow: 1,
+		height: "100%",
+		overflow: "hidden",
+		float: "left",
+		marginLeft: theme.spacing(-1),
+	},
 
-  logo: {
-    width: theme.spacing(17),
-    height: "100%",
-  },
+	logo: {
+		width: theme.spacing(17),
+		height: "100%",
+	},
 
-  icon: {
-    marginRight: theme.spacing(-2),
-  },
+	icon: {
+		marginRight: theme.spacing(-2),
+	},
 });
 
 class App extends React.Component {
-  constructor(props) {
-    super(props);
+	constructor(props) {
+		super(props);
 
-    this.state = {
-      anchorEl: null,
-    };
+		this.state = {
+			anchorEl: null,
+		};
 
-    this.handleClick = this.handleClick.bind(this);
-    this.handleClose = this.handleClose.bind(this);
-  }
+		this.handleClick = this.handleClick.bind(this);
+		this.handleClose = this.handleClose.bind(this);
+	}
 
-  componentDidMount() {
-    ReactGA.pageview(window.location.pathname);
-  }
+	componentDidMount() {
+		ReactGA.pageview(window.location.pathname);
+	}
 
-  logout() {
-    this.props.logout();
-  }
+	logout() {
+		this.props.logout();
+	}
 
-  handleClick(event) {
-    //show menu for registered user
-    if (getValueSafe(() => this.props.security.user.registeredUser === true)) {
-      this.setState({ anchorEl: event.currentTarget });
-    } else {
-      //go to login for unregistered users
-      history.push("/login");
-    }
-  }
+	handleClick(event) {
+		//show menu for registered user
+		if (getValueSafe(() => this.props.security.user.registeredUser === true)) {
+			this.setState({ anchorEl: event.currentTarget });
+		} else {
+			//go to login for unregistered users
+			history.push("/login");
+		}
+	}
 
-  handleClose() {
-    this.setState({ anchorEl: null });
-  }
+	handleClose() {
+		this.setState({ anchorEl: null });
+	}
 
-  render() {
-    ReactGA.initialize("UA-139517059-1");
+	render() {
+		ReactGA.initialize("UA-139517059-1");
 
-    const { classes } = this.props;
-    const { isLoading } = this.props.app;
+		const { classes } = this.props;
+		const { isLoading } = this.props.app;
 
-    let userMenu = (
-      <Menu
-        id="simple-menu"
-        anchorEl={this.state.anchorEl}
-        open={Boolean(this.state.anchorEl)}
-        onClick={(e) => this.handleClose(e)}
-        disableAutoFocusItem
-      >
-        <Link href={"/decisions"} style={{ textDecoration: "none" }}>
-          <MenuItem>
-            <ListItemIcon>
-              <ListAltIcon />
-            </ListItemIcon>
-            <ListItemText primary="Decisions" />
-          </MenuItem>
-        </Link>
-        <Divider />
-        <Link
-          onClick={this.logout.bind(this)}
-          style={{ textDecoration: "none" }}
-        >
-          <MenuItem>
-            <ListItemIcon>
-              <ExitToAppIcon />
-            </ListItemIcon>
-            <ListItemText primary="Logout" />
-          </MenuItem>
-        </Link>
-      </Menu>
-    );
+		let userMenu = (
+			<Menu
+				id="simple-menu"
+				anchorEl={this.state.anchorEl}
+				open={Boolean(this.state.anchorEl)}
+				onClick={(e) => this.handleClose(e)}
+				disableAutoFocusItem
+			>
+				<Link href={"/decisions"} style={{ textDecoration: "none" }}>
+					<MenuItem>
+						<ListItemIcon>
+							<ListAltIcon />
+						</ListItemIcon>
+						<ListItemText primary="Decisions" />
+					</MenuItem>
+				</Link>
+				<Divider />
+				<Link
+					onClick={this.logout.bind(this)}
+					style={{ textDecoration: "none" }}
+				>
+					<MenuItem>
+						<ListItemIcon>
+							<ExitToAppIcon />
+						</ListItemIcon>
+						<ListItemText primary="Logout" />
+					</MenuItem>
+				</Link>
+			</Menu>
+		);
 
-    return (
-      <ThemeProvider theme={theme}>
-        <Router history={history}>
-          <div className={classes.div_main}>
-            {/*Title Bar*/}
-            <AppBar
-              position="static"
-              color="primary"
-              className={classes.appBar}
-            >
-              <Toolbar>
-                <div className={classes.div_logo}>
-                  <Link href={"/"} style={{ textDecoration: "none" }}>
-                    <CardMedia
-                      className={classes.logo}
-                      image={dcide_Logo}
-                      title="d-cide"
-                    />
-                  </Link>
-                </div>
+		return (
+			<ThemeProvider theme={theme}>
+				<Router history={history}>
+					<div className={classes.div_main}>
+						{/*Title Bar*/}
+						<AppBar
+							position="static"
+							color="primary"
+							className={classes.appBar}
+						>
+							<Toolbar>
+								<div className={classes.div_logo}>
+									<Link href={"/"} style={{ textDecoration: "none" }}>
+										<CardMedia
+											className={classes.logo}
+											image={dcide_Logo}
+											title="d-cide"
+										/>
+									</Link>
+								</div>
 
-                <IconButton
-                  className={classes.icon}
-                  onClick={(e) => this.handleClick(e)}
-                  color="inherit"
-                >
-                  <AccountCircleIcon />
-                </IconButton>
-                {userMenu}
-              </Toolbar>
-            </AppBar>
+								<IconButton
+									className={classes.icon}
+									onClick={(e) => this.handleClick(e)}
+									color="inherit"
+								>
+									<AccountCircleIcon />
+								</IconButton>
+								{userMenu}
+							</Toolbar>
+						</AppBar>
 
-            {/*Loading Bar*/}
-            <div className={classes.linearProgress}>
-              {isLoading > 0 && <LinearProgress color="secondary" />}
-            </div>
-            <Switch>
-              {/*Public Scenes*/}
-              <Route exact path="/" component={LandingPage} />
-              <Route exact path="/login" component={Login} />
-              <Route exact path="/signUp" component={SignUp} />
+						{/*Loading Bar*/}
+						<div className={classes.linearProgress}>
+							{isLoading > 0 && <LinearProgress color="secondary" />}
+						</div>
+						<Switch>
+							{/*Public Scenes*/}
+							<Route exact path="/" component={LandingPage} />
+							<Route exact path="/login" component={Login} />
+							<Route exact path="/signUp" component={SignUp} />
 
-              {/*Private Scenes*/}
-              <SecureRoute exact path="/decisions" component={Decisions} />
-              <SecureRoute
-                exact
-                path="/decisions/:decisionId"
-                component={Decision}
-              />
-              <Route component={NotFound} />
-            </Switch>
-            <AlertsBanner />
-          </div>
-        </Router>
-      </ThemeProvider>
-    );
-  }
+							{/*Private Scenes*/}
+							<SecureRoute exact path="/decisions" component={Decisions} />
+							<SecureRoute
+								exact
+								path="/decisions/:decisionId"
+								component={Decision}
+							/>
+							<Route component={NotFound} />
+						</Switch>
+						<AlertsBanner />
+					</div>
+				</Router>
+			</ThemeProvider>
+		);
+	}
 }
 
 App.propTypes = {
-  classes: PropTypes.object.isRequired,
-  app: PropTypes.object.isRequired,
-  security: PropTypes.object.isRequired,
-  alerts: PropTypes.object.isRequired,
-  optionsAndCriteria: PropTypes.object.isRequired,
-  logout: PropTypes.func.isRequired,
-  setJWT: PropTypes.func.isRequired,
+	classes: PropTypes.object.isRequired,
+	app: PropTypes.object.isRequired,
+	security: PropTypes.object.isRequired,
+	alerts: PropTypes.object.isRequired,
+	optionsAndCriteria: PropTypes.object.isRequired,
+	logout: PropTypes.func.isRequired,
+	setJWT: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-  app: state.app,
-  alerts: state.alerts,
-  security: state.security,
-  optionsAndCriteria: state.optionsAndCriteria,
+	app: state.app,
+	alerts: state.alerts,
+	security: state.security,
+	optionsAndCriteria: state.optionsAndCriteria,
 });
 
 export default connect(mapStateToProps, { logout, setJWT })(
-  withStyles(styles)(App)
+	withStyles(styles)(App)
 );
