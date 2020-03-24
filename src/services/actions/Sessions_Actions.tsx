@@ -1,10 +1,10 @@
 import axios, { AxiosError } from "axios";
 import { Dispatch } from "redux";
 import { User } from "../reducers/Sessions_Reducer";
-import { AppActions } from "../reducers";
 import { showHTTPAlert } from "./Alerts_Actions";
 import { endLoading, startLoading } from "./App_Actions";
 import jwt_decode from "jwt-decode";
+import {AppActions} from "../store";
 
 export type SessionsActionsTypes =
 	| ReturnType<typeof setSession>
@@ -83,6 +83,8 @@ export function postUser(newUser: User) {
 
 export function logout() {
 	return async (dispatch: Dispatch<AppActions>) => {
+		console.log("hola");
+
 		dispatch(startLoading());
 
 		dispatch(setSession(new User(), ""));

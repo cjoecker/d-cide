@@ -1,9 +1,9 @@
-import React from "react";
+import React, {useState} from "react";
 import "./index.css";
 import AppBar from "@material-ui/core/AppBar";
 import Typography from "@material-ui/core/Typography";
 import PropTypes from "prop-types";
-import { withStyles } from "@material-ui/core/styles";
+import {createStyles, Theme, WithStyles, withStyles} from "@material-ui/core/styles";
 import CardMedia from "@material-ui/core/CardMedia";
 import dcide_Logo from "./images/d-cide_Logo.svg";
 import theme from "./muiTheme";
@@ -12,7 +12,7 @@ import LinearProgress from "@material-ui/core/LinearProgress";
 import { Router, Route, Switch } from "react-router-dom";
 import { connect } from "react-redux";
 import Login from "./scenes/Login/Login";
-import store from "./store";
+import store, {AppState} from "./services/store";
 import SignUp from "./scenes/SignUp/SignUp";
 import jwt_decode from "jwt-decode";
 import Decision from "./scenes/Decision/Decision";
@@ -43,6 +43,10 @@ import { getValueSafe } from "./services/GeneralUtils";
 import { POST_SESSION } from "./services/actions/types";
 import axios from "axios";
 import AlertsBanner from "./components/AlertsBanner";
+import {useDispatch, useSelector} from "react-redux";
+import {InitialState} from "./services/reducers/App_Reducer";
+import {startLoading} from "./services/actions/App_Actions";
+
 
 const token = localStorage.token;
 
@@ -79,7 +83,8 @@ history.listen((location) => {
 	ReactGA.pageview(location.pathname);
 });
 
-const styles = (theme) => ({
+const styles = (theme: Theme) => createStyles({
+// const styles = (theme) => ({
 	div_main: {
 		flexGrow: 1,
 		width: "100%",
@@ -122,52 +127,83 @@ const styles = (theme) => ({
 	},
 });
 
-class App extends React.Component {
-	constructor(props) {
-		super(props);
+interface Props extends WithStyles<typeof styles> {
+}
 
-		this.state = {
-			anchorEl: null,
-		};
+interface StateProps {
+	isLoading: boolean;
+}
 
-		this.handleClick = this.handleClick.bind(this);
-		this.handleClose = this.handleClose.bind(this);
-	}
 
-	componentDidMount() {
-		ReactGA.pageview(window.location.pathname);
-	}
+const App: React.FC<Props> = (props: Props) => {
 
-	logout() {
-		this.props.logout();
-	}
-
-	handleClick(event) {
-		//show menu for registered user
-		if (getValueSafe(() => this.props.security.user.registeredUser === true)) {
-			this.setState({ anchorEl: event.currentTarget });
-		} else {
-			//go to login for unregistered users
-			history.push("/login");
+	const {isLoading} = useSelector<typeof InitialState, StateProps>((state: typeof InitialState) => {
+		return {
+			isLoading: state.isLoading,
 		}
-	}
+	});
 
-	handleClose() {
-		this.setState({ anchorEl: null });
-	}
+	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
-	render() {
+	const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+		setAnchorEl(event.currentTarget);
+	};
+
+	const handleClose = () => {
+		setAnchorEl(null);
+	};
+
+	const handleLogoutClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+		setAnchorEl(event.currentTarget);
+	};
+
+
+// class App extends React.Component {
+// 	constructor(props) {
+// 		super(props);
+//
+// 		this.state = {
+// 			anchorEl: null,
+// 		};
+//
+// 		this.handleClick = this.handleClick.bind(this);
+// 		this.handleClose = this.handleClose.bind(this);
+// 	}
+
+	// componentDidMount() {
+	// 	ReactGA.pageview(window.location.pathname);
+	// }
+	//
+	// logout() {
+	// 	this.props.logout();
+	// }
+	//
+	// handleClick(event) {
+	// 	//show menu for registered user
+	// 	if (getValueSafe(() => this.props.security.user.registeredUser === true)) {
+	// 		this.setState({ anchorEl: event.currentTarget });
+	// 	} else {
+	// 		//go to login for unregistered users
+	// 		history.push("/login");
+	// 	}
+	// }
+	//
+	// handleClose() {
+	// 	this.setState({ anchorEl: null });
+	// }
+
+
 		ReactGA.initialize("UA-139517059-1");
 
-		const { classes } = this.props;
-		const { isLoading } = this.props.app;
+		const { classes } = props;
+		// const { isLoading } = this.props.app;
 
 		let userMenu = (
 			<Menu
 				id="simple-menu"
-				anchorEl={this.state.anchorEl}
-				open={Boolean(this.state.anchorEl)}
-				onClick={(e) => this.handleClose(e)}
+				anchorEl={anchorEl}
+				open={Boolean(anchorEl)}
+				onClick={handleClose}
 				disableAutoFocusItem
 			>
 				<Link href={"/decisions"} style={{ textDecoration: "none" }}>
@@ -180,7 +216,7 @@ class App extends React.Component {
 				</Link>
 				<Divider />
 				<Link
-					onClick={this.logout.bind(this)}
+					onClick={logout}
 					style={{ textDecoration: "none" }}
 				>
 					<MenuItem>
@@ -216,7 +252,7 @@ class App extends React.Component {
 
 								<IconButton
 									className={classes.icon}
-									onClick={(e) => this.handleClick(e)}
+									onClick={handleClick}
 									color="inherit"
 								>
 									<AccountCircleIcon />
@@ -224,51 +260,51 @@ class App extends React.Component {
 								{userMenu}
 							</Toolbar>
 						</AppBar>
-
-						{/*Loading Bar*/}
 						<div className={classes.linearProgress}>
 							{isLoading > 0 && <LinearProgress color="secondary" />}
 						</div>
-						<Switch>
-							{/*Public Scenes*/}
-							<Route exact path="/" component={LandingPage} />
-							<Route exact path="/login" component={Login} />
-							<Route exact path="/signUp" component={SignUp} />
+						{/*<Switch>*/}
+						{/*	/!*Public Scenes*!/*/}
+						{/*	<Route exact path="/" component={LandingPage} />*/}
+						{/*	<Route exact path="/login" component={Login} />*/}
+						{/*	<Route exact path="/signUp" component={SignUp} />*/}
 
-							{/*Private Scenes*/}
-							<SecureRoute exact path="/decisions" component={Decisions} />
-							<SecureRoute
-								exact
-								path="/decisions/:decisionId"
-								component={Decision}
-							/>
-							<Route component={NotFound} />
-						</Switch>
+						{/*	/!*Private Scenes*!/*/}
+						{/*	<SecureRoute exact path="/decisions" component={Decisions} />*/}
+						{/*	<SecureRoute*/}
+						{/*		exact*/}
+						{/*		path="/decisions/:decisionId"*/}
+						{/*		component={Decision}*/}
+						{/*	/>*/}
+						{/*	<Route component={NotFound} />*/}
+						{/*</Switch>*/}
 						<AlertsBanner />
 					</div>
 				</Router>
 			</ThemeProvider>
 		);
-	}
-}
 
-App.propTypes = {
-	classes: PropTypes.object.isRequired,
-	app: PropTypes.object.isRequired,
-	security: PropTypes.object.isRequired,
-	alerts: PropTypes.object.isRequired,
-	optionsAndCriteria: PropTypes.object.isRequired,
-	logout: PropTypes.func.isRequired,
-	setJWT: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-	app: state.app,
-	alerts: state.alerts,
-	security: state.security,
-	optionsAndCriteria: state.optionsAndCriteria,
-});
+// App.propTypes = {
+// 	classes: PropTypes.object.isRequired,
+// 	app: PropTypes.object.isRequired,
+// 	security: PropTypes.object.isRequired,
+// 	alerts: PropTypes.object.isRequired,
+// 	optionsAndCriteria: PropTypes.object.isRequired,
+// 	logout: PropTypes.func.isRequired,
+// 	setJWT: PropTypes.func.isRequired,
+// };
+//
+// const mapStateToProps = (state) => ({
+// 	app: state.app,
+// 	alerts: state.alerts,
+// 	security: state.security,
+// 	optionsAndCriteria: state.optionsAndCriteria,
+// });
 
-export default connect(mapStateToProps, { logout, setJWT })(
-	withStyles(styles)(App)
-);
+// export default connect(mapStateToProps, { logout, setJWT })(
+// 	withStyles(styles)(App)
+// );
+
+export default withStyles(styles)(App);
