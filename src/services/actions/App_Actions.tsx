@@ -1,3 +1,5 @@
+import {Action, Dispatch} from "redux";
+
 export type AppActionsTypes =
 	| ReturnType<typeof startLoading>
 	| ReturnType<typeof endLoading>;
@@ -11,3 +13,4 @@ export const endLoading = () =>
 	({
 		type: "END_LOADING",
 	} as const);
+

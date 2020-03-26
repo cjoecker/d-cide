@@ -1,21 +1,71 @@
-import { AppActionsTypes } from "../actions/App_Actions";
-import {Alert} from "./Alerts_Reducer";
+import {Action, Dispatch, Reducer} from "redux";
 
-export class App {
+
+
+
+
+
+export type AppActionsTypes =
+	| ReturnType<typeof startLoading>
+	| ReturnType<typeof endLoading>;
+
+export const startLoading = () =>
+	({
+		type: "START_LOADING",
+	} as const);
+
+export const endLoading = () =>
+	({
+		type: "END_LOADING",
+	} as const);
+
+
+
+
+
+
+
+export enum ActionType {
+	StartLoading,
+	EndLoading,
+}
+
+export class AppState {
 	isLoading: number = 0;
 }
 
-export const InitialState: App = new App();
+export const InitialState: AppState = new AppState();
 
-export default function (state = InitialState, action: AppActionsTypes): App {
+
+export interface DispatchAction extends Action {
+	payload: Partial<AppState>;
+}
+
+export class RootDispatcher {
+
+	private readonly dispatch: Dispatch<DispatchAction>;
+
+	constructor(dispatch: Dispatch<DispatchAction>){
+		this.dispatch = dispatch;
+	}
+
+	startLoading = (    ) => {
+
+		this.dispatch({type: ActionType.StartLoading, payload: {}});
+	}
+}
+
+
+export const App_Reducer: Reducer<AppState, DispatchAction> = (state = InitialState, action) => {
+
 	switch (action.type) {
-		case "START_LOADING":
+		case ActionType.StartLoading:
 			return {
 				...state,
 				isLoading: state.isLoading + 1,
 			};
 
-		case "END_LOADING":
+		case ActionType.EndLoading:
 			return {
 				...state,
 				isLoading: state.isLoading - 1,
@@ -24,4 +74,4 @@ export default function (state = InitialState, action: AppActionsTypes): App {
 		default:
 			return state;
 	}
-}
+};

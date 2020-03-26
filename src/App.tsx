@@ -12,7 +12,7 @@ import LinearProgress from "@material-ui/core/LinearProgress";
 import { Router, Route, Switch } from "react-router-dom";
 import { connect } from "react-redux";
 import Login from "./scenes/Login/Login";
-import store, {AppState} from "./services/store";
+import store from "./services/store";
 import SignUp from "./scenes/SignUp/SignUp";
 import jwt_decode from "jwt-decode";
 import Decision from "./scenes/Decision/Decision";
@@ -43,9 +43,9 @@ import { getValueSafe } from "./services/GeneralUtils";
 import { POST_SESSION } from "./services/actions/types";
 import axios from "axios";
 import AlertsBanner from "./components/AlertsBanner";
-import {useDispatch, useSelector} from "react-redux";
-import {InitialState} from "./services/reducers/App_Reducer";
-import {startLoading} from "./services/actions/App_Actions";
+import {useDispatch, useSelector, shallowEqual} from "react-redux";
+import {AppState, RootDispatcher} from "./services/reducers/App_Reducer";
+
 
 
 const token = localStorage.token;
@@ -130,32 +130,47 @@ const styles = (theme: Theme) => createStyles({
 interface Props extends WithStyles<typeof styles> {
 }
 
-interface StateProps {
-	isLoading: boolean;
-}
+// interface StateProps {
+// 	isLoading: boolean;
+// }
 
+
+interface StateProps {
+	isLoading: string;
+}
 
 const App: React.FC<Props> = (props: Props) => {
 
-	const {isLoading} = useSelector<typeof InitialState, StateProps>((state: typeof InitialState) => {
+	// const {isLoading} = useSelector<typeof InitialState, StateProps>((state: typeof InitialState) => {
+	// 	return {
+	// 		isLoading: state.isLoading,
+	// 	}
+	// });
+
+	const {isLoading} = useSelector<AppState, StateProps>((state: AppState) => {
 		return {
 			isLoading: state.isLoading,
 		}
 	});
 
+
 	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+
+	const dispatch = useDispatch();
+	const rootDispatcher = new RootDispatcher(dispatch);
 
 	const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
 		setAnchorEl(event.currentTarget);
 	};
 
+
+
 	const handleClose = () => {
 		setAnchorEl(null);
 	};
 
-	const handleLogoutClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-		setAnchorEl(event.currentTarget);
-	};
+
+
 
 
 // class App extends React.Component {
@@ -216,7 +231,7 @@ const App: React.FC<Props> = (props: Props) => {
 				</Link>
 				<Divider />
 				<Link
-					onClick={logout}
+					onClick={handleClose}
 					style={{ textDecoration: "none" }}
 				>
 					<MenuItem>
@@ -252,7 +267,10 @@ const App: React.FC<Props> = (props: Props) => {
 
 								<IconButton
 									className={classes.icon}
-									onClick={handleClick}
+									// onClick={handleClick}
+									onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+										rootDispatcher.startLoading()}
+									}
 									color="inherit"
 								>
 									<AccountCircleIcon />
@@ -260,9 +278,11 @@ const App: React.FC<Props> = (props: Props) => {
 								{userMenu}
 							</Toolbar>
 						</AppBar>
+
 						<div className={classes.linearProgress}>
 							{isLoading > 0 && <LinearProgress color="secondary" />}
 						</div>
+						{isLoading}
 						{/*<Switch>*/}
 						{/*	/!*Public Scenes*!/*/}
 						{/*	<Route exact path="/" component={LandingPage} />*/}

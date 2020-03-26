@@ -5,6 +5,8 @@ import { showHTTPAlert } from "./Alerts_Actions";
 import { endLoading, startLoading } from "./App_Actions";
 import jwt_decode from "jwt-decode";
 import {AppActions} from "../store";
+import {httpRequest} from "../HttpDispatcher";
+import {PUT_DECISION} from "./types";
 
 export type SessionsActionsTypes =
 	| ReturnType<typeof setSession>
@@ -81,10 +83,10 @@ export function postUser(newUser: User) {
 	};
 }
 
-export function logout() {
-	return async (dispatch: Dispatch<AppActions>) => {
-		console.log("hola");
+export function logout2() {
+	console.log("hola");
 
+	return async (dispatch: Dispatch<AppActions>) => {
 		dispatch(startLoading());
 
 		dispatch(setSession(new User(), ""));
@@ -92,6 +94,11 @@ export function logout() {
 		dispatch(endLoading());
 	};
 }
+
+export const logout = () => async (dispatch: Dispatch<AppActions>) => {
+	dispatch(startLoading());
+};
+
 
 export function getUnregisteredUser() {
 	return async (dispatch: Dispatch<AppActions>) => {
