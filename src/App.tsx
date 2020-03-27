@@ -1,32 +1,20 @@
-import React, {useState} from "react";
+import React from "react";
 import "./index.css";
 import AppBar from "@material-ui/core/AppBar";
 import Typography from "@material-ui/core/Typography";
 import PropTypes from "prop-types";
-import {createStyles, Theme, WithStyles, withStyles} from "@material-ui/core/styles";
+import {createStyles, Theme, ThemeProvider, withStyles, WithStyles} from "@material-ui/core/styles";
 import CardMedia from "@material-ui/core/CardMedia";
 import dcide_Logo from "./images/d-cide_Logo.svg";
 import theme from "./muiTheme";
-import { ThemeProvider } from "@material-ui/core/styles";
 import LinearProgress from "@material-ui/core/LinearProgress";
-import { Router, Route, Switch } from "react-router-dom";
-import { connect } from "react-redux";
-import Login from "./scenes/Login/Login";
+import {Router} from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
 import store from "./services/store";
-import SignUp from "./scenes/SignUp/SignUp";
 import jwt_decode from "jwt-decode";
-import Decision from "./scenes/Decision/Decision";
-import Decisions from "./scenes/Decisions/Decisions";
-import {
-	logout,
-	postSession,
-	setJWT,
-} from "./services/actions/Sessions_Actions";
-import SecureRoute from "./services/SecureRoute";
-import LandingPage from "./scenes/LandingPage";
-import Banner from "./components/AlertsBanner";
-import NotFound from "./scenes/NotFound/NotFound";
-import { createBrowserHistory } from "history";
+import {logout,} from "./services/actions/Sessions_Actions";
+import AlertsBanner from "./components/AlertsBanner";
+import {createBrowserHistory} from "history";
 import ReactGA from "react-ga";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
@@ -39,138 +27,108 @@ import IconButton from "@material-ui/core/IconButton";
 import Toolbar from "@material-ui/core/Toolbar";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
-import { getValueSafe } from "./services/GeneralUtils";
-import { POST_SESSION } from "./services/actions/types";
+import {POST_SESSION} from "./services/actions/types";
 import axios from "axios";
-import AlertsBanner from "./components/AlertsBanner";
-import {useDispatch, useSelector, shallowEqual} from "react-redux";
-import {AppState, RootDispatcher} from "./services/reducers/App_Reducer";
-
+import {AppState} from "./services/reducers/App_Reducer";
+import {startLoadingAction} from "./services/actions/App_Actions";
 
 
 const token = localStorage.token;
 
 //Security
 if (token) {
-	axios.defaults.headers.common["Authorization"] = token;
+    axios.defaults.headers.common["Authorization"] = token;
 
-	const decoded_TOKENToken = jwt_decode(token);
-	store.dispatch({
-		type: POST_SESSION,
-		payload: decoded_TOKENToken,
-	});
-	const currentTime = Date.now() / 1000;
-	if (decoded_TOKENToken.exp < currentTime) {
-		store.dispatch(logout());
-	}
+    const decoded_TOKENToken = jwt_decode(token);
+    store.dispatch({
+        type: POST_SESSION,
+        payload: decoded_TOKENToken,
+    });
+    const currentTime = Date.now() / 1000;
+    if (decoded_TOKENToken.exp < currentTime) {
+        store.dispatch(logout());
+    }
 }
 
 function TabContainer(props) {
-	return (
-		<Typography component="div" style={{ padding: 8 * 3 }}>
-			{props.children}
-		</Typography>
-	);
+    return (
+        <Typography component="div" style={{padding: 8 * 3}}>
+            {props.children}
+        </Typography>
+    );
 }
 
 TabContainer.propTypes = {
-	children: PropTypes.node.isRequired,
+    children: PropTypes.node.isRequired,
 };
 
 const history = createBrowserHistory();
 history.listen((location) => {
-	ReactGA.set({ page: location.pathname });
-	ReactGA.pageview(location.pathname);
+    ReactGA.set({page: location.pathname});
+    ReactGA.pageview(location.pathname);
 });
 
 const styles = (theme: Theme) => createStyles({
 // const styles = (theme) => ({
-	div_main: {
-		flexGrow: 1,
-		width: "100%",
-		overflowX: "hidden", //Avoid negative margin from mainGrid
-	},
+    div_main: {
+        flexGrow: 1,
+        width: "100%",
+        overflowX: "hidden", //Avoid negative margin from mainGrid
+    },
 
-	appBar: {
-		position: "fixed",
-		Top: 0,
-		height: theme.spacing(6),
-		width: "100%",
-		justifyContent: "center",
-		justifyItems: "center",
-	},
+    appBar: {
+        position: "fixed",
+        Top: 0,
+        height: theme.spacing(6),
+        width: "100%",
+        justifyContent: "center",
+        justifyItems: "center",
+    },
 
-	linearProgress: {
-		position: "fixed",
-		Top: 0,
-		marginTop: theme.spacing(6),
-		width: "100%",
-		height: theme.spacing(1.5),
-	},
+    linearProgress: {
+        position: "fixed",
+        Top: 0,
+        marginTop: theme.spacing(6),
+        width: "100%",
+        height: theme.spacing(1.5),
+    },
 
-	div_logo: {
-		flex: 1,
-		flexGrow: 1,
-		height: "100%",
-		overflow: "hidden",
-		float: "left",
-		marginLeft: theme.spacing(-1),
-	},
+    div_logo: {
+        flex: 1,
+        flexGrow: 1,
+        height: "100%",
+        overflow: "hidden",
+        float: "left",
+        marginLeft: theme.spacing(-1),
+    },
 
-	logo: {
-		width: theme.spacing(17),
-		height: "100%",
-	},
+    logo: {
+        width: theme.spacing(17),
+        height: "100%",
+    },
 
-	icon: {
-		marginRight: theme.spacing(-2),
-	},
+    icon: {
+        marginRight: theme.spacing(-2),
+    },
 });
 
 interface Props extends WithStyles<typeof styles> {
 }
 
-// interface StateProps {
-// 	isLoading: boolean;
-// }
-
-
-interface StateProps {
-	isLoading: string;
-}
-
 const App: React.FC<Props> = (props: Props) => {
 
-	// const {isLoading} = useSelector<typeof InitialState, StateProps>((state: typeof InitialState) => {
-	// 	return {
-	// 		isLoading: state.isLoading,
-	// 	}
-	// });
-
-	const {isLoading} = useSelector<AppState, StateProps>((state: AppState) => {
-		return {
-			isLoading: state.isLoading,
-		}
-	});
-
-
-	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
-
 	const dispatch = useDispatch();
-	const rootDispatcher = new RootDispatcher(dispatch);
+	const isLoading = useSelector(state => state.App.isLoading);
+    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
-	const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-		setAnchorEl(event.currentTarget);
-	};
-
-
-
-	const handleClose = () => {
-		setAnchorEl(null);
-	};
+    const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+        setAnchorEl(event.currentTarget);
+    };
 
 
-
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
 
 
 // class App extends React.Component {
@@ -185,124 +143,124 @@ const App: React.FC<Props> = (props: Props) => {
 // 		this.handleClose = this.handleClose.bind(this);
 // 	}
 
-	// componentDidMount() {
-	// 	ReactGA.pageview(window.location.pathname);
-	// }
-	//
-	// logout() {
-	// 	this.props.logout();
-	// }
-	//
-	// handleClick(event) {
-	// 	//show menu for registered user
-	// 	if (getValueSafe(() => this.props.security.user.registeredUser === true)) {
-	// 		this.setState({ anchorEl: event.currentTarget });
-	// 	} else {
-	// 		//go to login for unregistered users
-	// 		history.push("/login");
-	// 	}
-	// }
-	//
-	// handleClose() {
-	// 	this.setState({ anchorEl: null });
-	// }
+    // componentDidMount() {
+    // 	ReactGA.pageview(window.location.pathname);
+    // }
+    //
+    // logout() {
+    // 	this.props.logout();
+    // }
+    //
+    // handleClick(event) {
+    // 	//show menu for registered user
+    // 	if (getValueSafe(() => this.props.security.user.registeredUser === true)) {
+    // 		this.setState({ anchorEl: event.currentTarget });
+    // 	} else {
+    // 		//go to login for unregistered users
+    // 		history.push("/login");
+    // 	}
+    // }
+    //
+    // handleClose() {
+    // 	this.setState({ anchorEl: null });
+    // }
 
 
-		ReactGA.initialize("UA-139517059-1");
+    ReactGA.initialize("UA-139517059-1");
 
-		const { classes } = props;
-		// const { isLoading } = this.props.app;
+    const {classes} = props;
+    // const { isLoading } = this.props.app;
 
-		let userMenu = (
-			<Menu
-				id="simple-menu"
-				anchorEl={anchorEl}
-				open={Boolean(anchorEl)}
-				onClick={handleClose}
-				disableAutoFocusItem
-			>
-				<Link href={"/decisions"} style={{ textDecoration: "none" }}>
-					<MenuItem>
-						<ListItemIcon>
-							<ListAltIcon />
-						</ListItemIcon>
-						<ListItemText primary="Decisions" />
-					</MenuItem>
-				</Link>
-				<Divider />
-				<Link
-					onClick={handleClose}
-					style={{ textDecoration: "none" }}
-				>
-					<MenuItem>
-						<ListItemIcon>
-							<ExitToAppIcon />
-						</ListItemIcon>
-						<ListItemText primary="Logout" />
-					</MenuItem>
-				</Link>
-			</Menu>
-		);
+    let userMenu = (
+        <Menu
+            id="simple-menu"
+            anchorEl={anchorEl}
+            open={Boolean(anchorEl)}
+            onClick={handleClose}
+            disableAutoFocusItem
+        >
+            <Link href={"/decisions"} style={{textDecoration: "none"}}>
+                <MenuItem>
+                    <ListItemIcon>
+                        <ListAltIcon/>
+                    </ListItemIcon>
+                    <ListItemText primary="Decisions"/>
+                </MenuItem>
+            </Link>
+            <Divider/>
+            <Link
+                onClick={handleClose}
+                style={{textDecoration: "none"}}
+            >
+                <MenuItem>
+                    <ListItemIcon>
+                        <ExitToAppIcon/>
+                    </ListItemIcon>
+                    <ListItemText primary="Logout"/>
+                </MenuItem>
+            </Link>
+        </Menu>
+    );
 
-		return (
-			<ThemeProvider theme={theme}>
-				<Router history={history}>
-					<div className={classes.div_main}>
-						{/*Title Bar*/}
-						<AppBar
-							position="static"
-							color="primary"
-							className={classes.appBar}
-						>
-							<Toolbar>
-								<div className={classes.div_logo}>
-									<Link href={"/"} style={{ textDecoration: "none" }}>
-										<CardMedia
-											className={classes.logo}
-											image={dcide_Logo}
-											title="d-cide"
-										/>
-									</Link>
-								</div>
+    return (
+        <ThemeProvider theme={theme}>
+            <Router history={history}>
+                <div className={classes.div_main}>
+                    {/*Title Bar*/}
+                    <AppBar
+                        position="static"
+                        color="primary"
+                        className={classes.appBar}
+                    >
+                        <Toolbar>
+                            <div className={classes.div_logo}>
+                                <Link href={"/"} style={{textDecoration: "none"}}>
+                                    <CardMedia
+                                        className={classes.logo}
+                                        image={dcide_Logo}
+                                        title="d-cide"
+                                    />
+                                </Link>
+                            </div>
 
-								<IconButton
-									className={classes.icon}
-									// onClick={handleClick}
-									onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-										rootDispatcher.startLoading()}
-									}
-									color="inherit"
-								>
-									<AccountCircleIcon />
-								</IconButton>
-								{userMenu}
-							</Toolbar>
-						</AppBar>
+                            <IconButton
+                                className={classes.icon}
+                                // onClick={handleClick}
+                                onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                                    dispatch(startLoadingAction())
+                                }}
+                                color="inherit"
+                            >
+                                <AccountCircleIcon/>
+                            </IconButton>
+                            {userMenu}
+                        </Toolbar>
+                    </AppBar>
 
-						<div className={classes.linearProgress}>
-							{isLoading > 0 && <LinearProgress color="secondary" />}
-						</div>
-						{isLoading}
-						{/*<Switch>*/}
-						{/*	/!*Public Scenes*!/*/}
-						{/*	<Route exact path="/" component={LandingPage} />*/}
-						{/*	<Route exact path="/login" component={Login} />*/}
-						{/*	<Route exact path="/signUp" component={SignUp} />*/}
+                    <div className={classes.linearProgress}>
+                        {isLoading > 0 && <LinearProgress color="secondary"/>}
+                    </div>
+                    {isLoading}
+                    {/*<Switch>*/}
+                    {/*	/!*Public Scenes*!/*/}
+                    {/*	<Route exact path="/" component={LandingPage} />*/}
+                    {/*	<Route exact path="/login" component={Login} />*/}
+                    {/*	<Route exact path="/signUp" component={SignUp} />*/}
 
-						{/*	/!*Private Scenes*!/*/}
-						{/*	<SecureRoute exact path="/decisions" component={Decisions} />*/}
-						{/*	<SecureRoute*/}
-						{/*		exact*/}
-						{/*		path="/decisions/:decisionId"*/}
-						{/*		component={Decision}*/}
-						{/*	/>*/}
-						{/*	<Route component={NotFound} />*/}
-						{/*</Switch>*/}
-						<AlertsBanner />
-					</div>
-				</Router>
-			</ThemeProvider>
-		);
+                    {/*	/!*Private Scenes*!/*/}
+                    {/*	<SecureRoute exact path="/decisions" component={Decisions} />*/}
+                    {/*	<SecureRoute*/}
+                    {/*		exact*/}
+                    {/*		path="/decisions/:decisionId"*/}
+                    {/*		component={Decision}*/}
+                    {/*	/>*/}
+                    {/*	<Route component={NotFound} />*/}
+                    {/*</Switch>*/}
+                    <AlertsBanner/>
+                </div>
+            </Router>
+        </ThemeProvider>
+    );
 
 };
 
