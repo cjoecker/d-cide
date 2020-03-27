@@ -40,10 +40,11 @@ if (token) {
     axios.defaults.headers.common["Authorization"] = token;
 
     const decoded_TOKENToken = jwt_decode(token);
-    store.dispatch({
-        type: POST_SESSION,
-        payload: decoded_TOKENToken,
-    });
+    // store.dispatch({
+    //     type: POST_SESSION,
+    //     payload: decoded_TOKENToken,
+    // });
+	//TODO uncomment when reducer ready
     const currentTime = Date.now() / 1000;
     if (decoded_TOKENToken.exp < currentTime) {
         store.dispatch(logout());

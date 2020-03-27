@@ -24,27 +24,13 @@ export type AppActions =
 
 const middleware = thunk as ThunkMiddleware<AppState, AppActions>;
 
-let store;
-
 const ReduxDevTools =
-	(window as any).__REDUX_DEVTOOLS_EXTENSION__ &&
-	(window as any).__REDUX_DEVTOOLS_EXTENSION__();
+    (window as any).__REDUX_DEVTOOLS_EXTENSION__ &&
+    (window as any).__REDUX_DEVTOOLS_EXTENSION__();
 
-
-if (window.navigator.userAgent.includes("Chrome") && ReduxDevTools) {
-
-    store = createStore(
-        rootReducer,
-        compose(applyMiddleware(middleware),ReduxDevTools)
-    );
-
-} else {
-    store = createStore(
-        rootReducer,
-        compose(applyMiddleware(middleware))
-    );
-}
-
-export default store;
+export default createStore(
+    rootReducer,
+    compose(applyMiddleware(middleware),ReduxDevTools)
+);
 
 
