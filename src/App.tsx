@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import "./index.css";
 import AppBar from "@material-ui/core/AppBar";
 import Typography from "@material-ui/core/Typography";
@@ -120,8 +120,9 @@ const App: React.FC<Props> = (props: Props) => {
 
 	const dispatch = useDispatch();
 	const isLoading = useSelector(state => state.App.isLoading);
-    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
+
+    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         setAnchorEl(event.currentTarget);
     };
@@ -131,18 +132,6 @@ const App: React.FC<Props> = (props: Props) => {
         setAnchorEl(null);
     };
 
-
-// class App extends React.Component {
-// 	constructor(props) {
-// 		super(props);
-//
-// 		this.state = {
-// 			anchorEl: null,
-// 		};
-//
-// 		this.handleClick = this.handleClick.bind(this);
-// 		this.handleClose = this.handleClose.bind(this);
-// 	}
 
     // componentDidMount() {
     // 	ReactGA.pageview(window.location.pathname);

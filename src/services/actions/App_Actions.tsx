@@ -7,28 +7,19 @@ export type AppActionsTypes =
 	| ReturnType<typeof endLoading>;
 
 
-export enum ActionType {
-	StartLoading,
-	EndLoading,
-}
-
 export const startLoading = () =>
 	({
-		type: ActionType.StartLoading,
+		type: "START_LOADING",
 	} as const);
 
 export const endLoading = () =>
 	({
-		type: ActionType.EndLoading,
+		type: "END_LOADING",
 	} as const);
 
 
-//
-// export const startLoadingAction = (dispatch) => {
-// 	dispatch(fetchExample());
-// };
 
-export const startLoadingAction = (): ThunkAction<void, AppState, null, Action<ActionType>> => async dispatch => {
+export const startLoadingAction = (): ThunkAction<void, AppState, null, Action<string>> => async dispatch => {
 	dispatch(startLoading());
 
 	setTimeout(() => {

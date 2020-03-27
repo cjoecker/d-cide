@@ -1,4 +1,4 @@
-import {ActionType, AppActionsTypes} from "../actions/App_Actions";
+import { AppActionsTypes} from "../actions/App_Actions";
 
 
 export class AppState {
@@ -10,12 +10,12 @@ export function App_Reducer(
     action: AppActionsTypes
 ): AppState{
     switch (action.type) {
-        case ActionType.StartLoading:
+        case "START_LOADING":
             return {
                 ...state,
                 isLoading: state.isLoading + 1,
             };
-        case ActionType.EndLoading:
+        case "END_LOADING":
             return {
                 ...state,
                 isLoading: state.isLoading - 1,
