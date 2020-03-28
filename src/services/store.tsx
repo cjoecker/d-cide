@@ -22,13 +22,15 @@ export type AppActions =
     | AppActionsTypes;
 
 
-const middleware = thunk as ThunkMiddleware<AppState, AppActions>;
+export interface DispatchAction extends Action {
+    payload: Partial<AppState>;
+}
+
+const middleware = thunk as ThunkMiddleware<AppState, DispatchAction>;
 
 const ReduxDevTools =
     (window as any).__REDUX_DEVTOOLS_EXTENSION__ &&
-    (window as any).__REDUX_DEVTOOLS_EXTENSION__({
-        serialize: true
-    });
+    (window as any).__REDUX_DEVTOOLS_EXTENSION__();
 
 export default createStore(
     rootReducer,

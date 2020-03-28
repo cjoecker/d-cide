@@ -47,7 +47,7 @@ if (token) {
 	//TODO uncomment when reducer ready
     const currentTime = Date.now() / 1000;
     if (decoded_TOKENToken.exp < currentTime) {
-        store.dispatch(logout());
+        // store.dispatch(logout());
     }
 }
 

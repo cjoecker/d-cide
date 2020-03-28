@@ -2,7 +2,7 @@ import axios, { AxiosError } from "axios";
 import {Action, Dispatch} from "redux";
 import { User } from "../reducers/Sessions_Reducer";
 import { showHTTPAlert } from "./Alerts_Actions";
-import {endLoading, endLoading2, startLoading} from "./App_Actions";
+import {endLoading, startLoading} from "./App_Actions";
 import jwt_decode from "jwt-decode";
 import {AppActions} from "../store";
 import {httpRequest} from "../HttpDispatcher";
@@ -71,64 +71,65 @@ export const postSession = (loginRequest: LoginRequest): ThunkAction<void, AppSt
 
 
 export function postUser(newUser: User) {
-	return async (dispatch: Dispatch<AppActions>) => {
-		dispatch(startLoading());
-
-		await axios
-			.post("/api/users/", newUser)
-			.then((answer) => dispatch(setSignUpSuccessful(true)))
-			.catch((error: AxiosError) => {
-				dispatch(setSignUpSuccessful(false));
-				showHTTPAlert(error);
-			});
-
-		dispatch(endLoading());
-	};
+	// return async (dispatch: Dispatch<AppActions>) => {
+	// 	dispatch(startLoading());
+	//
+	// 	await axios
+	// 		.post("/api/users/", newUser)
+	// 		.then((answer) => dispatch(setSignUpSuccessful(true)))
+	// 		.catch((error: AxiosError) => {
+	// 			dispatch(setSignUpSuccessful(false));
+	// 			showHTTPAlert(error);
+	// 		});
+	//
+	// 	dispatch(endLoading());
+	// };
 }
 
 export function logout2() {
 	console.log("hola");
 
-	return async (dispatch: Dispatch<AppActions>) => {
-		dispatch(startLoading());
-
-		dispatch(setSession(new User(), ""));
-
-		dispatch(endLoading());
-	};
+	// return async (dispatch: Dispatch<AppActions>) => {
+	// 	dispatch(startLoading());
+	//
+	// 	dispatch(setSession(new User(), ""));
+	//
+	// 	dispatch(endLoading());
+	// };
 }
 
-export const logout = () => async (dispatch: Dispatch<AppActions>) => {
-	dispatch(startLoading());
+export const logout = () => {
+	// async (dispatch: Dispatch<AppActions>) => {
+	// dispatch(startLoading());
 };
 
 
 export function getUnregisteredUser() {
-	return async (dispatch: Dispatch<AppActions>) => {
-		dispatch(startLoading());
-
-		await axios
-			.post("/api/sessions/unregistered")
-			.then((answer) => {
-				dispatch(setSession(jwt_decode(answer.data.token), answer.data.token));
-			})
-			.catch((error: AxiosError) => {
-				showHTTPAlert(error);
-			});
-
-		dispatch(endLoading());
-	};
+	// return async (dispatch: Dispatch<AppActions>) => {
+	// 	dispatch(startLoading());
+	//
+	// 	await axios
+	// 		.post("/api/sessions/unregistered")
+	// 		.then((answer) => {
+	// 			dispatch(setSession(jwt_decode(answer.data.token), answer.data.token));
+	// 		})
+	// 		.catch((error: AxiosError) => {
+	// 			showHTTPAlert(error);
+	// 		});
+	//
+	// 	dispatch(endLoading());
+	// };
 }
 
 export function setJWT(token: string) {
-	return async (dispatch: Dispatch<AppActions>) => {
-		if (token) {
-			localStorage.setItem("token", token);
-			axios.defaults.headers.common["Authorization"] = token;
-		} else {
-			localStorage.removeItem("token");
-			delete axios.defaults.headers.common["Authorization"];
-			dispatch(setToken(""));
-		}
-	};
+	// return async (dispatch: Dispatch<AppActions>) => {
+	// 	if (token) {
+	// 		localStorage.setItem("token", token);
+	// 		axios.defaults.headers.common["Authorization"] = token;
+	// 	} else {
+	// 		localStorage.removeItem("token");
+	// 		delete axios.defaults.headers.common["Authorization"];
+	// 		dispatch(setToken(""));
+	// 	}
+	// };
 }

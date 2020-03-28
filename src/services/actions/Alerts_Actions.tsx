@@ -21,11 +21,11 @@ export const deleteAlert = (alert: Alert) =>
 	} as const);
 
 export function showHTTPAlert(error: AxiosError) {
-	return async (dispatch: Dispatch<AppActions>) => {
-		let httpError = HTTP_ERROR;
-
-		httpError.text = `${error.response?.statusText} (${error.response?.status})`;
-
-		dispatch(showAlert(httpError));
-	};
+	// return async (dispatch: Dispatch<AppActions>) => {
+	// 	let httpError = HTTP_ERROR;
+	//
+	// 	httpError.text = `${error.response?.statusText} (${error.response?.status})`;
+	//
+	// 	dispatch(showAlert(httpError));
+	// };
 }
