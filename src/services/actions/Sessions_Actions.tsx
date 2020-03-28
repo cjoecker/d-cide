@@ -2,9 +2,7 @@ import axios, { AxiosError } from "axios";
 import {Action, Dispatch} from "redux";
 import { User } from "../reducers/Sessions_Reducer";
 import { showHTTPAlert } from "./Alerts_Actions";
-import {endLoading, startLoading} from "./App_Actions";
 import jwt_decode from "jwt-decode";
-import {AppActions} from "../store";
 import {httpRequest} from "../HttpDispatcher";
 import {PUT_DECISION} from "./types";
 import {ThunkAction} from "redux-thunk";
@@ -49,7 +47,7 @@ export interface LoginRequest {
 
 
 export const postSession = (loginRequest: LoginRequest): ThunkAction<void, AppState, null, Action<string>> => async dispatch => {
-	dispatch(startLoading());
+	// dispatch(startLoading());
 
 	await axios
 		.post("/api/sessions/", loginRequest)
@@ -66,7 +64,7 @@ export const postSession = (loginRequest: LoginRequest): ThunkAction<void, AppSt
 			}
 		});
 
-	dispatch(endLoading());
+	// dispatch(endLoading());
 };
 
 

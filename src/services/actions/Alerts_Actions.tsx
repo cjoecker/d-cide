@@ -1,8 +1,6 @@
 import { Alert } from "../reducers/Alerts_Reducer";
-import { Dispatch } from "redux";
-import { HTTP_ERROR } from "../Alerts";
+
 import { AxiosError } from "axios";
-import {AppActions} from "../store";
 
 export type AlertsActionsTypes =
 	| ReturnType<typeof showAlert>

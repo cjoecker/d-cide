@@ -1,7 +1,7 @@
 import { SessionsActionsTypes } from "../actions/Sessions_Actions";
 
 //TODO: remove valid token and use user instead
-export class Session {
+export class SessionState {
 	validToken: boolean = false;
 	signUpSuccessful: boolean = false;
 	wrongPassword: boolean = false;
@@ -18,9 +18,9 @@ export class User {
 }
 
 export default function (
-	state = new Session(),
+	state = new SessionState(),
 	action: SessionsActionsTypes
-): Session {
+): SessionState {
 	switch (action.type) {
 		case "SET_SESSION":
 			return {

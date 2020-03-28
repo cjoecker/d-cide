@@ -1,15 +1,15 @@
 import {AppActionsTypes} from "../actions/App_Actions";
+import {Reducer} from "redux";
+import {DispatchAction} from "../store";
 
 
 export class AppState {
     isLoading: number = 0;
 }
 
-export function App_Reducer(
-    state = new AppState(),
-    action: AppActionsTypes
-): AppState{
-    switch (action) {
+
+export const App_Reducer: Reducer<AppState, DispatchAction> = (state = new AppState(), action) => {
+    switch (action.type) {
         case AppActionsTypes.StartLoading:
             return {
                 ...state,
@@ -21,7 +21,6 @@ export function App_Reducer(
                 isLoading: state.isLoading - 1,
             };
         default:
-            console.log(action);
             return state;
     }
 };
