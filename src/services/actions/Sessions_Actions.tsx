@@ -1,12 +1,14 @@
 import axios, { AxiosError } from "axios";
-import { Dispatch } from "redux";
+import {Action, Dispatch} from "redux";
 import { User } from "../reducers/Sessions_Reducer";
 import { showHTTPAlert } from "./Alerts_Actions";
-import { endLoading, startLoading } from "./App_Actions";
+import {endLoading, endLoading2, startLoading} from "./App_Actions";
 import jwt_decode from "jwt-decode";
 import {AppActions} from "../store";
 import {httpRequest} from "../HttpDispatcher";
 import {PUT_DECISION} from "./types";
+import {ThunkAction} from "redux-thunk";
+import {AppState} from "../reducers/App_Reducer";
 
 export type SessionsActionsTypes =
 	| ReturnType<typeof setSession>
@@ -27,6 +29,7 @@ export const setSignUpSuccessful = (signUpSuccessful: boolean) =>
 		signUpSuccessful,
 	} as const);
 
+
 export const setToken = (token: string) =>
 	({
 		type: "SET_TOKEN",
@@ -44,28 +47,28 @@ export interface LoginRequest {
 	password: string;
 }
 
-export function postSession(loginRequest: LoginRequest) {
-	return async (dispatch: Dispatch<AppActions>) => {
-		dispatch(startLoading());
 
-		await axios
-			.post("/api/sessions/", loginRequest)
-			.then((answer) => {
-				dispatch(setSession(jwt_decode(answer.data.token), answer.data.token));
-			})
-			.catch((error: AxiosError) => {
-				if (error.response?.data.password !== undefined) {
-					//reset value for animation
-					dispatch(setWrongPassword(false));
-					dispatch(setWrongPassword(true));
-				} else {
-					showHTTPAlert(error);
-				}
-			});
+export const postSession = (loginRequest: LoginRequest): ThunkAction<void, AppState, null, Action<string>> => async dispatch => {
+	dispatch(startLoading());
 
-		dispatch(endLoading());
-	};
-}
+	await axios
+		.post("/api/sessions/", loginRequest)
+		.then((answer) => {
+			dispatch(setSession(jwt_decode(answer.data.token), answer.data.token));
+		})
+		.catch((error: AxiosError) => {
+			if (error.response?.data.password !== undefined) {
+				//reset value for animation
+				dispatch(setWrongPassword(false));
+				dispatch(setWrongPassword(true));
+			} else {
+				showHTTPAlert(error);
+			}
+		});
+
+	dispatch(endLoading());
+};
+
 
 export function postUser(newUser: User) {
 	return async (dispatch: Dispatch<AppActions>) => {

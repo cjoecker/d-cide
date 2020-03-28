@@ -26,7 +26,9 @@ const middleware = thunk as ThunkMiddleware<AppState, AppActions>;
 
 const ReduxDevTools =
     (window as any).__REDUX_DEVTOOLS_EXTENSION__ &&
-    (window as any).__REDUX_DEVTOOLS_EXTENSION__();
+    (window as any).__REDUX_DEVTOOLS_EXTENSION__({
+        serialize: true
+    });
 
 export default createStore(
     rootReducer,

@@ -17,12 +17,15 @@ export const endLoading = () =>
 		type: "END_LOADING",
 	} as const);
 
-
+export const endLoading2 = (type: string) =>
+	({
+		type: type,
+	} as const);
 
 export const startLoadingAction = (): ThunkAction<void, AppState, null, Action<string>> => async dispatch => {
-	dispatch(startLoading());
+	dispatch(endLoading2("START_LOADING"));
 
 	setTimeout(() => {
-		dispatch(endLoading());
-	}, 5000);
+		dispatch(endLoading2("END_LOADING"));
+	}, 2000);
 };
