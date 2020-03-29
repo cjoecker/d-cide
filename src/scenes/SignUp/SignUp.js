@@ -9,7 +9,6 @@ import Fab from "@material-ui/core/Fab";
 import Typography from "@material-ui/core/Typography";
 import * as LongStrings from "../../services/LongTexts";
 import { connect } from "react-redux";
-import { postSession, postUser } from "../../services/Redux/Sessions_Actions";
 import ReactGA from "react-ga";
 import InfoDialog from "../../components/InfoDialog";
 
@@ -317,6 +316,6 @@ const mapStateToProps = (state) => ({
 	security: state.security,
 });
 
-export default connect(mapStateToProps, { postUser, postSession })(
+export default connect(mapStateToProps)(
 	withStyles(styles)(SignUp)
 );

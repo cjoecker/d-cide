@@ -13,7 +13,6 @@ import IconButton from "@material-ui/core/IconButton";
 import { green } from "@material-ui/core/colors";
 import ReactGA from "react-ga";
 import { connect } from "react-redux";
-import { deleteAlert } from "../services/redux/Alerts_Actions";
 import Alert from "@material-ui/lab/Alert";
 
 const styles = (theme) => ({
@@ -68,7 +67,8 @@ class AlertsBanner extends Component {
 
 		this.setState({ open: false });
 
-		this.props.deleteAlert(this.state.actualAlert);
+		//TODO delete alert dispatch
+		// this.props.deleteAlert(this.state.actualAlert);
 	};
 
 	calculateHideTime(alert) {
@@ -150,6 +150,6 @@ const mapStateToProps = (state) => ({
 	alerts: state.alerts,
 });
 
-export default connect(mapStateToProps, { deleteAlert })(
+export default connect(mapStateToProps)(
 	withStyles(styles)(AlertsBanner)
 );

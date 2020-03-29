@@ -4,7 +4,6 @@ import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import { connect } from "react-redux";
-import { postSession } from "../../services/Redux/Sessions_Actions";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import ReactGA from "react-ga";
@@ -115,6 +114,6 @@ const mapStateToProps = (state) => ({
 	security: state.security,
 });
 
-export default connect(mapStateToProps, { postSession })(
+export default connect(mapStateToProps)(
 	withStyles(styles)(NotFound)
 );

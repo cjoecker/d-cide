@@ -1,13 +1,8 @@
 import { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import {
-	postSession,
-	postUser,
-	logout,
-	getUnregisteredUser,
-} from "../services/Redux/Sessions_Actions";
 import { getDecisions } from "../services/actions/Decisions_Action";
+import {getUnregisteredUser} from "../services/redux/Sessions_Actions";
 
 class LandingPage extends Component {
 	componentDidMount() {

@@ -11,7 +11,6 @@ import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import Link from "@material-ui/core/Link";
 import Fab from "@material-ui/core/Fab";
 import { connect } from "react-redux";
-import { postSession, setJWT } from "../../services/Redux/Sessions_Actions";
 import Typography from "@material-ui/core/Typography";
 import TwoButtonsDialog from "../../components/TwoButtonsDialog";
 import ReactGA from "react-ga";
@@ -421,8 +420,8 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps, {
-	postSession,
+	// postSession,
 	putDecision,
 	getDecisions,
-	setJWT,
+	// setJWT,
 })(withStyles(styles)(Login));
