@@ -5,7 +5,7 @@ import App from "./App";
 import registerServiceWorker from "./registerServiceWorker";
 
 import { Provider } from "react-redux";
-import store from "./services/Redux/store";
+import store from "./services/redux/store";
 
 ReactDOM.render(
 	<Provider store={store}>

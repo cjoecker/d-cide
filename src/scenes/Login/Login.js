@@ -11,7 +11,7 @@ import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import Link from "@material-ui/core/Link";
 import Fab from "@material-ui/core/Fab";
 import { connect } from "react-redux";
-import { postSession, setJWT } from "../../services/actions/Sessions_Actions";
+import { postSession, setJWT } from "../../services/Redux/Sessions_Actions";
 import Typography from "@material-ui/core/Typography";
 import TwoButtonsDialog from "../../components/TwoButtonsDialog";
 import ReactGA from "react-ga";

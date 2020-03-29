@@ -6,7 +6,7 @@ import {
 	postUser,
 	logout,
 	getUnregisteredUser,
-} from "../services/actions/Sessions_Actions";
+} from "../services/Redux/Sessions_Actions";
 import { getDecisions } from "../services/actions/Decisions_Action";
 
 class LandingPage extends Component {

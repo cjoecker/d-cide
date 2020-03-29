@@ -9,7 +9,7 @@ import Fab from "@material-ui/core/Fab";
 import Typography from "@material-ui/core/Typography";
 import * as LongStrings from "../../services/LongTexts";
 import { connect } from "react-redux";
-import { postSession, postUser } from "../../services/actions/Sessions_Actions";
+import { postSession, postUser } from "../../services/Redux/Sessions_Actions";
 import ReactGA from "react-ga";
 import InfoDialog from "../../components/InfoDialog";
 

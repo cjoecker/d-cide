@@ -13,7 +13,7 @@ import ReactGA from "react-ga";
 import {
 	deleteAlert,
 	showAlert,
-} from "../../../services/actions/Alerts_Actions";
+} from "../../../services/redux/Alerts_Actions";
 import {
 	NOT_ENOUGH_CRITERIA,
 	NOT_ENOUGH_OPTIONS,

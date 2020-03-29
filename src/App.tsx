@@ -10,9 +10,9 @@ import theme from "./muiTheme";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import {Router} from "react-router-dom";
 import {useDispatch, useSelector, shallowEqual} from "react-redux";
-import store from "./services/Redux/store";
+import store from "./services/redux/store";
 import jwt_decode from "jwt-decode";
-import {logout,} from "./services/actions/Sessions_Actions";
+import {logout,} from "./services/redux/Sessions_Actions";
 import AlertsBanner from "./components/AlertsBanner";
 import {createBrowserHistory} from "history";
 import ReactGA from "react-ga";
@@ -29,8 +29,8 @@ import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import {POST_SESSION} from "./services/actions/types";
 import axios from "axios";
-import {AppState} from "./services/Redux/App_Reducer";
-import {AppActionTypes} from "./services/Redux/App_Actions";
+import {AppState} from "./services/redux/App_Reducer";
+import {AppActionTypes} from "./services/redux/App_Actions";
 
 
 const token = localStorage.token;

@@ -4,7 +4,7 @@ import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import { connect } from "react-redux";
-import { postSession } from "../../services/actions/Sessions_Actions";
+import { postSession } from "../../services/Redux/Sessions_Actions";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
 import ReactGA from "react-ga";

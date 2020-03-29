@@ -1,19 +1,19 @@
 import {Action, applyMiddleware, combineReducers, compose, createStore,} from "redux";
 import thunk, {ThunkMiddleware} from "redux-thunk";
 import {AppState, App_Reducer} from "./App_Reducer";
-import Session_Reducer, {SessionState} from "./Session_Reducer";
+import {SessionState, Session_Reducer} from "./Session_Reducer";
+
 
 
 const rootReducer = combineReducers({
     App: App_Reducer,
-    Session: Session_Reducer
+    Session: Session_Reducer,
 });
 
 interface rootState extends
     AppState,
     SessionState
 {}
-
 
 
 

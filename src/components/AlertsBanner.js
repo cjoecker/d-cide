@@ -13,7 +13,7 @@ import IconButton from "@material-ui/core/IconButton";
 import { green } from "@material-ui/core/colors";
 import ReactGA from "react-ga";
 import { connect } from "react-redux";
-import { deleteAlert } from "../services/actions/Alerts_Actions";
+import { deleteAlert } from "../services/redux/Alerts_Actions";
 import Alert from "@material-ui/lab/Alert";
 
 const styles = (theme) => ({

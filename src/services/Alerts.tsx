@@ -1,5 +1,21 @@
 import React from "react";
-import { Alert, AlertTypes } from "./reducers/Alerts_Reducer";
+
+
+export class Alert {
+	type: AlertTypes = AlertTypes.error;
+	allowDelete: boolean = false;
+	autoHide: boolean = false;
+	text: string = "";
+}
+
+export enum AlertTypes {
+	error,
+	warning,
+	info,
+	success,
+}
+
+
 
 //ERRORS
 export const HTTP_ERROR: Alert = {
