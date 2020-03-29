@@ -10,7 +10,6 @@ export enum AppActionTypes {
 }
 
 export function showHTTPAlert(dispatch: Dispatch, error: AxiosError) {
-
 	const httpError = {
 		...HTTP_ERROR,
 		text: `${error.response?.statusText} (${error.response?.status})`
@@ -18,6 +17,6 @@ export function showHTTPAlert(dispatch: Dispatch, error: AxiosError) {
 
 	dispatch({
 		type: AppActionTypes.addAlerts,
-		payload: [httpError]
+		payload: {Alerts:[httpError]}
 	});
 }

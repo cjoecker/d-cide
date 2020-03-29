@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 import "./index.css";
 import AppBar from "@material-ui/core/AppBar";
 import Typography from "@material-ui/core/Typography";
@@ -9,10 +9,9 @@ import dcide_Logo from "./images/d-cide_Logo.svg";
 import theme from "./muiTheme";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import {Router} from "react-router-dom";
-import {useDispatch, useSelector, shallowEqual} from "react-redux";
-import store from "./services/redux/store";
+import {shallowEqual, useDispatch, useSelector} from "react-redux";
 import jwt_decode from "jwt-decode";
-import {logout,} from "./services/redux/Sessions_Actions";
+import {postSession,} from "./services/redux/Sessions_Actions";
 import AlertsBanner from "./components/AlertsBanner";
 import {createBrowserHistory} from "history";
 import ReactGA from "react-ga";
@@ -27,10 +26,7 @@ import IconButton from "@material-ui/core/IconButton";
 import Toolbar from "@material-ui/core/Toolbar";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
-import {POST_SESSION} from "./services/actions/types";
 import axios from "axios";
-import {AppState} from "./services/redux/App_Reducer";
-import {AppActionTypes} from "./services/redux/App_Actions";
 
 
 const token = localStorage.token;
@@ -44,7 +40,7 @@ if (token) {
     //     type: POST_SESSION,
     //     payload: decoded_TOKENToken,
     // });
-	//TODO uncomment when reducer ready
+    //TODO uncomment when reducer ready
     const currentTime = Date.now() / 1000;
     if (decoded_TOKENToken.exp < currentTime) {
         // store.dispatch(logout());
@@ -118,8 +114,8 @@ interface Props extends WithStyles<typeof styles> {
 
 const App: React.FC<Props> = (props: Props) => {
 
-	const dispatch = useDispatch();
-	const {isLoading} = useSelector(state => state.App, shallowEqual);
+    const dispatch = useDispatch();
+    const {isLoading} = useSelector(state => state.App, shallowEqual);
 
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -216,7 +212,10 @@ const App: React.FC<Props> = (props: Props) => {
                                 className={classes.icon}
                                 // onClick={handleClick}
                                 onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-                                    dispatch({type: AppActionTypes.startLoading})
+                                    dispatch(postSession({
+                                        username: "hola",
+                                        password: "chao",
+                                    }))
                                 }}
                                 color="inherit"
                             >
