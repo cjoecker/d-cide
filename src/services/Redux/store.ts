@@ -1,15 +1,18 @@
 import {Action, applyMiddleware, combineReducers, compose, createStore,} from "redux";
 import thunk, {ThunkMiddleware} from "redux-thunk";
-import {AppState, App_Reducer} from "./reducers/App_Reducer";
-import {SessionState} from "./reducers/Sessions_Reducer";
+import {AppState, App_Reducer} from "./App_Reducer";
+import Session_Reducer, {SessionState} from "./Session_Reducer";
 
 
 const rootReducer = combineReducers({
-    App: App_Reducer
+    App: App_Reducer,
+    Session: Session_Reducer
 });
 
-type rootState = AppState | SessionState;
-
+interface rootState extends
+    AppState,
+    SessionState
+{}
 
 
 
@@ -19,7 +22,7 @@ export interface DispatchAction extends Action {
     payload: Partial<rootState>;
 }
 
-const middleware = thunk as ThunkMiddleware<AppState, DispatchAction>;
+const middleware = thunk as ThunkMiddleware<rootState, DispatchAction>;
 
 const ReduxDevTools =
     (window as any).__REDUX_DEVTOOLS_EXTENSION__ &&
@@ -29,7 +32,6 @@ export default createStore(
     rootReducer,
     compose(applyMiddleware(middleware),ReduxDevTools)
 );
-
 
 
 

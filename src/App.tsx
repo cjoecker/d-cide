@@ -9,8 +9,8 @@ import dcide_Logo from "./images/d-cide_Logo.svg";
 import theme from "./muiTheme";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import {Router} from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
-import store from "./services/store";
+import {useDispatch, useSelector, shallowEqual} from "react-redux";
+import store from "./services/Redux/store";
 import jwt_decode from "jwt-decode";
 import {logout,} from "./services/actions/Sessions_Actions";
 import AlertsBanner from "./components/AlertsBanner";
@@ -29,8 +29,8 @@ import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import {POST_SESSION} from "./services/actions/types";
 import axios from "axios";
-import {AppState} from "./services/reducers/App_Reducer";
-import {startLoadingAction} from "./services/actions/App_Actions";
+import {AppState} from "./services/Redux/App_Reducer";
+import {AppActionTypes} from "./services/Redux/App_Actions";
 
 
 const token = localStorage.token;
@@ -119,8 +119,7 @@ interface Props extends WithStyles<typeof styles> {
 const App: React.FC<Props> = (props: Props) => {
 
 	const dispatch = useDispatch();
-	const isLoading = useSelector(state => state.App.isLoading);
-
+	const {isLoading} = useSelector(state => state.App, shallowEqual);
 
     const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -217,7 +216,7 @@ const App: React.FC<Props> = (props: Props) => {
                                 className={classes.icon}
                                 // onClick={handleClick}
                                 onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-                                    dispatch(startLoadingAction())
+                                    dispatch({type: AppActionTypes.startLoading})
                                 }}
                                 color="inherit"
                             >

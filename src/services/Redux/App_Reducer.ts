@@ -1,6 +1,6 @@
-import {AppActionsTypes} from "../actions/App_Actions";
+import {AppActionTypes} from "./App_Actions";
 import {Reducer} from "redux";
-import {DispatchAction} from "../store";
+import {DispatchAction} from "./store";
 
 
 export class AppState {
@@ -10,12 +10,12 @@ export class AppState {
 
 export const App_Reducer: Reducer<AppState, DispatchAction> = (state = new AppState(), action) => {
     switch (action.type) {
-        case AppActionsTypes.StartLoading:
+        case AppActionTypes.startLoading:
             return {
                 ...state,
                 isLoading: state.isLoading + 1,
             };
-        case AppActionsTypes.EndLoading:
+        case AppActionTypes.endLoading:
             return {
                 ...state,
                 isLoading: state.isLoading - 1,

@@ -1,12 +1,12 @@
 import axios, { AxiosError } from "axios";
 import {Action, Dispatch} from "redux";
-import { User } from "../reducers/Sessions_Reducer";
+import { User } from "../Redux/Session_Reducer";
 import { showHTTPAlert } from "./Alerts_Actions";
 import jwt_decode from "jwt-decode";
 import {httpRequest} from "../HttpDispatcher";
 import {PUT_DECISION} from "./types";
 import {ThunkAction} from "redux-thunk";
-import {AppState} from "../reducers/App_Reducer";
+import {AppState} from "../Redux/App_Reducer";
 
 export type SessionsActionsTypes =
 	| ReturnType<typeof setSession>
