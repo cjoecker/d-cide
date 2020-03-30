@@ -1,13 +1,13 @@
 import {Reducer} from "redux";
 import {DispatchAction} from "./store";
 import {AppActionTypes} from "./App_Actions";
-import {Alert} from "../Alerts";
+import {AlertClass} from "../Alerts";
 import {mergeWithoutDuplicates, removeObjectsFromArray} from "../GeneralUtils";
 
 
 export class AppState {
     isLoading: number = 0;
-    Alerts: Alert[] = [];
+    Alerts: AlertClass[] = [];
 }
 
 

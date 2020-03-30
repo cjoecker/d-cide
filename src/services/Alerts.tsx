@@ -1,7 +1,7 @@
 import React from "react";
 
 
-export class Alert {
+export class AlertClass {
 	type: AlertTypes = AlertTypes.error;
 	allowDelete: boolean = false;
 	autoHide: boolean = false;
@@ -18,7 +18,7 @@ export enum AlertTypes {
 
 
 //ERRORS
-export const HTTP_ERROR: Alert = {
+export const HTTP_ERROR: AlertClass = {
 	type: AlertTypes.error,
 	allowDelete: true,
 	autoHide: false,
@@ -26,14 +26,14 @@ export const HTTP_ERROR: Alert = {
 };
 
 //WARNINGS
-export const NOT_ENOUGH_OPTIONS: Alert = {
+export const NOT_ENOUGH_OPTIONS: AlertClass = {
 	type: AlertTypes.warning,
 	allowDelete: false,
 	autoHide: false,
 	text: "At least two decision options are necessary! ",
 };
 
-export const NOT_ENOUGH_CRITERIA: Alert = {
+export const NOT_ENOUGH_CRITERIA: AlertClass = {
 	type: AlertTypes.warning,
 	allowDelete: false,
 	autoHide: false,
