@@ -5,12 +5,11 @@ import {AppState} from "./App_Reducer";
 
 //TODO: remove valid token and use user instead
 export class SessionState {
-	validToken: boolean = false;
 	signUpSuccessful: boolean = false;
 	wrongPassword: boolean = false;
 	token: string = "";
 	tokenExpirationDate: number = 0;
-	user? = new User();
+	user = new User();
 }
 
 export class User {
@@ -26,7 +25,6 @@ export const Session_Reducer: Reducer<SessionState, DispatchAction> = (state = n
 		case SessionActionTypes.setSession:
 			return {
 				...state,
-				validToken: !!action.payload.user || false,
 				user: action.payload.user || new User(),
 				token: action.payload.token || '',
 				wrongPassword: false,

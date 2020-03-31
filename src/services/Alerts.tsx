@@ -3,7 +3,7 @@ import React from "react";
 
 export class AlertClass {
 	type: AlertTypes = AlertTypes.error;
-	allowDelete: boolean = false;
+	allowClose: boolean = false;
 	autoHide: boolean = false;
 	text: string = "";
 }
@@ -20,7 +20,7 @@ export enum AlertTypes {
 //ERRORS
 export const HTTP_ERROR: AlertClass = {
 	type: AlertTypes.error,
-	allowDelete: true,
+	allowClose: true,
 	autoHide: false,
 	text: "",
 };
@@ -28,14 +28,14 @@ export const HTTP_ERROR: AlertClass = {
 //WARNINGS
 export const NOT_ENOUGH_OPTIONS: AlertClass = {
 	type: AlertTypes.warning,
-	allowDelete: false,
+	allowClose: false,
 	autoHide: false,
 	text: "At least two decision options are necessary! ",
 };
 
 export const NOT_ENOUGH_CRITERIA: AlertClass = {
 	type: AlertTypes.warning,
-	allowDelete: false,
+	allowClose: false,
 	autoHide: false,
 	text: "At least two selection criteria are necessary! ",
 };

@@ -118,7 +118,7 @@ const AlertsBanner: React.FC<Props> = (props: Props) => {
                 autoHideDuration={autoHideTime !== 0 ? autoHideTime : undefined}
                 onClose={handleClose}>
                 <Alert
-                    onClose={alert.allowDelete ? handleClose : undefined}
+                    onClose={alert.allowClose ? handleClose : undefined}
                     variant="filled"
                     severity={alert.type}
                 >

@@ -17,7 +17,7 @@ import ReactGA from "react-ga";
 import {
 	getDecisions,
 	putDecision,
-} from "../../services/actions/Decisions_Action";
+} from "../../services/redux/Decisions_Action";
 import { getValueSafe } from "../../services/GeneralUtils";
 import clsx from "clsx";
 

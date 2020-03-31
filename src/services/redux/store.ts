@@ -2,17 +2,20 @@ import {Action, applyMiddleware, combineReducers, compose, createStore,} from "r
 import thunk, {ThunkMiddleware} from "redux-thunk";
 import {AppState, App_Reducer} from "./App_Reducer";
 import {SessionState, Session_Reducer} from "./Session_Reducer";
+import Decisions_Reducer, {DecisionsState} from "./Decisions_Reducer";
 
 
 
 const rootReducer = combineReducers({
     App: App_Reducer,
     Session: Session_Reducer,
+    Decisions: Decisions_Reducer,
 });
 
-interface rootState extends
+export interface rootState extends
     AppState,
-    SessionState
+    SessionState,
+    DecisionsState
 {}
 
 

@@ -213,8 +213,8 @@ const App: React.FC<Props> = (props: Props) => {
                                 // onClick={handleClick}
                                 onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
                                     dispatch(postSession({
-                                        username: "hola",
-                                        password: "chao",
+                                        username: "peter2@parker.com",
+                                        password: "123456789",
                                     }))
                                 }}
                                 color="inherit"

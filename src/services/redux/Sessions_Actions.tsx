@@ -1,5 +1,5 @@
 import axios, {AxiosError} from "axios";
-import {Action} from "redux";
+import {Action, Dispatch} from "redux";
 import {SessionState, User} from "./Session_Reducer";
 import jwt_decode from "jwt-decode";
 import {ThunkAction} from "redux-thunk";
@@ -38,22 +38,51 @@ export const postSession = (loginRequest: LoginRequest): ThunkAction<void, Sessi
         })
         .catch((error: AxiosError) => {
 			if (error.response?.data.password !== undefined) {
-				//reset value for wrong password animation
-				dispatch({
-					type: SessionActionTypes.setSession,
-					payload: {
-						wrongPassword: false,
-					}
-				});
-				dispatch({
-					type: SessionActionTypes.setSession,
-					payload: {
-						wrongPassword: true,
-					}
-				});
+                resetWrongPasswordAnimation(dispatch);
 			} else {
 				showHTTPAlert(dispatch, error);
 			}
+        }).finally(() => {
+        dispatch({
+            type: AppActionTypes.endLoading
+        });
+    })
+};
+
+const resetWrongPasswordAnimation = (dispatch: Dispatch) =>
+{
+    dispatch({
+        type: SessionActionTypes.setSession,
+        payload: {
+            wrongPassword: false,
+        }
+    });
+    dispatch({
+        type: SessionActionTypes.setSession,
+        payload: {
+            wrongPassword: true,
+        }
+    });
+};
+
+export const getUnregisteredUser = (): ThunkAction<void, SessionState, null, Action<string>> => async dispatch => {
+
+    await dispatch({
+        type: AppActionTypes.startLoading
+    });
+
+    axios.post("/api/sessions/unregistered")
+        .then((answer) => {
+            dispatch({
+                type: SessionActionTypes.setSession,
+                payload: {
+                    user: jwt_decode(answer.data.token),
+                    token: answer.data.token
+                }
+            });
+        })
+        .catch((error: AxiosError) => {
+            showHTTPAlert(dispatch, error);
         }).finally(() => {
         dispatch({
             type: AppActionTypes.endLoading
@@ -80,7 +109,6 @@ export function postUser(newUser: User) {
 }
 
 export function logout2() {
-    console.log("hola");
 
     // return async (dispatch: Dispatch<AppActions>) => {
     // 	dispatch(startLoading());
@@ -97,22 +125,7 @@ export const logout = () => {
 };
 
 
-export function getUnregisteredUser() {
-    // return async (dispatch: Dispatch<AppActions>) => {
-    // 	dispatch(startLoading());
-    //
-    // 	await axios
-    // 		.post("/api/sessions/unregistered")
-    // 		.then((answer) => {
-    // 			dispatch(setSession(jwt_decode(answer.data.token), answer.data.token));
-    // 		})
-    // 		.catch((error: AxiosError) => {
-    // 			showHTTPAlert(error);
-    // 		});
-    //
-    // 	dispatch(endLoading());
-    // };
-}
+
 
 export function setJWT(token: string) {
     // return async (dispatch: Dispatch<AppActions>) => {
