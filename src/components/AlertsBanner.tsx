@@ -7,6 +7,7 @@ import Alert from "@material-ui/lab/Alert";
 import {WithStyles} from "@material-ui/core/styles";
 import {shallowEqual, useDispatch, useSelector} from "react-redux";
 import {AlertClass, AlertTypes} from "../services/Alerts";
+import {AppActionTypes} from "../services/redux/App_Actions";
 
 const styles = (theme) => ({
     success: {
@@ -47,20 +48,15 @@ const AlertsBanner: React.FC<Props> = (props: Props) => {
     const [open, setOpen] = useState(false);
     const [alert, setAlert] = useState(new AlertClass());
 
-    useEffect(() => {
-        console.log(Alerts);
 
+    useEffect(() => {
         if (Alerts[0] !== undefined && Alerts[0].text !== "") {
             setAlert(sortAlerts(Alerts));
             setAutoHideTime(calculateHideTime(Alerts[0]));
-            //TODO this needs to be taken out to other function to avoid async issues
             setOpen(true);
-        } else {
-            setAlert(new AlertClass());
-            setAutoHideTime(0);
-            setOpen(false);
         }
     }, [Alerts]);
+
 
 
     const handleClose = (event: React.SyntheticEvent | React.MouseEvent, reason?: string) => {
@@ -70,8 +66,10 @@ const AlertsBanner: React.FC<Props> = (props: Props) => {
 
         setOpen(false);
 
-        //TODO delete alert dispatch
-        // this.props.deleteAlert(this.state.actualAlert);
+        dispatch({
+            type: AppActionTypes.deleteAlerts,
+            payload: {Alerts:[alert]}
+        });
     };
 
     const calculateHideTime = (alertLocal: AlertClass) => {
