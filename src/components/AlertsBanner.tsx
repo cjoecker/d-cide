@@ -6,8 +6,9 @@ import { green } from "@material-ui/core/colors";
 import Alert from "@material-ui/lab/Alert";
 import { WithStyles } from "@material-ui/core/styles";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
-import { AlertClass, AlertTypes } from "../services/Alerts";
+import {AlertInitialState, AlertType, AlertTypes} from "../services/Alerts";
 import { AppActionTypes } from "../services/redux/App_Actions";
+import {RootState} from "../services/redux/rootReducer";
 
 const styles = (theme) => ({
 	success: {
@@ -40,19 +41,22 @@ interface Props extends WithStyles<typeof styles> {}
 const AlertsBanner: React.FC<Props> = (props: Props) => {
 	const dispatch = useDispatch();
 
-	const { Alerts } = useSelector((state) => state.App, shallowEqual);
+	const {alerts} = useSelector((state: RootState) => state.App, shallowEqual);
 
 	const [autoHideTime, setAutoHideTime] = useState(0);
 	const [open, setOpen] = useState(false);
-	const [alert, setAlert] = useState(new AlertClass());
+	const [alert, setAlert] = useState(AlertInitialState);
+
 
 	useEffect(() => {
-		if (Alerts[0] !== undefined && Alerts[0].text !== "") {
-			setAlert(sortAlerts(Alerts));
-			setAutoHideTime(calculateHideTime(Alerts[0]));
+		if (alerts[0] !== undefined && alerts[0].text !== "") {
+			setAlert(sortAlerts(alerts));
+			setAutoHideTime(calculateHideTime(alerts[0]));
 			setOpen(true);
+		}else{
+			setOpen(false);
 		}
-	}, [Alerts]);
+	}, [alerts]);
 
 	const handleClose = (
 		event: React.SyntheticEvent | React.MouseEvent,
@@ -70,7 +74,7 @@ const AlertsBanner: React.FC<Props> = (props: Props) => {
 		});
 	};
 
-	const calculateHideTime = (alertLocal: AlertClass) => {
+	const calculateHideTime = (alertLocal: AlertType) => {
 		if (!alertLocal.autoHide) return 0;
 
 		const matches = String(alertLocal.text).match(/[\w\d’-]+/gi);
@@ -80,7 +84,7 @@ const AlertsBanner: React.FC<Props> = (props: Props) => {
 		return (wordsNum / 3.3) * 1500;
 	};
 
-	const sortAlerts = (alerts: AlertClass[]) => {
+	const sortAlerts = (alerts: AlertType[]) => {
 		const errors = alerts.filter((alert) => alert.type === AlertTypes.error);
 		if (errors.length > 0) {
 			return errors[0];

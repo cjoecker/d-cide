@@ -12,7 +12,7 @@ import { SessionState } from "./Session_Reducer";
 import { Action } from "redux";
 import { AppActionTypes, showHTTPAlert } from "./App_Actions";
 import { SessionActionTypes } from "./Sessions_Actions";
-import { rootState } from "./store";
+// import { rootState } from "./store";
 
 export const httpRequest = (
 	requestType,

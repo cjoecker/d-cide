@@ -1,7 +1,7 @@
 import { SessionActionTypes } from "./Sessions_Actions";
 import { Reducer } from "redux";
-import { DispatchAction } from "./store";
-import { AppState } from "./App_Reducer";
+// import { DispatchAction } from "./store";
+// import { AppState } from "./App_Reducer";
 
 //TODO: remove valid token and use user instead
 export class SessionState {
@@ -20,34 +20,34 @@ export class User {
 }
 
 //TODO set token expiration date
-export const Session_Reducer: Reducer<SessionState, DispatchAction> = (
-	state = new SessionState(),
-	action
-) => {
-	switch (action.type) {
-		case SessionActionTypes.setSession:
-			return {
-				...state,
-				user: action.payload.user || new User(),
-				token: action.payload.token || "",
-				wrongPassword: false,
-			};
-		case SessionActionTypes.setToken:
-			return {
-				...state,
-				token: action.payload.token || "",
-			};
-		case SessionActionTypes.setSignUpSuccessful:
-			return {
-				...state,
-				signUpSuccessful: action.payload.signUpSuccessful || false,
-			};
-		case SessionActionTypes.setWrongPassword:
-			return {
-				...state,
-				wrongPassword: action.payload.wrongPassword || false,
-			};
-		default:
-			return state;
-	}
-};
+// export const Session_Reducer: Reducer<SessionState, DispatchAction> = (
+// 	state = new SessionState(),
+// 	action
+// ) => {
+// 	switch (action.type) {
+// 		case SessionActionTypes.setSession:
+// 			return {
+// 				...state,
+// 				user: action.payload.user || new User(),
+// 				token: action.payload.token || "",
+// 				wrongPassword: false,
+// 			};
+// 		case SessionActionTypes.setToken:
+// 			return {
+// 				...state,
+// 				token: action.payload.token || "",
+// 			};
+// 		case SessionActionTypes.setSignUpSuccessful:
+// 			return {
+// 				...state,
+// 				signUpSuccessful: action.payload.signUpSuccessful || false,
+// 			};
+// 		case SessionActionTypes.setWrongPassword:
+// 			return {
+// 				...state,
+// 				wrongPassword: action.payload.wrongPassword || false,
+// 			};
+// 		default:
+// 			return state;
+// 	}
+// };

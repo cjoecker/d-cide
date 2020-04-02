@@ -6,11 +6,13 @@
       "dom.iterable",
       "esnext"
     ],
+    "noImplicitAny": false,
+    "noImplicitThis": true,
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "strict": true,
+    "strict": false, //TODO set to true after conversion done
     "forceConsistentCasingInFileNames": true,
     "module": "esnext",
     "moduleResolution": "node",

@@ -33,6 +33,9 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import axios from "axios";
+import {RootState} from "./services/redux/rootReducer";
+import AppSlice from "./services/redux/AppSlice"
+import {NOT_ENOUGH_OPTIONS} from "./services/Alerts";
 
 const token = localStorage.token;
 
@@ -47,9 +50,9 @@ if (token) {
 	// });
 	//TODO uncomment when reducer ready
 	const currentTime = Date.now() / 1000;
-	if (decoded_TOKENToken.exp < currentTime) {
-		// store.dispatch(logout());
-	}
+	// if (decoded_TOKENToken.exp < currentTime) {
+	// 	// store.dispatch(logout());
+	// }
 }
 
 function TabContainer(props) {
@@ -119,7 +122,7 @@ interface Props extends WithStyles<typeof styles> {}
 
 const App: React.FC<Props> = (props: Props) => {
 	const dispatch = useDispatch();
-	const { isLoading } = useSelector((state) => state.App, shallowEqual);
+	const {isLoading} = useSelector((state: RootState) => state.App);
 
 	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 	const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -207,10 +210,10 @@ const App: React.FC<Props> = (props: Props) => {
 								// onClick={handleClick}
 								onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
 									dispatch(
-										postSession({
-											username: "peter2@parker.com",
-											password: "123456789",
-										})
+										// postSession({
+										// 	username: "peter2@parker.com",
+										// 	password: "123456789",
+										// })
 									);
 								}}
 								color="inherit"
