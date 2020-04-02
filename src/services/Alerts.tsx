@@ -1,6 +1,5 @@
 import React from "react";
 
-
 export class AlertClass {
 	type: AlertTypes = AlertTypes.error;
 	allowClose: boolean = false;
@@ -9,13 +8,11 @@ export class AlertClass {
 }
 
 export enum AlertTypes {
-	error= "error",
+	error = "error",
 	warning = "warning",
 	info = "info",
 	success = "success",
 }
-
-
 
 //ERRORS
 export const HTTP_ERROR: AlertClass = {

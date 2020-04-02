@@ -1,40 +1,20 @@
-import {Action, applyMiddleware, combineReducers, compose, createStore,} from "redux";
-import thunk, {ThunkMiddleware} from "redux-thunk";
-import {AppState, App_Reducer} from "./App_Reducer";
-import {SessionState, Session_Reducer} from "./Session_Reducer";
-import Decisions_Reducer, {DecisionsState} from "./Decisions_Reducer";
+import { configureStore, Action } from "@reduxjs/toolkit";
+import { ThunkAction } from "redux-thunk";
+import rootReducer, {RootState} from "./rootReducer";
 
-
-
-const rootReducer = combineReducers({
-    App: App_Reducer,
-    Session: Session_Reducer,
-    Decisions: Decisions_Reducer,
+const store = configureStore({
+	reducer: rootReducer,
 });
 
-export interface rootState extends
-    AppState,
-    SessionState,
-    DecisionsState
-{}
-
-
-
-
-export interface DispatchAction extends Action {
-    payload: Partial<rootState>;
+if (process.env.NODE_ENV === "development" && module.hot) {
+	module.hot.accept("./rootReducer", () => {
+		const newRootReducer = require("./rootReducer").default;
+		store.replaceReducer(newRootReducer);
+	});
 }
 
-const middleware = thunk as ThunkMiddleware<rootState, DispatchAction>;
+export type AppDispatch = typeof store.dispatch;
 
-const ReduxDevTools =
-    (window as any).__REDUX_DEVTOOLS_EXTENSION__ &&
-    (window as any).__REDUX_DEVTOOLS_EXTENSION__();
+export type AppThunk = ThunkAction<void, RootState, null, Action<string>>;
 
-export default createStore(
-    rootReducer,
-    compose(applyMiddleware(middleware),ReduxDevTools)
-);
-
-
-
+export default store;

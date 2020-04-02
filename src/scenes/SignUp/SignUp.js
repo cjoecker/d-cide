@@ -316,6 +316,4 @@ const mapStateToProps = (state) => ({
 	security: state.security,
 });
 
-export default connect(mapStateToProps)(
-	withStyles(styles)(SignUp)
-);
+export default connect(mapStateToProps)(withStyles(styles)(SignUp));

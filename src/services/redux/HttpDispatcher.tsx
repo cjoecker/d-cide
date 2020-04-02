@@ -6,14 +6,13 @@ import {
 	START_LOADING,
 } from "../actions/types";
 import { HTTP_ERROR } from "../Alerts";
-import axios, {AxiosError} from "axios";
-import {ThunkAction} from "redux-thunk";
-import {SessionState} from "./Session_Reducer";
-import {Action} from "redux";
-import {AppActionTypes, showHTTPAlert} from "./App_Actions";
-import {SessionActionTypes} from "./Sessions_Actions";
-import {rootState} from "./store";
-
+import axios, { AxiosError } from "axios";
+import { ThunkAction } from "redux-thunk";
+import { SessionState } from "./Session_Reducer";
+import { Action } from "redux";
+import { AppActionTypes, showHTTPAlert } from "./App_Actions";
+import { SessionActionTypes } from "./Sessions_Actions";
+import { rootState } from "./store";
 
 export const httpRequest = (
 	requestType,
@@ -71,5 +70,3 @@ export const httpRequest = (
 	//Show Loading Bar
 	dispatch({ type: END_LOADING });
 };
-
-

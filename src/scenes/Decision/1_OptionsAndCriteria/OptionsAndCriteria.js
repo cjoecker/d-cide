@@ -10,10 +10,7 @@ import Typography from "@material-ui/core/Typography";
 import { connect } from "react-redux";
 import * as LongStrings from "../../../services/LongTexts";
 import ReactGA from "react-ga";
-import {
-	deleteAlert,
-	showAlert,
-} from "../../../services/redux/Alerts_Actions";
+import { deleteAlert, showAlert } from "../../../services/redux/Alerts_Actions";
 import {
 	NOT_ENOUGH_CRITERIA,
 	NOT_ENOUGH_OPTIONS,
