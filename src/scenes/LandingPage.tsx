@@ -4,10 +4,8 @@ import { RootState } from "../services/redux/rootReducer";
 // import {getUnregisteredUser} from "../services/redux/Sessions_Actions";
 // import {WithStyles} from "@material-ui/core/styles";
 import { useHistory } from "react-router-dom";
-import SessionSlice, {
-	createUnregisteredUser,
-} from "../services/redux/SessionSlice";
-import { getDecisions } from "../services/redux/DecisionActions";
+import { getDecisions } from "../services/redux/DecisionsActions";
+import {createUnregisteredUser} from "../services/redux/SessionActions";
 
 interface Props {}
 
