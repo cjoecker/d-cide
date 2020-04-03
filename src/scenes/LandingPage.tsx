@@ -1,7 +1,7 @@
 import React, {useEffect} from "react";
 import {useDispatch, useSelector,shallowEqual} from "react-redux";
-import {getUnregisteredUser} from "../services/redux/Sessions_Actions";
-import {WithStyles} from "@material-ui/core/styles";
+// import {getUnregisteredUser} from "../services/redux/Sessions_Actions";
+// import {WithStyles} from "@material-ui/core/styles";
 // import { useHistory } from "react-router-dom";
 
 interface Props{

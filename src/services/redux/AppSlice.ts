@@ -41,9 +41,10 @@ const AppSlice = createSlice({
 export default AppSlice;
 
 export const showHTTPAlert = (dispatch: Dispatch, error: AxiosError) => {
+
 	const httpError = {
 		...HTTP_ERROR,
 		text: `${error.response?.statusText} (${error.response?.status})`,
 	};
-	AppSlice.actions.addAlert(httpError);
+	dispatch(AppSlice.actions.addAlert(httpError));
 };

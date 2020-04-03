@@ -6,9 +6,9 @@ import { green } from "@material-ui/core/colors";
 import Alert from "@material-ui/lab/Alert";
 import { WithStyles } from "@material-ui/core/styles";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
-import {AlertInitialState, AlertType, AlertTypes} from "../services/Alerts";
-import { AppActionTypes } from "../services/redux/App_Actions";
-import {RootState} from "../services/redux/rootReducer";
+import { AlertInitialState, AlertType, AlertTypes } from "../services/Alerts";
+import { RootState } from "../services/redux/rootReducer";
+import AppSlice from "../services/redux/AppSlice";
 
 const styles = (theme) => ({
 	success: {
@@ -41,19 +41,18 @@ interface Props extends WithStyles<typeof styles> {}
 const AlertsBanner: React.FC<Props> = (props: Props) => {
 	const dispatch = useDispatch();
 
-	const {alerts} = useSelector((state: RootState) => state.App, shallowEqual);
+	const { alerts } = useSelector((state: RootState) => state.App, shallowEqual);
 
 	const [autoHideTime, setAutoHideTime] = useState(0);
 	const [open, setOpen] = useState(false);
 	const [alert, setAlert] = useState(AlertInitialState);
-
 
 	useEffect(() => {
 		if (alerts[0] !== undefined && alerts[0].text !== "") {
 			setAlert(sortAlerts(alerts));
 			setAutoHideTime(calculateHideTime(alerts[0]));
 			setOpen(true);
-		}else{
+		} else {
 			setOpen(false);
 		}
 	}, [alerts]);
@@ -68,10 +67,7 @@ const AlertsBanner: React.FC<Props> = (props: Props) => {
 
 		setOpen(false);
 
-		dispatch({
-			type: AppActionTypes.deleteAlerts,
-			payload: { Alerts: [alert] },
-		});
+		dispatch(AppSlice.actions.deleteAlert(alert));
 	};
 
 	const calculateHideTime = (alertLocal: AlertType) => {

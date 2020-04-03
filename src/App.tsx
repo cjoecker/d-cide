@@ -17,7 +17,6 @@ import LinearProgress from "@material-ui/core/LinearProgress";
 import { Router } from "react-router-dom";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import jwt_decode from "jwt-decode";
-import { postSession } from "./services/redux/Sessions_Actions";
 import AlertsBanner from "./components/AlertsBanner";
 import { createBrowserHistory } from "history";
 import ReactGA from "react-ga";
@@ -33,9 +32,10 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import axios from "axios";
-import {RootState} from "./services/redux/rootReducer";
-import AppSlice from "./services/redux/AppSlice"
-import {NOT_ENOUGH_OPTIONS} from "./services/Alerts";
+import { RootState } from "./services/redux/rootReducer";
+import AppSlice from "./services/redux/AppSlice";
+import { NOT_ENOUGH_OPTIONS } from "./services/Alerts";
+import SessionSlice, { postSession } from "./services/redux/SessionSlice";
 
 const token = localStorage.token;
 
@@ -122,7 +122,7 @@ interface Props extends WithStyles<typeof styles> {}
 
 const App: React.FC<Props> = (props: Props) => {
 	const dispatch = useDispatch();
-	const {isLoading} = useSelector((state: RootState) => state.App);
+	const { isLoading } = useSelector((state: RootState) => state.App);
 
 	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 	const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -209,12 +209,10 @@ const App: React.FC<Props> = (props: Props) => {
 								className={classes.icon}
 								// onClick={handleClick}
 								onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-									dispatch(
-										// postSession({
-										// 	username: "peter2@parker.com",
-										// 	password: "123456789",
-										// })
-									);
+										postSession(dispatch,{
+											username: "peter@parker.com",
+											password: "123456789",
+										})
 								}}
 								color="inherit"
 							>
