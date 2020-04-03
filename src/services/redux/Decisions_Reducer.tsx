@@ -1,6 +1,4 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { AppThunk } from "./store";
-import AppSlice, { showHTTPAlert } from "./AppSlice";
 import axios from "axios";
 import { axiosRequest } from "./axiosRequest";
 
@@ -18,7 +16,7 @@ let initialState: DecisionsState = {
 };
 
 const DecisionsSlice = createSlice({
-	name: "App",
+	name: "Decision",
 	initialState: initialState,
 	reducers: {
 		setDecisions(state, action: PayloadAction<Decision[]>) {

@@ -1,14 +1,12 @@
 import { combineReducers } from '@reduxjs/toolkit'
 import AppSlice from "./AppSlice";
 import DecisionsSlice from "./Decisions_Reducer";
-
-// import {Session_Reducer} from "./Session_Reducer";
-// import {Decisions_Reducer} from "./Decisions_Reducer";
+import SessionSlice from "./SessionSlice";
 
 
 const rootReducer = combineReducers({
   App: AppSlice.reducer,
-  // Session: DecisionsSlice.reducer,
+  Session: SessionSlice.reducer,
   Decisions: DecisionsSlice.reducer,
 });
 

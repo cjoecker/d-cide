@@ -1,6 +1,6 @@
 import axios, { AxiosError } from "axios";
 import { Action, Dispatch } from "redux";
-import { SessionState, User } from "./Session_Reducer";
+import { SessionState, User } from "./SessionSlice";
 import jwt_decode from "jwt-decode";
 import { ThunkAction } from "redux-thunk";
 import { AppActionTypes, showHTTPAlert } from "./App_Actions";
