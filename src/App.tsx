@@ -35,7 +35,7 @@ import axios from "axios";
 import { RootState } from "./services/redux/rootReducer";
 import AppSlice from "./services/redux/AppSlice";
 import { NOT_ENOUGH_OPTIONS } from "./services/Alerts";
-import SessionSlice, { postSession } from "./services/redux/SessionSlice";
+import SessionSlice, {createUnregisteredUser, postSession} from "./services/redux/SessionSlice";
 
 const token = localStorage.token;
 
@@ -209,10 +209,7 @@ const App: React.FC<Props> = (props: Props) => {
 								className={classes.icon}
 								// onClick={handleClick}
 								onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-										postSession(dispatch,{
-											username: "peter@parker.com",
-											password: "123456789",
-										})
+									createUnregisteredUser(dispatch)
 								}}
 								color="inherit"
 							>

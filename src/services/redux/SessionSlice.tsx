@@ -91,3 +91,14 @@ const resetWrongPasswordAnimation: ErrorActionType = (dispatch, error) => {
 		showHTTPAlert(dispatch, error);
 	}
 };
+
+export const createUnregisteredUser = (
+	dispatch: AppDispatch
+) => {
+	dispatch(
+		axiosRequest(
+			axios.post<LoginResponse>("/api/sessions/unregistered"),
+			SessionSlice.actions.setSession.bind(null)
+		)
+	);
+};
