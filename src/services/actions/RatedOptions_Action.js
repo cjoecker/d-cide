@@ -4,7 +4,7 @@ import {
 	GET_WEIGHTED_CRITERIA,
 	PUT_RATED_OPTION,
 } from "./types";
-import { httpRequest } from "../redux/HttpDispatcher";
+import { httpRequest } from "../redux/axiosRequest";
 
 export const getRatedOptions = (decisionId) => async (dispatch) => {
 	dispatch(

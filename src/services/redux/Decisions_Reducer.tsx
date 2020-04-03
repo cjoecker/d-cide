@@ -1,44 +1,46 @@
-import { Reducer } from "redux";
-// import { DispatchAction } from "./store";
-import { DecisionsActionTypes } from "./Decisions_Action";
-import { removeObjectsFromArray } from "../GeneralUtils";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { AppThunk } from "./store";
+import AppSlice, { showHTTPAlert } from "./AppSlice";
+import axios from "axios";
+import { axiosRequest } from "./axiosRequest";
 
-export class DecisionsState {
-	decisions: Decision[] = [];
-}
+type DecisionsState = {
+	decisions: Decision[];
+};
 
-class Decision {
-	id: number = 0;
-	name: string = "";
-}
+type Decision = {
+	id: number;
+	name: string;
+};
 
-// export const Decisions_Reducer: Reducer<DecisionsState, DispatchAction> = (
-// 	state = new DecisionsState(),
-// 	action
-// ) => {
-// 	switch (action.type) {
-// 		case DecisionsActionTypes.setDecisions:
-// 			return {
-// 				...state,
-// 				decisions: action.payload.decisions || [],
-// 			};
-// 		case DecisionsActionTypes.addDecision:
-// 			return {
-// 				...state,
-// 				decisions: [...(action.payload.decisions || []), ...state.decisions],
-// 			};
-// 		case DecisionsActionTypes.deleteDecision:
-// 			return {
-// 				...state,
-// 				decisions: removeObjectsFromArray(state.decisions, [
-// 					...(action.payload.decisions || []),
-// 				]),
-// 			};
-// 		case DecisionsActionTypes.updateDecision:
-// 			return {
-// 				...state,
-// 			};
-// 		default:
-// 			return state;
-// 	}
-// };
+let initialState: DecisionsState = {
+	decisions: [],
+};
+
+const DecisionsSlice = createSlice({
+	name: "App",
+	initialState: initialState,
+	reducers: {
+		setDecisions(state, action: PayloadAction<Decision[]>) {
+			state.decisions = action.payload;
+		},
+		addDecision(state, action: PayloadAction<Decision>) {
+			state.decisions = [action.payload, ...state.decisions];
+		},
+		updateDecision(state) {},
+		deleteDecision(state, action: PayloadAction<Decision>) {
+			state.decisions = state.decisions.filter(
+				(decision) => decision.id !== action.payload.id
+			);
+		},
+	},
+});
+
+export default DecisionsSlice;
+
+export const getDecisions = () => {
+	axiosRequest(
+		axios.get(`/api/decisions`),
+		DecisionsSlice.actions.setDecisions.bind(null)
+	);
+};

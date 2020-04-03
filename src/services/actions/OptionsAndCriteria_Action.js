@@ -10,7 +10,7 @@ import {
 	DELETE_SELECTION_CRITERIA,
 	PUT_SELECTION_CRITERIA,
 } from "../actions/types";
-import { httpRequest } from "../redux/HttpDispatcher";
+import { httpRequest } from "../redux/axiosRequest";
 
 export const getItems = (itemsKey, decisionId, calculatedScore) => async (
 	dispatch
