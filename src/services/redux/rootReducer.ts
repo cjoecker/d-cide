@@ -1,6 +1,6 @@
 import { combineReducers } from '@reduxjs/toolkit'
 import AppSlice from "./AppSlice";
-import DecisionsSlice from "./Decisions_Reducer";
+import DecisionsSlice from "./DecisionsSlice";
 import SessionSlice from "./SessionSlice";
 
 

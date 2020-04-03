@@ -1,33 +1,31 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import axios from "axios";
 import { axiosRequest } from "./axiosRequest";
+import { AppDispatch } from "./store";
 
 type DecisionsState = {
 	decisions: Decision[];
 };
 
-type Decision = {
+export type Decision = {
 	id: number;
 	name: string;
 };
 
-let initialState: DecisionsState = {
-	decisions: [],
-};
 
 const DecisionsSlice = createSlice({
 	name: "Decision",
-	initialState: initialState,
+	initialState: [],
 	reducers: {
 		setDecisions(state, action: PayloadAction<Decision[]>) {
-			state.decisions = action.payload;
+			return action.payload;
 		},
 		addDecision(state, action: PayloadAction<Decision>) {
-			state.decisions = [action.payload, ...state.decisions];
+			return [action.payload, ...state];
 		},
 		updateDecision(state) {},
 		deleteDecision(state, action: PayloadAction<Decision>) {
-			state.decisions = state.decisions.filter(
+			return state.filter(
 				(decision) => decision.id !== action.payload.id
 			);
 		},
@@ -35,10 +33,3 @@ const DecisionsSlice = createSlice({
 });
 
 export default DecisionsSlice;
-
-export const getDecisions = () => {
-	axiosRequest(
-		axios.get(`/api/decisions`),
-		DecisionsSlice.actions.setDecisions.bind(null)
-	);
-};

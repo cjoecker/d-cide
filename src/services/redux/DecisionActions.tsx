@@ -4,7 +4,9 @@ import { ThunkAction } from "redux-thunk";
 import { Action, Dispatch } from "redux";
 // import { AppActionTypes, showHTTPAlert } from "./App_Actions";
 import axios, { AxiosError, AxiosPromise } from "axios";
-import Decision from "../../scenes/Decision/Decision";
+import {AppDispatch} from "./store";
+import {axiosRequest} from "./axiosRequest";
+import DecisionsSlice, {Decision} from "./DecisionsSlice";
 
 // export const postDecision = (newEntry) => async (dispatch) => {
 // 	dispatch(httpRequest("post", `/api/decisions/`, newEntry, POST_DECISION));
@@ -20,30 +22,9 @@ import Decision from "../../scenes/Decision/Decision";
 // 	dispatch(httpRequest("put", `/api/decisions/`, newItem, PUT_DECISION));
 // };
 
-export enum DecisionsActionTypes {
-	setDecisions = "setDecisions",
-	addDecision = "addDecision",
-	updateDecision = "updateDecision",
-	deleteDecision = "deleteDecision",
-}
 
-export const getDecisions = (dispatch: Dispatch) => {
-	// httpRequest(
-	// 	axios.get(`/api/decisions`),
-	// 	DecisionsActionTypes.setDecisions,
-	// 	"decisions"
-	// );
-};
 
-//TODO:replace root state
-// const httpRequest = (
-// 	axiosPromise: AxiosPromise,
-// 	actionType: string,
-// 	payloadObject: string
-// ): ThunkAction<void, rootState, null, Action<string>> => async (dispatch) => {
-// 	await dispatch({
-// 		type: AppActionTypes.startLoading,
-// 	});
+
 //
 // 	axiosPromise
 // 		.then((answer) => {
@@ -63,3 +44,11 @@ export const getDecisions = (dispatch: Dispatch) => {
 // };
 
 
+export const getDecisions = (dispatch: AppDispatch) => {
+	dispatch(
+		axiosRequest(
+			axios.get<Decision[]>(`/api/decisions`),
+			DecisionsSlice.actions.setDecisions.bind(null)
+		)
+	);
+};

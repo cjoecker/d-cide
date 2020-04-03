@@ -35,7 +35,8 @@ import axios from "axios";
 import { RootState } from "./services/redux/rootReducer";
 import AppSlice from "./services/redux/AppSlice";
 import { NOT_ENOUGH_OPTIONS } from "./services/Alerts";
-import SessionSlice, {createUnregisteredUser, postSession} from "./services/redux/SessionSlice";
+import SessionSlice, {signUp, login, createUnregisteredUser} from "./services/redux/SessionSlice";
+import {getDecisions} from "./services/redux/DecisionActions";
 
 const token = localStorage.token;
 
@@ -122,7 +123,7 @@ interface Props extends WithStyles<typeof styles> {}
 
 const App: React.FC<Props> = (props: Props) => {
 	const dispatch = useDispatch();
-	const { isLoading } = useSelector((state: RootState) => state.App);
+	const { isLoading } = useSelector((state: RootState) => state.App, shallowEqual);
 
 	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 	const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -209,7 +210,8 @@ const App: React.FC<Props> = (props: Props) => {
 								className={classes.icon}
 								// onClick={handleClick}
 								onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-									createUnregisteredUser(dispatch)
+									getDecisions(dispatch)
+
 								}}
 								color="inherit"
 							>

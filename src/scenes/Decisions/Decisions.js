@@ -15,7 +15,7 @@ import {
 	postDecision,
 	deleteDecision,
 	putDecision,
-} from "../../services/redux/Decisions_Action";
+} from "../../services/redux/DecisionActions";
 import Fab from "@material-ui/core/Fab";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
