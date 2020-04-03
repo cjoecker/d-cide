@@ -4,13 +4,16 @@ import { RootState } from "../services/redux/rootReducer";
 // import {getUnregisteredUser} from "../services/redux/Sessions_Actions";
 // import {WithStyles} from "@material-ui/core/styles";
 import { useHistory } from "react-router-dom";
-import SessionSlice, {createUnregisteredUser} from "../services/redux/SessionSlice";
-import {getDecisions} from "../services/redux/DecisionActions";
+import SessionSlice, {
+	createUnregisteredUser,
+} from "../services/redux/SessionSlice";
+import { getDecisions } from "../services/redux/DecisionActions";
 
 interface Props {}
 
 const LandingPage: React.FC<Props> = (props: Props) => {
 	const dispatch = useDispatch();
+	const history = useHistory();
 
 	const { token } = useSelector(
 		(state: RootState) => state.Session,
@@ -20,36 +23,32 @@ const LandingPage: React.FC<Props> = (props: Props) => {
 		(state: RootState) => state.Session,
 		shallowEqual
 	);
-	const history = useHistory();
+
+	const decisions = useSelector(
+		(state: RootState) => state.Decisions,
+		shallowEqual
+	);
 
 	useEffect(() => {
 		if (token == "") {
-			createUnregisteredUser(dispatch)
+			createUnregisteredUser(dispatch);
 		} else {
 			if (user.registeredUser) {
 				history.push("/decisions");
 			} else {
-				getDecisions(dispatch)
+				getDecisions(dispatch);
 			}
 		}
 	}, []);
-	//
-	//
-	// componentDidUpdate(prevProps, prevState, snapshot) {
-	// 	//change of user
-	// 	if (prevProps.security.user !== this.props.security.user) {
-	// 		this.props.getDecisions();
-	// 	}
-	//
-	// 	if (prevProps.decision.decisions !== this.props.decision.decisions) {
-	// 		const decisionsNumber = this.props.decision.decisions.length;
-	// 		if (decisionsNumber > 0) {
-	// 			this.props.history.push(
-	// 				"/decisions/" + this.props.decision.decisions[decisionsNumber - 1].id
-	// 			);
-	// 		}
-	// 	}
-	// }
+
+	useEffect(() => {
+		if (user.id !== 0) getDecisions(dispatch);
+	}, [user]);
+
+	useEffect(() => {
+		if (decisions.length > 0)
+			history.push("/decisions/" + decisions[decisions.length - 1].id);
+	}, [decisions]);
 
 	return null;
 };

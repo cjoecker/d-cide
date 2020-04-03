@@ -14,7 +14,6 @@ import CardMedia from "@material-ui/core/CardMedia";
 import dcide_Logo from "./images/d-cide_Logo.svg";
 import theme from "./muiTheme";
 import LinearProgress from "@material-ui/core/LinearProgress";
-import { Router } from "react-router-dom";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import jwt_decode from "jwt-decode";
 import AlertsBanner from "./components/AlertsBanner";
@@ -37,6 +36,11 @@ import AppSlice from "./services/redux/AppSlice";
 import { NOT_ENOUGH_OPTIONS } from "./services/Alerts";
 import SessionSlice, {signUp, login, createUnregisteredUser} from "./services/redux/SessionSlice";
 import {getDecisions} from "./services/redux/DecisionActions";
+import LandingPage from "./scenes/LandingPage";
+import NotFound from "./scenes/NotFound/NotFound";
+import SecureRoute from "./services/SecureRoute";
+import Decision from "./scenes/Decision/Decision";
+import {Router, Route, Switch} from "react-router-dom";
 
 const token = localStorage.token;
 
@@ -224,22 +228,22 @@ const App: React.FC<Props> = (props: Props) => {
 					<div className={classes.linearProgress}>
 						{isLoading > 0 && <LinearProgress color="secondary" />}
 					</div>
-					{isLoading}
-					{/*<Switch>*/}
+					<Switch>
 					{/*	/!*Public Scenes*!/*/}
-					{/*	<Route exact path="/" component={LandingPage} />*/}
+						<Route exact path="/" component={LandingPage} />
+						<Route component={NotFound} />
 					{/*	<Route exact path="/login" component={Login} />*/}
 					{/*	<Route exact path="/signUp" component={SignUp} />*/}
 
 					{/*	/!*Private Scenes*!/*/}
 					{/*	<SecureRoute exact path="/decisions" component={Decisions} />*/}
-					{/*	<SecureRoute*/}
-					{/*		exact*/}
-					{/*		path="/decisions/:decisionId"*/}
-					{/*		component={Decision}*/}
-					{/*	/>*/}
-					{/*	<Route component={NotFound} />*/}
-					{/*</Switch>*/}
+						<SecureRoute
+							exact
+							path="/decisions/:decisionId"
+							component={Decision}
+						/>
+
+					</Switch>
 					<AlertsBanner />
 				</div>
 			</Router>
