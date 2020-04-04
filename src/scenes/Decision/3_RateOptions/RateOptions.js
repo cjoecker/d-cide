@@ -42,7 +42,7 @@ const styles = (theme) => ({
 		marginLeft: theme.spacing(1),
 	},
 
-	gridItem_title: {
+	TitleGridItem: {
 		minWidth: theme.spacing(40),
 		maxWidth: theme.spacing(50),
 	},

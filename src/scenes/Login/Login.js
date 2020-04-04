@@ -28,7 +28,7 @@ const styles = (theme) => ({
 		textJustify: "center",
 	},
 
-	typography_title: {
+	TitleTypography: {
 		marginTop: theme.spacing(1),
 	},
 
@@ -41,7 +41,7 @@ const styles = (theme) => ({
 		margin: theme.spacing(1),
 	},
 
-	gridItem_title: {
+	TitleGridItem: {
 		paddingTop: theme.spacing(6),
 		paddingBottom: theme.spacing(3),
 	},

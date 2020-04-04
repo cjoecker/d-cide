@@ -16,6 +16,10 @@
 		"import/no-unresolved": "off",
 		"spaced-comment": "off",
 		"react/jsx-indent": "off",
-		"react/jsx-indent-props": "off"
+		"react/jsx-indent-props": "off",
+		"react/jsx-filename-extension": [
+			2,
+			{ "extensions": [".js", ".jsx", ".ts", ".tsx"] }
+		]
 	}
 }

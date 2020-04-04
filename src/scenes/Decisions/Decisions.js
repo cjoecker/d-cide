@@ -29,7 +29,7 @@ const styles = (theme) => ({
 		textAlign: "center",
 	},
 
-	typography_title: {
+	TitleTypography: {
 		marginTop: theme.spacing(1),
 	},
 

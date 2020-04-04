@@ -24,7 +24,7 @@ const styles = (theme) => ({
 		maxWidth: theme.spacing(63),
 	},
 
-	gridItem_title: {
+	TitleGridItem: {
 		paddingTop: theme.spacing(6),
 	},
 

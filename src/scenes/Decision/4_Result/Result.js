@@ -31,7 +31,7 @@ const styles = (theme) => ({
 		left: theme.spacing(1.2),
 	},
 
-	gridItem_title: {
+	TitleGridItem: {
 		margin: theme.spacing(1),
 		paddingTop: theme.spacing(1),
 	},
