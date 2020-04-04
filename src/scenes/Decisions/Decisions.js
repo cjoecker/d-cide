@@ -195,7 +195,7 @@ class Decisions extends React.Component {
 
 		return (
 			isMounted && (
-				<div className={classes.div_main}>
+				<div className={classes.divMain}>
 					<Typography
 						variant="h3"
 						className={classes.typography_title}

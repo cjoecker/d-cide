@@ -250,7 +250,7 @@ class Login extends React.Component {
 		const { classes } = this.props;
 
 		return (
-			<div className={classes.div_main}>
+			<div className={classes.divMain}>
 				<Grid container justify="center">
 					<Paper
 						elevation={2}

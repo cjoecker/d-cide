@@ -176,7 +176,7 @@ class Decision extends Component {
 		const stepDisabled = [false, minItemsThere, minItemsThere, minItemsThere];
 
 		return (
-			<div className={classes.div_main}>
+			<div className={classes.divMain}>
 				<Stepper
 					className={classes.stepper}
 					alternativeLabel

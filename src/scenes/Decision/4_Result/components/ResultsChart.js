@@ -80,7 +80,7 @@ class ResultsChart extends React.Component {
 		const labelsWidth = 100 + this.state.labelsOffset;
 
 		return (
-			<div className={classes.div_main}>
+			<div className={classes.divMain}>
 				<ResponsiveContainer height={items.length * 70 + 10} width="100%">
 					<BarChart
 						data={items}

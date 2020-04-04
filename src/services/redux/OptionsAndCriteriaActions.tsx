@@ -92,7 +92,7 @@ export const getDecisions = (
 	decisionId: string,
 	itemsKey: string,
 	calculatedScore: boolean
-) => {
+): void => {
 	const params = {
 		params: {
 			calculatedScore,

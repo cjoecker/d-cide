@@ -76,7 +76,7 @@ class Result extends Component {
 		];
 
 		return (
-			<div className={classes.div_main}>
+			<div className={classes.divMain}>
 				<Grid container justify="center" alignContent="center" spacing={24}>
 					<Grid className={classes.gridItem} key="1" item xs={12}>
 						<Zoom

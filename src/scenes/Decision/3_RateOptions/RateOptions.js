@@ -235,7 +235,7 @@ class RateOptions extends React.Component {
 		const { classes } = this.props;
 
 		return (
-			<div className={classes.div_main}>
+			<div className={classes.divMain}>
 				<Grid container justify="center" alignContent="center" spacing={24}>
 					<Grid item xs={12}>
 						<Typography variant="h5" gutterBottom>

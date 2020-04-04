@@ -64,6 +64,8 @@ export class EditableList extends React.Component {
 		this.onBlurItem = this.onBlurItem.bind(this);
 	}
 
+	//TODO alerts needs to be created here
+
 	//GET_ITEMS
 	componentDidMount() {
 		this.props.getItems(this.props.itemsKey, this.props.decisionId, false);
@@ -159,7 +161,7 @@ export class EditableList extends React.Component {
 		const { classes } = this.props;
 
 		return (
-			<div className={classes.div_main}>
+			<div className={classes.divMain}>
 				<List>
 					<Paper className={classes.paper_title} elevation={2} key="NewEntry">
 						<ListItem>

@@ -132,7 +132,7 @@ class SignUp extends React.Component {
 		const { errors } = this.state;
 
 		return (
-			<div className={classes.div_main}>
+			<div className={classes.divMain}>
 				<Grid container justify="center">
 					<Paper className={classes.paper} elevation={2} key="mainPaper">
 						<Grid
