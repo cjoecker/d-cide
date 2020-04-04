@@ -93,9 +93,9 @@ export const getDecisions = (
 	itemsKey: string,
 	calculatedScore: boolean
 ) => {
-	let params = {
+	const params = {
 		params: {
-			calculatedScore: calculatedScore,
+			calculatedScore,
 		},
 	};
 

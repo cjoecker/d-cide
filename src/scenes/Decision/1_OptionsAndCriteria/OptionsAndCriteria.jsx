@@ -1,23 +1,23 @@
 import React, { Component } from "react";
 import Grid from "@material-ui/core/Grid";
-import EditableList from "./components/EditableList";
 import InfoIcon from "@material-ui/icons/Info";
 import IconButton from "@material-ui/core/IconButton";
-import InfoDialog from "../../../components/InfoDialog";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core";
 import Typography from "@material-ui/core/Typography";
 import { connect } from "react-redux";
-import * as LongStrings from "../../../services/LongTexts";
 import ReactGA from "react-ga";
-import { deleteAlert, showAlert } from "../../../services/redux/Alerts_Actions";
+import * as LongStrings from "../../../services/LongTexts";
+import InfoDialog from "../../../components/InfoDialog";
+import EditableList from "./components/EditableList";
+// import { deleteAlert, showAlert } from "../../../services/redux/Alerts_Actions";
 import {
 	NOT_ENOUGH_CRITERIA,
 	NOT_ENOUGH_OPTIONS,
 } from "../../../services/Alerts";
 
 const styles = (theme) => ({
-	div_main: {
+	divMain: {
 		paddingTop: theme.spacing(2.5),
 		paddingBottom: theme.spacing(5.5),
 		textAlign: "center",
@@ -55,18 +55,18 @@ class OptionsAndCriteria extends Component {
 			prevProps.optionsAndCriteria.decisionOptions !==
 			this.props.optionsAndCriteria.decisionOptions
 		) {
-			this.props.optionsAndCriteria.decisionOptions.length < 2
-				? this.props.showAlert(NOT_ENOUGH_OPTIONS)
-				: this.props.deleteAlert(NOT_ENOUGH_OPTIONS);
+			// this.props.optionsAndCriteria.decisionOptions.length < 2
+			// 	? this.props.showAlert(NOT_ENOUGH_OPTIONS)
+			// 	: this.props.deleteAlert(NOT_ENOUGH_OPTIONS);
 		}
 
 		if (
 			prevProps.optionsAndCriteria.selectionCriteria !==
 			this.props.optionsAndCriteria.selectionCriteria
 		) {
-			this.props.optionsAndCriteria.selectionCriteria.length < 2
-				? this.props.showAlert(NOT_ENOUGH_CRITERIA)
-				: this.props.deleteAlert(NOT_ENOUGH_CRITERIA);
+			// this.props.optionsAndCriteria.selectionCriteria.length < 2
+			// 	? this.props.showAlert(NOT_ENOUGH_CRITERIA)
+			// 	: this.props.deleteAlert(NOT_ENOUGH_CRITERIA);
 		}
 	}
 
@@ -152,17 +152,17 @@ class OptionsAndCriteria extends Component {
 }
 
 OptionsAndCriteria.propTypes = {
-	app: PropTypes.object.isRequired,
-	optionsAndCriteria: PropTypes.object.isRequired,
-	showAlert: PropTypes.func.isRequired,
-	deleteAlert: PropTypes.func.isRequired,
+	// app: PropTypes.object.isRequired,
+	// optionsAndCriteria: PropTypes.object.isRequired,
+	// showAlert: PropTypes.func.isRequired,
+	// deleteAlert: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = (state) => ({
-	app: state.app,
-	optionsAndCriteria: state.optionsAndCriteria,
+	// app: state.app,
+	// optionsAndCriteria: state.optionsAndCriteria,
 });
 
-export default connect(mapStateToProps, { showAlert, deleteAlert })(
+export default connect(mapStateToProps, {  })(
 	withStyles(styles)(OptionsAndCriteria)
 );

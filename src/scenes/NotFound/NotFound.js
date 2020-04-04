@@ -9,7 +9,7 @@ import Button from "@material-ui/core/Button";
 import ReactGA from "react-ga";
 
 const styles = (theme) => ({
-	div_main: {
+	divMain: {
 		textAlign: "center",
 		textJustify: "center",
 		marginTop: theme.spacing(8),

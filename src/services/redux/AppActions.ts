@@ -4,7 +4,6 @@ import { HTTP_ERROR } from "../Alerts";
 import AppSlice from "./AppSlice";
 
 
-
 export const showHTTPAlert = (dispatch: Dispatch, error: AxiosError) => {
 
 	const httpError = {

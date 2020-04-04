@@ -22,7 +22,7 @@ import { getValueSafe } from "../../services/GeneralUtils";
 import clsx from "clsx";
 
 const styles = (theme) => ({
-	div_main: {
+	divMain: {
 		paddingTop: theme.spacing(8),
 		textAlign: "center",
 		textJustify: "center",

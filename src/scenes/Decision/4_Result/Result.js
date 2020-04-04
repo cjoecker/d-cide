@@ -14,7 +14,7 @@ import { connect } from "react-redux";
 import Zoom from "@material-ui/core/Zoom";
 
 const styles = (theme) => ({
-	div_main: {
+	divMain: {
 		paddingTop: theme.spacing(2.5),
 		paddingBottom: theme.spacing(5.5),
 		textAlign: "center",

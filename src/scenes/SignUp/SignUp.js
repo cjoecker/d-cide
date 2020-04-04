@@ -13,7 +13,7 @@ import ReactGA from "react-ga";
 import InfoDialog from "../../components/InfoDialog";
 
 const styles = (theme) => ({
-	div_main: {
+	divMain: {
 		textAlign: "center",
 		textJustify: "center",
 		paddingTop: theme.spacing(8),

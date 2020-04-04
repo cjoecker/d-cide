@@ -24,7 +24,7 @@ import ReactGA from "react-ga";
 import IconButton from "@material-ui/core/IconButton/IconButton";
 
 const styles = (theme) => ({
-	div_main: {
+	divMain: {
 		paddingTop: theme.spacing(8),
 		textAlign: "center",
 	},

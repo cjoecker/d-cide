@@ -20,7 +20,7 @@ import {
 import Fade from "@material-ui/core/Fade";
 
 const styles = (theme) => ({
-	div_main: {
+	divMain: {
 		minWidth: theme.spacing(37),
 	},
 

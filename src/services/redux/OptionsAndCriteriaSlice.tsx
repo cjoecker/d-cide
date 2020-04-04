@@ -31,7 +31,7 @@ const OptionsAndCriteriaSlice = createSlice({
 		addDecisionOption(state, action: PayloadAction<OptionAndCriteria>): void {
 			state.decisionOptions = [action.payload, ...state.decisionOptions];
 		},
-		updateDecisionOption(state): RootState {
+		updateDecisionOption(state):typeof state {
 			return state;
 		},
 		deleteDecisionOption(
@@ -51,7 +51,7 @@ const OptionsAndCriteriaSlice = createSlice({
 		addSelectionCriteria(state, action: PayloadAction<OptionAndCriteria>): void {
 			state.selectionCriteria = [action.payload, ...state.selectionCriteria];
 		},
-		updateSelectionCriteria(state): RootState {
+		updateSelectionCriteria(state):typeof state {
 			return state;
 		},
 		deleteSelectionCriteria(state, action: PayloadAction<OptionAndCriteria>): void {

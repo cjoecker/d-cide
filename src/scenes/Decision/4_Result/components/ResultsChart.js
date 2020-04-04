@@ -15,7 +15,7 @@ import ReactGA from "react-ga";
 import Zoom from "@material-ui/core/Zoom";
 
 const styles = (theme) => ({
-	div_main: {
+	divMain: {
 		padding: theme.spacing(0.8),
 	},
 

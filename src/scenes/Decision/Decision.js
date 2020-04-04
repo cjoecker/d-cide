@@ -28,7 +28,7 @@ TabContainer.propTypes = {
 };
 
 const styles = (theme) => ({
-	div_main: {
+	divMain: {
 		flexGrow: 1,
 		width: "100%",
 		overflowX: "hidden", //Avoid negative margin from mainGrid

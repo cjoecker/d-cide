@@ -23,7 +23,7 @@ import { debounceTime } from "rxjs/operators";
 let onChange$ = new Subject();
 
 const styles = (theme) => ({
-	div_main: {
+	divMain: {
 		paddingTop: theme.spacing(2.5),
 		paddingBottom: theme.spacing(5.5),
 		textAlign: "center",

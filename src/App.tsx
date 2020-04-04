@@ -11,12 +11,9 @@ import {
 	WithStyles,
 } from "@material-ui/core/styles";
 import CardMedia from "@material-ui/core/CardMedia";
-import dcide_Logo from "./images/d-cide_Logo.svg";
-import theme from "./muiTheme";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import jwt_decode from "jwt-decode";
-import AlertsBanner from "./components/AlertsBanner";
 import { createBrowserHistory } from "history";
 import ReactGA from "react-ga";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
@@ -31,21 +28,22 @@ import Toolbar from "@material-ui/core/Toolbar";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import axios from "axios";
+import { Router, Route, Switch } from "react-router-dom";
 import { RootState } from "./services/redux/rootReducer";
-import AppSlice from "./services/redux/AppSlice";
-import { NOT_ENOUGH_OPTIONS } from "./services/Alerts";
-import {getDecisions} from "./services/redux/DecisionsActions";
+import { getDecisions } from "./services/redux/DecisionsActions";
 import LandingPage from "./scenes/LandingPage";
 import NotFound from "./scenes/NotFound/NotFound";
 import SecureRoute from "./services/SecureRoute";
 import Decision from "./scenes/Decision/Decision";
-import {Router, Route, Switch} from "react-router-dom";
+import AlertsBanner from "./components/AlertsBanner";
+import theme from "./muiTheme";
+import dcideLogo from "./images/d-cide_Logo.svg";
 
-const token = localStorage.token;
+const { token } = localStorage;
 
 //Security
 if (token) {
-	axios.defaults.headers.common["Authorization"] = token;
+	axios.defaults.headers.common.Authorization = token;
 
 	const decoded_TOKENToken = jwt_decode(token);
 	// store.dispatch({
@@ -79,8 +77,7 @@ history.listen((location) => {
 
 const styles = (theme: Theme) =>
 	createStyles({
-		// const styles = (theme) => ({
-		div_main: {
+		divMain: {
 			flexGrow: 1,
 			width: "100%",
 			overflowX: "hidden", //Avoid negative margin from mainGrid
@@ -126,7 +123,10 @@ interface Props extends WithStyles<typeof styles> {}
 
 const App: React.FC<Props> = (props: Props) => {
 	const dispatch = useDispatch();
-	const { isLoading } = useSelector((state: RootState) => state.App, shallowEqual);
+	const { isLoading } = useSelector(
+		(state: RootState) => state.App,
+		shallowEqual
+	);
 
 	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 	const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -195,7 +195,7 @@ const App: React.FC<Props> = (props: Props) => {
 	return (
 		<ThemeProvider theme={theme}>
 			<Router history={history}>
-				<div className={classes.div_main}>
+				<div className={classes.divMain}>
 					{/*Title Bar*/}
 					<AppBar position="static" color="primary" className={classes.appBar}>
 						<Toolbar>
@@ -203,7 +203,7 @@ const App: React.FC<Props> = (props: Props) => {
 								<Link href={"/"} style={{ textDecoration: "none" }}>
 									<CardMedia
 										className={classes.logo}
-										image={dcide_Logo}
+										image={dcideLogo}
 										title="d-cide"
 									/>
 								</Link>
@@ -213,8 +213,7 @@ const App: React.FC<Props> = (props: Props) => {
 								className={classes.icon}
 								// onClick={handleClick}
 								onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-									getDecisions(dispatch)
-
+									getDecisions(dispatch);
 								}}
 								color="inherit"
 							>
@@ -228,20 +227,19 @@ const App: React.FC<Props> = (props: Props) => {
 						{isLoading > 0 && <LinearProgress color="secondary" />}
 					</div>
 					<Switch>
-					{/*	/!*Public Scenes*!/*/}
-						<Route exact path="/" component={LandingPage} />
+						{/*	/!*Public Scenes*!/*/}
+						{/*<Route exact path="/" component={LandingPage} />*/}
 						<Route component={NotFound} />
-					{/*	<Route exact path="/login" component={Login} />*/}
-					{/*	<Route exact path="/signUp" component={SignUp} />*/}
+						{/*	<Route exact path="/login" component={Login} />*/}
+						{/*	<Route exact path="/signUp" component={SignUp} />*/}
 
-					{/*	/!*Private Scenes*!/*/}
-					{/*	<SecureRoute exact path="/decisions" component={Decisions} />*/}
+						{/*	/!*Private Scenes*!/*/}
+						{/*	<SecureRoute exact path="/decisions" component={Decisions} />*/}
 						<SecureRoute
 							exact
 							path="/decisions/:decisionId"
 							component={Decision}
 						/>
-
 					</Switch>
 					<AlertsBanner />
 				</div>

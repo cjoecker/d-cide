@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 // eslint-disable-next-line @typescript-eslint/camelcase
 import jwt_decode from "jwt-decode";
-import {LoginResponse} from "./SessionActions";
+import { LoginResponse } from "./SessionActions";
 
 type SessionState = {
 	signUpSuccessful: boolean;
@@ -19,7 +19,7 @@ type User = {
 	username: string;
 };
 
-let initialState: SessionState = {
+const initialState: SessionState = {
 	signUpSuccessful: false,
 	wrongPassword: false,
 	token: "",
@@ -37,29 +37,27 @@ const SessionSlice = createSlice({
 	name: "Session",
 	initialState,
 	reducers: {
-		setSession(state, action: PayloadAction<LoginResponse>):void {
+		setSession(state, action: PayloadAction<LoginResponse>): void {
 			state.token = action.payload.token;
 			state.user = jwt_decode(action.payload.token);
 			state.wrongPassword = false;
 		},
-		deleteSession(state):void {
+		deleteSession(state): void {
 			state.token = "";
 			state.user = initialState.user;
 			state.wrongPassword = false;
 		},
-		setToken(state, action: PayloadAction<string>):void {
+		setToken(state, action: PayloadAction<string>): void {
 			//TODO: check if at the end of refactoring, this is necessary
 			state.token = action.payload;
 		},
-		setSignUpSuccessful(state, action: PayloadAction<boolean>):void {
+		setSignUpSuccessful(state, action: PayloadAction<boolean>): void {
 			state.signUpSuccessful = !action.payload;
 		},
-		setWrongPassword(state, action: PayloadAction<boolean>):void {
+		setWrongPassword(state, action: PayloadAction<boolean>): void {
 			state.wrongPassword = action.payload;
 		},
 	},
 });
 
 export default SessionSlice;
-
-

@@ -13,6 +13,7 @@
 	"rules": {
 		"no-param-reassign": [2, { "props": false }],
 		"import/extensions": "off",
-		"import/no-unresolved": "off"
+		"import/no-unresolved": "off",
+		"spaced-comment": "off"
 	}
 }
