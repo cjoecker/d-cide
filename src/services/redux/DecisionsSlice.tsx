@@ -1,7 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import axios from "axios";
-import { axiosRequest } from "./axiosRequest";
-import { AppDispatch } from "./store";
+import {RootState} from "./rootReducer";
 
 type DecisionsState = {
 	decisions: Decision[];
@@ -17,14 +15,16 @@ const DecisionsSlice = createSlice({
 	name: "Decision",
 	initialState: [],
 	reducers: {
-		setDecisions(state, action: PayloadAction<Decision[]>) {
+		setDecisions(state, action: PayloadAction<Decision[]>):RootState {
 			return action.payload;
 		},
-		addDecision(state, action: PayloadAction<Decision>) {
+		addDecision(state, action: PayloadAction<Decision>):RootState {
 			return [action.payload, ...state];
 		},
-		updateDecision(state) {},
-		deleteDecision(state, action: PayloadAction<Decision>) {
+		updateDecision(state): RootState {
+			return state;
+		},
+		deleteDecision(state, action: PayloadAction<Decision>):RootState {
 			return state.filter(
 				(decision) => decision.id !== action.payload.id
 			);

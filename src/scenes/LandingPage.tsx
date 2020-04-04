@@ -5,8 +5,10 @@ import { RootState } from "../services/redux/rootReducer";
 // import {WithStyles} from "@material-ui/core/styles";
 import { useHistory } from "react-router-dom";
 import { getDecisions } from "../services/redux/DecisionsActions";
-import {createUnregisteredUser} from "../services/redux/SessionActions";
+import { createUnregisteredUser } from "../services/redux/SessionActions";
 
+
+//TODO Make this a function and not a component
 interface Props {}
 
 const LandingPage: React.FC<Props> = (props: Props) => {

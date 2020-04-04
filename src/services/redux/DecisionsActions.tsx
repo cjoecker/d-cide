@@ -5,7 +5,7 @@ import { Action, Dispatch } from "redux";
 // import { AppActionTypes, showHTTPAlert } from "./App_Actions";
 import axios, { AxiosError, AxiosPromise } from "axios";
 import {AppDispatch} from "./store";
-import {axiosRequest} from "./axiosRequest";
+import {AxiosRequest} from "./AxiosRequest";
 import DecisionsSlice, {Decision} from "./DecisionsSlice";
 
 // export const postDecision = (newEntry) => async (dispatch) => {
@@ -46,7 +46,7 @@ import DecisionsSlice, {Decision} from "./DecisionsSlice";
 
 export const getDecisions = (dispatch: AppDispatch) => {
 	dispatch(
-		axiosRequest(
+		AxiosRequest(
 			axios.get<Decision[]>(`/api/decisions`),
 			DecisionsSlice.actions.setDecisions.bind(null)
 		)

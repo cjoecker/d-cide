@@ -1,7 +1,8 @@
-import { AppDispatch, AppThunk } from "./store";
-import AppSlice, { showHTTPAlert } from "./AppSlice";
-import axios, { AxiosError, AxiosPromise, AxiosResponse } from "axios";
+import { AxiosError, AxiosPromise, AxiosResponse } from "axios";
 import { PayloadAction } from "@reduxjs/toolkit";
+import { AppDispatch, AppThunk } from "./store";
+import AppSlice from "./AppSlice";
+import { showHTTPAlert } from "./AppActions";
 
 export interface SuccessActionType {
 	(answer: PayloadAction<any>);
@@ -15,7 +16,7 @@ export interface ErrorActionType {
 	(dispatch: AppDispatch, error: AxiosError);
 }
 
-export const axiosRequest = (
+export const AxiosRequest = (
 	axiosPromise: AxiosPromise,
 	successAction: SuccessActionType,
 	successExtraAction?: SuccessExtraActionType,
@@ -37,3 +38,5 @@ export const axiosRequest = (
 			dispatch(AppSlice.actions.endLoading());
 		});
 };
+
+export default AxiosRequest;

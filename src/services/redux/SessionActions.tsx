@@ -1,8 +1,8 @@
 import {AppDispatch} from "./store";
-import {axiosRequest, ErrorActionType, SuccessExtraActionType} from "./axiosRequest";
+import {AxiosRequest, ErrorActionType, SuccessExtraActionType} from "./AxiosRequest";
 import axios, {AxiosResponse} from "axios";
-import {showHTTPAlert} from "./AppSlice";
 import SessionSlice from "./SessionSlice";
+import {showHTTPAlert} from "./AppActions";
 
 export interface LoginRequest {
     username: string;
@@ -16,7 +16,7 @@ export interface LoginResponse {
 
 export const login = (dispatch: AppDispatch, loginRequest: LoginRequest) => {
     dispatch(
-        axiosRequest(
+        AxiosRequest(
             axios.post<LoginResponse>("/api/sessions/", loginRequest),
             SessionSlice.actions.setSession.bind(null),
             loginSuccessful.bind(null),
@@ -47,7 +47,7 @@ export const logout = (dispatch: AppDispatch) => {
 
 export const createUnregisteredUser = (dispatch: AppDispatch) => {
     dispatch(
-        axiosRequest(
+        AxiosRequest(
             axios.post<LoginResponse>("/api/sessions/unregistered"),
             SessionSlice.actions.setSession.bind(null),
             loginSuccessful.bind(null),
@@ -74,7 +74,7 @@ export interface SignUpResponse {
 //TODO: needs to be tested
 export const signUp = (dispatch: AppDispatch, newUser: SignUpRequest) => {
     dispatch(
-        axiosRequest(
+        AxiosRequest(
             axios.post<SignUpResponse>("/api/users/", newUser),
             SessionSlice.actions.setSignUpSuccessful.bind(null)
         )
