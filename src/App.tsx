@@ -86,8 +86,9 @@ const useStyles = makeStyles({
 	},
 
 	appBar: {
-		position: "fixed",
+		position: "relative",
 		Top: 0,
+		marginBottom: theme.spacing(2),
 		height: theme.spacing(6),
 		width: "100%",
 		justifyContent: "center",
@@ -96,10 +97,9 @@ const useStyles = makeStyles({
 
 	linearProgress: {
 		position: "fixed",
+		marginTop: theme.spacing(-2),
 		Top: 0,
-		marginTop: theme.spacing(6),
 		width: "100%",
-		height: theme.spacing(1.5),
 	},
 
 	divLogo: {
