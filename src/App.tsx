@@ -5,6 +5,7 @@ import Typography from "@material-ui/core/Typography";
 import PropTypes from "prop-types";
 import {
 	createStyles,
+	makeStyles,
 	Theme,
 	ThemeProvider,
 	withStyles,
@@ -13,6 +14,7 @@ import {
 import CardMedia from "@material-ui/core/CardMedia";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
+// eslint-disable-next-line @typescript-eslint/camelcase
 import jwt_decode from "jwt-decode";
 import { createBrowserHistory } from "history";
 import ReactGA from "react-ga";
@@ -56,7 +58,7 @@ if (token) {
 	// 	// store.dispatch(logout());
 	// }
 }
-
+//TODO see if this is necessary
 function TabContainer(props) {
 	return (
 		<Typography component="div" style={{ padding: 8 * 3 }}>
@@ -69,59 +71,58 @@ TabContainer.propTypes = {
 	children: PropTypes.node.isRequired,
 };
 
+//TODO see if this is necessary
 const history = createBrowserHistory();
 history.listen((location) => {
 	ReactGA.set({ page: location.pathname });
 	ReactGA.pageview(location.pathname);
 });
 
-const styles = (theme: Theme) =>
-	createStyles({
-		divMain: {
-			flexGrow: 1,
-			width: "100%",
-			overflowX: "hidden", //Avoid negative margin from mainGrid
-		},
+const useStyles = makeStyles({
+	divMain: {
+		flexGrow: 1,
+		width: "100%",
+		overflowX: "hidden", //Avoid negative margin from mainGrid
+	},
 
-		appBar: {
-			position: "fixed",
-			Top: 0,
-			height: theme.spacing(6),
-			width: "100%",
-			justifyContent: "center",
-			justifyItems: "center",
-		},
+	appBar: {
+		position: "fixed",
+		Top: 0,
+		height: theme.spacing(6),
+		width: "100%",
+		justifyContent: "center",
+		justifyItems: "center",
+	},
 
-		linearProgress: {
-			position: "fixed",
-			Top: 0,
-			marginTop: theme.spacing(6),
-			width: "100%",
-			height: theme.spacing(1.5),
-		},
+	linearProgress: {
+		position: "fixed",
+		Top: 0,
+		marginTop: theme.spacing(6),
+		width: "100%",
+		height: theme.spacing(1.5),
+	},
 
-		div_logo: {
-			flex: 1,
-			flexGrow: 1,
-			height: "100%",
-			overflow: "hidden",
-			float: "left",
-			marginLeft: theme.spacing(-1),
-		},
+	divLogo: {
+		flex: 1,
+		flexGrow: 1,
+		height: "100%",
+		overflow: "hidden",
+		float: "left",
+		marginLeft: theme.spacing(-1),
+	},
 
-		logo: {
-			width: theme.spacing(17),
-			height: "100%",
-		},
+	logo: {
+		width: theme.spacing(17),
+		height: "100%",
+	},
 
-		icon: {
-			marginRight: theme.spacing(-2),
-		},
-	});
+	icon: {
+		marginRight: theme.spacing(-2),
+	},
+});
 
-interface Props extends WithStyles<typeof styles> {}
-
-const App: React.FC<Props> = (props: Props) => {
+const App: React.FC = () => {
+	const classes = useStyles();
 	const dispatch = useDispatch();
 	const { isLoading } = useSelector(
 		(state: RootState) => state.App,
@@ -133,7 +134,7 @@ const App: React.FC<Props> = (props: Props) => {
 		setAnchorEl(event.currentTarget);
 	};
 
-	const handleClose = () => {
+	const handleClose = (): void => {
 		setAnchorEl(null);
 	};
 
@@ -161,10 +162,9 @@ const App: React.FC<Props> = (props: Props) => {
 
 	ReactGA.initialize("UA-139517059-1");
 
-	const { classes } = props;
 	// const { isLoading } = this.props.app;
 
-	let userMenu = (
+	const userMenu = (
 		<Menu
 			id="simple-menu"
 			anchorEl={anchorEl}
@@ -172,7 +172,7 @@ const App: React.FC<Props> = (props: Props) => {
 			onClick={handleClose}
 			disableAutoFocusItem
 		>
-			<Link href={"/decisions"} style={{ textDecoration: "none" }}>
+			<Link href="/decisions" style={{ textDecoration: "none" }}>
 				<MenuItem>
 					<ListItemIcon>
 						<ListAltIcon />
@@ -181,6 +181,7 @@ const App: React.FC<Props> = (props: Props) => {
 				</MenuItem>
 			</Link>
 			<Divider />
+			{/*TODO replace Link with button*/}
 			<Link onClick={handleClose} style={{ textDecoration: "none" }}>
 				<MenuItem>
 					<ListItemIcon>
@@ -199,8 +200,8 @@ const App: React.FC<Props> = (props: Props) => {
 					{/*Title Bar*/}
 					<AppBar position="static" color="primary" className={classes.appBar}>
 						<Toolbar>
-							<div className={classes.div_logo}>
-								<Link href={"/"} style={{ textDecoration: "none" }}>
+							<div className={classes.divLogo}>
+								<Link href="/" style={{ textDecoration: "none" }}>
 									<CardMedia
 										className={classes.logo}
 										image={dcideLogo}
@@ -248,25 +249,4 @@ const App: React.FC<Props> = (props: Props) => {
 	);
 };
 
-// App.propTypes = {
-// 	classes: PropTypes.object.isRequired,
-// 	app: PropTypes.object.isRequired,
-// 	security: PropTypes.object.isRequired,
-// 	alerts: PropTypes.object.isRequired,
-// 	optionsAndCriteria: PropTypes.object.isRequired,
-// 	logout: PropTypes.func.isRequired,
-// 	setJWT: PropTypes.func.isRequired,
-// };
-//
-// const mapStateToProps = (state) => ({
-// 	app: state.app,
-// 	alerts: state.alerts,
-// 	security: state.security,
-// 	optionsAndCriteria: state.optionsAndCriteria,
-// });
-
-// export default connect(mapStateToProps, { logout, setJWT })(
-// 	withStyles(styles)(App)
-// );
-
-export default withStyles(styles)(App);
+export default App;
