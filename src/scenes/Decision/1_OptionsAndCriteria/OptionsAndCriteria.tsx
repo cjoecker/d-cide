@@ -27,6 +27,8 @@ const useStyles = makeStyles({
 
 	gridItem: {
 		maxWidth: theme.spacing(62),
+		marginRight: theme.spacing(2),
+		marginLeft: theme.spacing(2),
 	},
 
 	emptySpace: {
@@ -43,7 +45,7 @@ const OptionsAndCriteria: React.FC = () => {
 
 	return (
 		<div className={classes.divMain}>
-			<Grid container justify="center" alignContent="center" spacing={2}>
+			<Grid container justify="center" alignContent="center">
 				<Grid item xs={6} className={classes.gridItem}>
 					<Typography variant="h5" gutterBottom>
 						Decision Options

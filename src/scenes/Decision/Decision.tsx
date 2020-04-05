@@ -1,4 +1,4 @@
-import React, {useState } from "react";
+import React, { useState } from "react";
 import Step from "@material-ui/core/Step";
 import Stepper from "@material-ui/core/Stepper";
 import StepButton from "@material-ui/core/StepButton";
@@ -7,6 +7,8 @@ import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import { makeStyles } from "@material-ui/core/styles";
 import theme from "../../muiTheme";
+import SwipeableViews from "react-swipeable-views";
+import OptionsAndCriteria from "./1_OptionsAndCriteria/OptionsAndCriteria";
 
 const useStyles = makeStyles({
 	divMain: {
@@ -46,7 +48,7 @@ const Decision: React.FC = () => {
 	const [steps, setSteps] = useState<stepsType[]>([
 		{
 			number: 1,
-			name: "Options and criteria",
+			name: "Options and selection criteria",
 			disabled: false,
 			completed: false,
 		},
@@ -76,7 +78,7 @@ const Decision: React.FC = () => {
 		const newSteps = [...steps];
 		const index = newSteps.findIndex((obj) => obj.number === stepNumber);
 		newSteps[index].completed = true;
-		
+
 		setSteps(newSteps);
 	};
 
@@ -132,7 +134,15 @@ const Decision: React.FC = () => {
 				})}
 			</Stepper>
 
-			{activeStepNum}
+			<SwipeableViews
+				axis={theme.direction === "rtl" ? "x-reverse" : "x"}
+				index={activeStepNum - 1}
+			>
+				<div>
+						<OptionsAndCriteria />
+				</div>
+
+			</SwipeableViews>
 
 			{/*Navigation Buttons*/}
 			{activeStepNum !== 1 ? (
