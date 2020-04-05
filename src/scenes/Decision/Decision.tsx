@@ -16,7 +16,6 @@ const useStyles = makeStyles({
 	},
 
 	stepper: {
-		marginTop: theme.spacing(6),
 		backgroundColor: "transparent",
 	},
 
@@ -82,12 +81,12 @@ const Decision: React.FC = () => {
 	};
 
 	const changeStep = (stepNumber: number): void => {
-		setStepCompleted(stepNumber);
+		setStepCompleted(activeStepNum);
 
 		setActiveStepNum(stepNumber);
 	};
 
-	// TODO disable steps
+	// TODO disable steps for alerts
 
 	// getStepContent(stepIndex) {
 	// 	switch (stepIndex) {
@@ -116,7 +115,7 @@ const Decision: React.FC = () => {
 				className={classes.stepper}
 				alternativeLabel
 				nonLinear
-				activeStep={activeStepNum}
+				activeStep={activeStepNum - 1}
 			>
 				{steps.map((step) => {
 					return (
@@ -136,7 +135,7 @@ const Decision: React.FC = () => {
 			{activeStepNum}
 
 			{/*Navigation Buttons*/}
-			{activeStepNum !== 0 ? (
+			{activeStepNum !== 1 ? (
 				<Fab
 					color="secondary"
 					aria-label="Previous Step"
@@ -148,7 +147,7 @@ const Decision: React.FC = () => {
 				</Fab>
 			) : null}
 
-			{activeStepNum !== steps.length - 1 ? (
+			{activeStepNum !== steps.length ? (
 				<Fab
 					color="primary"
 					aria-label="Next Step"

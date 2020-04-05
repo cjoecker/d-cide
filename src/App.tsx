@@ -215,21 +215,22 @@ const App: React.FC = () => {
 					<div className={classes.linearProgress}>
 						{isLoading > 0 && <LinearProgress color="secondary" />}
 					</div>
-					<Switch>
-						{/*	/!*Public Scenes*!/*/}
-						<Route exact path="/" component={LandingPage} />
-						<Route component={NotFound} />
-						{/*	<Route exact path="/login" component={Login} />*/}
-						{/*	<Route exact path="/signUp" component={SignUp} />*/}
+					<Decision></Decision>
+					{/*<Switch>*/}
+					{/*	/!*	/!*Public Scenes*!/*!/*/}
+					{/*	<Route exact path="/" component={LandingPage} />*/}
+					{/*	<Route component={NotFound} />*/}
+					{/*	/!*	<Route exact path="/login" component={Login} />*!/*/}
+					{/*	/!*	<Route exact path="/signUp" component={SignUp} />*!/*/}
 
-						{/*	/!*Private Scenes*!/*/}
-						{/*	<SecureRoute exact path="/decisions" component={Decisions} />*/}
-						<SecureRoute
-							exact
-							path="/decisions/:decisionId"
-							component={Decision}
-						/>
-					</Switch>
+					{/*	/!*	/!*Private Scenes*!/*!/*/}
+					{/*	/!*	<SecureRoute exact path="/decisions" component={Decisions} />*!/*/}
+					{/*	<Route*/}
+					{/*		exact*/}
+					{/*		path="/decisions/:decisionId"*/}
+					{/*		component={Decision}*/}
+					{/*	/>*/}
+					{/*</Switch>*/}
 					<AlertsBanner />
 				</div>
 			</Router>
