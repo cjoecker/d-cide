@@ -1,12 +1,13 @@
 import axios, { AxiosResponse } from "axios";
-import { AppDispatch } from "./store";
+import store, { AppDispatch } from "./store";
 import {
 	AxiosRequest,
 	ErrorActionType,
 	SuccessExtraActionType,
 } from "./AxiosRequest";
-import SessionSlice from "./SessionSlice";
+import SessionSlice, { User } from "./SessionSlice";
 import { showHTTPAlert } from "./AppActions";
+import jwt_decode from "jwt-decode";
 
 export interface LoginRequest {
 	username: string;
@@ -18,12 +19,20 @@ export interface LoginResponse {
 	token: string;
 }
 
+const saveTokenCookie = (token: string): void => {
+	localStorage.setItem("token", token);
+	axios.defaults.headers.common.Authorization = token;
+};
+const deleteTokenCookie = (): void => {
+	localStorage.removeItem("token");
+	delete axios.defaults.headers.common.Authorization;
+};
+
 const loginSuccessful: SuccessExtraActionType = (
 	dispatch,
 	answer: AxiosResponse<LoginResponse>
 ) => {
-	localStorage.setItem("token", answer.data.token);
-	axios.defaults.headers.common.Authorization = answer.data.token;
+	saveTokenCookie(answer.data.token);
 };
 
 const resetWrongPasswordAnimation: ErrorActionType = (dispatch, error) => {
@@ -51,11 +60,10 @@ export const login = (
 
 export const logout = (dispatch: AppDispatch): void => {
 	dispatch(SessionSlice.actions.deleteSession);
-	localStorage.removeItem("token");
-	delete axios.defaults.headers.common.Authorization;
+	deleteTokenCookie();
 };
 
-export const createUnregisteredUser = (dispatch: AppDispatch):void => {
+export const createUnregisteredUser = (dispatch: AppDispatch): void => {
 	dispatch(
 		AxiosRequest(
 			axios.post<LoginResponse>("/api/sessions/unregistered"),
@@ -88,4 +96,23 @@ export const signUp = (dispatch: AppDispatch, newUser: SignUpRequest) => {
 			SessionSlice.actions.setSignUpSuccessful.bind(null)
 		)
 	);
+};
+
+export const verifyToken = (token: string): void => {
+	if (token === "" || token === undefined) return;
+
+	const decodedToken: User = jwt_decode(token);
+	const currentTime = Date.now() / 1000;
+
+	if (decodedToken.exp < currentTime) {
+		logout(store.dispatch);
+	} else {
+		const tokenResponse: LoginResponse = {
+			success: true,
+			token,
+		};
+
+		SessionSlice.actions.setSession(tokenResponse);
+		saveTokenCookie(token);
+	}
 };

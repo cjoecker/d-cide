@@ -7,6 +7,11 @@ export type OptionAndCriteria = {
 	score: number;
 };
 
+export enum OptionsAndCriteriaKeys{
+	decisionOptions = "decisionOptions",
+	selectionCriteria = "selectionCriteria"
+}
+
 type OptionsAndCriteriaState = {
 	decisionOptions: OptionAndCriteria[];
 	selectionCriteria: OptionAndCriteria[];

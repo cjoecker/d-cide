@@ -10,7 +10,7 @@ type SessionState = {
 	user: User;
 };
 
-type User = {
+export type User = {
 	registeredUser: boolean;
 	fullName: string;
 	id: number;

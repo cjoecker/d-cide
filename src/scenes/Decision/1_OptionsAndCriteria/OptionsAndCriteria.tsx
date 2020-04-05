@@ -11,6 +11,7 @@ import {
 	DecisionOptionInfo,
 	SelectionCriteriaInfo,
 } from "../../../services/LongTexts";
+import {OptionsAndCriteriaKeys} from "../../../services/redux/OptionsAndCriteriaSlice";
 
 const useStyles = makeStyles({
 	divMain: {
@@ -34,10 +35,11 @@ const useStyles = makeStyles({
 });
 
 const OptionsAndCriteria: React.FC = () => {
-	const classes = useStyles();
 
 	const [showOptionsInfo, setShowOptionsInfo] = useState(false);
 	const [showCriteriaInfo, setShowCriteriaInfo] = useState(false);
+
+	const classes = useStyles();
 
 	return (
 		<div className={classes.divMain}>
@@ -54,7 +56,7 @@ const OptionsAndCriteria: React.FC = () => {
 						</IconButton>
 					</Typography>
 					<EditableList
-						itemsKey="decisionOptions"
+						itemsKey={OptionsAndCriteriaKeys.decisionOptions}
 					/>
 				</Grid>
 				<Grid item xs={6} className={classes.gridItem}>
@@ -69,7 +71,7 @@ const OptionsAndCriteria: React.FC = () => {
 						</IconButton>
 					</Typography>
 					<EditableList
-						itemsKey="selectionCriteria"
+						itemsKey={OptionsAndCriteriaKeys.selectionCriteria}
 					/>
 				</Grid>
 			</Grid>

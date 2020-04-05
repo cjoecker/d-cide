@@ -40,24 +40,12 @@ import Decision from "./scenes/Decision/Decision";
 import AlertsBanner from "./components/AlertsBanner";
 import theme from "./muiTheme";
 import dcideLogo from "./images/d-cide_Logo.svg";
+import { verifyToken } from "./services/redux/SessionActions";
 
 const { token } = localStorage;
 
-//Security
-if (token) {
-	axios.defaults.headers.common.Authorization = token;
+verifyToken(token);
 
-	const decoded_TOKENToken = jwt_decode(token);
-	// store.dispatch({
-	//     type: POST_SESSION,
-	//     payload: decoded_TOKENToken,
-	// });
-	//TODO uncomment when reducer ready
-	const currentTime = Date.now() / 1000;
-	// if (decoded_TOKENToken.exp < currentTime) {
-	// 	// store.dispatch(logout());
-	// }
-}
 //TODO see if this is necessary
 function TabContainer(props) {
 	return (
@@ -122,14 +110,14 @@ const useStyles = makeStyles({
 });
 
 const App: React.FC = () => {
-	const classes = useStyles();
-	const dispatch = useDispatch();
 	const { isLoading } = useSelector(
 		(state: RootState) => state.App,
 		shallowEqual
 	);
-
 	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+	const classes = useStyles();
+	const dispatch = useDispatch();
+
 	const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
 		setAnchorEl(event.currentTarget);
 	};
@@ -229,7 +217,7 @@ const App: React.FC = () => {
 					</div>
 					<Switch>
 						{/*	/!*Public Scenes*!/*/}
-						{/*<Route exact path="/" component={LandingPage} />*/}
+						<Route exact path="/" component={LandingPage} />
 						<Route component={NotFound} />
 						{/*	<Route exact path="/login" component={Login} />*/}
 						{/*	<Route exact path="/signUp" component={SignUp} />*/}

@@ -12,8 +12,6 @@ import { createUnregisteredUser } from "../services/redux/SessionActions";
 interface Props {}
 
 const LandingPage: React.FC<Props> = (props: Props) => {
-	const dispatch = useDispatch();
-	const history = useHistory();
 
 	const { token } = useSelector(
 		(state: RootState) => state.Session,
@@ -29,16 +27,17 @@ const LandingPage: React.FC<Props> = (props: Props) => {
 		shallowEqual
 	);
 
+	const dispatch = useDispatch();
+	const history = useHistory();
+
 	useEffect(() => {
-		if (token == "") {
+		if (token === "") {
 			createUnregisteredUser(dispatch);
-		} else {
-			if (user.registeredUser) {
+		} else if (user.registeredUser) {
 				history.push("/decisions");
 			} else {
 				getDecisions(dispatch);
 			}
-		}
 	}, []);
 
 	useEffect(() => {

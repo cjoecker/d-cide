@@ -1,96 +1,15 @@
 import axios from "axios";
-import {
-	GET_DECISION_OPTIONS,
-	POST_DECISION_OPTION,
-	DELETE_DECISION_OPTION,
-	PUT_DECISION_OPTION,
-	GET_SELECTION_CRITERIA,
-	POST_SELECTION_CRITERIA,
-	DELETE_SELECTION_CRITERIA,
-	PUT_SELECTION_CRITERIA,
-} from "../actions/types";
-
 import { AppDispatch } from "./store";
-import { AxiosRequest } from "./AxiosRequest";
-import DecisionsSlice from "./DecisionsSlice";
-import { OptionAndCriteria } from "./OptionsAndCriteriaSlice";
-// import { httpRequest } from "../redux/AxiosRequest";
+import { AxiosRequest, SuccessActionType } from "./AxiosRequest";
+import OptionsAndCriteriaSlice, {
+	OptionAndCriteria,
+	OptionsAndCriteriaKeys,
+} from "./OptionsAndCriteriaSlice";
 
-export const getItems = (itemsKey, decisionId, calculatedScore) => async (
-	dispatch
-) => {
-	let action =
-		itemsKey === "decisionOptions"
-			? GET_DECISION_OPTIONS
-			: GET_SELECTION_CRITERIA;
-
-	let params = {
-		params: {
-			calculatedScore: calculatedScore,
-		},
-	};
-
-	dispatch();
-	// httpRequest(
-	// 	"get",
-	// 	`/api/decisions/${decisionId}/${itemsKey}`,
-	// 	params,
-	// 	action
-	// )
-};
-
-export const postItem = (newEntry, itemsKey, decisionId) => async (
-	dispatch
-) => {
-	let action =
-		itemsKey === "decisionOptions"
-			? POST_DECISION_OPTION
-			: POST_SELECTION_CRITERIA;
-
-	dispatch();
-	// httpRequest(
-	// 	"post",
-	// 	`/api/decisions/${decisionId}/${itemsKey}/`,
-	// 	newEntry,
-	// 	action
-	// )
-};
-
-export const deleteItem = (id, itemsKey, decisionId) => async (dispatch) => {
-	let action =
-		itemsKey === "decisionOptions"
-			? DELETE_DECISION_OPTION
-			: DELETE_SELECTION_CRITERIA;
-
-	dispatch();
-	// httpRequest(
-	// 	"delete",
-	// 	`/api/decisions/${decisionId}/${itemsKey}/${id}`,
-	// 	null,
-	// 	action,
-	// 	id
-	// )
-};
-
-export const putItem = (newEntry, itemsKey, decisionId) => async (dispatch) => {
-	let action =
-		itemsKey === "decisionOptions"
-			? PUT_DECISION_OPTION
-			: PUT_SELECTION_CRITERIA;
-
-	dispatch();
-	// httpRequest(
-	// 	"put",
-	// 	`/api/decisions/${decisionId}/${itemsKey}/`,
-	// 	newEntry,
-	// 	action
-	// )
-};
-
-export const getDecisions = (
+export const getOptionsAndCriteria = (
 	dispatch: AppDispatch,
 	decisionId: string,
-	itemsKey: string,
+	itemsKey: OptionsAndCriteriaKeys,
 	calculatedScore: boolean
 ): void => {
 	const params = {
@@ -99,13 +18,90 @@ export const getDecisions = (
 		},
 	};
 
+	const successAction: SuccessActionType =
+		itemsKey === OptionsAndCriteriaKeys.decisionOptions
+			? OptionsAndCriteriaSlice.actions.setDecisionOptions.bind(null)
+			: OptionsAndCriteriaSlice.actions.setSelectionCriteria.bind(null);
+
 	dispatch(
 		AxiosRequest(
 			axios.get<OptionAndCriteria[]>(
-				`/api/decisions/${decisionId}/${itemsKey}`,
+				`/api/decisions/${decisionId}/${itemsKey}/`,
 				params
 			),
-			DecisionsSlice.actions.setDecisions.bind(null)
+			successAction
+		)
+	);
+};
+
+export const postOptionsAndCriteria = (
+	dispatch: AppDispatch,
+	decisionId: string,
+	itemsKey: OptionsAndCriteriaKeys,
+	itemName: string
+): void => {
+	const newItem = {
+		name: itemName,
+	};
+
+	const successAction: SuccessActionType =
+		itemsKey === OptionsAndCriteriaKeys.decisionOptions
+			? OptionsAndCriteriaSlice.actions.addDecisionOption.bind(null)
+			: OptionsAndCriteriaSlice.actions.addSelectionCriteria.bind(null);
+
+	dispatch(
+		AxiosRequest(
+			axios.post<OptionAndCriteria>(
+				`/api/decisions/${decisionId}/${itemsKey}/`,
+				newItem
+			),
+			successAction
+		)
+	);
+};
+
+export const editOptionsAndCriteria = (
+	dispatch: AppDispatch,
+	decisionId: string,
+	itemsKey: OptionsAndCriteriaKeys,
+	item: OptionAndCriteria
+): void => {
+	const newItem = {
+		id: item.id,
+		name: item.name,
+	};
+
+	const successAction: SuccessActionType =
+		itemsKey === OptionsAndCriteriaKeys.decisionOptions
+			? OptionsAndCriteriaSlice.actions.updateDecisionOption.bind(null)
+			: OptionsAndCriteriaSlice.actions.updateSelectionCriteria.bind(null);
+
+	dispatch(
+		AxiosRequest(
+			axios.put<OptionAndCriteria>(
+				`/api/decisions/${decisionId}/${itemsKey}`,
+				newItem
+			),
+			successAction
+		)
+	);
+};
+
+export const deleteOptionsAndCriteria = (
+	dispatch: AppDispatch,
+	decisionId: string,
+	itemsKey: OptionsAndCriteriaKeys,
+	itemId: number
+): void => {
+	const successAction: SuccessActionType =
+		itemsKey === OptionsAndCriteriaKeys.decisionOptions
+			? OptionsAndCriteriaSlice.actions.deleteDecisionOption.bind(null)
+			: OptionsAndCriteriaSlice.actions.deleteSelectionCriteria.bind(null);
+
+	dispatch(
+		AxiosRequest(
+			axios.delete(`/api/decisions/${decisionId}/${itemsKey}/${itemId}`),
+			successAction
 		)
 	);
 };

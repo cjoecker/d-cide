@@ -39,13 +39,15 @@ const styles = (theme) => ({
 interface Props extends WithStyles<typeof styles> {}
 
 const AlertsBanner: React.FC<Props> = (props: Props) => {
-	const dispatch = useDispatch();
+
 
 	const { alerts } = useSelector((state: RootState) => state.App, shallowEqual);
 
 	const [autoHideTime, setAutoHideTime] = useState(0);
 	const [open, setOpen] = useState(false);
 	const [alert, setAlert] = useState(AlertInitialState);
+
+	const dispatch = useDispatch();
 
 	useEffect(() => {
 		if (alerts[0] !== undefined && alerts[0].text !== "") {
