@@ -30,6 +30,7 @@ const useStyles = makeStyles({
 		maxWidth: theme.spacing(62),
 		marginRight: theme.spacing(2),
 		marginLeft: theme.spacing(2),
+		marginBottom: theme.spacing(4),
 	},
 
 	emptySpace: {

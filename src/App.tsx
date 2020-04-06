@@ -74,7 +74,7 @@ const useStyles = makeStyles({
 	},
 
 	appBar: {
-		position: "relative",
+		position: "fixed",
 		Top: 0,
 		marginBottom: theme.spacing(2),
 		height: theme.spacing(6),
@@ -98,6 +98,11 @@ const useStyles = makeStyles({
 		float: "left",
 		marginLeft: theme.spacing(-1),
 	},
+
+	divRouter: {
+		marginTop: theme.spacing(6),
+	},
+	
 
 	logo: {
 		width: theme.spacing(17),
@@ -215,21 +220,20 @@ const App: React.FC = () => {
 					<div className={classes.linearProgress}>
 						{isLoading > 0 && <LinearProgress color="secondary" />}
 					</div>
-					<Switch>
-						{/*	/!*Public Scenes*!/*/}
-						<Route exact path="/" component={LandingPage} />
-						{/*<Route component={NotFound} />*/}
-						{/*	<Route exact path="/login" component={Login} />*/}
-						{/*	<Route exact path="/signUp" component={SignUp} />*/}
 
-						{/*	/!*Private Scenes*!/*/}
-						{/*	<SecureRoute exact path="/decisions" component={Decisions} />*/}
-						<Route
-							exact
-							path="/decisions/:decisionId"
-							component={Decision}
-						/>
-					</Switch>
+					<div className={classes.divRouter}>
+						<Switch>
+							{/*	/!*Public Scenes*!/*/}
+							<Route exact path="/" component={LandingPage} />
+							{/*<Route component={NotFound} />*/}
+							{/*	<Route exact path="/login" component={Login} />*/}
+							{/*	<Route exact path="/signUp" component={SignUp} />*/}
+
+							{/*	/!*Private Scenes*!/*/}
+							{/*	<SecureRoute exact path="/decisions" component={Decisions} />*/}
+							<Route exact path="/decisions/:decisionId" component={Decision} />
+						</Switch>
+					</div>
 					<AlertsBanner />
 				</div>
 			</Router>
