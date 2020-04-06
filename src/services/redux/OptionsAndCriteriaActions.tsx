@@ -79,7 +79,7 @@ export const editOptionsAndCriteria = (
 	dispatch(
 		AxiosRequest(
 			axios.put<OptionAndCriteria>(
-				`/api/decisions/${decisionId}/${itemsKey}`,
+				`/api/decisions/${decisionId}/${itemsKey}/`,
 				newItem
 			),
 			successAction

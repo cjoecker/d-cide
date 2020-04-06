@@ -138,10 +138,7 @@ const Decision: React.FC = () => {
 				axis={theme.direction === "rtl" ? "x-reverse" : "x"}
 				index={activeStepNum - 1}
 			>
-				<div>
-						<OptionsAndCriteria />
-				</div>
-
+				<OptionsAndCriteria />
 			</SwipeableViews>
 
 			{/*Navigation Buttons*/}

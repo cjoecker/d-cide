@@ -101,15 +101,8 @@ const EditableList: React.FC<Props> = (props: Props) => {
 		setNewEntry("");
 	};
 
-	const onDeleteItem = (itemId: number): void => {
-		if (newEntry !== "")
-			deleteOptionsAndCriteria(dispatch, decisionId, props.itemsKey, itemId);
-	};
-
-	const onChangeItem = (event, index: number): void => {
-		const itemsLocal = [...items];
-		itemsLocal[index].name = event.target.value;
-		setItems(itemsLocal);
+	const onChangeItem = (event, itemId: number): void => {
+		setItems(items.map(item => item.id === itemId ? {...item, name : event.target.value} : item ))
 	};
 
 	const onLeaveItem = (itemLocal: OptionAndCriteria): void => {
@@ -169,7 +162,7 @@ const EditableList: React.FC<Props> = (props: Props) => {
 								<InputBase
 									className={classes.inputBase}
 									value={item.name}
-									onChange={(event): void => onChangeItem(event, index)}
+									onChange={(event): void => onChangeItem(event, item.id)}
 									onBlur={(): void => onLeaveItem(item)}
 									multiline
 									onKeyDown={(event): void => {
