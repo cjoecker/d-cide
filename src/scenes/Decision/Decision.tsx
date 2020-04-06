@@ -9,6 +9,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import theme from "../../muiTheme";
 import SwipeableViews from "react-swipeable-views";
 import OptionsAndCriteria from "./1_OptionsAndCriteria/OptionsAndCriteria";
+import WeightCriteria from "./2_WeightCriteria/WeightCriteria";
 
 const useStyles = makeStyles({
 	divMain: {
@@ -75,7 +76,7 @@ const Decision: React.FC = () => {
 
 	const classes = useStyles();
 
-	const setStepCompleted = (stepNumber: number): void => {
+	const setStepCompleted = (stepNumber: number) => {
 		const newSteps = [...steps];
 		const index = newSteps.findIndex((obj) => obj.number === stepNumber);
 		newSteps[index].completed = true;
@@ -83,7 +84,7 @@ const Decision: React.FC = () => {
 		setSteps(newSteps);
 	};
 
-	const changeStep = (stepNumber: number): void => {
+	const changeStep = (stepNumber: number) => {
 		setStepCompleted(activeStepNum);
 
 		setActiveStepNum(stepNumber);
@@ -124,7 +125,7 @@ const Decision: React.FC = () => {
 					return (
 						<Step key={step.number}>
 							<StepButton
-								onClick={(): void => changeStep(step.number)}
+								onClick={() => changeStep(step.number)}
 								completed={step.completed}
 								disabled={step.disabled}
 							>
@@ -138,9 +139,10 @@ const Decision: React.FC = () => {
 			<SwipeableViews
 				axis={theme.direction === "rtl" ? "x-reverse" : "x"}
 				index={activeStepNum - 1}
-				onTransitionEnd={(): void => setLoadedStepNum(activeStepNum)}
+				onTransitionEnd={() => setLoadedStepNum(activeStepNum)}
 			>
 				<OptionsAndCriteria hidden={loadedStepNum !== 1} />
+				<WeightCriteria hidden={loadedStepNum !== 2} />
 			</SwipeableViews>
 			{/*Navigation Buttons*/}
 			{activeStepNum !== 1 ? (
@@ -149,7 +151,7 @@ const Decision: React.FC = () => {
 					aria-label="Previous Step"
 					size="medium"
 					className={classes.buttonBack}
-					onClick={(): void => changeStep(activeStepNum - 1)}
+					onClick={() => changeStep(activeStepNum - 1)}
 				>
 					<ArrowBackIcon />
 				</Fab>
@@ -160,7 +162,7 @@ const Decision: React.FC = () => {
 					aria-label="Next Step"
 					size="medium"
 					className={classes.buttonNext}
-					onClick={(): void => changeStep(activeStepNum + 1)}
+					onClick={() => changeStep(activeStepNum + 1)}
 					// disabled={minItemsThere}
 				>
 					<ArrowForwardIcon />

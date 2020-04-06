@@ -40,7 +40,7 @@ const NotFound: React.FC = () => {
 	const classes = useStyles();
 	const history = useHistory();
 
-	const handleClick = ():void => {
+	const handleClick = () => {
 		history.push("/");
 	};
 

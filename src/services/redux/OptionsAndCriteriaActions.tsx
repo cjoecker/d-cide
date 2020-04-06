@@ -11,7 +11,7 @@ export const getOptionsAndCriteria = (
 	decisionId: string,
 	itemsKey: OptionsAndCriteriaKeys,
 	calculatedScore: boolean
-): void => {
+) => {
 	const params = {
 		params: {
 			calculatedScore,
@@ -39,7 +39,7 @@ export const postOptionsAndCriteria = (
 	decisionId: string,
 	itemsKey: OptionsAndCriteriaKeys,
 	itemName: string
-): void => {
+) => {
 	const newItem = {
 		name: itemName,
 	};
@@ -65,7 +65,7 @@ export const editOptionsAndCriteria = (
 	decisionId: string,
 	itemsKey: OptionsAndCriteriaKeys,
 	item: OptionAndCriteria
-): void => {
+) => {
 	const newItem = {
 		id: item.id,
 		name: item.name,
@@ -92,7 +92,7 @@ export const deleteOptionsAndCriteria = (
 	decisionId: string,
 	itemsKey: OptionsAndCriteriaKeys,
 	itemId: number
-): void => {
+) => {
 	const successAction: SuccessActionType =
 		itemsKey === OptionsAndCriteriaKeys.decisionOptions
 			? OptionsAndCriteriaSlice.actions.deleteDecisionOption.bind(null)

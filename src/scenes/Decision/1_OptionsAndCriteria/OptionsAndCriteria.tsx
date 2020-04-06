@@ -51,7 +51,7 @@ const OptionsAndCriteria: React.FC<Props> = (props: Props) => {
 	const classes = useStyles();
 
 	return (
-		!hidden && (
+
 			<div className={classes.divMain}>
 				<Grid container justify="center" alignContent="center">
 					<Grid item xs={6} className={classes.gridItem}>
@@ -60,7 +60,7 @@ const OptionsAndCriteria: React.FC<Props> = (props: Props) => {
 							<IconButton
 								aria-label="Help"
 								className={classes.infoButton}
-								onClick={(): void => setShowOptionsInfo(true)}
+								onClick={() => setShowOptionsInfo(true)}
 							>
 								<InfoIcon color="secondary" />
 							</IconButton>
@@ -73,7 +73,7 @@ const OptionsAndCriteria: React.FC<Props> = (props: Props) => {
 							<IconButton
 								aria-label="Help"
 								className={classes.infoButton}
-								onClick={(): void => setShowCriteriaInfo(true)}
+								onClick={() => setShowCriteriaInfo(true)}
 							>
 								<InfoIcon color="secondary" />
 							</IconButton>
@@ -87,15 +87,15 @@ const OptionsAndCriteria: React.FC<Props> = (props: Props) => {
 				<InfoDialog
 					text={DecisionOptionInfo}
 					show={showOptionsInfo}
-					hide={(): void => setShowOptionsInfo(false)}
+					hide={() => setShowOptionsInfo(false)}
 				/>
 				<InfoDialog
 					text={SelectionCriteriaInfo}
 					show={showCriteriaInfo}
-					hide={(): void => setShowCriteriaInfo(false)}
+					hide={() => setShowCriteriaInfo(false)}
 				/>
 			</div>
-		)
+
 	);
 };
 

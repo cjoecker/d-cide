@@ -15,20 +15,20 @@ const AppSlice = createSlice({
 	name: "App",
 	initialState,
 	reducers: {
-		startLoading(state):void {
+		startLoading(state) {
 			state.isLoading += 1;
 		},
-		endLoading(state):void {
+		endLoading(state) {
 			state.isLoading -= 1;
 		},
-		addAlert(state, action: PayloadAction<AlertType>):void {
+		addAlert(state, action: PayloadAction<AlertType>) {
 			state.alerts = state.alerts.some(
 				(alert) => JSON.stringify(alert) === JSON.stringify(action.payload)
 			)
 				? state.alerts
 				: [action.payload, ...state.alerts];
 		},
-		deleteAlert(state, action: PayloadAction<AlertType>):void {
+		deleteAlert(state, action: PayloadAction<AlertType>) {
 			state.alerts = state.alerts.filter(
 				(alert) => JSON.stringify(alert) !== JSON.stringify(action.payload)
 			);

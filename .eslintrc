@@ -17,6 +17,9 @@
 		"spaced-comment": "off",
 		"react/jsx-indent": "off",
 		"react/jsx-indent-props": "off",
+		"no-use-before-define": "off",
+		"@typescript-eslint/no-use-before-define": "off",
+		"@typescript-eslint/explicit-function-return-type": "off",
 		"react/jsx-filename-extension": [
 			2,
 			{ "extensions": [".js", ".jsx", ".ts", ".tsx"] }

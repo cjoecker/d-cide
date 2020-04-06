@@ -83,7 +83,7 @@ const EditableList: React.FC<Props> = (props: Props) => {
 			() => setIsLoaded(true),
 			(importedItems.length + 1) * animationDelay
 		);
-		return (): void => clearTimeout(timer);
+		return () => clearTimeout(timer);
 	};
 
 	useEffect(() => {
@@ -92,7 +92,7 @@ const EditableList: React.FC<Props> = (props: Props) => {
 		if (!isLoaded && importedItems.length !== 0) stopItemsAnimation();
 	}, [importedItems]);
 
-	const onCreateItem = (): void => {
+	const onCreateItem = () => {
 		if (newEntry === "") return;
 
 		postOptionsAndCriteria(dispatch, decisionId, props.itemsKey, newEntry);
@@ -101,11 +101,11 @@ const EditableList: React.FC<Props> = (props: Props) => {
 		setNewEntry("");
 	};
 
-	const onChangeItem = (event, itemId: number): void => {
+	const onChangeItem = (event, itemId: number) => {
 		setItems(items.map(item => item.id === itemId ? {...item, name : event.target.value} : item ))
 	};
 
-	const onLeaveItem = (itemLocal: OptionAndCriteria): void => {
+	const onLeaveItem = (itemLocal: OptionAndCriteria) => {
 		if (itemLocal.name !== "")
 			editOptionsAndCriteria(dispatch, decisionId, props.itemsKey, itemLocal);
 		else
@@ -127,13 +127,13 @@ const EditableList: React.FC<Props> = (props: Props) => {
 							className={classes.inputBase}
 							placeholder="New Entry"
 							value={newEntry}
-							onKeyPress={(event): void => {
+							onKeyPress={(event) => {
 								if (event.key === "Enter") {
 									event.preventDefault();
 									onCreateItem();
 								}
 							}}
-							onChange={(event): void => setNewEntry(event.target.value)}
+							onChange={(event) => setNewEntry(event.target.value)}
 							multiline
 						/>
 
@@ -142,7 +142,7 @@ const EditableList: React.FC<Props> = (props: Props) => {
 								test-data="button-add-item"
 								aria-label="Add"
 								className={classes.paperButtons}
-								onClick={(): void => onCreateItem()}
+								onClick={() => onCreateItem()}
 							>
 								<AddIcon />
 							</IconButton>
@@ -162,10 +162,10 @@ const EditableList: React.FC<Props> = (props: Props) => {
 								<InputBase
 									className={classes.inputBase}
 									value={item.name}
-									onChange={(event): void => onChangeItem(event, item.id)}
-									onBlur={(): void => onLeaveItem(item)}
+									onChange={(event) => onChangeItem(event, item.id)}
+									onBlur={() => onLeaveItem(item)}
 									multiline
-									onKeyDown={(event): void => {
+									onKeyDown={(event) => {
 										if (event.key === "Enter") {
 											event.preventDefault();
 											if (document.activeElement instanceof HTMLElement) {
@@ -177,7 +177,7 @@ const EditableList: React.FC<Props> = (props: Props) => {
 								<ListItemSecondaryAction>
 									<IconButton
 										aria-label="Delete"
-										onClick={(): void => deleteOptionsAndCriteria(dispatch, decisionId, props.itemsKey, item.id)}
+										onClick={() => deleteOptionsAndCriteria(dispatch, decisionId, props.itemsKey, item.id)}
 										className={classes.paperButtons}
 									>
 										<DeleteIcon />

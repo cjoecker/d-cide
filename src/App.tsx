@@ -127,7 +127,7 @@ const App: React.FC = () => {
 		setAnchorEl(event.currentTarget);
 	};
 
-	const handleClose = (): void => {
+	const handleClose = () => {
 		setAnchorEl(null);
 	};
 

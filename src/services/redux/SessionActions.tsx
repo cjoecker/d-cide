@@ -19,11 +19,13 @@ export interface LoginResponse {
 	token: string;
 }
 
-const saveTokenCookie = (token: string): void => {
+//TODO put small methods at the end
+
+const saveTokenCookie = (token: string) => {
 	localStorage.setItem("token", token);
 	axios.defaults.headers.common.Authorization = token;
 };
-const deleteTokenCookie = (): void => {
+const deleteTokenCookie = () => {
 	localStorage.removeItem("token");
 	delete axios.defaults.headers.common.Authorization;
 };
@@ -47,7 +49,7 @@ const resetWrongPasswordAnimation: ErrorActionType = (dispatch, error) => {
 export const login = (
 	dispatch: AppDispatch,
 	loginRequest: LoginRequest
-): void => {
+) => {
 	dispatch(
 		AxiosRequest(
 			axios.post<LoginResponse>("/api/sessions/", loginRequest),
@@ -58,12 +60,12 @@ export const login = (
 	);
 };
 
-export const logout = (dispatch: AppDispatch): void => {
+export const logout = (dispatch: AppDispatch) => {
 	dispatch(SessionSlice.actions.deleteSession);
 	deleteTokenCookie();
 };
 
-export const createUnregisteredUser = (dispatch: AppDispatch): void => {
+export const createUnregisteredUser = (dispatch: AppDispatch) => {
 	dispatch(
 		AxiosRequest(
 			axios.post<LoginResponse>("/api/sessions/unregistered"),
@@ -98,7 +100,7 @@ export const signUp = (dispatch: AppDispatch, newUser: SignUpRequest) => {
 	);
 };
 
-export const verifyToken = (token: string): void => {
+export const verifyToken = (token: string) => {
 	if (token === "" || token === undefined) return;
 
 	const decodedToken: User = jwt_decode(token);
