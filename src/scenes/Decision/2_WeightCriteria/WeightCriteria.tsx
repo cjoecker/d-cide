@@ -64,17 +64,20 @@ const useStyles = makeStyles({
 	},
 
 	gridItemSlider: {
-		marginTop: -theme.spacing(1),
-		marginBottom: -theme.spacing(2),
+		marginTop: -theme.spacing(2),
+		marginBottom: -theme.spacing(1),
 		marginLeft: theme.spacing(1),
 		marginRight: theme.spacing(1),
+	},
+
+	gridItemSliderInfo: {
+		marginTop: -theme.spacing(2.5),
 	},
 
 	emptySpace: {
 		height: theme.spacing(4),
 	},
 });
-
 
 type Props = {
 	hidden: boolean;
@@ -85,9 +88,9 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
 	const { hidden } = props;
 
 	const [showInfo, setShowInfo] = useState(false);
-	const [weightedCriteria, setWeightedCriteria] = useState<WeightedCriteriaLocalType[]>(
-		[]
-	);
+	const [weightedCriteria, setWeightedCriteria] = useState<
+		WeightedCriteriaLocalType[]
+	>([]);
 	const [weightInfo, setWeightInfo] = useState<string[]>([]);
 	const selectionCriteria = useSelector(
 		(state: RootState) => state.OptionsAndCriteria.selectionCriteria,
@@ -127,11 +130,7 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
 		selectionCriteria2: OptionAndCriteria;
 	};
 
-
-
 	useEffect(() => {
-		getWeightedCriteria(dispatch, decisionId);
-
 		const subscription = onChangeSlider$
 			.pipe(debounceTime(1500))
 			.subscribe((criteria) => {
@@ -144,24 +143,26 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
 	}, []);
 
 	useEffect(() => {
+		if (!hidden) getWeightedCriteria(dispatch, decisionId);
+		else setWeightedCriteria([]);
+	}, [hidden]);
+
+	useEffect(() => {
 		if (importedWeightedCriteria.length > 0) {
 			prepareWeightedCriteria();
 		}
 	}, [importedWeightedCriteria]);
-
 
 	const onChange = (event, value, itemLocal, index) => {
 		onChangeSlider$.next(itemLocal);
 
 		setWeightedCriteria(
 			weightedCriteria.map((criteria) =>
-				criteria.id === itemLocal.id
-					? { ...criteria, weight: event.target.value }
-					: criteria
+				criteria.id === itemLocal.id ? { ...criteria, weight: value } : criteria
 			)
 		);
 
-		updateWeightInfo(index, weightedCriteria);
+		updateWeightInfo(index, itemLocal);
 	};
 
 	const prepareWeightedCriteria = () => {
@@ -194,10 +195,10 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
 		setWeightedCriteria(weightedCriteriaArray);
 	};
 
-
-
 	const updateWeightInfo = (index, criteria) => {
 		const newWeightInfo = weightInfo;
+
+		console.log(getWeightInfoText(criteria))
 
 		newWeightInfo[index] = getWeightInfoText(criteria);
 
@@ -225,7 +226,6 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
 		}
 	};
 
-
 	return (
 		<div className={classes.divMain}>
 			<Grid container justify="center" alignContent="center">
@@ -251,7 +251,7 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
 						>
 							<Paper elevation={2} className={classes.paper}>
 								<Grid container spacing={2} alignItems="center">
-									<Grid item xs={6}>
+									<Grid item xs={6} >
 										<Typography variant="body1">
 											{criteria.selectionCriteria1.name}
 										</Typography>
@@ -284,7 +284,7 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
 											}
 										/>
 									</Grid>
-									<Grid item xs={12}>
+									<Grid item xs={12} className={classes.gridItemSliderInfo}>
 										<Typography variant="caption">
 											{weightInfo[index]}
 										</Typography>

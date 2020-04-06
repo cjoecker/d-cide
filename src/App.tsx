@@ -47,19 +47,6 @@ const { token } = localStorage;
 verifyToken(token);
 
 //TODO see if this is necessary
-function TabContainer(props) {
-	return (
-		<Typography component="div" style={{ padding: 8 * 3 }}>
-			{props.children}
-		</Typography>
-	);
-}
-
-TabContainer.propTypes = {
-	children: PropTypes.node.isRequired,
-};
-
-//TODO see if this is necessary
 const history = createBrowserHistory();
 history.listen((location) => {
 	ReactGA.set({ page: location.pathname });
@@ -85,7 +72,7 @@ const useStyles = makeStyles({
 
 	linearProgress: {
 		position: "fixed",
-		marginTop: theme.spacing(-2),
+		marginTop: theme.spacing(6),
 		Top: 0,
 		width: "100%",
 	},

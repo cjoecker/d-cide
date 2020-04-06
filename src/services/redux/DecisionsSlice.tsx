@@ -17,8 +17,10 @@ const DecisionsSlice = createSlice({
 		addDecision(state, action: PayloadAction<Decision>):typeof state {
 			return [action.payload, ...state];
 		},
-		updateDecision(state):typeof state {
-			return state;
+		updateDecision(state, action: PayloadAction<Decision>):typeof state {
+			return state.map((item) =>
+				item.id === action.payload.id ? action.payload : item
+			)
 		},
 		deleteDecision(state, action: PayloadAction<Decision>):typeof state {
 			return state.filter(

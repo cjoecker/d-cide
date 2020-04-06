@@ -70,7 +70,6 @@ export const editOptionsAndCriteria = (
 		id: item.id,
 		name: item.name,
 	};
-
 	const successAction: SuccessActionType =
 		itemsKey === OptionsAndCriteriaKeys.decisionOptions
 			? OptionsAndCriteriaSlice.actions.updateDecisionOption.bind(null)
@@ -82,7 +81,10 @@ export const editOptionsAndCriteria = (
 				`/api/decisions/${decisionId}/${itemsKey}/`,
 				newItem
 			),
-			successAction
+			successAction,
+			null,
+			null,
+			item
 		)
 	);
 };

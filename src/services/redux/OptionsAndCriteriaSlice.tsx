@@ -35,8 +35,10 @@ const OptionsAndCriteriaSlice = createSlice({
 		addDecisionOption(state, action: PayloadAction<OptionAndCriteria>) {
 			state.decisionOptions = [action.payload, ...state.decisionOptions];
 		},
-		updateDecisionOption(state):typeof state {
-			return state;
+		updateDecisionOption(state, action: PayloadAction<OptionAndCriteria>){
+			state.decisionOptions = state.decisionOptions.map((item) =>
+				item.id === action.payload.id ? action.payload : item
+			)
 		},
 		deleteDecisionOption(
 			state,
@@ -55,8 +57,10 @@ const OptionsAndCriteriaSlice = createSlice({
 		addSelectionCriteria(state, action: PayloadAction<OptionAndCriteria>) {
 			state.selectionCriteria = [action.payload, ...state.selectionCriteria];
 		},
-		updateSelectionCriteria(state):typeof state {
-			return state;
+		updateSelectionCriteria(state, action: PayloadAction<OptionAndCriteria>){
+			state.selectionCriteria = state.selectionCriteria.map((item) =>
+				item.id === action.payload.id ? action.payload : item
+			)
 		},
 		deleteSelectionCriteria(state, action: PayloadAction<number>) {
 			state.selectionCriteria = state.selectionCriteria.filter(

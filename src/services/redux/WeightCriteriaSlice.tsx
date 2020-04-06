@@ -17,8 +17,13 @@ const WeightedCriteriaSlice = createSlice({
 		): typeof state {
 			return action.payload;
 		},
-		updateWeightedCriteria(state): typeof state {
-			return state;
+		updateWeightedCriteria(
+			state,
+			action: PayloadAction<WeightedCriteria>
+		): typeof state {
+			return state.map((item) =>
+				item.id === action.payload.id ? action.payload : item
+			)
 		},
 	},
 });
