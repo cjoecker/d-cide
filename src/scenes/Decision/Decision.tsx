@@ -45,6 +45,7 @@ type stepsType = {
 
 const Decision: React.FC = () => {
 	const [activeStepNum, setActiveStepNum] = useState(1);
+	const [loadedStepNum, setLoadedStepNum] = useState(1);
 	const [steps, setSteps] = useState<stepsType[]>([
 		{
 			number: 1,
@@ -133,14 +134,14 @@ const Decision: React.FC = () => {
 					);
 				})}
 			</Stepper>
-
+			//TODO check transitions with onChangeIndex and onTransitionEnd
 			<SwipeableViews
 				axis={theme.direction === "rtl" ? "x-reverse" : "x"}
 				index={activeStepNum - 1}
+				onTransitionEnd={(): void => setLoadedStepNum(activeStepNum)}
 			>
-				<OptionsAndCriteria />
+				<OptionsAndCriteria hidden={loadedStepNum !== 1} />
 			</SwipeableViews>
-
 			{/*Navigation Buttons*/}
 			{activeStepNum !== 1 ? (
 				<Fab
@@ -153,7 +154,6 @@ const Decision: React.FC = () => {
 					<ArrowBackIcon />
 				</Fab>
 			) : null}
-
 			{activeStepNum !== steps.length ? (
 				<Fab
 					color="primary"

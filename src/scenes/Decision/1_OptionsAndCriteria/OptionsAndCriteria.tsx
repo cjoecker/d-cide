@@ -38,14 +38,21 @@ const useStyles = makeStyles({
 	},
 });
 
-const OptionsAndCriteria: React.FC = () => {
+type Props = {
+	hidden : boolean
+}
+
+const OptionsAndCriteria: React.FC<Props> = (props : Props) => {
 
 	const [showOptionsInfo, setShowOptionsInfo] = useState(false);
-	const [showCriteriaInfo, setShowCriteriaInfo] = useState(false);
+	const [showCriteriaInfo, setShowCriteriaInfo] = useState(false)
+
+	const {hidden} = props
 
 	const classes = useStyles();
 
 	return (
+		!hidden && (
 		<div className={classes.divMain}>
 			<Grid container justify="center" alignContent="center">
 				<Grid item xs={6} className={classes.gridItem}>
@@ -93,6 +100,7 @@ const OptionsAndCriteria: React.FC = () => {
 				hide={():void => setShowCriteriaInfo(false)}
 			/>
 		</div>
+		)
 	);
 };
 
