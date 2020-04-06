@@ -12,6 +12,7 @@ import {
 	SelectionCriteriaInfo,
 } from "../../../services/LongTexts";
 import {OptionsAndCriteriaKeys} from "../../../services/redux/OptionsAndCriteriaSlice";
+import {useParams} from "react-router-dom";
 
 const useStyles = makeStyles({
 	divMain: {

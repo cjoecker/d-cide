@@ -35,7 +35,7 @@ import { RootState } from "./services/redux/rootReducer";
 import { getDecisions } from "./services/redux/DecisionsActions";
 import LandingPage from "./scenes/LandingPage";
 import NotFound from "./scenes/NotFound/NotFound";
-import SecureRoute from "./services/SecureRoute";
+import SecureRoute from "./services/PrivateRoute";
 import Decision from "./scenes/Decision/Decision";
 import AlertsBanner from "./components/AlertsBanner";
 import theme from "./muiTheme";
@@ -215,22 +215,21 @@ const App: React.FC = () => {
 					<div className={classes.linearProgress}>
 						{isLoading > 0 && <LinearProgress color="secondary" />}
 					</div>
-					<Decision></Decision>
-					{/*<Switch>*/}
-					{/*	/!*	/!*Public Scenes*!/*!/*/}
-					{/*	<Route exact path="/" component={LandingPage} />*/}
-					{/*	<Route component={NotFound} />*/}
-					{/*	/!*	<Route exact path="/login" component={Login} />*!/*/}
-					{/*	/!*	<Route exact path="/signUp" component={SignUp} />*!/*/}
+					<Switch>
+						{/*	/!*Public Scenes*!/*/}
+						<Route exact path="/" component={LandingPage} />
+						{/*<Route component={NotFound} />*/}
+						{/*	<Route exact path="/login" component={Login} />*/}
+						{/*	<Route exact path="/signUp" component={SignUp} />*/}
 
-					{/*	/!*	/!*Private Scenes*!/*!/*/}
-					{/*	/!*	<SecureRoute exact path="/decisions" component={Decisions} />*!/*/}
-					{/*	<Route*/}
-					{/*		exact*/}
-					{/*		path="/decisions/:decisionId"*/}
-					{/*		component={Decision}*/}
-					{/*	/>*/}
-					{/*</Switch>*/}
+						{/*	/!*Private Scenes*!/*/}
+						{/*	<SecureRoute exact path="/decisions" component={Decisions} />*/}
+						<Route
+							exact
+							path="/decisions/:decisionId"
+							component={Decision}
+						/>
+					</Switch>
 					<AlertsBanner />
 				</div>
 			</Router>

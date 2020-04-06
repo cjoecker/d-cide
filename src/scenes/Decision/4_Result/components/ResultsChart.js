@@ -64,7 +64,7 @@ class ResultsChart extends React.Component {
 
 		this.setState({ labelsOffset: totalOffset });
 
-		if (this.props.optionsAndCriteria[this.props.itemsKey] !== null) {
+		if (this.props.optionsAndCriteria[this.props.itemsKey] != null) {
 			ReactGA.event({
 				category: "Result",
 				action: "Items number from " + this.props.itemsKey,

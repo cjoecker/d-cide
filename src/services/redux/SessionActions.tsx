@@ -36,7 +36,7 @@ const loginSuccessful: SuccessExtraActionType = (
 };
 
 const resetWrongPasswordAnimation: ErrorActionType = (dispatch, error) => {
-	if (error.response?.data.password !== undefined) {
+	if (error.response?.data.password != null) {
 		dispatch(SessionSlice.actions.setWrongPassword(false));
 		dispatch(SessionSlice.actions.setWrongPassword(true));
 	} else {

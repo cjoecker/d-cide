@@ -50,7 +50,7 @@ const AlertsBanner: React.FC<Props> = (props: Props) => {
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		if (alerts[0] !== undefined && alerts[0].text !== "") {
+		if (alerts[0] != null && alerts[0].text !== "") {
 			setAlert(sortAlerts(alerts));
 			setAutoHideTime(calculateHideTime(alerts[0]));
 			setOpen(true);

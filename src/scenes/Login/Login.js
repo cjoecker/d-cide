@@ -133,7 +133,7 @@ class Login extends React.Component {
 			this.props.history.push("/decisions");
 		}
 
-		if (this.props.security.user !== null) {
+		if (this.props.security.user != null) {
 			if (!this.props.security.user.registeredUser) {
 				this.setState({
 					unregisteredUsername: this.props.security.user.username,

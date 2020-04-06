@@ -29,11 +29,11 @@ export const AxiosRequest = (
 	axiosPromise
 		.then((answer) => {
 			dispatch(successAction(answer.data));
-			if (successExtraAction !== undefined)
+			if (successExtraAction != null)
 				successExtraAction(dispatch, answer);
 		})
 		.catch((error: AxiosError) => {
-			if (errorAction !== undefined) errorAction(dispatch, error);
+			if (errorAction != null) errorAction(dispatch, error);
 			else showHTTPAlert(dispatch, error);
 		})
 		.finally(() => {

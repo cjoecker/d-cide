@@ -61,10 +61,12 @@ const EditableList: React.FC<Props> = (props: Props) => {
 
 	const [newEntry, setNewEntry] = useState("");
 	const [items, setItems] = useState<OptionAndCriteria[]>([]);
+	const [isLoaded, setIsLoaded] = useState(false);
 	const importedItems = useSelector(
 		(state: RootState) => state.OptionsAndCriteria[props.itemsKey],
 		shallowEqual
 	);
+	const animationDelay = 100;
 
 	const classes = useStyles();
 	const dispatch = useDispatch();
@@ -75,8 +77,19 @@ const EditableList: React.FC<Props> = (props: Props) => {
 		getOptionsAndCriteria(dispatch, decisionId, props.itemsKey, false);
 	}, []);
 
+	const stopItemsAnimation = (): (() => void) => {
+
+		const timer = setTimeout(
+			() => setIsLoaded(true),
+			(importedItems.length + 1) * animationDelay
+		);
+		return (): void => clearTimeout(timer);
+	};
+
 	useEffect(() => {
 		setItems(importedItems);
+
+		if (!isLoaded && importedItems.length !== 0) stopItemsAnimation();
 	}, [importedItems]);
 
 	const onCreateItem = (): void => {
@@ -144,8 +157,14 @@ const EditableList: React.FC<Props> = (props: Props) => {
 					</ListItem>
 				</Paper>
 				{items.map((item, index) => (
-					<Fade in style={{ transitionDelay: `${index * 100}ms` }}>
-						<Paper className={classes.paperItems} elevation={2} key={item.id}>
+					<Fade
+						in
+						style={{
+							transitionDelay: `${index * (isLoaded ? 0 : animationDelay)}ms`,
+						}}
+						key={item.id}
+					>
+						<Paper className={classes.paperItems} elevation={2}>
 							<ListItem>
 								<InputBase
 									className={classes.inputBase}
@@ -165,7 +184,7 @@ const EditableList: React.FC<Props> = (props: Props) => {
 								<ListItemSecondaryAction>
 									<IconButton
 										aria-label="Delete"
-										onClick={(): void => onDeleteItem(item.id)}
+										onClick={(): void => deleteOptionsAndCriteria(dispatch, decisionId, props.itemsKey, item.id)}
 										className={classes.paperButtons}
 									>
 										<DeleteIcon />
