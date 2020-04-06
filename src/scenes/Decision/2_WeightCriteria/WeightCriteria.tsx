@@ -1,20 +1,13 @@
-import React, {Component, useEffect} from "react";
+import React, {Component, useEffect, useState} from "react";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
-import PropTypes from "prop-types";
-import { withStyles } from "@material-ui/core";
 import Slider from "@material-ui/core/Slider";
 import update from "immutability-helper";
-import WeightSlider_Scale from "../../../images/WeightSlider_Scale.svg";
 import Typography from "@material-ui/core/Typography";
 import InfoIcon from "@material-ui/icons/Info";
 import IconButton from "@material-ui/core/IconButton";
 import InfoDialog from "../../../components/InfoDialog";
-import {connect, useDispatch} from "react-redux";
-import {
-	getWeightedCriteria,
-	putWeightedCriteria,
-} from "../../../services/actions/WeightCriteria_Action";
+import {shallowEqual, useDispatch, useSelector} from "react-redux";
 import * as LongStrings from "../../../services/LongTexts";
 import ReactGA from "react-ga";
 import Fade from "@material-ui/core/Fade";
@@ -22,9 +15,13 @@ import { Subject } from "rxjs";
 import { debounceTime } from "rxjs/operators";
 import {makeStyles} from "@material-ui/core/styles";
 import theme from "../../../muiTheme";
-import {getOptionsAndCriteria} from "../../../services/redux/OptionsAndCriteriaActions";
+import {useParams} from "react-router-dom";
+import {getWeightedCriteria, updateWeightedCriteria} from "../../../services/redux/WeightCriteriaActions";
+import {WeightedCriteria} from "../../../services/redux/WeightCriteriaSlice";
+import {RootState} from "../../../services/redux/rootReducer";
+import {OptionAndCriteria} from "../../../services/redux/OptionsAndCriteriaSlice";
 
-let onChange$ = new Subject();
+
 
 const useStyles = makeStyles({
 	divMain: {
@@ -77,23 +74,6 @@ const useStyles = makeStyles({
 	},
 });
 
-const marks = [
-	{
-		value: -66.6,
-	},
-	{
-		value: -33.3,
-	},
-	{
-		value: 0,
-	},
-	{
-		value: 33.3,
-	},
-	{
-		value: 66.6,
-	},
-];
 
 type Props = {
 	hidden: boolean;
@@ -101,81 +81,67 @@ type Props = {
 
 const WeightCriteria: React.FC<Props> = (props: Props) => {
 
-
+	const { decisionId } = useParams();
 	const { hidden } = props;
+
+	const [showInfo, setShowInfo] = useState(false);
+	const [criteria, setCriteria] = useState<WeightedCriteria[]>([]);
+	const [weightInfo, setWeightInfo] = useState<string[]>([]);
+	const importedCriteria = useSelector(
+		(state: RootState) => state.WeightedCriteria,
+		shallowEqual
+	);
+
 	const classes = useStyles();
 	const dispatch = useDispatch();
+	let onChangeSlider$ = new Subject();
+
+	const sliderMarks = [
+		{
+			value: -66.6,
+		},
+		{
+			value: -33.3,
+		},
+		{
+			value: 0,
+		},
+		{
+			value: 33.3,
+		},
+		{
+			value: 66.6,
+		},
+	];
+
 
 	useEffect(() => {
-		getOptionsAndCriteria(dispatch, decisionId, props.itemsKey, false);
-	}, []);
+		getWeightedCriteria(dispatch, decisionId);
 
-	constructor(props) {
-		super(props);
+		const subscription = onChangeSlider$.pipe(debounceTime(1500)).subscribe(criteria => {
+			updateWeightedCriteria(dispatch, decisionId, criteria)
+		});
 
-		this.state = {
-			weightedCriteria: [],
-			weightInfo: [],
-			value: 50,
-			showInfo: false,
-			dragging: false,
+		return () => {
+			subscription.unsubscribe();
 		};
 
-		this.onChange = this.onChange.bind(this);
-		this.onHideInfo = this.onHideInfo.bind(this);
-		this.onShowInfo = this.onShowInfo.bind(this);
-	}
+	}, []);
 
-	//GET_CRITERIA
-	componentDidMount() {
-		this.props.getWeightedCriteria(this.props.decisionId);
 
-		const subscription = onChange$
-			.pipe(debounceTime(500))
-			.subscribe((data) => this.fetchSliderValues(data));
 
-		// prevent memory leaks
-		this.setState((prevState) => ({ ...prevState, subscription }));
-	}
-
-	componentWillUnmount() {
-		// prevent memory leaks
-		this.state.subscription.unsubscribe();
-	}
-
-	//Refresh when redux state changes
-	componentDidUpdate(prevProps, prevState, snapshot) {
-		if (
-			prevProps.weightCriteria.weightedCriteria !==
-			this.props.weightCriteria.weightedCriteria
-		) {
-			if (this.props.weightCriteria.weightedCriteria.length > 0) {
-				this.setWeightedCriteria();
-			}
-		}
-	}
 
 	//CHANGE_CRITERIA
 	onChange = (event, value, itemLocal, index) => {
-		//send data to fetch
-		const weightedCriteria = {
-			id: itemLocal.id,
-			weight: value,
-		};
 
-		onChange$.next(weightedCriteria);
+		onChangeSlider$.next(itemLocal);
 
-		//Update State
-		let weightInfoArray = this.state.weightInfo;
+		setCriteria(criteria.map(criteria => criteria.id === itemLocal.id ? {...criteria, weight : event.target.value} : criteria ))
 
-		let newState = update(this.state.weightedCriteria, {
-			[index]: {
-				weight: { $set: value },
-			},
-		});
+		updateWeightInfo(index)
 
-		//Show InfoText
-		weightInfoArray[index] = WeightCriteria.getWeightInfoText(itemLocal);
+		let weightInfoLocal = weightInfo;
+		weightInfoLocal[index] = WeightCriteria.getWeightInfoText(itemLocal);
 
 		this.setState({
 			weightedCriteria: newState,
@@ -183,27 +149,10 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
 		});
 	};
 
-	fetchSliderValues(weightedCriteria) {
-		this.props.putWeightedCriteria(this.props.decisionId, weightedCriteria);
+	updateWeightInfo(index:number){
+
 	}
 
-	onHideInfo() {
-		this.setState({ showInfo: false });
-
-		ReactGA.event({
-			category: "Weight Criteria",
-			action: "Hide Info",
-		});
-	}
-
-	onShowInfo = () => {
-		this.setState({ showInfo: true });
-
-		ReactGA.event({
-			category: "Weight Criteria",
-			action: "Show Info",
-		});
-	};
 
 	setWeightedCriteria() {
 		let weightInfoArray = this.state.weightInfo;
@@ -277,7 +226,7 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
 							<IconButton
 								aria-label="Help"
 								className={classes.infoButton}
-								onClick={this.onShowInfo}
+								onClick={(): void => setShowOptionsInfo(true)}
 							>
 								<InfoIcon color="secondary" />
 							</IconButton>
@@ -320,7 +269,7 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
 												min={-100}
 												max={100}
 												step={1}
-												marks={marks}
+												marks={sliderMarks}
 												onChange={(event, value) =>
 													this.onChange(event, value, criteria, index)
 												}
@@ -343,8 +292,8 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
 				<InfoDialog
 					title={"Weight Criteria"}
 					text={LongStrings.WeightCriteriaInfo}
-					show={this.state.showInfo}
-					hide={this.onHideInfo}
+					show={showInfo}
+					hide={(): void => setShowInfo(false)}
 				/>
 			</div>
 		);

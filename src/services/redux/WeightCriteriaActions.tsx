@@ -5,7 +5,7 @@ import WeightedCriteriaSlice, {WeightedCriteria} from "./WeightCriteriaSlice";
 
 
 
-export const getWeightedCriteria = (dispatch: AppDispatch, decisionId: number):void => {
+export const getWeightedCriteria = (dispatch: AppDispatch, decisionId: string):void => {
 	dispatch(
 		AxiosRequest(
 			axios.get<WeightedCriteria[]>(`/api/decisions/${decisionId}/weightedCriteria`),
@@ -15,12 +15,8 @@ export const getWeightedCriteria = (dispatch: AppDispatch, decisionId: number):v
 };
 
 
-export type WeightedCriteriaUpdateType = {
-	id: number;
-	weight: number;
-};
 
-export const updateWeightedCriteria = (dispatch: AppDispatch, decisionId: number, criteria: WeightedCriteriaUpdateType):void => {
+export const updateWeightedCriteria = (dispatch: AppDispatch, decisionId: string, criteria: unknown):void => {
 	dispatch(
 		AxiosRequest(
 			axios.put<WeightedCriteria[]>(`/api/decisions/${decisionId}/weightedCriteria`, criteria),
