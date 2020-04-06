@@ -16,25 +16,33 @@ export interface ErrorActionType {
 	(dispatch: AppDispatch, error: AxiosError);
 }
 
-
 export const AxiosRequest = (
 	axiosPromise: AxiosPromise,
 	successAction: SuccessActionType,
-	successExtraAction?: SuccessExtraActionType,
-	errorAction?: ErrorActionType
+	successExtraAction: SuccessExtraActionType = null,
+	errorAction: ErrorActionType = null,
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	predefinedPayload: any = null
 	// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 ): AppThunk => async (dispatch) => {
 	await dispatch(AppSlice.actions.startLoading());
 
 	axiosPromise
 		.then((answer) => {
-			dispatch(successAction(answer.data));
+
+			if (predefinedPayload == null)
+				dispatch(successAction(answer.data));
+			else
+				dispatch(successAction(predefinedPayload));
+
 			if (successExtraAction != null)
 				successExtraAction(dispatch, answer);
 		})
 		.catch((error: AxiosError) => {
-			if (errorAction != null) errorAction(dispatch, error);
-			else showHTTPAlert(dispatch, error);
+			if (errorAction != null)
+				errorAction(dispatch, error);
+			else
+				showHTTPAlert(dispatch, error);
 		})
 		.finally(() => {
 			dispatch(AppSlice.actions.endLoading());
