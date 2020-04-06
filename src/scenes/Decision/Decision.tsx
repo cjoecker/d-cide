@@ -134,7 +134,7 @@ const Decision: React.FC = () => {
 					);
 				})}
 			</Stepper>
-			//TODO check transitions with onChangeIndex and onTransitionEnd
+			{/*TODO check transitions with onChangeIndex and onTransitionEnd*/}
 			<SwipeableViews
 				axis={theme.direction === "rtl" ? "x-reverse" : "x"}
 				index={activeStepNum - 1}

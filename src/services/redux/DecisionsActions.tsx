@@ -44,7 +44,7 @@ import DecisionsSlice, {Decision} from "./DecisionsSlice";
 // };
 
 
-export const getDecisions = (dispatch: AppDispatch) => {
+export const getDecisions = (dispatch: AppDispatch):void => {
 	dispatch(
 		AxiosRequest(
 			axios.get<Decision[]>(`/api/decisions`),

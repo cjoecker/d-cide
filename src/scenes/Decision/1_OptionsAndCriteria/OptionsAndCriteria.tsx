@@ -1,4 +1,4 @@
-import React, {useState } from "react";
+import React, { useState } from "react";
 import Grid from "@material-ui/core/Grid";
 import InfoIcon from "@material-ui/icons/Info";
 import IconButton from "@material-ui/core/IconButton";
@@ -11,8 +11,8 @@ import {
 	DecisionOptionInfo,
 	SelectionCriteriaInfo,
 } from "../../../services/LongTexts";
-import {OptionsAndCriteriaKeys} from "../../../services/redux/OptionsAndCriteriaSlice";
-import {useParams} from "react-router-dom";
+import { OptionsAndCriteriaKeys } from "../../../services/redux/OptionsAndCriteriaSlice";
+import { useParams } from "react-router-dom";
 
 const useStyles = makeStyles({
 	divMain: {
@@ -39,67 +39,62 @@ const useStyles = makeStyles({
 });
 
 type Props = {
-	hidden : boolean
-}
+	hidden: boolean;
+};
 
-const OptionsAndCriteria: React.FC<Props> = (props : Props) => {
-
+const OptionsAndCriteria: React.FC<Props> = (props: Props) => {
 	const [showOptionsInfo, setShowOptionsInfo] = useState(false);
-	const [showCriteriaInfo, setShowCriteriaInfo] = useState(false)
+	const [showCriteriaInfo, setShowCriteriaInfo] = useState(false);
 
-	const {hidden} = props
+	const { hidden } = props;
 
 	const classes = useStyles();
 
 	return (
 		!hidden && (
-		<div className={classes.divMain}>
-			<Grid container justify="center" alignContent="center">
-				<Grid item xs={6} className={classes.gridItem}>
-					<Typography variant="h5" gutterBottom>
-						Decision Options
-						<IconButton
-							aria-label="Help"
-							className={classes.infoButton}
-							onClick={():void => setShowOptionsInfo(true)}
-						>
-							<InfoIcon color="secondary" />
-						</IconButton>
-					</Typography>
-					<EditableList
-						itemsKey={OptionsAndCriteriaKeys.decisionOptions}
-					/>
+			<div className={classes.divMain}>
+				<Grid container justify="center" alignContent="center">
+					<Grid item xs={6} className={classes.gridItem}>
+						<Typography variant="h5" gutterBottom>
+							Decision Options
+							<IconButton
+								aria-label="Help"
+								className={classes.infoButton}
+								onClick={(): void => setShowOptionsInfo(true)}
+							>
+								<InfoIcon color="secondary" />
+							</IconButton>
+						</Typography>
+						<EditableList itemsKey={OptionsAndCriteriaKeys.decisionOptions} />
+					</Grid>
+					<Grid item xs={6} className={classes.gridItem}>
+						<Typography variant="h5" gutterBottom>
+							Selection Criteria
+							<IconButton
+								aria-label="Help"
+								className={classes.infoButton}
+								onClick={(): void => setShowCriteriaInfo(true)}
+							>
+								<InfoIcon color="secondary" />
+							</IconButton>
+						</Typography>
+						<EditableList itemsKey={OptionsAndCriteriaKeys.selectionCriteria} />
+					</Grid>
 				</Grid>
-				<Grid item xs={6} className={classes.gridItem}>
-					<Typography variant="h5" gutterBottom>
-						Selection Criteria
-						<IconButton
-							aria-label="Help"
-							className={classes.infoButton}
-							onClick={():void => setShowCriteriaInfo(true)}
-						>
-							<InfoIcon color="secondary" />
-						</IconButton>
-					</Typography>
-					<EditableList
-						itemsKey={OptionsAndCriteriaKeys.selectionCriteria}
-					/>
-				</Grid>
-			</Grid>
-			{/*Empty Space for Buttons*/}
-			<div className={classes.emptySpace} />
-			{/*Info Dialogs*/}
-			<InfoDialog
-				text={DecisionOptionInfo}
-				show={showOptionsInfo}
-				hide={():void => setShowOptionsInfo(false)}
-			/>
-			<InfoDialog
-				text={SelectionCriteriaInfo}
-				show={showCriteriaInfo}
-				hide={():void => setShowCriteriaInfo(false)}
-			/>
-		</div>
+				{/*Empty Space for Buttons*/}
+				<div className={classes.emptySpace} />
+				{/*Info Dialogs*/}
+				<InfoDialog
+					text={DecisionOptionInfo}
+					show={showOptionsInfo}
+					hide={(): void => setShowOptionsInfo(false)}
+				/>
+				<InfoDialog
+					text={SelectionCriteriaInfo}
+					show={showCriteriaInfo}
+					hide={(): void => setShowCriteriaInfo(false)}
+				/>
+			</div>
 		)
 	);
 };

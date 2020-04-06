@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, {Component, useEffect} from "react";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import PropTypes from "prop-types";
@@ -10,7 +10,7 @@ import Typography from "@material-ui/core/Typography";
 import InfoIcon from "@material-ui/icons/Info";
 import IconButton from "@material-ui/core/IconButton";
 import InfoDialog from "../../../components/InfoDialog";
-import { connect } from "react-redux";
+import {connect, useDispatch} from "react-redux";
 import {
 	getWeightedCriteria,
 	putWeightedCriteria,
@@ -20,10 +20,13 @@ import ReactGA from "react-ga";
 import Fade from "@material-ui/core/Fade";
 import { Subject } from "rxjs";
 import { debounceTime } from "rxjs/operators";
+import {makeStyles} from "@material-ui/core/styles";
+import theme from "../../../muiTheme";
+import {getOptionsAndCriteria} from "../../../services/redux/OptionsAndCriteriaActions";
 
 let onChange$ = new Subject();
 
-const styles = (theme) => ({
+const useStyles = makeStyles({
 	divMain: {
 		paddingTop: theme.spacing(2.5),
 		paddingBottom: theme.spacing(5.5),
@@ -92,7 +95,21 @@ const marks = [
 	},
 ];
 
-class WeightCriteria extends Component {
+type Props = {
+	hidden: boolean;
+};
+
+const WeightCriteria: React.FC<Props> = (props: Props) => {
+
+
+	const { hidden } = props;
+	const classes = useStyles();
+	const dispatch = useDispatch();
+
+	useEffect(() => {
+		getOptionsAndCriteria(dispatch, decisionId, props.itemsKey, false);
+	}, []);
+
 	constructor(props) {
 		super(props);
 
@@ -250,8 +267,6 @@ class WeightCriteria extends Component {
 		}
 	}
 
-	render() {
-		const { classes } = this.props;
 
 		return (
 			<div className={classes.divMain}>
@@ -333,23 +348,8 @@ class WeightCriteria extends Component {
 				/>
 			</div>
 		);
-	}
+
 }
 
-WeightCriteria.propTypes = {
-	classes: PropTypes.object.isRequired,
-	weightCriteria: PropTypes.object.isRequired,
-	getWeightedCriteria: PropTypes.func.isRequired,
-	putWeightedCriteria: PropTypes.func.isRequired,
-	optionsAndCriteria: PropTypes.object.isRequired,
-};
 
-const mapStateToProps = (state) => ({
-	weightCriteria: state.weightCriteria,
-	optionsAndCriteria: state.optionsAndCriteria,
-});
-
-export default connect(mapStateToProps, {
-	getWeightedCriteria,
-	putWeightedCriteria,
-})(withStyles(styles)(WeightCriteria));
+export default WeightCriteria
