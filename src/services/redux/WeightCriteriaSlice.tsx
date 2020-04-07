@@ -7,6 +7,7 @@ export type WeightedCriteria = {
 	selectionCriteria2Id: number;
 };
 
+
 const WeightedCriteriaSlice = createSlice({
 	name: "WeightedCriteria",
 	initialState: [],

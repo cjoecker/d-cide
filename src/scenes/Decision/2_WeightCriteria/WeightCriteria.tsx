@@ -1,13 +1,11 @@
-import React, { Component, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import Slider from "@material-ui/core/Slider";
-import update from "immutability-helper";
 import Typography from "@material-ui/core/Typography";
 import InfoIcon from "@material-ui/icons/Info";
 import IconButton from "@material-ui/core/IconButton";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
-import ReactGA from "react-ga";
 import Fade from "@material-ui/core/Fade";
 import { Subject } from "rxjs";
 import { debounceTime } from "rxjs/operators";
@@ -20,9 +18,10 @@ import {
 	getWeightedCriteria,
 	updateWeightedCriteria,
 } from "../../../services/redux/WeightCriteriaActions";
-import { WeightedCriteria } from "../../../services/redux/WeightCriteriaSlice";
 import { RootState } from "../../../services/redux/rootReducer";
 import { OptionAndCriteria } from "../../../services/redux/OptionsAndCriteriaSlice";
+
+const onChangeSlider$ = new Subject();
 
 const useStyles = makeStyles({
 	divMain: {
@@ -103,7 +102,6 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
 
 	const classes = useStyles();
 	const dispatch = useDispatch();
-	const onChangeSlider$ = new Subject();
 
 	const sliderMarks = [
 		{
@@ -132,7 +130,7 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
 
 	useEffect(() => {
 		const subscription = onChangeSlider$
-			.pipe(debounceTime(1500))
+			.pipe(debounceTime(1000))
 			.subscribe((criteria) => {
 				updateWeightedCriteria(dispatch, decisionId, criteria);
 			});
@@ -148,21 +146,35 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
 	}, [hidden]);
 
 	useEffect(() => {
-		if (importedWeightedCriteria.length > 0) {
+		if (importedWeightedCriteria.length !== weightedCriteria.length) {
 			prepareWeightedCriteria();
 		}
 	}, [importedWeightedCriteria]);
 
 	const onChange = (event, value, itemLocal, index) => {
-		onChangeSlider$.next(itemLocal);
 
 		setWeightedCriteria(
-			weightedCriteria.map((criteria) =>
-				criteria.id === itemLocal.id ? { ...criteria, weight: value } : criteria
-			)
+			weightedCriteria.map((criteria) => {
+				if (criteria.id === itemLocal.id) {
+					const newWeightedCriteria = { ...criteria, weight: value };
+					sendUpdatedWeightedCriteria(newWeightedCriteria);
+					return newWeightedCriteria;
+				} return criteria;
+			})
 		);
 
 		updateWeightInfo(index, itemLocal);
+	};
+
+	const sendUpdatedWeightedCriteria = (itemLocal) => {
+		const newWeightedCriteria = {
+			id: itemLocal.id,
+			weight: itemLocal.weight,
+			selectionCriteria1Id: itemLocal.selectionCriteria1.id,
+			selectionCriteria2Id: itemLocal.selectionCriteria2.id,
+		};
+
+		onChangeSlider$.next(newWeightedCriteria);
 	};
 
 	const prepareWeightedCriteria = () => {
@@ -185,7 +197,6 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
 				selectionCriteria2: criteria2,
 			};
 
-			// eslint-disable-next-line @typescript-eslint/no-use-before-define
 			newWeightInfo[index] = getWeightInfoText(newWeightedCriteria);
 
 			weightedCriteriaArray = [...weightedCriteriaArray, newWeightedCriteria];
@@ -197,8 +208,6 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
 
 	const updateWeightInfo = (index, criteria) => {
 		const newWeightInfo = weightInfo;
-
-		console.log(getWeightInfoText(criteria))
 
 		newWeightInfo[index] = getWeightInfoText(criteria);
 
@@ -251,7 +260,7 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
 						>
 							<Paper elevation={2} className={classes.paper}>
 								<Grid container spacing={2} alignItems="center">
-									<Grid item xs={6} >
+									<Grid item xs={6}>
 										<Typography variant="body1">
 											{criteria.selectionCriteria1.name}
 										</Typography>
