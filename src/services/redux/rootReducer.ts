@@ -4,6 +4,7 @@ import SessionSlice from "./SessionSlice";
 import OptionsAndCriteriaSlice from "./OptionsAndCriteriaSlice";
 import DecisionsSlice from "./DecisionsSlice";
 import WeightedCriteriaSlice from "./WeightCriteriaSlice";
+import RatedOptionsSlice from "./RatedOptionsSlice";
 
 
 const rootReducer = combineReducers({
@@ -12,6 +13,7 @@ const rootReducer = combineReducers({
 	Decisions: DecisionsSlice.reducer,
 	OptionsAndCriteria: OptionsAndCriteriaSlice.reducer,
 	WeightedCriteria: WeightedCriteriaSlice.reducer,
+	RatedOptions: RatedOptionsSlice.reducer,
 });
 
 export type RootState = ReturnType<typeof rootReducer>;

@@ -9,7 +9,6 @@ import { Bar } from "recharts";
 import { Rectangle } from "recharts";
 import { Cell } from "recharts";
 import { connect } from "react-redux";
-import { getItems } from "../../../../services/actions/OptionsAndCriteria_Action";
 import { CartesianGrid } from "recharts";
 import ReactGA from "react-ga";
 import Zoom from "@material-ui/core/Zoom";
