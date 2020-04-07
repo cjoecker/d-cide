@@ -65,7 +65,7 @@ const OptionsAndCriteria: React.FC<Props> = (props: Props) => {
 								<InfoIcon color="secondary" />
 							</IconButton>
 						</Typography>
-						<EditableList itemsKey={OptionsAndCriteriaKeys.decisionOptions} />
+						<EditableList itemsKey={OptionsAndCriteriaKeys.decisionOptions} hidden={hidden} />
 					</Grid>
 					<Grid item xs={6} className={classes.gridItem}>
 						<Typography variant="h5" gutterBottom>
@@ -78,7 +78,7 @@ const OptionsAndCriteria: React.FC<Props> = (props: Props) => {
 								<InfoIcon color="secondary" />
 							</IconButton>
 						</Typography>
-						<EditableList itemsKey={OptionsAndCriteriaKeys.selectionCriteria} />
+						<EditableList itemsKey={OptionsAndCriteriaKeys.selectionCriteria} hidden={hidden} />
 					</Grid>
 				</Grid>
 				{/*Empty Space for Buttons*/}

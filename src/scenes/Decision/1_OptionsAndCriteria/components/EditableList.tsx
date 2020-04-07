@@ -23,6 +23,7 @@ import {
 	postOptionsAndCriteria,
 } from "../../../../services/redux/OptionsAndCriteriaActions";
 import { RootState } from "../../../../services/redux/rootReducer";
+import {getWeightedCriteria} from "../../../../services/redux/WeightCriteriaActions";
 
 const useStyles = makeStyles({
 	divMain: {
@@ -54,6 +55,7 @@ const useStyles = makeStyles({
 
 interface Props {
 	itemsKey: OptionsAndCriteriaKeys;
+	hidden: boolean
 }
 
 const EditableList: React.FC<Props> = (props: Props) => {
@@ -66,6 +68,9 @@ const EditableList: React.FC<Props> = (props: Props) => {
 		(state: RootState) => state.OptionsAndCriteria[props.itemsKey],
 		shallowEqual
 	);
+
+	const { hidden } = props;
+
 	const animationDelay = 100;
 
 	const classes = useStyles();
@@ -74,8 +79,9 @@ const EditableList: React.FC<Props> = (props: Props) => {
 	//TODO alerts needs to be created here
 
 	useEffect(() => {
-		getOptionsAndCriteria(dispatch, decisionId, props.itemsKey, false);
-	}, []);
+		if (!hidden) getOptionsAndCriteria(dispatch, decisionId, props.itemsKey, false);
+		else setItems([])
+	}, [hidden]);
 
 	const stopItemsAnimation = (): (() => void) => {
 
