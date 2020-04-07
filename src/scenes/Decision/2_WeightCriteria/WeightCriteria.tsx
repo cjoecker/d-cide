@@ -19,7 +19,7 @@ import {
 	updateWeightedCriteria,
 } from "../../../services/redux/WeightCriteriaActions";
 import { RootState } from "../../../services/redux/rootReducer";
-import { OptionAndCriteria } from "../../../services/redux/OptionsAndCriteriaSlice";
+import { WeightedCriteria } from "../../../services/redux/WeightCriteriaSlice";
 
 const onChangeSlider$ = new Subject();
 
@@ -87,10 +87,9 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
 	const { hidden } = props;
 
 	const [showInfo, setShowInfo] = useState(false);
-	const [weightedCriteria, setWeightedCriteria] = useState<
-		WeightedCriteriaLocalType[]
-	>([]);
-	const [weightInfo, setWeightInfo] = useState<string[]>([]);
+	const [weightedCriteria, setWeightedCriteria] = useState<WeightedCriteria[]>(
+		[]
+	);
 	const selectionCriteria = useSelector(
 		(state: RootState) => state.OptionsAndCriteria.selectionCriteria,
 		shallowEqual
@@ -121,13 +120,6 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
 		},
 	];
 
-	type WeightedCriteriaLocalType = {
-		id: number;
-		weight: number;
-		selectionCriteria1: OptionAndCriteria;
-		selectionCriteria2: OptionAndCriteria;
-	};
-
 	useEffect(() => {
 		const subscription = onChangeSlider$
 			.pipe(debounceTime(1000))
@@ -146,90 +138,54 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
 	}, [hidden]);
 
 	useEffect(() => {
-		if (importedWeightedCriteria.length !== weightedCriteria.length) {
-			prepareWeightedCriteria();
-		}
+		if (importedWeightedCriteria.length !== weightedCriteria.length)
+			setWeightedCriteria(importedWeightedCriteria);
 	}, [importedWeightedCriteria]);
 
 	const onChange = (event, value, itemLocal, index) => {
-
 		setWeightedCriteria(
 			weightedCriteria.map((criteria) => {
 				if (criteria.id === itemLocal.id) {
 					const newWeightedCriteria = { ...criteria, weight: value };
-					sendUpdatedWeightedCriteria(newWeightedCriteria);
+					onChangeSlider$.next(newWeightedCriteria);
 					return newWeightedCriteria;
-				} return criteria;
+				}
+				return criteria;
 			})
 		);
-
-		updateWeightInfo(index, itemLocal);
 	};
 
-	const sendUpdatedWeightedCriteria = (itemLocal) => {
-		const newWeightedCriteria = {
-			id: itemLocal.id,
-			weight: itemLocal.weight,
-			selectionCriteria1Id: itemLocal.selectionCriteria1.id,
-			selectionCriteria2Id: itemLocal.selectionCriteria2.id,
-		};
-
-		onChangeSlider$.next(newWeightedCriteria);
+	const getSelectionCriteriaName = (selectionCriteriaId) => {
+		return selectionCriteria.find((obj) => obj.id === selectionCriteriaId).name;
 	};
 
-	const prepareWeightedCriteria = () => {
-		const newWeightInfo = weightInfo;
-		let weightedCriteriaArray = [];
+	const getWeightInfoText = (
+		weight: number,
+		selectionCriteria1Id: number,
+		selectionCriteria2Id: number
+	): string => {
+		const selectionCriteria1Name = getSelectionCriteriaName(
+			selectionCriteria1Id
+		);
+		const selectionCriteria2Name = getSelectionCriteriaName(
+			selectionCriteria2Id
+		);
 
-		importedWeightedCriteria.forEach((criteria, index) => {
-			const criteria1 = selectionCriteria.find(
-				(obj) => obj.id === criteria.selectionCriteria1Id
-			);
-
-			const criteria2 = selectionCriteria.find(
-				(obj) => obj.id === criteria.selectionCriteria2Id
-			);
-
-			const newWeightedCriteria = {
-				id: criteria.id,
-				weight: criteria.weight,
-				selectionCriteria1: criteria1,
-				selectionCriteria2: criteria2,
-			};
-
-			newWeightInfo[index] = getWeightInfoText(newWeightedCriteria);
-
-			weightedCriteriaArray = [...weightedCriteriaArray, newWeightedCriteria];
-		});
-
-		setWeightInfo(newWeightInfo);
-		setWeightedCriteria(weightedCriteriaArray);
-	};
-
-	const updateWeightInfo = (index, criteria) => {
-		const newWeightInfo = weightInfo;
-
-		newWeightInfo[index] = getWeightInfoText(criteria);
-
-		setWeightInfo(newWeightInfo);
-	};
-
-	const getWeightInfoText = (itemLocal): string => {
 		switch (true) {
-			case itemLocal.weight < -66:
-				return `${itemLocal.selectionCriteria1.name} is way more important than ${itemLocal.selectionCriteria2.name}`;
-			case itemLocal.weight < -33:
-				return `${itemLocal.selectionCriteria1.name} is more important than ${itemLocal.selectionCriteria2.name}`;
-			case itemLocal.weight < -5:
-				return `${itemLocal.selectionCriteria1.name} is a little more important than ${itemLocal.selectionCriteria2.name}`;
-			case itemLocal.weight < 5:
-				return `${itemLocal.selectionCriteria1.name} is as important as ${itemLocal.selectionCriteria2.name}`;
-			case itemLocal.weight < 33:
-				return `${itemLocal.selectionCriteria2.name} is a little more important than ${itemLocal.selectionCriteria1.name}`;
-			case itemLocal.weight < 66:
-				return `${itemLocal.selectionCriteria2.name} is more important than ${itemLocal.selectionCriteria1.name}`;
-			case itemLocal.weight <= 100:
-				return `${itemLocal.selectionCriteria2.name} is way more important than ${itemLocal.selectionCriteria1.name}`;
+			case weight < -66:
+				return `${selectionCriteria1Name} is way more important than ${selectionCriteria2Name}`;
+			case weight < -33:
+				return `${selectionCriteria1Name} is more important than ${selectionCriteria2Name}`;
+			case weight < -5:
+				return `${selectionCriteria1Name} is a little more important than ${selectionCriteria2Name}`;
+			case weight < 5:
+				return `${selectionCriteria1Name} is as important as ${selectionCriteria2Name}`;
+			case weight < 33:
+				return `${selectionCriteria2Name} is a little more important than ${selectionCriteria1Name}`;
+			case weight < 66:
+				return `${selectionCriteria2Name} is more important than ${selectionCriteria1Name}`;
+			case weight <= 100:
+				return `${selectionCriteria2Name} is way more important than ${selectionCriteria1Name}`;
 			default:
 				return "";
 		}
@@ -262,12 +218,12 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
 								<Grid container spacing={2} alignItems="center">
 									<Grid item xs={6}>
 										<Typography variant="body1">
-											{criteria.selectionCriteria1.name}
+											{getSelectionCriteriaName(criteria.selectionCriteria1Id)}
 										</Typography>
 									</Grid>
 									<Grid item xs={6}>
 										<Typography variant="body1">
-											{criteria.selectionCriteria2.name}
+											{getSelectionCriteriaName(criteria.selectionCriteria2Id)}
 										</Typography>
 									</Grid>
 									<Grid
@@ -295,7 +251,11 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
 									</Grid>
 									<Grid item xs={12} className={classes.gridItemSliderInfo}>
 										<Typography variant="caption">
-											{weightInfo[index]}
+											{getWeightInfoText(
+												criteria.weight,
+												criteria.selectionCriteria1Id,
+												criteria.selectionCriteria2Id
+											)}
 										</Typography>
 									</Grid>
 								</Grid>
