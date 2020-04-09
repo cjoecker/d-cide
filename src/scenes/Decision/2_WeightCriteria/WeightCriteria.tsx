@@ -136,8 +136,9 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
 		else setWeightedCriteria([]);
 	}, [hidden]);
 
+
 	useEffect(() => {
-		if (selectionCriteria.length > 0) getWeightedCriteria(dispatch, decisionId);
+		if (!hidden && selectionCriteria.length > 0) getWeightedCriteria(dispatch, decisionId);
 	}, [selectionCriteria]);
 
 	useEffect(() => {
@@ -210,7 +211,7 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
 					</Typography>
 				</Grid>
 				{weightedCriteria.map((criteria, index) => (
-					<Fade in style={{ transitionDelay: `${index * 100}ms` }}>
+					<Fade in timeout={500} style={{ transitionDelay: `${index * 100}ms` }}>
 						<Grid
 							item
 							xs={6}
