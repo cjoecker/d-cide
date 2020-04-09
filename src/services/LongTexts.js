@@ -69,7 +69,7 @@ export const WeightCriteriaInfo = (
 			Which of both criteria are you willing to sacrifice to get the other one?
 			<br />
 			<br />
-			Move the slider to the left or to the right depending on what is more
+			Move the slider to the left or right depending on what is more
 			important to you.
 			<br />
 			The distance moved in the slider is proportional to the importance of
@@ -86,7 +86,7 @@ export const OptionsRatingInfo = (
 		<p>
 			Rate every decision option for every selection criteria.
 			<br />
-			Move the slider to the right or to the left rate it.
+			Move the slider to the right or left rate it.
 		</p>
 	</div>
 );

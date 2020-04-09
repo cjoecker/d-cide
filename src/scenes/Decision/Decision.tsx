@@ -10,6 +10,7 @@ import theme from "../../muiTheme";
 import SwipeableViews from "react-swipeable-views";
 import OptionsAndCriteria from "./1_OptionsAndCriteria/OptionsAndCriteria";
 import WeightCriteria from "./2_WeightCriteria/WeightCriteria";
+import RateOptions from "./3_RateOptions/RateOptions";
 
 const useStyles = makeStyles({
 	divMain: {
@@ -135,7 +136,6 @@ const Decision: React.FC = () => {
 					);
 				})}
 			</Stepper>
-			{/*TODO check transitions with onChangeIndex and onTransitionEnd*/}
 			<SwipeableViews
 				axis={theme.direction === "rtl" ? "x-reverse" : "x"}
 				index={activeStepNum - 1}
@@ -143,6 +143,7 @@ const Decision: React.FC = () => {
 			>
 				<OptionsAndCriteria hidden={loadedStepNum !== 1} />
 				<WeightCriteria hidden={loadedStepNum !== 2} />
+				<RateOptions hidden={loadedStepNum !== 4} />
 			</SwipeableViews>
 			{/*Navigation Buttons*/}
 			{activeStepNum !== 1 ? (

@@ -1,25 +1,24 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import Slider from "@material-ui/core/Slider";
 import Typography from "@material-ui/core/Typography";
 import InfoIcon from "@material-ui/icons/Info";
 import IconButton from "@material-ui/core/IconButton";
-import { shallowEqual, useDispatch, useSelector } from "react-redux";
+import {shallowEqual, useDispatch, useSelector} from "react-redux";
 import Fade from "@material-ui/core/Fade";
-import { Subject } from "rxjs";
-import { debounceTime } from "rxjs/operators";
-import { makeStyles } from "@material-ui/core/styles";
-import { useParams } from "react-router-dom";
+import {Subject} from "rxjs";
+import {debounceTime} from "rxjs/operators";
+import {makeStyles} from "@material-ui/core/styles";
+import {useParams} from "react-router-dom";
 import theme from "../../../muiTheme";
 import * as LongStrings from "../../../services/LongTexts";
 import InfoDialog from "../../../components/InfoDialog";
-import {
-	getWeightedCriteria,
-	updateWeightedCriteria,
-} from "../../../services/redux/WeightCriteriaActions";
-import { RootState } from "../../../services/redux/rootReducer";
-import { WeightedCriteria } from "../../../services/redux/WeightCriteriaSlice";
+import {getWeightedCriteria, updateWeightedCriteria,} from "../../../services/redux/WeightCriteriaActions";
+import {RootState} from "../../../services/redux/rootReducer";
+import {WeightedCriteria} from "../../../services/redux/WeightCriteriaSlice";
+import {getOptionsAndCriteria} from "../../../services/redux/OptionsAndCriteriaActions";
+import {OptionsAndCriteriaKeys} from "../../../services/redux/OptionsAndCriteriaSlice";
 
 const onChangeSlider$ = new Subject();
 
@@ -51,7 +50,7 @@ const useStyles = makeStyles({
 		alignItems: "center",
 	},
 
-	sliderMark: {
+	sliderMarks: {
 		height: 8,
 		width: 1,
 		marginTop: -3,
@@ -133,9 +132,13 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
 	}, []);
 
 	useEffect(() => {
-		if (!hidden) getWeightedCriteria(dispatch, decisionId);
+		if (!hidden) getOptionsAndCriteria(dispatch, decisionId, OptionsAndCriteriaKeys.selectionCriteria, false);
 		else setWeightedCriteria([]);
 	}, [hidden]);
+
+	useEffect(() => {
+		if (selectionCriteria.length > 0) getWeightedCriteria(dispatch, decisionId);
+	}, [selectionCriteria]);
 
 	useEffect(() => {
 		if (importedWeightedCriteria.length !== weightedCriteria.length)
@@ -236,8 +239,8 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
 											classes={{
 												track: classes.sliderTrack,
 												rail: classes.sliderTrack,
-												mark: classes.sliderMark,
-												markActive: classes.sliderMark,
+												mark: classes.sliderMarks,
+												markActive: classes.sliderMarks,
 											}}
 											value={criteria.weight}
 											min={-100}

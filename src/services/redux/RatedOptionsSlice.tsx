@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-//TODO id JSON ignore in Kotlin
 export type RatedOption = {
+	id: number;
 	score: number;
 	decisionOptionId: number;
 	selectionCriteriaId: number;

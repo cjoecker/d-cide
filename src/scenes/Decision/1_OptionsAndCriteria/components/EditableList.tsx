@@ -23,7 +23,9 @@ import {
 	postOptionsAndCriteria,
 } from "../../../../services/redux/OptionsAndCriteriaActions";
 import { RootState } from "../../../../services/redux/rootReducer";
-import {getWeightedCriteria} from "../../../../services/redux/WeightCriteriaActions";
+import { getWeightedCriteria } from "../../../../services/redux/WeightCriteriaActions";
+import { Grow } from "@material-ui/core";
+import Collapse from "@material-ui/core/Collapse";
 
 const useStyles = makeStyles({
 	divMain: {
@@ -55,7 +57,7 @@ const useStyles = makeStyles({
 
 interface Props {
 	itemsKey: OptionsAndCriteriaKeys;
-	hidden: boolean
+	hidden: boolean;
 }
 
 const EditableList: React.FC<Props> = (props: Props) => {
@@ -63,7 +65,7 @@ const EditableList: React.FC<Props> = (props: Props) => {
 
 	const [newEntry, setNewEntry] = useState("");
 	const [items, setItems] = useState<OptionAndCriteria[]>([]);
-	const [isLoaded, setIsLoaded] = useState(false);
+	const [stopAnimation, setStopAnimation] = useState(false);
 	const importedItems = useSelector(
 		(state: RootState) => state.OptionsAndCriteria[props.itemsKey],
 		shallowEqual
@@ -79,23 +81,17 @@ const EditableList: React.FC<Props> = (props: Props) => {
 	//TODO alerts needs to be created here
 
 	useEffect(() => {
-		if (!hidden) getOptionsAndCriteria(dispatch, decisionId, props.itemsKey, false);
-		else setItems([])
+		if (!hidden)
+			getOptionsAndCriteria(dispatch, decisionId, props.itemsKey, false);
+		else {
+			setItems([]);
+			setStopAnimation(false);
+		}
 	}, [hidden]);
 
-	const stopItemsAnimation = (): (() => void) => {
-
-		const timer = setTimeout(
-			() => setIsLoaded(true),
-			(importedItems.length + 1) * animationDelay
-		);
-		return () => clearTimeout(timer);
-	};
-
 	useEffect(() => {
-		setItems(importedItems);
-
-		if (!isLoaded && importedItems.length !== 0) stopItemsAnimation();
+		if (importedItems.length !== items.length && !hidden)
+			setItems(importedItems);
 	}, [importedItems]);
 
 	const onCreateItem = () => {
@@ -108,7 +104,11 @@ const EditableList: React.FC<Props> = (props: Props) => {
 	};
 
 	const onChangeItem = (event, itemId: number) => {
-		setItems(items.map(item => item.id === itemId ? {...item, name : event.target.value} : item ))
+		setItems(
+			items.map((item) =>
+				item.id === itemId ? { ...item, name: event.target.value } : item
+			)
+		);
 	};
 
 	const onLeaveItem = (itemLocal: OptionAndCriteria) => {
@@ -121,6 +121,12 @@ const EditableList: React.FC<Props> = (props: Props) => {
 				props.itemsKey,
 				itemLocal.id
 			);
+	};
+
+	const endOfAnimation = (index) => {
+		if (index === items.length) {
+			setStopAnimation(true);
+		}
 	};
 
 	return (
@@ -155,12 +161,17 @@ const EditableList: React.FC<Props> = (props: Props) => {
 						</ListItemSecondaryAction>
 					</ListItem>
 				</Paper>
+
 				{items.map((item, index) => (
 					<Fade
 						in
 						style={{
-							transitionDelay: `${index * (isLoaded ? 0 : animationDelay)}ms`,
+							transitionDelay: `${
+								index * (stopAnimation ? 0 : animationDelay)
+							}ms`,
 						}}
+						timeout={500}
+						onEntered={() => endOfAnimation(index)}
 						key={item.id}
 					>
 						<Paper className={classes.paperItems} elevation={2}>
@@ -183,7 +194,14 @@ const EditableList: React.FC<Props> = (props: Props) => {
 								<ListItemSecondaryAction>
 									<IconButton
 										aria-label="Delete"
-										onClick={() => deleteOptionsAndCriteria(dispatch, decisionId, props.itemsKey, item.id)}
+										onClick={() =>
+											deleteOptionsAndCriteria(
+												dispatch,
+												decisionId,
+												props.itemsKey,
+												item.id
+											)
+										}
 										className={classes.paperButtons}
 									>
 										<DeleteIcon />
