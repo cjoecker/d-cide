@@ -227,7 +227,7 @@ const RateOptions: React.FC<Props> = (props: Props) => {
 						</IconButton>
 					</Typography>
 				</Grid>
-				{selectionCriteria.map((criteria, criteriaIndex) => (
+				{!hidden && selectionCriteria.map((criteria, criteriaIndex) => (
 					<Fade
 						in={startAnimation}
 						timeout={500}

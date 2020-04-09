@@ -16,7 +16,7 @@ const useStyles = makeStyles({
 	divMain: {
 		flexGrow: 1,
 		width: "100%",
-		overflowX: "hidden", //Avoid negative margin from mainGrid
+		overflowX: "hidden",
 	},
 
 	stepper: {
