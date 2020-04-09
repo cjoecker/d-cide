@@ -143,7 +143,7 @@ const Decision: React.FC = () => {
 			>
 				<OptionsAndCriteria hidden={loadedStepNum !== 1} />
 				<WeightCriteria hidden={loadedStepNum !== 2} />
-				<RateOptions hidden={loadedStepNum !== 4} />
+				<RateOptions hidden={loadedStepNum !== 3} />
 			</SwipeableViews>
 			{/*Navigation Buttons*/}
 			{activeStepNum !== 1 ? (

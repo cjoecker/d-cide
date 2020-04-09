@@ -20,9 +20,10 @@ import {
 	getRatedOptions,
 	updateRatedOptions,
 } from "../../../services/redux/RatedOptionsActions";
-import {getOptionsAndCriteria} from "../../../services/redux/OptionsAndCriteriaActions";
-import {OptionsAndCriteriaKeys} from "../../../services/redux/OptionsAndCriteriaSlice";
-import {getWeightedCriteria} from "../../../services/redux/WeightCriteriaActions";
+import { getOptionsAndCriteria } from "../../../services/redux/OptionsAndCriteriaActions";
+import { OptionsAndCriteriaKeys } from "../../../services/redux/OptionsAndCriteriaSlice";
+import { getWeightedCriteria } from "../../../services/redux/WeightCriteriaActions";
+import {log} from "util";
 
 const onChangeSlider$ = new Subject();
 
@@ -158,20 +159,21 @@ const RateOptions: React.FC<Props> = (props: Props) => {
 
 	useEffect(() => {
 		if (!hidden) {
-			getOptionsAndCriteria(dispatch, decisionId, OptionsAndCriteriaKeys.selectionCriteria, false);
-			getOptionsAndCriteria(dispatch, decisionId, OptionsAndCriteriaKeys.decisionOptions, false);
-			getWeightedCriteria(dispatch,decisionId)
-		}
-		else setLocalRatedOptions([]);
+			getOptionsAndCriteria(
+				dispatch,
+				decisionId,
+				OptionsAndCriteriaKeys.selectionCriteria,
+				false
+			);
+			getOptionsAndCriteria(
+				dispatch,
+				decisionId,
+				OptionsAndCriteriaKeys.decisionOptions,
+				false
+			);
+			getRatedOptions(dispatch, decisionId);
+		} else setLocalRatedOptions([]);
 	}, [hidden]);
-
-	// useEffect(() => {
-	// 	if (!hidden && selectionCriteria.length > 0) getOptionsAndCriteria(dispatch, decisionId, OptionsAndCriteriaKeys.decisionOptions, false);
-	// }, [selectionCriteria]);
-	//
-	// useEffect(() => {
-	// 	if (!hidden && decisionOptions.length > 0) get
-	// }, [decisionOptions]);
 
 	useEffect(() => {
 		if (ratedOptions.length !== LocalRatedOptions.length)
@@ -195,13 +197,13 @@ const RateOptions: React.FC<Props> = (props: Props) => {
 	};
 
 	const getScore = (criteriaId: number, optionId: number): number => {
-		if (LocalRatedOptions.length === 0) return 50;
-
-		return LocalRatedOptions.find(
+		const FoundRatedOption = LocalRatedOptions.find(
 			(obj) =>
 				obj.selectionCriteriaId === criteriaId &&
-				obj.selectionCriteriaId === optionId
-		).score;
+				obj.decisionOptionId === optionId
+		);
+
+		return FoundRatedOption == null ? 50 : FoundRatedOption.score;
 	};
 
 	return (
