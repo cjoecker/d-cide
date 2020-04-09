@@ -111,6 +111,7 @@ const RateOptions: React.FC<Props> = (props: Props) => {
 	const { hidden } = props;
 
 	const [showInfo, setShowInfo] = useState(false);
+	const [startAnimation, setStartAnimation] = useState(false);
 
 	const [LocalRatedOptions, setLocalRatedOptions] = useState<RatedOption[]>([]);
 
@@ -172,12 +173,17 @@ const RateOptions: React.FC<Props> = (props: Props) => {
 				false
 			);
 			getRatedOptions(dispatch, decisionId);
-		} else setLocalRatedOptions([]);
+		} else {
+			setLocalRatedOptions([]);
+			setStartAnimation(false);
+		}
 	}, [hidden]);
 
 	useEffect(() => {
-		if (ratedOptions.length !== LocalRatedOptions.length)
+		if (ratedOptions.length !== LocalRatedOptions.length){
 			setLocalRatedOptions(ratedOptions);
+			setStartAnimation(true);
+		}
 	}, [ratedOptions]);
 
 	const onChange = (event, criteriaId, optionId, score) => {
@@ -223,7 +229,8 @@ const RateOptions: React.FC<Props> = (props: Props) => {
 				</Grid>
 				{selectionCriteria.map((criteria, criteriaIndex) => (
 					<Fade
-						in
+						in={startAnimation}
+						timeout={500}
 						style={{
 							transitionDelay: `${criteriaIndex * 100}ms`,
 						}}

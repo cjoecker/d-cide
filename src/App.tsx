@@ -181,7 +181,7 @@ const App: React.FC = () => {
 					<AppBar position="static" color="primary" className={classes.appBar}>
 						<Toolbar>
 							<div className={classes.divLogo}>
-								<Link href="/" style={{ textDecoration: "none" }}>
+								<Link href="/" style={{ textDecoration: "none"}}>
 									<CardMedia
 										className={classes.logo}
 										image={dcideLogo}
