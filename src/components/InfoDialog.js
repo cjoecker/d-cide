@@ -17,7 +17,7 @@ const styles = (theme) => ({
 		textAlign: "justify",
 	},
 });
-
+//TODO align close button
 class InfoDialog extends React.Component {
 	handleClose = () => {
 		this.props.hide(false);

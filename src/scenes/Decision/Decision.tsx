@@ -11,6 +11,7 @@ import SwipeableViews from "react-swipeable-views";
 import OptionsAndCriteria from "./1_OptionsAndCriteria/OptionsAndCriteria";
 import WeightCriteria from "./2_WeightCriteria/WeightCriteria";
 import RateOptions from "./3_RateOptions/RateOptions";
+import Results from "./4_Result/Result";
 
 const useStyles = makeStyles({
 	divMain: {
@@ -93,27 +94,6 @@ const Decision: React.FC = () => {
 
 	// TODO disable steps for alerts
 
-	// getStepContent(stepIndex) {
-	// 	switch (stepIndex) {
-	// 		case 0:
-	// 			return (
-	// 				<OptionsAndCriteria decisionId={this.props.match.params.decisionId} />
-	// 			);
-	// 		case 1:
-	// 			return (
-	// 				<WeightCriteria decisionId={this.props.match.params.decisionId} />
-	// 			);
-	// 		case 2:
-	// 			return (
-	// 				<OptionsRating decisionId={this.props.match.params.decisionId} />
-	// 			);
-	// 		case 3:
-	// 			return <Result decisionId={this.props.match.params.decisionId} />;
-	// 		default:
-	// 			return "Unknown stepIndex";
-	// 	}
-	// }
-
 	return (
 		<div className={classes.divMain}>
 			<Stepper
@@ -144,6 +124,7 @@ const Decision: React.FC = () => {
 				<OptionsAndCriteria hidden={loadedStepNum !== 1} />
 				<WeightCriteria hidden={loadedStepNum !== 2} />
 				<RateOptions hidden={loadedStepNum !== 3} />
+				<Results hidden={loadedStepNum !== 4} />
 			</SwipeableViews>
 			{/*Navigation Buttons*/}
 			{activeStepNum !== 1 ? (

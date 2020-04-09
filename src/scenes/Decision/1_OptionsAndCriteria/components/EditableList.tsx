@@ -23,6 +23,9 @@ import {
 	postOptionsAndCriteria,
 } from "../../../../services/redux/OptionsAndCriteriaActions";
 import { RootState } from "../../../../services/redux/rootReducer";
+import { getWeightedCriteria } from "../../../../services/redux/WeightCriteriaActions";
+import { Grow } from "@material-ui/core";
+import Collapse from "@material-ui/core/Collapse";
 
 const useStyles = makeStyles({
 	divMain: {
@@ -58,7 +61,8 @@ interface Props {
 }
 
 const EditableList: React.FC<Props> = (props: Props) => {
-
+	const { decisionId } = useParams();
+	const { hidden, itemsKey } = props;
 
 	const [newEntry, setNewEntry] = useState("");
 	const [localItems, setLocalItems] = useState<OptionAndCriteria[]>([]);
@@ -68,10 +72,8 @@ const EditableList: React.FC<Props> = (props: Props) => {
 		shallowEqual
 	);
 
-	const { hidden, itemsKey } = props;
 	const animationDelay = 100;
 
-	const { decisionId } = useParams();
 	const classes = useStyles();
 	const dispatch = useDispatch();
 
