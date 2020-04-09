@@ -20,6 +20,9 @@ import {
 	getRatedOptions,
 	updateRatedOptions,
 } from "../../../services/redux/RatedOptionsActions";
+import {getOptionsAndCriteria} from "../../../services/redux/OptionsAndCriteriaActions";
+import {OptionsAndCriteriaKeys} from "../../../services/redux/OptionsAndCriteriaSlice";
+import {getWeightedCriteria} from "../../../services/redux/WeightCriteriaActions";
 
 const onChangeSlider$ = new Subject();
 
@@ -108,14 +111,14 @@ const RateOptions: React.FC<Props> = (props: Props) => {
 
 	const [showInfo, setShowInfo] = useState(false);
 
-	const [ratedOptions, setRatedOptions] = useState<RatedOption[]>([]);
+	const [LocalRatedOptions, setLocalRatedOptions] = useState<RatedOption[]>([]);
 
 	const { selectionCriteria, decisionOptions } = useSelector(
 		(state: RootState) => state.OptionsAndCriteria,
 		shallowEqual
 	);
 
-	const importedRatedOptions = useSelector(
+	const ratedOptions = useSelector(
 		(state: RootState) => state.RatedOptions,
 		shallowEqual
 	);
@@ -154,19 +157,30 @@ const RateOptions: React.FC<Props> = (props: Props) => {
 	}, []);
 
 	useEffect(() => {
-		if (!hidden) getRatedOptions(dispatch, decisionId);
-		else setRatedOptions([]);
+		if (!hidden) {
+			getOptionsAndCriteria(dispatch, decisionId, OptionsAndCriteriaKeys.selectionCriteria, false);
+			getOptionsAndCriteria(dispatch, decisionId, OptionsAndCriteriaKeys.decisionOptions, false);
+			getWeightedCriteria(dispatch,decisionId)
+		}
+		else setLocalRatedOptions([]);
 	}, [hidden]);
 
+	// useEffect(() => {
+	// 	if (!hidden && selectionCriteria.length > 0) getOptionsAndCriteria(dispatch, decisionId, OptionsAndCriteriaKeys.decisionOptions, false);
+	// }, [selectionCriteria]);
+	//
+	// useEffect(() => {
+	// 	if (!hidden && decisionOptions.length > 0) get
+	// }, [decisionOptions]);
+
 	useEffect(() => {
-		if (importedRatedOptions.length !== ratedOptions.length) {
-			setRatedOptions(importedRatedOptions);
-		}
-	}, [importedRatedOptions]);
+		if (ratedOptions.length !== LocalRatedOptions.length)
+			setLocalRatedOptions(ratedOptions);
+	}, [ratedOptions]);
 
 	const onChange = (event, criteriaId, optionId, score) => {
-		setRatedOptions(
-			ratedOptions.map((option) => {
+		setLocalRatedOptions(
+			LocalRatedOptions.map((option) => {
 				if (
 					option.selectionCriteriaId === criteriaId &&
 					option.decisionOptionId === optionId
@@ -181,9 +195,9 @@ const RateOptions: React.FC<Props> = (props: Props) => {
 	};
 
 	const getScore = (criteriaId: number, optionId: number): number => {
-		if (ratedOptions.length === 0) return 50;
+		if (LocalRatedOptions.length === 0) return 50;
 
-		return ratedOptions.find(
+		return LocalRatedOptions.find(
 			(obj) =>
 				obj.selectionCriteriaId === criteriaId &&
 				obj.selectionCriteriaId === optionId

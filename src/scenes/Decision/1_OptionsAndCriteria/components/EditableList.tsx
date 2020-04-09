@@ -64,9 +64,9 @@ const EditableList: React.FC<Props> = (props: Props) => {
 	const { decisionId } = useParams();
 
 	const [newEntry, setNewEntry] = useState("");
-	const [items, setItems] = useState<OptionAndCriteria[]>([]);
+	const [localItems, setLocalItems] = useState<OptionAndCriteria[]>([]);
 	const [stopAnimation, setStopAnimation] = useState(false);
-	const importedItems = useSelector(
+	const items = useSelector(
 		(state: RootState) => state.OptionsAndCriteria[props.itemsKey],
 		shallowEqual
 	);
@@ -84,15 +84,15 @@ const EditableList: React.FC<Props> = (props: Props) => {
 		if (!hidden)
 			getOptionsAndCriteria(dispatch, decisionId, props.itemsKey, false);
 		else {
-			setItems([]);
+			setLocalItems([]);
 			setStopAnimation(false);
 		}
 	}, [hidden]);
 
 	useEffect(() => {
-		if (importedItems.length !== items.length && !hidden)
-			setItems(importedItems);
-	}, [importedItems]);
+		if (items.length !== localItems.length && !hidden)
+			setLocalItems(items);
+	}, [items]);
 
 	const onCreateItem = () => {
 		if (newEntry === "") return;
@@ -104,8 +104,8 @@ const EditableList: React.FC<Props> = (props: Props) => {
 	};
 
 	const onChangeItem = (event, itemId: number) => {
-		setItems(
-			items.map((item) =>
+		setLocalItems(
+			localItems.map((item) =>
 				item.id === itemId ? { ...item, name: event.target.value } : item
 			)
 		);
@@ -124,7 +124,7 @@ const EditableList: React.FC<Props> = (props: Props) => {
 	};
 
 	const endOfAnimation = (index) => {
-		if (index === items.length) {
+		if (index === localItems.length) {
 			setStopAnimation(true);
 		}
 	};
@@ -162,7 +162,7 @@ const EditableList: React.FC<Props> = (props: Props) => {
 					</ListItem>
 				</Paper>
 
-				{items.map((item, index) => (
+				{localItems.map((item, index) => (
 					<Fade
 						in
 						style={{

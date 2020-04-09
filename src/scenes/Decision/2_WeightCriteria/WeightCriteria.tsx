@@ -1,24 +1,27 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import Slider from "@material-ui/core/Slider";
 import Typography from "@material-ui/core/Typography";
 import InfoIcon from "@material-ui/icons/Info";
 import IconButton from "@material-ui/core/IconButton";
-import {shallowEqual, useDispatch, useSelector} from "react-redux";
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import Fade from "@material-ui/core/Fade";
-import {Subject} from "rxjs";
-import {debounceTime} from "rxjs/operators";
-import {makeStyles} from "@material-ui/core/styles";
-import {useParams} from "react-router-dom";
+import { Subject } from "rxjs";
+import { debounceTime } from "rxjs/operators";
+import { makeStyles } from "@material-ui/core/styles";
+import { useParams } from "react-router-dom";
 import theme from "../../../muiTheme";
 import * as LongStrings from "../../../services/LongTexts";
 import InfoDialog from "../../../components/InfoDialog";
-import {getWeightedCriteria, updateWeightedCriteria,} from "../../../services/redux/WeightCriteriaActions";
-import {RootState} from "../../../services/redux/rootReducer";
-import {WeightedCriteria} from "../../../services/redux/WeightCriteriaSlice";
-import {getOptionsAndCriteria} from "../../../services/redux/OptionsAndCriteriaActions";
-import {OptionsAndCriteriaKeys} from "../../../services/redux/OptionsAndCriteriaSlice";
+import {
+	getWeightedCriteria,
+	updateWeightedCriteria,
+} from "../../../services/redux/WeightCriteriaActions";
+import { RootState } from "../../../services/redux/rootReducer";
+import { WeightedCriteria } from "../../../services/redux/WeightCriteriaSlice";
+import { getOptionsAndCriteria } from "../../../services/redux/OptionsAndCriteriaActions";
+import { OptionsAndCriteriaKeys } from "../../../services/redux/OptionsAndCriteriaSlice";
 
 const onChangeSlider$ = new Subject();
 
@@ -86,14 +89,14 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
 	const { hidden } = props;
 
 	const [showInfo, setShowInfo] = useState(false);
-	const [weightedCriteria, setWeightedCriteria] = useState<WeightedCriteria[]>(
-		[]
-	);
+	const [LocalWeightedCriteria, setLocalWeightedCriteria] = useState<
+		WeightedCriteria[]
+	>([]);
 	const selectionCriteria = useSelector(
 		(state: RootState) => state.OptionsAndCriteria.selectionCriteria,
 		shallowEqual
 	);
-	const importedWeightedCriteria = useSelector(
+	const weightedCriteria = useSelector(
 		(state: RootState) => state.WeightedCriteria,
 		shallowEqual
 	);
@@ -132,23 +135,26 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
 	}, []);
 
 	useEffect(() => {
-		if (!hidden) getOptionsAndCriteria(dispatch, decisionId, OptionsAndCriteriaKeys.selectionCriteria, false);
-		else setWeightedCriteria([]);
+		if (!hidden) {
+			getOptionsAndCriteria(
+				dispatch,
+				decisionId,
+				OptionsAndCriteriaKeys.selectionCriteria,
+				false
+			);
+
+			getWeightedCriteria(dispatch, decisionId);
+		} else setLocalWeightedCriteria([]);
 	}, [hidden]);
 
-
 	useEffect(() => {
-		if (!hidden && selectionCriteria.length > 0) getWeightedCriteria(dispatch, decisionId);
-	}, [selectionCriteria]);
-
-	useEffect(() => {
-		if (importedWeightedCriteria.length !== weightedCriteria.length)
-			setWeightedCriteria(importedWeightedCriteria);
-	}, [importedWeightedCriteria]);
+		if (weightedCriteria.length !== LocalWeightedCriteria.length)
+			setLocalWeightedCriteria(weightedCriteria);
+	}, [weightedCriteria]);
 
 	const onChange = (event, value, itemLocal, index) => {
-		setWeightedCriteria(
-			weightedCriteria.map((criteria) => {
+		setLocalWeightedCriteria(
+			LocalWeightedCriteria.map((criteria) => {
 				if (criteria.id === itemLocal.id) {
 					const newWeightedCriteria = { ...criteria, weight: value };
 					onChangeSlider$.next(newWeightedCriteria);
@@ -160,7 +166,13 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
 	};
 
 	const getSelectionCriteriaName = (selectionCriteriaId) => {
-		return selectionCriteria.find((obj) => obj.id === selectionCriteriaId).name;
+		const FoundSelectionCriteria = selectionCriteria.find(
+			(obj) => obj.id === selectionCriteriaId
+		);
+
+		return FoundSelectionCriteria == null
+			? "Loading..."
+			: FoundSelectionCriteria.name;
 	};
 
 	const getWeightInfoText = (
@@ -210,8 +222,12 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
 						</IconButton>
 					</Typography>
 				</Grid>
-				{weightedCriteria.map((criteria, index) => (
-					<Fade in timeout={500} style={{ transitionDelay: `${index * 100}ms` }}>
+				{LocalWeightedCriteria.map((criteria, index) => (
+					<Fade
+						in
+						timeout={500}
+						style={{ transitionDelay: `${index * 100}ms` }}
+					>
 						<Grid
 							item
 							xs={6}
