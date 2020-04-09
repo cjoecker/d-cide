@@ -23,9 +23,6 @@ import {
 	postOptionsAndCriteria,
 } from "../../../../services/redux/OptionsAndCriteriaActions";
 import { RootState } from "../../../../services/redux/rootReducer";
-import { getWeightedCriteria } from "../../../../services/redux/WeightCriteriaActions";
-import { Grow } from "@material-ui/core";
-import Collapse from "@material-ui/core/Collapse";
 
 const useStyles = makeStyles({
 	divMain: {
@@ -61,20 +58,20 @@ interface Props {
 }
 
 const EditableList: React.FC<Props> = (props: Props) => {
-	const { decisionId } = useParams();
+
 
 	const [newEntry, setNewEntry] = useState("");
 	const [localItems, setLocalItems] = useState<OptionAndCriteria[]>([]);
 	const [stopAnimation, setStopAnimation] = useState(false);
 	const items = useSelector(
-		(state: RootState) => state.OptionsAndCriteria[props.itemsKey],
+		(state: RootState) => state.OptionsAndCriteria[itemsKey],
 		shallowEqual
 	);
 
-	const { hidden } = props;
-
+	const { hidden, itemsKey } = props;
 	const animationDelay = 100;
 
+	const { decisionId } = useParams();
 	const classes = useStyles();
 	const dispatch = useDispatch();
 
@@ -82,7 +79,7 @@ const EditableList: React.FC<Props> = (props: Props) => {
 
 	useEffect(() => {
 		if (!hidden)
-			getOptionsAndCriteria(dispatch, decisionId, props.itemsKey, false);
+			getOptionsAndCriteria(dispatch, decisionId, itemsKey, false);
 		else {
 			setLocalItems([]);
 			setStopAnimation(false);
@@ -97,7 +94,7 @@ const EditableList: React.FC<Props> = (props: Props) => {
 	const onCreateItem = () => {
 		if (newEntry === "") return;
 
-		postOptionsAndCriteria(dispatch, decisionId, props.itemsKey, newEntry);
+		postOptionsAndCriteria(dispatch, decisionId, itemsKey, newEntry);
 
 		//TODO check if new entry is null even if service was not working
 		setNewEntry("");
@@ -113,12 +110,12 @@ const EditableList: React.FC<Props> = (props: Props) => {
 
 	const onLeaveItem = (itemLocal: OptionAndCriteria) => {
 		if (itemLocal.name !== "")
-			editOptionsAndCriteria(dispatch, decisionId, props.itemsKey, itemLocal);
+			editOptionsAndCriteria(dispatch, decisionId, itemsKey, itemLocal);
 		else
 			deleteOptionsAndCriteria(
 				dispatch,
 				decisionId,
-				props.itemsKey,
+				itemsKey,
 				itemLocal.id
 			);
 	};
@@ -198,7 +195,7 @@ const EditableList: React.FC<Props> = (props: Props) => {
 											deleteOptionsAndCriteria(
 												dispatch,
 												decisionId,
-												props.itemsKey,
+												itemsKey,
 												item.id
 											)
 										}
