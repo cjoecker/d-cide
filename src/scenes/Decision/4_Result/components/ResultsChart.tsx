@@ -78,9 +78,7 @@ const ResultsChart: React.FC<Props> = (props: Props) => {
 				in={startAnimation}
 				timeout={500}
 				style={{
-					transitionDelay: `${
-						itemsKey === OptionsAndCriteriaKeys.decisionOptions ? 0 : 500
-					}ms`,
+					transitionDelay: `200ms`,
 				}}
 			>
 				<div>
@@ -128,7 +126,7 @@ const ResultsChart: React.FC<Props> = (props: Props) => {
 											case 1:
 												return "#646464";
 											default:
-												return "#a0a0a0";
+												return "#0f61a0";
 										}
 									}}
 								/>
