@@ -35,9 +35,8 @@ const useStyles = makeStyles({
 		left: theme.spacing(1.2),
 	},
 
-	TitleGridItem: {
-		margin: theme.spacing(1),
-		paddingTop: theme.spacing(1),
+	title: {
+		paddingTop: theme.spacing(2),
 	},
 });
 
@@ -57,7 +56,7 @@ const Results: React.FC<Props> = (props: Props) => {
 			<Grid container justify="center" alignContent="center">
 				<Grid className={classes.gridItem} key="1" item xs={12}>
 					<Paper elevation={2} key="Option">
-						<Typography variant="h5" gutterBottom>
+						<Typography variant="h5" gutterBottom className={classes.title}>
 							Decision Options Ranking
 							<IconButton
 								aria-label="Help"
@@ -67,7 +66,6 @@ const Results: React.FC<Props> = (props: Props) => {
 								<InfoIcon color="secondary" />
 							</IconButton>
 						</Typography>
-
 						<ResultsChart
 							itemsKey={OptionsAndCriteriaKeys.decisionOptions}
 							YKey="name"
@@ -77,7 +75,7 @@ const Results: React.FC<Props> = (props: Props) => {
 				</Grid>
 				<Grid className={classes.gridItem} key="2" item xs={12}>
 					<Paper elevation={2} key="Criteria">
-						<Typography variant="h5" gutterBottom>
+						<Typography variant="h5" gutterBottom className={classes.title}>
 							Selection Criteria Ranking
 							<IconButton
 								aria-label="Help"

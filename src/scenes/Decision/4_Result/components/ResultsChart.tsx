@@ -1,17 +1,32 @@
-import React, {useEffect, useState} from "react";
-import {makeStyles} from "@material-ui/core/styles";
-import {Bar, BarChart, CartesianGrid, Cell, Rectangle, ResponsiveContainer, XAxis, YAxis,} from "recharts";
-import {shallowEqual, useDispatch, useSelector} from "react-redux";
-import {useParams} from "react-router-dom";
-import {OptionAndCriteria, OptionsAndCriteriaKeys,} from "../../../../services/redux/OptionsAndCriteriaSlice";
-import {RootState} from "../../../../services/redux/rootReducer";
+import React, { useEffect, useState } from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import {
+	Bar,
+	BarChart,
+	CartesianGrid,
+	Cell,
+	Rectangle,
+	ResponsiveContainer,
+	XAxis,
+	YAxis,
+} from "recharts";
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import {
+	OptionAndCriteria,
+	OptionsAndCriteriaKeys,
+} from "../../../../services/redux/OptionsAndCriteriaSlice";
+import { RootState } from "../../../../services/redux/rootReducer";
 import theme from "../../../../muiTheme";
-import {getOptionsAndCriteria} from "../../../../services/redux/OptionsAndCriteriaActions";
+import { getOptionsAndCriteria } from "../../../../services/redux/OptionsAndCriteriaActions";
 import Fade from "@material-ui/core/Fade";
+import {log} from "util";
 
 const useStyles = makeStyles({
 	divMain: {
-		padding: theme.spacing(0.8),
+		paddingTop: theme.spacing(0.8),
+		paddingLeft: theme.spacing(0.8),
+		paddingRight: theme.spacing(0.8),
 	},
 
 	bars: {
@@ -59,33 +74,37 @@ const ResultsChart: React.FC<Props> = (props: Props) => {
 		}
 	}, [items]);
 
+
+
 	const calculateLabelsOffset = () => {
 		const labelsMaxCharsNum = 18;
 		const maxNumOffset = 35;
 		const widthOffset = 100;
 
-		const longest = Math.max(...items.map((item) => item.name.length));
+		const longest = Math.max(...localItems.map((item) => item.name.length));
 
-		const totalOffset =
-			(longest / labelsMaxCharsNum) * maxNumOffset + widthOffset;
-
-		setLabelsOffset(totalOffset);
+		return (longest / labelsMaxCharsNum) * maxNumOffset + widthOffset;
 	};
 
 	return (
 		<div className={classes.divMain}>
-			<Fade
+   <Fade
 				in={startAnimation}
 				timeout={500}
 				style={{
 					transitionDelay: `200ms`,
 				}}
 			>
-				<div>
-				<ResponsiveContainer height={items.length * 70 + 10} width="100%">
+
+				<ResponsiveContainer height={localItems.length * 70 + 10} width="100%">
 					<BarChart
-						data={items}
-						margin={{ top: 5, right: 40, left: 40, bottom: 20 }}
+						data={localItems}
+						margin={{
+							top: theme.spacing(0),
+							right: theme.spacing(5),
+							left: theme.spacing(5),
+							bottom: theme.spacing(1),
+						}}
 						layout="vertical"
 						barCategoryGap="20%"
 						barGap={2}
@@ -97,6 +116,7 @@ const ResultsChart: React.FC<Props> = (props: Props) => {
 							strokeWidth={0.5}
 						/>
 						<XAxis
+							dataKey="score"
 							type="number"
 							axisLine={false}
 							stroke="#a0a0a0"
@@ -104,7 +124,7 @@ const ResultsChart: React.FC<Props> = (props: Props) => {
 							ticks={[0, 2.5, 5, 7.5, 10]}
 							strokeWidth={0.5}
 						/>
-						<YAxis type="category" dataKey={YKey} width={labelsOffset} />
+						<YAxis type="category" dataKey={YKey} width={calculateLabelsOffset()}/>
 						<Bar
 							dataKey="score"
 							animationDuration={1000}
@@ -113,28 +133,27 @@ const ResultsChart: React.FC<Props> = (props: Props) => {
 								backgroundColor: "#fff",
 							}}
 							shape={
-								<Rectangle className={classes.bars} radius={[0, 10, 10, 0]} />
+								<Rectangle className={classes.bars} radius={[0, 10, 10, 0]}/>
 							}
 						>
-							{items.map((entry, index) => (
+							{localItems.map((entry, index) => (
 								<Cell
 									key={`cell-${entry.id}`}
-									fill={() => {
+									fill={(() => {
 										switch (index) {
 											case 0:
 												return "#0f61a0";
 											case 1:
 												return "#646464";
 											default:
-												return "#0f61a0";
+												return "#a0a0a0";
 										}
-									}}
+									})()}
 								/>
 							))}
 						</Bar>
 					</BarChart>
 				</ResponsiveContainer>
-				</div>
 			</Fade>
 		</div>
 	);
