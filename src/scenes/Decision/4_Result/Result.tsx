@@ -50,7 +50,7 @@ const Results: React.FC<Props> = (props: Props) => {
 						itemsKey={OptionsAndCriteriaKeys.decisionOptions}
 						YKey="name"
 						hidden={hidden}
-						title="Decision Options Title"
+						title="Decision Options Ranking"
 						infoText={LongStrings.OptionsResultInfo}
 					/>
 				</Grid>
@@ -59,7 +59,7 @@ const Results: React.FC<Props> = (props: Props) => {
 						itemsKey={OptionsAndCriteriaKeys.selectionCriteria}
 						YKey="name"
 						hidden={hidden}
-						title="Selection Criteria Title"
+						title="Selection Criteria Ranking"
 						infoText={LongStrings.CriteriaResultInfo}
 					/>
 				</Grid>
