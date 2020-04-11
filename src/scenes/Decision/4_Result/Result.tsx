@@ -1,22 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Grid from "@material-ui/core/Grid";
-import Paper from "@material-ui/core/Paper";
-import InfoIcon from "@material-ui/icons/Info";
-import IconButton from "@material-ui/core/IconButton";
-import Typography from "@material-ui/core/Typography";
-import Zoom from "@material-ui/core/Zoom";
 import { makeStyles } from "@material-ui/core/styles";
-import { shallowEqual, useSelector } from "react-redux";
-import InfoDialog from "../../../components/InfoDialog";
 import * as LongStrings from "../../../services/LongTexts";
 import theme from "../../../muiTheme";
 import { OptionsAndCriteriaKeys } from "../../../services/redux/OptionsAndCriteriaSlice";
 import ResultsChart from "./components/ResultsChart";
-import { RootState } from "../../../services/redux/rootReducer";
-import Fade from "@material-ui/core/Fade";
-import { getOptionsAndCriteria } from "../../../services/redux/OptionsAndCriteriaActions";
-import { getRatedOptions } from "../../../services/redux/RatedOptionsActions";
-import { Collapse } from "@material-ui/core";
 
 const useStyles = makeStyles({
 	divMain: {
