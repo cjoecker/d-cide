@@ -37,8 +37,6 @@ type Props = {
 };
 
 const Results: React.FC<Props> = (props: Props) => {
-	const [showCriteriaInfo, setShowCriteriaInfo] = useState(false);
-
 	const { hidden } = props;
 	const classes = useStyles();
 
