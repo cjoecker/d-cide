@@ -1,5 +1,5 @@
 import React from "react";
-
+/* eslint-disable */
 //Info Texts
 export const DecisionOptionInfo = (
 	<div>
@@ -69,8 +69,8 @@ export const WeightCriteriaInfo = (
 			Which of both criteria are you willing to sacrifice to get the other one?
 			<br />
 			<br />
-			Move the slider to the left or right depending on what is more
-			important to you.
+			Move the slider to the left or right depending on what is more important
+			to you.
 			<br />
 			The distance moved in the slider is proportional to the importance of
 			criteria compared to the other.

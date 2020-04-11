@@ -16,6 +16,7 @@ import { RootState } from "../../../services/redux/rootReducer";
 import Fade from "@material-ui/core/Fade";
 import { getOptionsAndCriteria } from "../../../services/redux/OptionsAndCriteriaActions";
 import { getRatedOptions } from "../../../services/redux/RatedOptionsActions";
+import { Collapse } from "@material-ui/core";
 
 const useStyles = makeStyles({
 	divMain: {
@@ -29,15 +30,6 @@ const useStyles = makeStyles({
 		minWidth: theme.spacing(38),
 		margin: theme.spacing(2),
 	},
-
-	infoButton: {
-		bottom: theme.spacing(0.25),
-		left: theme.spacing(1.2),
-	},
-
-	title: {
-		paddingTop: theme.spacing(2),
-	},
 });
 
 type Props = {
@@ -45,7 +37,6 @@ type Props = {
 };
 
 const Results: React.FC<Props> = (props: Props) => {
-	const [showOptionsInfo, setShowOptionsInfo] = useState(false);
 	const [showCriteriaInfo, setShowCriteriaInfo] = useState(false);
 
 	const { hidden } = props;
@@ -55,58 +46,24 @@ const Results: React.FC<Props> = (props: Props) => {
 		<div className={classes.divMain}>
 			<Grid container justify="center" alignContent="center">
 				<Grid className={classes.gridItem} key="1" item xs={12}>
-					<Paper elevation={2} key="Option">
-						<Typography variant="h5" gutterBottom className={classes.title}>
-							Decision Options Ranking
-							<IconButton
-								aria-label="Help"
-								className={classes.infoButton}
-								onClick={() => setShowOptionsInfo(true)}
-							>
-								<InfoIcon color="secondary" />
-							</IconButton>
-						</Typography>
-						<ResultsChart
-							itemsKey={OptionsAndCriteriaKeys.decisionOptions}
-							YKey="name"
-							hidden={hidden}
-						/>
-					</Paper>
+					<ResultsChart
+						itemsKey={OptionsAndCriteriaKeys.decisionOptions}
+						YKey="name"
+						hidden={hidden}
+						title="Decision Options Title"
+						infoText={LongStrings.OptionsResultInfo}
+					/>
 				</Grid>
 				<Grid className={classes.gridItem} key="2" item xs={12}>
-					<Paper elevation={2} key="Criteria">
-						<Typography variant="h5" gutterBottom className={classes.title}>
-							Selection Criteria Ranking
-							<IconButton
-								aria-label="Help"
-								className={classes.infoButton}
-								onClick={() => setShowCriteriaInfo(true)}
-							>
-								<InfoIcon color="secondary" />
-							</IconButton>
-						</Typography>
-
-						<ResultsChart
-							itemsKey={OptionsAndCriteriaKeys.selectionCriteria}
-							YKey="name"
-							hidden={hidden}
-						/>
-					</Paper>
+					<ResultsChart
+						itemsKey={OptionsAndCriteriaKeys.selectionCriteria}
+						YKey="name"
+						hidden={hidden}
+						title="Selection Criteria Title"
+						infoText={LongStrings.CriteriaResultInfo}
+					/>
 				</Grid>
 			</Grid>
-			{/*Info Dialogs*/}
-			<InfoDialog
-				title="Decision Options Ranking"
-				text={LongStrings.OptionsResultInfo}
-				show={showOptionsInfo}
-				hide={() => setShowOptionsInfo(false)}
-			/>
-			<InfoDialog
-				title="Selection Criteria Ranking"
-				text={LongStrings.CriteriaResultInfo}
-				show={showCriteriaInfo}
-				hide={() => setShowCriteriaInfo(false)}
-			/>
 		</div>
 	);
 };
