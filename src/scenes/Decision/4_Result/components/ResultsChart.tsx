@@ -43,7 +43,6 @@ const useStyles = makeStyles({
 	bars: {
 		width: theme.spacing(19),
 	},
-
 });
 
 interface Props {
@@ -75,13 +74,13 @@ const ResultsChart: React.FC<Props> = (props: Props) => {
 	useEffect(() => {
 		if (!hidden) getOptionsAndCriteria(dispatch, decisionId, itemsKey, true);
 		else {
-			setLocalItems([])
+			setLocalItems([]);
 			setStartAnimation(false);
 		}
 	}, [hidden]);
 
 	useEffect(() => {
-		if (items.length !== localItems.length && !hidden){
+		if (items.length !== localItems.length && !hidden) {
 			setLocalItems(items);
 			setStartAnimation(true);
 		}
@@ -99,87 +98,83 @@ const ResultsChart: React.FC<Props> = (props: Props) => {
 
 	return (
 		<div className={classes.divMain}>
-			<Fade
-				in={startAnimation}
-				timeout={500}
-			>
-			<Paper elevation={2} key="Option">
-				<Typography variant="h5" gutterBottom className={classes.title}>
-					{title}
-					<IconButton
-						aria-label="Help"
-						className={classes.infoButton}
-						onClick={() => setShowInfo(true)}
-					>
-						<InfoIcon color="secondary" />
-					</IconButton>
-				</Typography>
-				<ResponsiveContainer height={localItems.length * 70 + 10} width="100%">
-					<BarChart
-						data={localItems}
-						margin={{
-							top: theme.spacing(0),
-							right: theme.spacing(5),
-							left: theme.spacing(5),
-							bottom: theme.spacing(1),
-						}}
-						layout="vertical"
-						barCategoryGap="20%"
-						barGap={2}
-						maxBarSize={10}
-					>
-						<CartesianGrid
-							horizontal={false}
-							stroke="#a0a0a0"
-							strokeWidth={0.5}
-						/>
-						<XAxis
-							dataKey="score"
-							type="number"
-							dy={-5}
-							axisLine={false}
-							tickLine={false}
-							domain={[0, 10]}
-							ticks={[0, 2.5, 5, 7.5, 10]}
-							strokeWidth={0.5}
-							stroke="#a0a0a0"
-							tick={{fontSize: "0.8rem"}}
-						/>
-						<YAxis
-							type="category"
-							dataKey={YKey}
-							width={getYAxisWidth()}
-						/>
-						<Bar
-							dataKey="score"
-							animationDuration={1000}
-							label={{
-								position: "right",
-								backgroundColor: "#fff",
-							}}
-							shape={
-								<Rectangle className={classes.bars} radius={[0, 10, 10, 0]} />
-							}
+			<Fade in={startAnimation} timeout={500}>
+				<Paper elevation={2} key="Option">
+					<Typography variant="h5" gutterBottom className={classes.title}>
+						{title}
+						<IconButton
+							aria-label="Help"
+							className={classes.infoButton}
+							onClick={() => setShowInfo(true)}
 						>
-							{localItems.map((entry, index) => (
-								<Cell
-									key={`cell-${entry.id}`}
-									fill={(() => {
-										switch (index) {
-											case 0:
-												return "#0f61a0";
-											case 1:
-												return "#646464";
-											default:
-												return "#a0a0a0";
-										}
-									})()}
-								/>
-							))}
-						</Bar>
-					</BarChart>
-				</ResponsiveContainer>
-			</Paper>
+							<InfoIcon color="secondary" />
+						</IconButton>
+					</Typography>
+					<ResponsiveContainer
+						height={localItems.length * 70 + 10}
+						width="100%"
+					>
+						<BarChart
+							data={localItems}
+							margin={{
+								top: theme.spacing(0),
+								right: theme.spacing(5),
+								left: theme.spacing(5),
+								bottom: theme.spacing(1),
+							}}
+							layout="vertical"
+							barCategoryGap="20%"
+							barGap={2}
+							maxBarSize={10}
+						>
+							<CartesianGrid
+								horizontal={false}
+								stroke="#a0a0a0"
+								strokeWidth={0.5}
+							/>
+							<XAxis
+								dataKey="score"
+								type="number"
+								dy={-5}
+								axisLine={false}
+								tickLine={false}
+								domain={[0, 10]}
+								ticks={[0, 2.5, 5, 7.5, 10]}
+								strokeWidth={0.5}
+								stroke="#a0a0a0"
+								tick={{ fontSize: "0.8rem" }}
+							/>
+							<YAxis type="category" dataKey={YKey} width={getYAxisWidth()} />
+							<Bar
+								dataKey="score"
+								animationDuration={1000}
+								label={{
+									position: "right",
+									backgroundColor: "#fff",
+								}}
+								shape={
+									<Rectangle className={classes.bars} radius={[0, 10, 10, 0]} />
+								}
+							>
+								{localItems.map((entry, index) => (
+									<Cell
+										key={`cell-${entry.id}`}
+										fill={(() => {
+											switch (index) {
+												case 0:
+													return "#0f61a0";
+												case 1:
+													return "#646464";
+												default:
+													return "#a0a0a0";
+											}
+										})()}
+									/>
+								))}
+							</Bar>
+						</BarChart>
+					</ResponsiveContainer>
+				</Paper>
 			</Fade>
 			{/*Info Dialogs*/}
 			<InfoDialog
