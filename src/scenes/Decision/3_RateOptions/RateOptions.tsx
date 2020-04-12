@@ -22,10 +22,8 @@ import {
 } from "../../../services/redux/RatedOptionsActions";
 import { getOptionsAndCriteria } from "../../../services/redux/OptionsAndCriteriaActions";
 import { OptionsAndCriteriaKeys } from "../../../services/redux/OptionsAndCriteriaSlice";
-import { getWeightedCriteria } from "../../../services/redux/WeightCriteriaActions";
-import {log} from "util";
+import {updateWeightedCriteria} from "../../../services/redux/WeightCriteriaActions";
 
-const onChangeSlider$ = new Subject();
 
 const useStyles = makeStyles({
 	divMain: {
@@ -146,17 +144,6 @@ const RateOptions: React.FC<Props> = (props: Props) => {
 		},
 	];
 
-	useEffect(() => {
-		const subscription = onChangeSlider$
-			.pipe(debounceTime(1000))
-			.subscribe((option) => {
-				updateRatedOptions(dispatch, decisionId, option);
-			});
-
-		return () => {
-			subscription.unsubscribe();
-		};
-	}, []);
 
 	useEffect(() => {
 		if (!hidden) {
@@ -193,13 +180,24 @@ const RateOptions: React.FC<Props> = (props: Props) => {
 					option.selectionCriteriaId === criteriaId &&
 					option.decisionOptionId === optionId
 				) {
-					const newRatedOptions = { ...option, score };
-					onChangeSlider$.next(newRatedOptions);
-					return newRatedOptions;
+					return { ...option, score };
 				}
 				return option;
 			})
 		);
+	};
+
+	const onChangeCommitted = (value, criteriaId, optionId) => {
+		const FoundRatedOption = LocalRatedOptions.find(
+			(obj) =>
+				obj.selectionCriteriaId === criteriaId &&
+				obj.decisionOptionId === optionId
+		);
+
+		updateRatedOptions(dispatch, decisionId, {
+			...FoundRatedOption,
+			score: value,
+		});
 	};
 
 	const getScore = (criteriaId: number, optionId: number): number => {
@@ -311,6 +309,9 @@ const RateOptions: React.FC<Props> = (props: Props) => {
 																marks={sliderMarks}
 																onChange={(event, value) =>
 																	onChange(event, criteria.id, option.id, value)
+																}
+																onChangeCommitted={(event, value) =>
+																	onChangeCommitted(value, criteria.id, option.id)
 																}
 															/>
 														</Grid>
