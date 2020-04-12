@@ -15,11 +15,11 @@ import InfoDialog from "../../../components/InfoDialog";
 import {
 	getWeightedCriteria,
 	updateWeightedCriteria,
-} from "../../../services/redux/WeightCriteriaActions";
+} from "../../../services/redux/actionsAndSlicers/WeightCriteriaActions";
 import { RootState } from "../../../services/redux/rootReducer";
-import { WeightedCriteria } from "../../../services/redux/WeightCriteriaSlice";
-import { getOptionsAndCriteria } from "../../../services/redux/OptionsAndCriteriaActions";
-import { OptionsAndCriteriaKeys } from "../../../services/redux/OptionsAndCriteriaSlice";
+import { WeightedCriteria } from "../../../services/redux/actionsAndSlicers/WeightCriteriaSlice";
+import { getOptionsAndCriteria } from "../../../services/redux/actionsAndSlicers/OptionsAndCriteriaActions";
+import { OptionsAndCriteriaKeys } from "../../../services/redux/actionsAndSlicers/OptionsAndCriteriaSlice";
 
 const useStyles = makeStyles({
 	divMain: {

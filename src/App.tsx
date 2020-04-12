@@ -32,7 +32,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import axios from "axios";
 import { Router, Route, Switch } from "react-router-dom";
 import { RootState } from "./services/redux/rootReducer";
-import { getDecisions } from "./services/redux/DecisionsActions";
+import { getDecisions } from "./services/redux/actionsAndSlicers/DecisionsActions";
 import LandingPage from "./scenes/LandingPage";
 import NotFound from "./scenes/NotFound/NotFound";
 import SecureRoute from "./services/PrivateRoute";
@@ -40,7 +40,7 @@ import Decision from "./scenes/Decision/Decision";
 import AlertsBanner from "./components/AlertsBanner";
 import theme from "./muiTheme";
 import dcideLogo from "./images/d-cide_Logo.svg";
-import { verifyToken } from "./services/redux/SessionActions";
+import { verifyToken } from "./services/redux/actionsAndSlicers/SessionActions";
 
 const { token } = localStorage;
 

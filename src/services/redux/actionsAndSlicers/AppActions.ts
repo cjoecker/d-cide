@@ -1,6 +1,6 @@
 import { Dispatch } from "redux";
 import { AxiosError } from "axios";
-import { HTTP_ERROR } from "../Alerts";
+import { HTTP_ERROR } from "../../Alerts";
 import AppSlice from "./AppSlice";
 
 

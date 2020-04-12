@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import {RootState} from "./rootReducer";
+import {RootState} from "../rootReducer";
 
 export type Decision = {
 	id: number;

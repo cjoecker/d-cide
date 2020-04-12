@@ -8,10 +8,10 @@ import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import { makeStyles } from "@material-ui/core/styles";
 import theme from "../../muiTheme";
 import SwipeableViews from "react-swipeable-views";
-import OptionsAndCriteria from "./1_OptionsAndCriteria/OptionsAndCriteria";
-import WeightCriteria from "./2_WeightCriteria/WeightCriteria";
-import RateOptions from "./3_RateOptions/RateOptions";
-import Results from "./4_Result/Result";
+import OptionsAndCriteria from "./Step1OptionsAndCriteria/OptionsAndCriteria";
+import WeightCriteria from "./Step2WeightCriteria/WeightCriteria";
+import RateOptions from "./Step3RateOptions/RateOptions";
+import Results from "./Step4Result/Result";
 
 const useStyles = makeStyles({
 	divMain: {

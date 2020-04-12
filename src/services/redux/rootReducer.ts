@@ -1,10 +1,10 @@
 import { combineReducers } from "@reduxjs/toolkit";
-import AppSlice from "./AppSlice";
-import SessionSlice from "./SessionSlice";
-import OptionsAndCriteriaSlice from "./OptionsAndCriteriaSlice";
-import DecisionsSlice from "./DecisionsSlice";
-import WeightedCriteriaSlice from "./WeightCriteriaSlice";
-import RatedOptionsSlice from "./RatedOptionsSlice";
+import AppSlice from "./actionsAndSlicers/AppSlice";
+import SessionSlice from "./actionsAndSlicers/SessionSlice";
+import OptionsAndCriteriaSlice from "./actionsAndSlicers/OptionsAndCriteriaSlice";
+import DecisionsSlice from "./actionsAndSlicers/DecisionsSlice";
+import WeightedCriteriaSlice from "./actionsAndSlicers/WeightCriteriaSlice";
+import RatedOptionsSlice from "./actionsAndSlicers/RatedOptionsSlice";
 
 
 const rootReducer = combineReducers({

@@ -16,13 +16,13 @@ import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
 import InfoIcon from "@material-ui/icons/Info";
-import { getOptionsAndCriteria } from "../../../../services/redux/OptionsAndCriteriaActions";
+import { getOptionsAndCriteria } from "../../../../services/redux/actionsAndSlicers/OptionsAndCriteriaActions";
 import theme from "../../../../muiTheme";
 import { RootState } from "../../../../services/redux/rootReducer";
 import {
 	OptionAndCriteria,
 	OptionsAndCriteriaKeys,
-} from "../../../../services/redux/OptionsAndCriteriaSlice";
+} from "../../../../services/redux/actionsAndSlicers/OptionsAndCriteriaSlice";
 import InfoDialog from "../../../../components/InfoDialog";
 import Fade from "@material-ui/core/Fade";
 

@@ -1,6 +1,6 @@
 import axios from "axios";
-import { AppDispatch } from "./store";
-import { AxiosRequest } from "./AxiosRequest";
+import { AppDispatch } from "../store";
+import { AxiosRequest } from "../AxiosRequest";
 import RatedOptionsSlice, {RatedOption} from "./RatedOptionsSlice";
 
 export const getRatedOptions = (

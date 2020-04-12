@@ -4,8 +4,8 @@ import { RootState } from "../services/redux/rootReducer";
 // import {getUnregisteredUser} from "../services/redux/Sessions_Actions";
 // import {WithStyles} from "@material-ui/core/styles";
 import { useHistory } from "react-router-dom";
-import { getDecisions } from "../services/redux/DecisionsActions";
-import { createUnregisteredUser } from "../services/redux/SessionActions";
+import { getDecisions } from "../services/redux/actionsAndSlicers/DecisionsActions";
+import { createUnregisteredUser } from "../services/redux/actionsAndSlicers/SessionActions";
 
 
 //TODO Make this a function and not a component

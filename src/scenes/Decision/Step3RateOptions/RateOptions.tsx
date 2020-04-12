@@ -15,14 +15,14 @@ import * as LongStrings from "../../../services/LongTexts";
 import InfoDialog from "../../../components/InfoDialog";
 import { RootState } from "../../../services/redux/rootReducer";
 import theme from "../../../muiTheme";
-import { RatedOption } from "../../../services/redux/RatedOptionsSlice";
+import { RatedOption } from "../../../services/redux/actionsAndSlicers/RatedOptionsSlice";
 import {
 	getRatedOptions,
 	updateRatedOptions,
-} from "../../../services/redux/RatedOptionsActions";
-import { getOptionsAndCriteria } from "../../../services/redux/OptionsAndCriteriaActions";
-import { OptionsAndCriteriaKeys } from "../../../services/redux/OptionsAndCriteriaSlice";
-import {updateWeightedCriteria} from "../../../services/redux/WeightCriteriaActions";
+} from "../../../services/redux/actionsAndSlicers/RatedOptionsActions";
+import { getOptionsAndCriteria } from "../../../services/redux/actionsAndSlicers/OptionsAndCriteriaActions";
+import { OptionsAndCriteriaKeys } from "../../../services/redux/actionsAndSlicers/OptionsAndCriteriaSlice";
+import {updateWeightedCriteria} from "../../../services/redux/actionsAndSlicers/WeightCriteriaActions";
 
 
 const useStyles = makeStyles({

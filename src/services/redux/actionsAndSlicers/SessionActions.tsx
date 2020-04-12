@@ -1,10 +1,10 @@
 import axios, { AxiosResponse } from "axios";
-import store, { AppDispatch } from "./store";
+import store, { AppDispatch } from "../store";
 import {
 	AxiosRequest,
 	ErrorActionType,
 	SuccessExtraActionType,
-} from "./AxiosRequest";
+} from "../AxiosRequest";
 import SessionSlice, { User } from "./SessionSlice";
 import { showHTTPAlert } from "./AppActions";
 import jwt_decode from "jwt-decode";

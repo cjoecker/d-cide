@@ -1,6 +1,6 @@
 import axios from "axios";
-import { AppDispatch } from "./store";
-import { AxiosRequest, SuccessActionType } from "./AxiosRequest";
+import { AppDispatch } from "../store";
+import { AxiosRequest, SuccessActionType } from "../AxiosRequest";
 import OptionsAndCriteriaSlice, {
 	OptionAndCriteria,
 	OptionsAndCriteriaKeys,

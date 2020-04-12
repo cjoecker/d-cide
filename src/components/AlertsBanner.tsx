@@ -8,7 +8,7 @@ import { WithStyles } from "@material-ui/core/styles";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { AlertInitialState, AlertType, AlertTypes } from "../services/Alerts";
 import { RootState } from "../services/redux/rootReducer";
-import AppSlice from "../services/redux/AppSlice";
+import AppSlice from "../services/redux/actionsAndSlicers/AppSlice";
 
 const styles = (theme) => ({
 	success: {

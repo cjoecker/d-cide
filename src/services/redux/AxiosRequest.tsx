@@ -1,8 +1,8 @@
 import { AxiosError, AxiosPromise, AxiosResponse } from "axios";
 import { PayloadAction } from "@reduxjs/toolkit";
 import { AppDispatch, AppThunk } from "./store";
-import AppSlice from "./AppSlice";
-import { showHTTPAlert } from "./AppActions";
+import AppSlice from "./actionsAndSlicers/AppSlice";
+import { showHTTPAlert } from "./actionsAndSlicers/AppActions";
 
 export interface SuccessActionType {
 	(answer: PayloadAction<any>);

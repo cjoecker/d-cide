@@ -17,9 +17,8 @@ import ReactGA from "react-ga";
 import {
 	getDecisions,
 	putDecision,
-} from "../../services/redux/DecisionsActions";
+} from "../../services/redux/actionsAndSlicers/DecisionsActions";
 import { getValueSafe } from "../../services/GeneralUtils";
-import clsx from "clsx";
 
 const styles = (theme) => ({
 	divMain: {

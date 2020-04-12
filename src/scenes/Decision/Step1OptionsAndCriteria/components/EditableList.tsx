@@ -15,15 +15,15 @@ import theme from "../../../../muiTheme";
 import {
 	OptionAndCriteria,
 	OptionsAndCriteriaKeys,
-} from "../../../../services/redux/OptionsAndCriteriaSlice";
+} from "../../../../services/redux/actionsAndSlicers/OptionsAndCriteriaSlice";
 import {
 	deleteOptionsAndCriteria,
 	editOptionsAndCriteria,
 	getOptionsAndCriteria,
 	postOptionsAndCriteria,
-} from "../../../../services/redux/OptionsAndCriteriaActions";
+} from "../../../../services/redux/actionsAndSlicers/OptionsAndCriteriaActions";
 import { RootState } from "../../../../services/redux/rootReducer";
-import { getWeightedCriteria } from "../../../../services/redux/WeightCriteriaActions";
+import { getWeightedCriteria } from "../../../../services/redux/actionsAndSlicers/WeightCriteriaActions";
 import { Grow } from "@material-ui/core";
 import Collapse from "@material-ui/core/Collapse";
 
