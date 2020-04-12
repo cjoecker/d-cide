@@ -179,7 +179,7 @@ const ResultsChart: React.FC<Props> = (props: Props) => {
 			<InfoDialog
 				text={infoText}
 				show={showInfo}
-				onClose={setShowInfo(false)}
+				onClose={()=>setShowInfo(false)}
 			/>
 		</div>
 	);

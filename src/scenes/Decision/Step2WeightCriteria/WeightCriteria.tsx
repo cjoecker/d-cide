@@ -280,7 +280,7 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
 			<InfoDialog
 				text={LongStrings.WeightCriteriaInfo}
 				show={showInfo}
-				onClose={setShowInfo(false)}
+				onClose={()=>setShowInfo(false)}
 			/>
 		</div>
 	);

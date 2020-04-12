@@ -330,7 +330,7 @@ const RateOptions: React.FC<Props> = (props: Props) => {
 			<InfoDialog
 				text={LongStrings.OptionsRatingInfo}
 				show={showInfo}
-				onClose={setShowInfo(false)}
+				onClose={()=>setShowInfo(false)}
 			/>
 		</div>
 	);

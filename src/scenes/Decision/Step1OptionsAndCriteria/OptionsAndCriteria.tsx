@@ -12,7 +12,6 @@ import {
 	SelectionCriteriaInfo,
 } from "../../../services/LongTexts";
 import { OptionsAndCriteriaKeys } from "../../../services/redux/actionsAndSlicers/OptionsAndCriteriaSlice";
-import { useParams } from "react-router-dom";
 
 const useStyles = makeStyles({
 	divMain: {
@@ -85,12 +84,12 @@ const OptionsAndCriteria: React.FC<Props> = (props: Props) => {
 				<InfoDialog
 					text={DecisionOptionInfo}
 					show={showOptionsInfo}
-					onClose={setShowOptionsInfo(false)}
+					onClose={()=>setShowOptionsInfo(false)}
 				/>
 				<InfoDialog
 					text={SelectionCriteriaInfo}
 					show={showCriteriaInfo}
-					onClose={setShowCriteriaInfo(false)}
+					onClose={()=>setShowCriteriaInfo(false)}
 				/>
 			</div>
 

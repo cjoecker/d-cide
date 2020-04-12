@@ -20,7 +20,7 @@ const useStyles = makeStyles({
 interface Props {
 	text: JSX.Element;
 	show: boolean;
-	onClose: void;
+	onClose:  (() => void);
 }
 
 const InfoDialog: React.FC<Props> = (props: Props) => {
@@ -28,10 +28,14 @@ const InfoDialog: React.FC<Props> = (props: Props) => {
 
 	const classes = useStyles();
 
+	const handleClose = () => {
+		onClose();
+	};
+
 	return (
 		<div>
 			<Dialog
-				onClose={() => onClose}
+				onClose={handleClose}
 				aria-labelledby="customized-dialog-title"
 				open={show}
 			>
@@ -46,7 +50,7 @@ const InfoDialog: React.FC<Props> = (props: Props) => {
 					<IconButton
 						aria-label="Close"
 						className={classes.closeButton}
-						onClick={() => onClose}
+						onClick={handleClose}
 					>
 						<CloseIcon />
 					</IconButton>
