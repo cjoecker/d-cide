@@ -326,14 +326,11 @@ const RateOptions: React.FC<Props> = (props: Props) => {
 					</Fade>
 				))}
 			</Grid>
-			{/*Empty Line for Buttons*/}
 			<div className={classes.emptySpace} />
-			{/*Info Dialogs*/}
 			<InfoDialog
-				title="Rate Options"
 				text={LongStrings.OptionsRatingInfo}
 				show={showInfo}
-				hide={() => setShowInfo(false)}
+				onClose={setShowInfo(false)}
 			/>
 		</div>
 	);

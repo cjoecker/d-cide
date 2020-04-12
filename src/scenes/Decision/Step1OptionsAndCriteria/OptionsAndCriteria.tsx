@@ -81,18 +81,16 @@ const OptionsAndCriteria: React.FC<Props> = (props: Props) => {
 						<EditableList itemsKey={OptionsAndCriteriaKeys.selectionCriteria} hidden={hidden} />
 					</Grid>
 				</Grid>
-				{/*Empty Space for Buttons*/}
 				<div className={classes.emptySpace} />
-				{/*Info Dialogs*/}
 				<InfoDialog
 					text={DecisionOptionInfo}
 					show={showOptionsInfo}
-					hide={() => setShowOptionsInfo(false)}
+					onClose={setShowOptionsInfo(false)}
 				/>
 				<InfoDialog
 					text={SelectionCriteriaInfo}
 					show={showCriteriaInfo}
-					hide={() => setShowCriteriaInfo(false)}
+					onClose={setShowCriteriaInfo(false)}
 				/>
 			</div>
 

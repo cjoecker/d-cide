@@ -176,12 +176,10 @@ const ResultsChart: React.FC<Props> = (props: Props) => {
 					</ResponsiveContainer>
 				</Paper>
 			</Fade>
-			{/*Info Dialogs*/}
 			<InfoDialog
-				title={title}
 				text={infoText}
 				show={showInfo}
-				hide={() => setShowInfo(false)}
+				onClose={setShowInfo(false)}
 			/>
 		</div>
 	);

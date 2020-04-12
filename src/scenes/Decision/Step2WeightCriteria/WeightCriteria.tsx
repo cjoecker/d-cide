@@ -276,14 +276,11 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
 					</Fade>
 				))}
 			</Grid>
-			{/*Empty Line for Buttons*/}
 			<div className={classes.emptySpace} />
-			{/*Info Dialogs*/}
 			<InfoDialog
-				title="Weight Criteria"
 				text={LongStrings.WeightCriteriaInfo}
 				show={showInfo}
-				hide={() => setShowInfo(false)}
+				onClose={setShowInfo(false)}
 			/>
 		</div>
 	);
