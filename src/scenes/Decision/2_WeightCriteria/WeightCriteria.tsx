@@ -8,7 +8,7 @@ import IconButton from "@material-ui/core/IconButton";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import Fade from "@material-ui/core/Fade";
 import { Subject } from "rxjs";
-import { debounceTime } from "rxjs/operators";
+import { debounceTime, distinctUntilChanged } from "rxjs/operators";
 import { makeStyles } from "@material-ui/core/styles";
 import { useParams } from "react-router-dom";
 import theme from "../../../muiTheme";
@@ -22,8 +22,6 @@ import { RootState } from "../../../services/redux/rootReducer";
 import { WeightedCriteria } from "../../../services/redux/WeightCriteriaSlice";
 import { getOptionsAndCriteria } from "../../../services/redux/OptionsAndCriteriaActions";
 import { OptionsAndCriteriaKeys } from "../../../services/redux/OptionsAndCriteriaSlice";
-
-const onChangeSlider$ = new Subject();
 
 const useStyles = makeStyles({
 	divMain: {
@@ -123,18 +121,6 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
 	];
 
 	useEffect(() => {
-		const subscription = onChangeSlider$
-			.pipe(debounceTime(1000))
-			.subscribe((criteria) => {
-				updateWeightedCriteria(dispatch, decisionId, criteria);
-			});
-
-		return () => {
-			subscription.unsubscribe();
-		};
-	}, []);
-
-	useEffect(() => {
 		if (!hidden) {
 			getOptionsAndCriteria(
 				dispatch,
@@ -156,13 +142,18 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
 		setLocalWeightedCriteria(
 			LocalWeightedCriteria.map((criteria) => {
 				if (criteria.id === itemLocal.id) {
-					const newWeightedCriteria = { ...criteria, weight: value };
-					onChangeSlider$.next(newWeightedCriteria);
-					return newWeightedCriteria;
+					return { ...criteria, weight: value };
 				}
 				return criteria;
 			})
 		);
+	};
+
+	const onChangeCommitted = (value, itemLocal) => {
+		updateWeightedCriteria(dispatch, decisionId, {
+			...itemLocal,
+			weight: value,
+		});
 	};
 
 	const getSelectionCriteriaName = (selectionCriteriaId) => {
@@ -266,6 +257,9 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
 											marks={sliderMarks}
 											onChange={(event, value) =>
 												onChange(event, value, criteria, index)
+											}
+											onChangeCommitted={(event, value) =>
+												onChangeCommitted(value, criteria)
 											}
 										/>
 									</Grid>
