@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { withStyles } from "@material-ui/core/styles";
+import {makeStyles, withStyles} from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import Paper from "@material-ui/core/Paper";
@@ -20,7 +20,7 @@ import {
 } from "../../services/redux/actionsAndSlicers/DecisionsActions";
 import { getValueSafe } from "../../services/GeneralUtils";
 
-const styles = (theme) => ({
+const useStyles = makeStyles({
 	divMain: {
 		paddingTop: theme.spacing(8),
 		textAlign: "center",
@@ -100,7 +100,7 @@ const styles = (theme) => ({
 	},
 });
 
-class Login extends React.Component {
+const Login: React.FC = () => {
 	constructor(props) {
 		super(props);
 
@@ -333,31 +333,6 @@ class Login extends React.Component {
 								/>
 							</Grid>
 
-							{/*RememberMe*/}
-							{/*<Grid item xs={6} style={{justify: 'left'}}>*/}
-							{/*    <FormControlLabel*/}
-							{/*        control={*/}
-							{/*            <Switch*/}
-							{/*                name="rememberMe"*/}
-							{/*                checked={this.state.rememberMe}*/}
-							{/*                onChange={this.onToggleRememberMe}*/}
-							{/*                value="rememberMe"*/}
-							{/*                color="primary"*/}
-							{/*            />*/}
-							{/*        }*/}
-							{/*        label="Remember Me"*/}
-							{/*        style={{marginLeft: '5%'}}*/}
-							{/*    />*/}
-							{/*</Grid>*/}
-
-							{/*Forgot Password*/}
-							{/*<Grid item xs={6} style={{textAlign: 'right'}}>*/}
-							{/*<Grid item xs={12} style={{textAlign: 'left'}}>*/}
-							{/*<Link href={'/Login'} className={classes.passwordLink}>*/}
-							{/*Forgot Password?*/}
-							{/*</Link>*/}
-							{/*</Grid>*/}
-
 							{/*Login Button*/}
 							<Grid item xs={12} className={classes.gridItem_button}>
 								<Fab
@@ -401,26 +376,6 @@ class Login extends React.Component {
 	}
 }
 
-Login.propTypes = {
-	classes: PropTypes.object.isRequired,
-	errors: PropTypes.object.isRequired,
-	security: PropTypes.object.isRequired,
-	decision: PropTypes.object.isRequired,
-	postSession: PropTypes.func.isRequired,
-	putDecision: PropTypes.func.isRequired,
-	getDecisions: PropTypes.func.isRequired,
-	setJWT: PropTypes.func.isRequired,
-};
 
-const mapStateToProps = (state) => ({
-	security: state.security,
-	errors: state.errors,
-	decision: state.decision,
-});
 
-export default connect(mapStateToProps, {
-	// postSession,
-	putDecision,
-	getDecisions,
-	// setJWT,
-})(withStyles(styles)(Login));
+export default Login
