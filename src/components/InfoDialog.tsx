@@ -8,12 +8,17 @@ import DialogContent from "@material-ui/core/DialogContent/DialogContent";
 import theme from "../muiTheme";
 
 const useStyles = makeStyles({
+	dialogContent: {
+		marginTop: -theme.spacing(2),
+		marginBottom: -theme.spacing(2),
+	},
 	closeButton: {
 		position: "absolute",
 		right: theme.spacing(1),
 		top: theme.spacing(1),
 	},
 	text: {
+		paddingTop	: theme.spacing(30),
 		textAlign: "justify",
 	},
 });
@@ -39,7 +44,7 @@ const InfoDialog: React.FC<Props> = (props: Props) => {
 				aria-labelledby="customized-dialog-title"
 				open={show}
 			>
-				<DialogContent>
+				<DialogContent className={classes.dialogContent}>
 					<Typography
 						component={"span"}
 						variant="body2"
