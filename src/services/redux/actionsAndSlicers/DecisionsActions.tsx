@@ -49,11 +49,32 @@ export const getDecisions = (dispatch: AppDispatch) => {
 };
 
 
-export const changeDecisions = (dispatch: AppDispatch, decision) => {
+export const postDecision = (dispatch: AppDispatch, decision: Decision) => {
 	dispatch(
 		AxiosRequest(
-			axios.post(`/api/decisions/`),
+			axios.post(`/api/decisions/`,decision),
+			DecisionsSlice.actions.addDecision.bind(null)
+		)
+	);
+};
+
+export const changeDecision = (dispatch: AppDispatch, decision: Decision) => {
+	dispatch(
+		AxiosRequest(
+			axios.put(`/api/decisions/`,decision),
 			DecisionsSlice.actions.updateDecision.bind(null)
 		)
 	);
 };
+export const deleteDecision = (dispatch: AppDispatch, decision: Decision) => {
+	dispatch(
+		AxiosRequest(
+			axios.delete(`/api/decisions/${decision.id}`),
+			DecisionsSlice.actions.deleteDecision.bind(null),
+			null,
+			null,
+			decision
+		)
+	);
+};
+

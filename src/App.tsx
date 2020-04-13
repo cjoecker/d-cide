@@ -28,6 +28,7 @@ import theme from "./muiTheme";
 import dcideLogo from "./images/d-cide_Logo.svg";
 import {verifyToken} from "./services/redux/actionsAndSlicers/SessionActions";
 import Login from "./scenes/Login/Login";
+import Decisions from "./scenes/Decisions/Decisions";
 
 const {token} = localStorage;
 
@@ -202,8 +203,8 @@ const App: React.FC = () => {
                             <Route exact path="/login" component={Login}/>
                             {/*	<Route exact path="/signUp" component={SignUp} />*/}
 
-                            {/*	/!*Private Scenes*!/*/}
-                            {/*	<SecureRoute exact path="/decisions" component={Decisions} />*/}
+                            {/*	/!*TODO Private Scenes*!/*/}
+                            	<Route exact path="/decisions" component={Decisions} />
                             <Route exact path="/decisions/:decisionId" component={Decision}/>
                         </Switch>
                     </div>

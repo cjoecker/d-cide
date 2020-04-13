@@ -15,7 +15,7 @@ import { useHistory } from "react-router-dom";
 import clsx from "clsx";
 import TwoButtonsDialog from "../../components/TwoButtonsDialog";
 import {
-	changeDecisions,
+	changeDecision,
 	getDecisions,
 } from "../../services/redux/actionsAndSlicers/DecisionsActions";
 import { RootState } from "../../services/redux/rootReducer";
@@ -172,7 +172,7 @@ const Login: React.FC = () => {
 			user: newUser,
 		};
 
-		changeDecisions(dispatch, decision);
+		changeDecision(dispatch, decision);
 
 		setShowSaveDecisionDialog(false);
 	};
