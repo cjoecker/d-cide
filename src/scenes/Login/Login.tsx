@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import {makeStyles, withStyles} from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
@@ -10,7 +10,7 @@ import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import Link from "@material-ui/core/Link";
 import Fab from "@material-ui/core/Fab";
-import { connect } from "react-redux";
+import {connect, shallowEqual, useDispatch, useSelector} from "react-redux";
 import Typography from "@material-ui/core/Typography";
 import TwoButtonsDialog from "../../components/TwoButtonsDialog";
 import ReactGA from "react-ga";
@@ -19,6 +19,9 @@ import {
 	putDecision,
 } from "../../services/redux/actionsAndSlicers/DecisionsActions";
 import { getValueSafe } from "../../services/GeneralUtils";
+import {RootState} from "../../services/redux/rootReducer";
+import {useHistory} from "react-router-dom";
+import {login} from "../../services/redux/actionsAndSlicers/SessionActions";
 
 const useStyles = makeStyles({
 	divMain: {
@@ -101,123 +104,82 @@ const useStyles = makeStyles({
 });
 
 const Login: React.FC = () => {
-	constructor(props) {
-		super(props);
 
-		this.state = {
-			username: "",
-			password: "",
-			showPassword: false,
-			rememberMe: false,
-			showSaveDecision: false,
-			unregisteredUsername: "",
-			wrongPassword: false,
-		};
-		this.onChange = this.onChange.bind(this);
-		this.onToggleShowPass = this.onToggleShowPass.bind(this);
-		this.onToggleRememberMe = this.onToggleRememberMe.bind(this);
-		this.onSubmit = this.onSubmit.bind(this);
+	const [username, setUsername] = useState("");
+	const [password, setPassword] = useState("");
+	const [wrongPassword, setWrongPassword] = useState(false);
+	const [showPassword, setShowPassword] = useState(false);
+	const [showSaveDecisionDialog, setShowSaveDecisionDialog] = useState(false);
 
-		this.saveDecision = this.saveDecision.bind(this);
-		this.dismissDecision = this.dismissDecision.bind(this);
+	const passwordInput = React.createRef();
 
-		this.passwordInput = React.createRef();
-	}
+	const { user, token } = useSelector(
+		(state: RootState) => state.Session,
+		shallowEqual
+	);
 
-	componentDidMount() {
-		if (
-			this.props.security.validToken &&
-			this.props.security.user.registeredUser
-		) {
-			this.props.history.push("/decisions");
-		}
+	const decisions = useSelector(
+		(state: RootState) => state.Decisions,
+		shallowEqual
+	);
 
-		if (this.props.security.user != null) {
-			if (!this.props.security.user.registeredUser) {
-				this.setState({
-					unregisteredUsername: this.props.security.user.username,
-				});
-			}
-		}
-	}
+	const dispatch = useDispatch();
+	const history = useHistory();
 
-	async componentDidUpdate(prevProps, prevState, snapshot) {
-		//Show form to transfer decision to user
-		if (
-			getValueSafe(() => prevProps.security.user.registeredUser) === false &&
-			getValueSafe(() => this.props.security.user.registeredUser) === true
-		) {
-			this.setState({ showSaveDecision: true });
-		}
+	useEffect(() => {
+		if(user.registeredUser && token !== "")
+			history.push("/decisions")
+	}, []);
 
-		//Go to decisions after asking to save decision
-		if (prevState.showSaveDecision && !this.state.showSaveDecision) {
-			this.props.history.push("/decisions");
-		}
+	useEffect(() => {
+		if(user.registeredUser)
+			setShowSaveDecisionDialog(true)
+	}, [user]);
 
-		//Go to decisions after asking to save decision
-		if (
-			getValueSafe(() => prevProps.security.user.registeredUser) === null &&
-			getValueSafe(() => this.props.security.user.registeredUser) === true
-		) {
-			await this.props.setJWT(this.props.security.token);
 
-			this.props.history.push("/decisions");
-		}
+	//TODO save after click save in dialog
 
-		//wrong password
-		if (
-			getValueSafe(() => prevProps.errors.password) === null &&
-			getValueSafe(() => this.props.errors.password) !== null
-		) {
-			this.setState({
-				wrongPassword: true,
-				password: "",
-			});
-			this.passwordInput.current.focus();
-		}
-	}
+	useEffect(() => {
+		if(user.registeredUser)
+			setShowSaveDecisionDialog(true)
+	}, [user]);
 
-	onChange(e) {
-		this.setState({ [e.target.name]: e.target.value });
-	}
+//TODO wrong password
+		// //wrong password
+		// if (
+		// 	getValueSafe(() => prevProps.errors.password) === null &&
+		// 	getValueSafe(() => this.props.errors.password) !== null
+		// ) {
+		// 	this.setState({
+		// 		wrongPassword: true,
+		// 		password: "",
+		// 	});
+		// 	this.passwordInput.current.focus();
+		// }
 
-	onToggleRememberMe(e) {
-		this.setState({ [e.target.name]: e.target.checked });
-	}
 
-	onToggleShowPass() {
-		this.setState({ showPassword: !this.state.showPassword });
-	}
 
-	onSubmit() {
-		this.setState({ wrongPassword: false });
+
+	const onSubmit = () => {
+		setWrongPassword(false);
 
 		const user = {
-			username: this.state.username,
-			password: this.state.password,
+			username,
+			password,
 		};
 
-		this.props.postSession(user);
+		login(dispatch, user)
 	}
 
-	showSaveDecision(e) {
-		this.setState({ showSaveDecision: true });
-		ReactGA.event({
-			category: "Login",
-			action: "Show Save Decision Dialog",
-		});
-	}
-
-	async saveDecision() {
+	const  saveDecision = () => {
 		const user = {
-			username: this.state.username,
-			password: this.state.password,
+			username,
+			password,
 		};
 
 		const decision = {
-			id: this.props.decision.decisions[0].id,
-			name: this.props.decision.decisions[0].name,
+			id: decisions[0].id,
+			name: decisions[0].name,
 			user: user,
 		};
 
@@ -227,11 +189,6 @@ const Login: React.FC = () => {
 		await this.props.setJWT(this.props.security.token);
 
 		this.setState({ showSaveDecision: false });
-
-		ReactGA.event({
-			category: "Login",
-			action: "Save Decision",
-		});
 	}
 
 	async dismissDecision(e) {
@@ -276,8 +233,8 @@ const Login: React.FC = () => {
 								<TextField
 									id="outlined-email-input"
 									name="username"
-									value={this.state.username}
-									onChange={this.onChange}
+									value={username}
+									onChange={(event)=> setUsername(event.target.value)}
 									label="Email"
 									type="email"
 									autoComplete="email"
@@ -298,8 +255,8 @@ const Login: React.FC = () => {
 								<TextField
 									id="outlined-password-input"
 									name="password"
-									value={this.state.password}
-									onChange={this.onChange}
+									value={password}
+									onChange={(event)=> setPassword(event.target.value)}
 									label="Password"
 									type={this.state.showPassword ? "text" : "password"}
 									autoComplete="password"

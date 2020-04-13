@@ -47,3 +47,12 @@ export const getDecisions = (dispatch: AppDispatch) => {
 		)
 	);
 };
+
+export const changeDecisions = (dispatch: AppDispatch) => {
+	dispatch(
+		AxiosRequest(
+			axios.post(`/api/decisions`),
+			DecisionsSlice.actions.setDecisions.bind(null)
+		)
+	);
+};
