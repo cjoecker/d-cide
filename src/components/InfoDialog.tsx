@@ -18,14 +18,14 @@ const useStyles = makeStyles({
 		top: theme.spacing(1),
 	},
 	text: {
-		paddingTop	: theme.spacing(30),
+		paddingTop: theme.spacing(30),
 		textAlign: "justify",
 	},
 });
 interface Props {
 	text: JSX.Element;
 	show: boolean;
-	onClose:  (() => void);
+	onClose: () => void;
 }
 
 const InfoDialog: React.FC<Props> = (props: Props) => {

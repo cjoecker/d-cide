@@ -1,15 +1,16 @@
 import React from "react";
-import { withStyles } from "@material-ui/core/styles";
+import {makeStyles} from "@material-ui/core/styles";
 import Dialog from "@material-ui/core/Dialog";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import DialogContent from "@material-ui/core/DialogContent";
-import PropTypes from "prop-types";
 import DialogActions from "@material-ui/core/DialogActions";
 import Button from "@material-ui/core/Button";
 import DialogContentText from "@material-ui/core/DialogContentText";
-import Slide from "@material-ui/core/Slide";
+import theme from "../muiTheme";
+import {Slide} from "@material-ui/core";
+import {TransitionProps} from "@material-ui/core/transitions";
 
-const styles = (theme) => ({
+const useStyles = makeStyles({
 	closeButton: {
 		position: "absolute",
 		right: theme.spacing(1),
@@ -20,59 +21,66 @@ const styles = (theme) => ({
 	},
 });
 
-function Transition(props) {
-	return <Slide direction="down" {...props} />;
+interface Props {
+	show: boolean;
+	title: string,
+	message: string,
+	primaryButtonText: string;
+	secondaryButtonText: string;
+	onClickPrimary: (() => void);
+	onClickSecondary: (() => void);
 }
 
-class TwoButtonsDialog extends React.Component {
-	onClickPrimary = () => {
-		this.props.handlePrimary(false);
-	};
+const TwoButtonsDialog: React.FC<Props> = (props: Props) => {
 
-	onClickSecondary = () => {
-		this.props.handleSecondary(false);
-	};
+	const {show, title, message, primaryButtonText, secondaryButtonText, onClickPrimary, onClickSecondary } = props;
+	const classes = useStyles();
 
-	render() {
+
+
 		return (
 			<div>
 				<Dialog
-					open={this.props.show}
+					open={show}
 					TransitionComponent={Transition}
 					disableBackdropClick
 					disableEscapeKeyDown
-					onClose={this.handleClose}
 					aria-labelledby="alert-dialog-slide-title"
 					aria-describedby="alert-dialog-slide-description"
 				>
 					<DialogTitle id="alert-dialog-slide-title">
-						{this.props.title}
+						{title}
 					</DialogTitle>
 					<DialogContent>
 						<DialogContentText id="alert-dialog-slide-description">
-							{this.props.alert}
+							{message}
 						</DialogContentText>
 					</DialogContent>
 					<DialogActions>
-						<Button onClick={this.onClickSecondary} color="secondary">
-							{this.props.secondaryButtonText}
+						<Button onClick={onClickSecondary} color="secondary">
+							{secondaryButtonText}
 						</Button>
 						<Button
 							variant="contained"
 							color="primary"
-							onClick={this.onClickPrimary}
+							onClick={onClickPrimary}
 						>
-							{this.props.primaryButtonText}
+							{primaryButtonText}
 						</Button>
 					</DialogActions>
 				</Dialog>
 			</div>
 		);
-	}
 }
 
-TwoButtonsDialog.propTypes = {
-	classes: PropTypes.object.isRequired,
-};
+export default TwoButtonsDialog;
 
-export default withStyles(styles)(TwoButtonsDialog);
+const Transition = React.forwardRef(function Transition(
+	props: TransitionProps & { children?: React.ReactElement<any, any> },
+	ref: React.Ref<unknown>,
+) {
+	return <Slide direction="up" ref={ref} {...props} />;
+});
+
+
+

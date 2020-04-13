@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import Paper from "@material-ui/core/Paper";
@@ -12,11 +12,14 @@ import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import { useHistory } from "react-router-dom";
-import clsx from 'clsx';
+import clsx from "clsx";
 import TwoButtonsDialog from "../../components/TwoButtonsDialog";
 import { changeDecisions } from "../../services/redux/actionsAndSlicers/DecisionsActions";
 import { RootState } from "../../services/redux/rootReducer";
-import {login, saveTokenCookie} from "../../services/redux/actionsAndSlicers/SessionActions";
+import {
+	login,
+	saveTokenCookie,
+} from "../../services/redux/actionsAndSlicers/SessionActions";
 import theme from "../../muiTheme";
 
 const useStyles = makeStyles({
@@ -49,6 +52,7 @@ const useStyles = makeStyles({
 
 	loginButton: {
 		paddingTop: theme.spacing(3),
+		paddingBottom: theme.spacing(1),
 	},
 
 	signUpText: {
@@ -94,7 +98,9 @@ const Login: React.FC = () => {
 	const [password, setPassword] = useState("");
 	const [showPassword, setShowPassword] = useState(false);
 	const [showSaveDecisionDialog, setShowSaveDecisionDialog] = useState(false);
+	const [startPasswordAnimation, setStartPasswordAnimation] = useState(false);
 
+	const usernameInput = useRef(null);
 	const passwordInput = useRef(null);
 
 
@@ -115,41 +121,34 @@ const Login: React.FC = () => {
 	useEffect(() => {
 		if (user.registeredUser && token !== "") history.push("/decisions");
 		setComponentLoaded(true);
+		usernameInput.current.focus();
 	}, []);
 
 	useEffect(() => {
-		if (user.registeredUser){
+		if (wrongPassword) {
+			if (username === "") usernameInput.current.focus();
+			else passwordInput.current.focus();
+		}
+
+		setStartPasswordAnimation(wrongPassword);
+	}, [wrongPassword]);
+
+	useEffect(() => {
+		if (user.registeredUser) {
 			setShowSaveDecisionDialog(true);
 		}
 	}, [user]);
 
 	useEffect(() => {
-		if (!showSaveDecisionDialog && componentLoaded){
-			saveTokenCookie(token)
+		if (!showSaveDecisionDialog && componentLoaded) {
+			saveTokenCookie(token);
 			history.push("/decisions");
 		}
 	}, [showSaveDecisionDialog]);
 
-	useEffect(() => {
-		passwordInput.current.focus();
-	}, [wrongPassword]);
 
-
-	//TODO wrong password
-	// //wrong password
-	// if (
-	// 	getValueSafe(() => prevProps.errors.password) === null &&
-	// 	getValueSafe(() => this.props.errors.password) !== null
-	// ) {
-	// 	this.setState({
-	// 		wrongPassword: true,
-	// 		password: "",
-	// 	});
-	// 	this.passwordInput.current.focus();
-	// }
 
 	const onSubmitLogin = () => {
-
 		const newUser = {
 			username,
 			password,
@@ -159,6 +158,9 @@ const Login: React.FC = () => {
 	};
 
 	const saveDecision = () => {
+
+		console.log(decisions)
+
 		const newUser = {
 			username,
 			password,
@@ -182,7 +184,7 @@ const Login: React.FC = () => {
 					elevation={2}
 					key="mainPaper"
 					className={clsx(classes.paper, {
-						[classes.animatedItem]: wrongPassword,
+						[classes.animatedItem]: startPasswordAnimation,
 					})}
 				>
 					<Grid
@@ -192,13 +194,11 @@ const Login: React.FC = () => {
 						spacing={0}
 						className={classes.gridContainer}
 					>
-						{/*Title*/}
 						<Grid item xs={12}>
 							<Typography variant="h4" gutterBottom className={classes.title}>
 								LOGIN
 							</Typography>
 						</Grid>
-						{/*Email*/}
 						<Grid item xs={12}>
 							<TextField
 								id="outlined-email-input"
@@ -211,10 +211,9 @@ const Login: React.FC = () => {
 								margin="normal"
 								variant="outlined"
 								className={classes.textField}
+								inputRef={usernameInput}
 							/>
 						</Grid>
-
-						{/*Password*/}
 						<Grid item xs={12} className={classes.textField}>
 							<TextField
 								id="outlined-password-input"
@@ -233,6 +232,7 @@ const Login: React.FC = () => {
 										onSubmitLogin();
 									}
 								}}
+								onFocus={(event) => event.target.select()}
 								inputRef={passwordInput}
 								InputProps={{
 									endAdornment: (
@@ -240,21 +240,15 @@ const Login: React.FC = () => {
 											<IconButton
 												aria-label="Show/Hide password"
 												name="showPassword"
-												onClick={()=>setShowPassword(!showPassword)}
+												onClick={() => setShowPassword(!showPassword)}
 											>
-												{showPassword ? (
-													<VisibilityOff />
-												) : (
-													<Visibility />
-												)}
+												{showPassword ? <VisibilityOff /> : <Visibility />}
 											</IconButton>
 										</InputAdornment>
 									),
 								}}
 							/>
 						</Grid>
-
-						{/*Login Button*/}
 						<Grid item xs={12} className={classes.loginButton}>
 							<Fab
 								color="primary"
@@ -266,8 +260,6 @@ const Login: React.FC = () => {
 								LOGIN
 							</Fab>
 						</Grid>
-
-						{/*SignUp*/}
 						<Grid item xs={12} style={{ textAlign: "center" }}>
 							<Typography
 								variant="body1"
@@ -278,16 +270,14 @@ const Login: React.FC = () => {
 								<Link href="/signUp">Sign up!</Link>
 							</Typography>
 						</Grid>
-
-						{/*Save unlogged decision*/}
 						<TwoButtonsDialog
 							show={showSaveDecisionDialog}
 							title="Save actual decision into your user account?"
-							message="The actual decision you have been working on unlogged can be saved into your user account."
+							message="The actual decision you have been working on, can be saved into your user account."
 							primaryButtonText="Save it!"
 							secondaryButtonText="Dismiss it"
-							handlePrimary={() => saveDecision()}
-							handleSecondary={() => setShowSaveDecisionDialog(false)}
+							onClickPrimary={() => saveDecision()}
+							onClickSecondary={() => setShowSaveDecisionDialog(false)}
 						/>
 					</Grid>
 				</Paper>
