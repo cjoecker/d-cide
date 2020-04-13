@@ -14,7 +14,10 @@ import { makeStyles } from "@material-ui/core/styles";
 import { useHistory } from "react-router-dom";
 import clsx from "clsx";
 import TwoButtonsDialog from "../../components/TwoButtonsDialog";
-import {changeDecisions, getDecisions} from "../../services/redux/actionsAndSlicers/DecisionsActions";
+import {
+	changeDecisions,
+	getDecisions,
+} from "../../services/redux/actionsAndSlicers/DecisionsActions";
 import { RootState } from "../../services/redux/rootReducer";
 import {
 	login,
@@ -103,7 +106,6 @@ const Login: React.FC = () => {
 	const usernameInput = useRef(null);
 	const passwordInput = useRef(null);
 
-
 	const { user, token, wrongPassword } = useSelector(
 		(state: RootState) => state.Session,
 		shallowEqual
@@ -147,8 +149,6 @@ const Login: React.FC = () => {
 		}
 	}, [showSaveDecisionDialog]);
 
-
-
 	const onSubmitLogin = () => {
 		const newUser = {
 			username,
@@ -159,8 +159,7 @@ const Login: React.FC = () => {
 	};
 
 	const saveDecision = () => {
-
-		console.log(decisions)
+		console.log(decisions);
 
 		const newUser = {
 			username,

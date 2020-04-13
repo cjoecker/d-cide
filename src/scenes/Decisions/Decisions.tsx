@@ -1,6 +1,6 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import PropTypes from "prop-types";
-import { withStyles } from "@material-ui/core/styles";
+import {makeStyles, withStyles} from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import InputBase from "@material-ui/core/InputBase";
 import AddIcon from "@material-ui/icons/Add";
@@ -9,7 +9,7 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
-import { connect } from "react-redux";
+import {connect, shallowEqual, useDispatch, useSelector} from "react-redux";
 import {
 	getDecisions,
 	postDecision,
@@ -22,8 +22,11 @@ import Typography from "@material-ui/core/Typography";
 import TwoButtonsDialog from "../../components/TwoButtonsDialog";
 import ReactGA from "react-ga";
 import IconButton from "@material-ui/core/IconButton/IconButton";
+import theme from "../../muiTheme";
+import {RootState} from "../../services/redux/rootReducer";
+import {useHistory} from "react-router-dom";
 
-const styles = (theme) => ({
+const useStyles = makeStyles({
 	divMain: {
 		paddingTop: theme.spacing(8),
 		textAlign: "center",
@@ -57,33 +60,35 @@ const styles = (theme) => ({
 	},
 });
 
-class Decisions extends React.Component {
-	constructor(props) {
-		super(props);
+const App: React.FC = () => {
 
-		this.state = {
-			decisions: [],
-			newEntry: "",
-			isMounted: false,
-			errors: {},
-			showAskBeforeDelete: false,
-			DeleteDecisionNum: "",
-			DeleteDecisionName: "",
-		};
-		this.createDecision = this.createDecision.bind(this);
-		this.deleteDecision = this.deleteDecision.bind(this);
-		this.goToDecision = this.goToDecision.bind(this);
-		this.onChangeDecision = this.onChangeDecision.bind(this);
+	const [newEntry, setNewEntry] = useState("");
+	const [showAskBeforeDelete, setShowAskBeforeDelete] = useState(false);
+	const [componentLoaded, setComponentLoaded] = useState(false);
 
-		this.deleteDecision = this.deleteDecision.bind(this);
-		this.cancelDeleteDecision = this.cancelDeleteDecision.bind(this);
-	}
+	const decisions = useSelector(
+		(state: RootState) => state.Decisions,
+		shallowEqual
+	);
 
-	componentDidMount() {
-		this.props.getDecisions();
+	const { user} = useSelector(
+		(state: RootState) => state.Session,
+		shallowEqual
+	);
 
-		this.setState({ isMounted: true });
-	}
+	const dispatch = useDispatch();
+	const history = useHistory();
+	const classes = useStyles();
+
+	useEffect(() => {
+		getDecisions(dispatch);
+	}, []);
+
+	useEffect(() => {
+		if(!user.registeredUser) history.push(`/decisions/${decisions[0].id}`);
+	}, [decisions]);
+
+	//TODO when to component when component is loaded
 
 	//Refresh when redux state changes
 	componentDidUpdate(prevProps, prevState, snapshot) {
@@ -305,26 +310,4 @@ class Decisions extends React.Component {
 	}
 }
 
-Decisions.propTypes = {
-	classes: PropTypes.object.isRequired,
-	errors: PropTypes.object.isRequired,
-	decision: PropTypes.object.isRequired,
-	security: PropTypes.object.isRequired,
-	getDecisions: PropTypes.func.isRequired,
-	postDecision: PropTypes.func.isRequired,
-	deleteDecision: PropTypes.func.isRequired,
-	putDecision: PropTypes.func.isRequired,
-};
-
-const mapStateToProps = (state) => ({
-	errors: state.errors,
-	decision: state.decision,
-	security: state.security,
-});
-
-export default connect(mapStateToProps, {
-	getDecisions,
-	postDecision,
-	deleteDecision,
-	putDecision,
-})(withStyles(styles)(Decisions));
+export default Decisions
