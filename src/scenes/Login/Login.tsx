@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useRef, useState} from "react";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import Paper from "@material-ui/core/Paper";
@@ -8,25 +8,21 @@ import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 import Link from "@material-ui/core/Link";
 import Fab from "@material-ui/core/Fab";
-import { connect, shallowEqual, useDispatch, useSelector } from "react-redux";
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import Typography from "@material-ui/core/Typography";
+import { makeStyles } from "@material-ui/core/styles";
+import { useHistory } from "react-router-dom";
+import clsx from 'clsx';
 import TwoButtonsDialog from "../../components/TwoButtonsDialog";
 import { changeDecisions } from "../../services/redux/actionsAndSlicers/DecisionsActions";
 import { RootState } from "../../services/redux/rootReducer";
-import { useHistory } from "react-router-dom";
-import { login } from "../../services/redux/actionsAndSlicers/SessionActions";
-import { async } from "rxjs/internal/scheduler/async";
+import {login, saveTokenCookie} from "../../services/redux/actionsAndSlicers/SessionActions";
 import theme from "../../muiTheme";
-import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles({
 	divMain: {
-		paddingTop: theme.spacing(8),
+		paddingTop: theme.spacing(6),
 		textAlign: "center",
-	},
-
-	TitleTypography: {
-		marginTop: theme.spacing(1),
 	},
 
 	gridContainer: {
@@ -38,7 +34,7 @@ const useStyles = makeStyles({
 		margin: theme.spacing(1),
 	},
 
-	TitleGridItem: {
+	title: {
 		paddingTop: theme.spacing(6),
 		paddingBottom: theme.spacing(3),
 	},
@@ -47,17 +43,15 @@ const useStyles = makeStyles({
 		width: "90%",
 	},
 
-	gridItem_textField: {},
-
 	passwordLink: {
 		marginLeft: theme.spacing(3),
 	},
 
-	gridItem_button: {
+	loginButton: {
 		paddingTop: theme.spacing(3),
 	},
 
-	typography_signUp: {
+	signUpText: {
 		padding: theme.spacing(3),
 		textAlign: "center",
 	},
@@ -95,15 +89,16 @@ const useStyles = makeStyles({
 });
 
 const Login: React.FC = () => {
+	const [componentLoaded, setComponentLoaded] = useState(false);
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
-	const [wrongPassword, setWrongPassword] = useState(false);
 	const [showPassword, setShowPassword] = useState(false);
 	const [showSaveDecisionDialog, setShowSaveDecisionDialog] = useState(false);
 
-	const passwordInput = React.createRef();
+	const passwordInput = useRef(null);
 
-	const { user, token } = useSelector(
+
+	const { user, token, wrongPassword } = useSelector(
 		(state: RootState) => state.Session,
 		shallowEqual
 	);
@@ -119,17 +114,26 @@ const Login: React.FC = () => {
 
 	useEffect(() => {
 		if (user.registeredUser && token !== "") history.push("/decisions");
+		setComponentLoaded(true);
 	}, []);
 
 	useEffect(() => {
-		if (user.registeredUser) setShowSaveDecisionDialog(true);
+		if (user.registeredUser){
+			setShowSaveDecisionDialog(true);
+		}
 	}, [user]);
-
-	//TODO save after click save in dialog
 
 	useEffect(() => {
-		if (user.registeredUser) setShowSaveDecisionDialog(true);
-	}, [user]);
+		if (!showSaveDecisionDialog && componentLoaded){
+			saveTokenCookie(token)
+			history.push("/decisions");
+		}
+	}, [showSaveDecisionDialog]);
+
+	useEffect(() => {
+		passwordInput.current.focus();
+	}, [wrongPassword]);
+
 
 	//TODO wrong password
 	// //wrong password
@@ -144,19 +148,18 @@ const Login: React.FC = () => {
 	// 	this.passwordInput.current.focus();
 	// }
 
-	const onSubmit = () => {
-		setWrongPassword(false);
+	const onSubmitLogin = () => {
 
-		const user = {
+		const newUser = {
 			username,
 			password,
 		};
 
-		login(dispatch, user);
+		login(dispatch, newUser);
 	};
 
 	const saveDecision = () => {
-		const user = {
+		const newUser = {
 			username,
 			password,
 		};
@@ -164,10 +167,9 @@ const Login: React.FC = () => {
 		const decision = {
 			id: decisions[0].id,
 			name: decisions[0].name,
-			user: user,
+			user: newUser,
 		};
 
-		//transfer decision to user
 		changeDecisions(dispatch, decision);
 
 		setShowSaveDecisionDialog(false);
@@ -180,7 +182,7 @@ const Login: React.FC = () => {
 					elevation={2}
 					key="mainPaper"
 					className={clsx(classes.paper, {
-						[classes.animatedItem]: this.state.wrongPassword,
+						[classes.animatedItem]: wrongPassword,
 					})}
 				>
 					<Grid
@@ -191,13 +193,13 @@ const Login: React.FC = () => {
 						className={classes.gridContainer}
 					>
 						{/*Title*/}
-						<Grid item xs={12} className={classes.gridItem_title}>
-							<Typography variant="h4" gutterBottom>
+						<Grid item xs={12}>
+							<Typography variant="h4" gutterBottom className={classes.title}>
 								LOGIN
 							</Typography>
 						</Grid>
 						{/*Email*/}
-						<Grid item xs={12} className={classes.gridItem_textField}>
+						<Grid item xs={12}>
 							<TextField
 								id="outlined-email-input"
 								name="username"
@@ -209,17 +211,11 @@ const Login: React.FC = () => {
 								margin="normal"
 								variant="outlined"
 								className={classes.textField}
-								onKeyPress={(event) => {
-									if (event.key === "Enter") {
-										event.preventDefault();
-										this.onSubmit();
-									}
-								}}
 							/>
 						</Grid>
 
 						{/*Password*/}
-						<Grid item xs={12} className={classes.gridItem_textField}>
+						<Grid item xs={12} className={classes.textField}>
 							<TextField
 								id="outlined-password-input"
 								name="password"
@@ -234,19 +230,19 @@ const Login: React.FC = () => {
 								onKeyPress={(event) => {
 									if (event.key === "Enter") {
 										event.preventDefault();
-										this.onSubmit();
+										onSubmitLogin();
 									}
 								}}
-								inputRef={this.passwordInput}
+								inputRef={passwordInput}
 								InputProps={{
 									endAdornment: (
 										<InputAdornment position="end">
 											<IconButton
 												aria-label="Show/Hide password"
 												name="showPassword"
-												onClick={this.onToggleShowPass}
+												onClick={()=>setShowPassword(!showPassword)}
 											>
-												{this.state.showPassword ? (
+												{showPassword ? (
 													<VisibilityOff />
 												) : (
 													<Visibility />
@@ -259,13 +255,13 @@ const Login: React.FC = () => {
 						</Grid>
 
 						{/*Login Button*/}
-						<Grid item xs={12} className={classes.gridItem_button}>
+						<Grid item xs={12} className={classes.loginButton}>
 							<Fab
 								color="primary"
 								variant="extended"
 								aria-label="Login"
 								className={classes.textField}
-								onClick={this.onSubmit}
+								onClick={onSubmitLogin}
 							>
 								LOGIN
 							</Fab>
@@ -275,11 +271,11 @@ const Login: React.FC = () => {
 						<Grid item xs={12} style={{ textAlign: "center" }}>
 							<Typography
 								variant="body1"
-								className={classes.typography_signUp}
+								className={classes.signUpText}
 								gutterBottom
 							>
 								Don't have an account? &nbsp;
-								<Link href={"/signUp"}>Sign up!</Link>
+								<Link href="/signUp">Sign up!</Link>
 							</Typography>
 						</Grid>
 
@@ -290,8 +286,8 @@ const Login: React.FC = () => {
 							message="The actual decision you have been working on unlogged can be saved into your user account."
 							primaryButtonText="Save it!"
 							secondaryButtonText="Dismiss it"
-							handlePrimary={(e) => this.saveDecision(e)}
-							handleSecondary={(e) => this.dismissDecision(e)}
+							handlePrimary={() => saveDecision()}
+							handleSecondary={() => setShowSaveDecisionDialog(false)}
 						/>
 					</Grid>
 				</Paper>

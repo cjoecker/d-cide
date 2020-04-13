@@ -19,6 +19,7 @@ export interface LoginResponse {
 	token: string;
 }
 
+
 export const login = (
 	dispatch: AppDispatch,
 	loginRequest: LoginRequest
@@ -26,7 +27,7 @@ export const login = (
 	dispatch(
 		AxiosRequest(
 			axios.post<LoginResponse>("/api/sessions/", loginRequest),
-			SessionSlice.actions.setUser.bind(null),
+			SessionSlice.actions.setSession.bind(null),
 			null,
 			resetWrongPasswordAnimation.bind(null)
 		)
@@ -34,20 +35,21 @@ export const login = (
 };
 
 export const logout = (dispatch: AppDispatch) => {
-	dispatch(SessionSlice.actions.deleteUser);
-	deleteToken(dispatch);
+	dispatch(SessionSlice.actions.deleteSession);
+	deleteTokenCookie();
 };
 
 export const createUnregisteredUser = (dispatch: AppDispatch) => {
 	dispatch(
 		AxiosRequest(
 			axios.post<LoginResponse>("/api/sessions/unregistered"),
-			SessionSlice.actions.setUser.bind(null),
-			saveUnregisteredToken.bind(null),
+			SessionSlice.actions.setSession.bind(null),
+			saveCookieAfterLogin.bind(null),
 			null
 		)
 	);
 };
+
 
 // TODO: needs to be tested
 export const signUp = (dispatch: AppDispatch, newUser: SignUpRequest) => {
@@ -58,36 +60,6 @@ export const signUp = (dispatch: AppDispatch, newUser: SignUpRequest) => {
 		)
 	);
 };
-
-
-const saveUnregisteredToken: SuccessExtraActionType = (
-	dispatch,
-	answer: AxiosResponse<LoginResponse>
-) => {
-	saveToken(dispatch, answer.data.token);
-};
-
-const saveToken = (dispatch: AppDispatch, token: string) => {
-	localStorage.setItem("token", token);
-	axios.defaults.headers.common.Authorization = token;
-	dispatch(SessionSlice.actions.setToken(token));
-};
-const deleteToken = (dispatch: AppDispatch) => {
-	localStorage.removeItem("token");
-	delete axios.defaults.headers.common.Authorization;
-	dispatch(SessionSlice.actions.deleteToken());
-};
-
-const resetWrongPasswordAnimation: ErrorActionType = (dispatch, error) => {
-	if (error.response?.data.password != null) {
-		dispatch(SessionSlice.actions.setWrongPassword(false));
-		dispatch(SessionSlice.actions.setWrongPassword(true));
-	} else {
-		showHTTPAlert(dispatch, error);
-	}
-};
-
-
 
 export interface SignUpRequest {
 	username: string;
@@ -103,7 +75,30 @@ export interface SignUpResponse {
 	fullName: string;
 }
 
+export const saveTokenCookie = (token: string) => {
+	localStorage.setItem("token", token);
+	axios.defaults.headers.common.Authorization = token;
+};
+const deleteTokenCookie = () => {
+	localStorage.removeItem("token");
+	delete axios.defaults.headers.common.Authorization;
+};
 
+const saveCookieAfterLogin: SuccessExtraActionType = (
+	dispatch,
+	answer: AxiosResponse<LoginResponse>
+) => {
+	saveTokenCookie(answer.data.token);
+};
+
+const resetWrongPasswordAnimation: ErrorActionType = (dispatch, error) => {
+	if (error.response?.data.password != null) {
+		dispatch(SessionSlice.actions.setWrongPassword(false));
+		dispatch(SessionSlice.actions.setWrongPassword(true));
+	} else {
+		showHTTPAlert(dispatch, error);
+	}
+};
 
 
 export const verifyToken = (token: string) => {
@@ -114,15 +109,13 @@ export const verifyToken = (token: string) => {
 
 	if (decodedToken.exp < currentTime) {
 		logout(store.dispatch);
+	} else {
+		const tokenResponse: LoginResponse = {
+			success: true,
+			token,
+		};
+
+		SessionSlice.actions.setSession(tokenResponse);
+		saveTokenCookie(token);
 	}
-	// else {
-	// 	const tokenResponse: LoginResponse = {
-	// 		success: true,
-	// 		token,
-	// 	};
-	//
-	// 	SessionSlice.actions.setUser(tokenResponse);
-	// 	SessionSlice.actions.setUser(tokenResponse);
-	// 	saveToken(token);
-	// }
 };

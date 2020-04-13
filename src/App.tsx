@@ -41,6 +41,7 @@ import AlertsBanner from "./components/AlertsBanner";
 import theme from "./muiTheme";
 import dcideLogo from "./images/d-cide_Logo.svg";
 import { verifyToken } from "./services/redux/actionsAndSlicers/SessionActions";
+import Login from "./scenes/Login/Login";
 
 const { token } = localStorage;
 
@@ -213,7 +214,7 @@ const App: React.FC = () => {
 							{/*	/!*Public Scenes*!/*/}
 							<Route exact path="/" component={LandingPage} />
 							{/*<Route component={NotFound} />*/}
-							{/*	<Route exact path="/login" component={Login} />*/}
+								<Route exact path="/login" component={Login} />
 							{/*	<Route exact path="/signUp" component={SignUp} />*/}
 
 							{/*	/!*Private Scenes*!/*/}
