@@ -107,12 +107,23 @@ const App: React.FC = () => {
 		(state: RootState) => state.App,
 		shallowEqual
 	);
+
 	const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+
+	const { user } = useSelector(
+		(state: RootState) => state.Session,
+		shallowEqual
+	);
+
 	const classes = useStyles();
 	const dispatch = useDispatch();
 
 	const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-		setAnchorEl(event.currentTarget);
+		if (user.registeredUser) {
+			setAnchorEl(event.currentTarget);
+		} else {
+			history.push("/login");
+		}
 	};
 
 	const handleClose = () => {
@@ -127,15 +138,6 @@ const App: React.FC = () => {
 	// 	this.props.logout();
 	// }
 	//
-	// handleClick(event) {
-	// 	//show menu for registered user
-	// 	if (getValueSafe(() => this.props.security.user.registeredUser === true)) {
-	// 		this.setState({ anchorEl: event.currentTarget });
-	// 	} else {
-	// 		//go to login for unregistered users
-	// 		history.push("/login");
-	// 	}
-	// }
 	//
 	// handleClose() {
 	// 	this.setState({ anchorEl: null });
@@ -193,10 +195,7 @@ const App: React.FC = () => {
 
 							<IconButton
 								className={classes.icon}
-								// onClick={handleClick}
-								onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-									getDecisions(dispatch);
-								}}
+								onClick={handleClick}
 								color="inherit"
 							>
 								<AccountCircleIcon />
