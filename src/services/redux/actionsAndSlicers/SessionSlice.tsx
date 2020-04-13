@@ -37,20 +37,21 @@ const SessionSlice = createSlice({
 	name: "Session",
 	initialState,
 	reducers: {
-		setSession(state, action: PayloadAction<LoginResponse>) {
-			state.token = action.payload.token;
+		setUser(state, action: PayloadAction<LoginResponse>) {
 			state.user = jwt_decode(action.payload.token);
 			state.wrongPassword = false;
 		},
-		deleteSession(state) {
-			state.token = "";
+		setToken(state, action: PayloadAction<string>) {
+			state.token = action.payload;
+		},
+		deleteUser(state) {
 			state.user = initialState.user;
 			state.wrongPassword = false;
 		},
-		setToken(state, action: PayloadAction<string>) {
-			//TODO: check if at the end of refactoring, this is necessary
-			state.token = action.payload;
+		deleteToken(state) {
+			state.token = initialState.token;
 		},
+
 		setSignUpSuccessful(state, action: PayloadAction<boolean>) {
 			state.signUpSuccessful = !action.payload;
 		},

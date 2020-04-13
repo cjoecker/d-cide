@@ -19,22 +19,63 @@ export interface LoginResponse {
 	token: string;
 }
 
-//TODO put small methods at the end
-
-const saveTokenCookie = (token: string) => {
-	localStorage.setItem("token", token);
-	axios.defaults.headers.common.Authorization = token;
+export const login = (
+	dispatch: AppDispatch,
+	loginRequest: LoginRequest
+) => {
+	dispatch(
+		AxiosRequest(
+			axios.post<LoginResponse>("/api/sessions/", loginRequest),
+			SessionSlice.actions.setUser.bind(null),
+			null,
+			resetWrongPasswordAnimation.bind(null)
+		)
+	);
 };
-const deleteTokenCookie = () => {
-	localStorage.removeItem("token");
-	delete axios.defaults.headers.common.Authorization;
+
+export const logout = (dispatch: AppDispatch) => {
+	dispatch(SessionSlice.actions.deleteUser);
+	deleteToken(dispatch);
 };
 
-const loginSuccessful: SuccessExtraActionType = (
+export const createUnregisteredUser = (dispatch: AppDispatch) => {
+	dispatch(
+		AxiosRequest(
+			axios.post<LoginResponse>("/api/sessions/unregistered"),
+			SessionSlice.actions.setUser.bind(null),
+			saveUnregisteredToken.bind(null),
+			null
+		)
+	);
+};
+
+// TODO: needs to be tested
+export const signUp = (dispatch: AppDispatch, newUser: SignUpRequest) => {
+	dispatch(
+		AxiosRequest(
+			axios.post<SignUpResponse>("/api/users/", newUser),
+			SessionSlice.actions.setSignUpSuccessful.bind(null)
+		)
+	);
+};
+
+
+const saveUnregisteredToken: SuccessExtraActionType = (
 	dispatch,
 	answer: AxiosResponse<LoginResponse>
 ) => {
-	saveTokenCookie(answer.data.token);
+	saveToken(dispatch, answer.data.token);
+};
+
+const saveToken = (dispatch: AppDispatch, token: string) => {
+	localStorage.setItem("token", token);
+	axios.defaults.headers.common.Authorization = token;
+	dispatch(SessionSlice.actions.setToken(token));
+};
+const deleteToken = (dispatch: AppDispatch) => {
+	localStorage.removeItem("token");
+	delete axios.defaults.headers.common.Authorization;
+	dispatch(SessionSlice.actions.deleteToken());
 };
 
 const resetWrongPasswordAnimation: ErrorActionType = (dispatch, error) => {
@@ -46,35 +87,7 @@ const resetWrongPasswordAnimation: ErrorActionType = (dispatch, error) => {
 	}
 };
 
-export const login = (
-	dispatch: AppDispatch,
-	loginRequest: LoginRequest
-) => {
-	dispatch(
-		AxiosRequest(
-			axios.post<LoginResponse>("/api/sessions/", loginRequest),
-			SessionSlice.actions.setSession.bind(null),
-			loginSuccessful.bind(null),
-			resetWrongPasswordAnimation.bind(null)
-		)
-	);
-};
 
-export const logout = (dispatch: AppDispatch) => {
-	dispatch(SessionSlice.actions.deleteSession);
-	deleteTokenCookie();
-};
-
-export const createUnregisteredUser = (dispatch: AppDispatch) => {
-	dispatch(
-		AxiosRequest(
-			axios.post<LoginResponse>("/api/sessions/unregistered"),
-			SessionSlice.actions.setSession.bind(null),
-			loginSuccessful.bind(null),
-			null
-		)
-	);
-};
 
 export interface SignUpRequest {
 	username: string;
@@ -90,15 +103,8 @@ export interface SignUpResponse {
 	fullName: string;
 }
 
-// TODO: needs to be tested
-export const signUp = (dispatch: AppDispatch, newUser: SignUpRequest) => {
-	dispatch(
-		AxiosRequest(
-			axios.post<SignUpResponse>("/api/users/", newUser),
-			SessionSlice.actions.setSignUpSuccessful.bind(null)
-		)
-	);
-};
+
+
 
 export const verifyToken = (token: string) => {
 	if (token === "" || token === undefined) return;
@@ -108,13 +114,15 @@ export const verifyToken = (token: string) => {
 
 	if (decodedToken.exp < currentTime) {
 		logout(store.dispatch);
-	} else {
-		const tokenResponse: LoginResponse = {
-			success: true,
-			token,
-		};
-
-		SessionSlice.actions.setSession(tokenResponse);
-		saveTokenCookie(token);
 	}
+	// else {
+	// 	const tokenResponse: LoginResponse = {
+	// 		success: true,
+	// 		token,
+	// 	};
+	//
+	// 	SessionSlice.actions.setUser(tokenResponse);
+	// 	SessionSlice.actions.setUser(tokenResponse);
+	// 	saveToken(token);
+	// }
 };

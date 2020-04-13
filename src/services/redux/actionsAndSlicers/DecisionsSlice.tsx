@@ -4,8 +4,13 @@ import {RootState} from "../rootReducer";
 export type Decision = {
 	id: number;
 	name: string;
+	user?: user;
 };
 
+type user ={
+	username: string;
+	password: string;
+}
 
 const DecisionsSlice = createSlice({
 	name: "Decision",
