@@ -14,7 +14,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { useHistory } from "react-router-dom";
 import clsx from "clsx";
 import TwoButtonsDialog from "../../components/TwoButtonsDialog";
-import { changeDecisions } from "../../services/redux/actionsAndSlicers/DecisionsActions";
+import {changeDecisions, getDecisions} from "../../services/redux/actionsAndSlicers/DecisionsActions";
 import { RootState } from "../../services/redux/rootReducer";
 import {
 	login,
@@ -120,7 +120,7 @@ const Login: React.FC = () => {
 
 	useEffect(() => {
 		if (user.registeredUser && token !== "") history.push("/decisions");
-		if (!user.registeredUser && decisions.length === 0) history.push("/decisions");
+		if (!user.registeredUser && decisions.length === 0) getDecisions(dispatch);
 		usernameInput.current.focus();
 		setComponentLoaded(true);
 	}, []);
@@ -274,7 +274,7 @@ const Login: React.FC = () => {
 						<TwoButtonsDialog
 							show={showSaveDecisionDialog}
 							title="Save actual decision into your user account?"
-							message="The actual decision you have been working on, can be saved into your user account."
+							message="The decision you have been working on can be saved into your user account."
 							primaryButtonText="Save it!"
 							secondaryButtonText="Dismiss it"
 							onClickPrimary={() => saveDecision()}
