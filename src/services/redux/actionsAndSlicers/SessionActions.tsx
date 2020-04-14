@@ -115,7 +115,7 @@ export const verifyToken = (token: string) => {
 			token,
 		};
 
-		SessionSlice.actions.setSession(tokenResponse);
+		store.dispatch(SessionSlice.actions.setSession(tokenResponse));
 		saveTokenCookie(token);
 	}
 };

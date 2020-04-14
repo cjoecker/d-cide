@@ -1,17 +1,13 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector, shallowEqual } from "react-redux";
 import { RootState } from "../services/redux/rootReducer";
-// import {getUnregisteredUser} from "../services/redux/Sessions_Actions";
-// import {WithStyles} from "@material-ui/core/styles";
 import { useHistory } from "react-router-dom";
 import { getDecisions } from "../services/redux/actionsAndSlicers/DecisionsActions";
 import { createUnregisteredUser } from "../services/redux/actionsAndSlicers/SessionActions";
 
 
-//TODO Make this a function and not a component
-interface Props {}
 
-const LandingPage: React.FC<Props> = (props: Props) => {
+const LandingPage: React.FC = () => {
 
 	const { token } = useSelector(
 		(state: RootState) => state.Session,
@@ -34,10 +30,10 @@ const LandingPage: React.FC<Props> = (props: Props) => {
 		if (token === "") {
 			createUnregisteredUser(dispatch);
 		} else if (user.registeredUser) {
-				history.push("/decisions");
-			} else {
-				getDecisions(dispatch);
-			}
+			history.push("/decisions");
+		} else {
+			getDecisions(dispatch);
+		}
 	}, []);
 
 	useEffect(() => {
