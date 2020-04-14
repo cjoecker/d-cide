@@ -32,26 +32,27 @@ const useStyles = makeStyles({
 		textAlign: "center",
 	},
 
-	gridItemPaper: {
-		maxWidth: theme.spacing(63),
+	gridContainer: {
+		maxWidth: theme.spacing(70),
+		marginLeft: theme.spacing(1),
+		marginRight: theme.spacing(3),
+	},
+
+	gridItemNewEntry: {
+		marginBottom: theme.spacing(2.5),
 	},
 
 	decisionsNegativeMargin: {
 		marginTop: -theme.spacing(1),
 	},
 
-	gridButtons: {
-		maxWidth: theme.spacing(7),
-		marginLeft: theme.spacing(0.5),
+	buttons: {
+		marginLeft: theme.spacing(1),
 	},
 
 	paperNewDecision: {
 		marginTop: theme.spacing(1),
 		marginBottom: theme.spacing(1),
-	},
-
-	gridItemDecisions: {
-		marginTop: theme.spacing(2),
 	},
 
 	paperButtons: {
@@ -145,7 +146,7 @@ const Decisions: React.FC = () => {
 
 	const onDismissDeleteDecision = () => {
 		setLocalDecisions(decisions);
-		setShowAskBeforeDelete(false)
+		setShowAskBeforeDelete(false);
 	};
 
 	const showDeleteDialog = (decision: Decision) => {
@@ -158,8 +159,11 @@ const Decisions: React.FC = () => {
 			<Typography variant="h3" gutterBottom>
 				Decisions
 			</Typography>
-			<Grid container justify="center" alignItems="center">
-				<Grid item xs={11} className={classes.gridItemPaper}>
+			<Grid container justify="center">
+			<Grid container
+				  justify="center"
+				  alignItems="center" className={classes.gridContainer}>
+				<Grid item xs={11} className={classes.gridItemNewEntry}>
 					<List>
 						<Paper
 							elevation={2}
@@ -185,8 +189,9 @@ const Decisions: React.FC = () => {
 						</Paper>
 					</List>
 				</Grid>
-				<Grid item xs={1} className={classes.gridButtons}>
+				<Grid item xs={1} className={classes.gridItemNewEntry}>
 					<Fab
+						className={classes.buttons}
 						size="small"
 						color="primary"
 						aria-label="Add"
@@ -195,63 +200,53 @@ const Decisions: React.FC = () => {
 						<AddIcon />
 					</Fab>
 				</Grid>
-
-				<Grid item xs={12} className={classes.gridItemDecisions}>
-					{localDecisions.map((decision) => (
-						<Grid container justify="center" alignItems="center" key={decision.id}>
-							<Grid
-								item
-								xs={11}
-								className={`${classes.gridItemPaper} ${classes.decisionsNegativeMargin}`}
-							>
-								<List>
-									<Paper elevation={2} key={decision.id}>
-										<ListItem>
-											<InputBase
-												multiline
-												className={classes.inputBaseExistingItems}
-												value={decision.name}
-												onChange={(event) => onChangeDecision(event, decision.id)}
-												onBlur={() => onLeaveDecision(decision)}
-												onKeyPress={(event) => {
-													if (event.key === "Enter") {
-														event.preventDefault();
-														if (document.activeElement instanceof HTMLElement) {
-															document.activeElement.blur();
-														}
+				{localDecisions.map((decision) => (
+					<React.Fragment>
+						<Grid item xs={11} className={classes.decisionsNegativeMargin}>
+							<List>
+								<Paper elevation={2} key={decision.id}>
+									<ListItem>
+										<InputBase
+											multiline
+											className={classes.inputBaseExistingItems}
+											value={decision.name}
+											onChange={(event) => onChangeDecision(event, decision.id)}
+											onBlur={() => onLeaveDecision(decision)}
+											onKeyPress={(event) => {
+												if (event.key === "Enter") {
+													event.preventDefault();
+													if (document.activeElement instanceof HTMLElement) {
+														document.activeElement.blur();
 													}
-												}}
-											/>
-											<ListItemSecondaryAction>
-												<IconButton
-													aria-label="Delete"
-													onClick={() => showDeleteDialog(decision)}
-													className={classes.paperButtons}
-												>
-													<DeleteIcon />
-												</IconButton>
-											</ListItemSecondaryAction>
-										</ListItem>
-									</Paper>
-								</List>
-							</Grid>
-							<Grid
-								item
-								xs={1}
-								className={`${classes.gridButtons} ${classes.decisionsNegativeMargin}`}
-							>
-								<Fab
-									size="small"
-									color="primary"
-									aria-label="Work on Decision"
-									onClick={() => history.push(`/decisions/${decision.id}`)}
-								>
-									<ArrowForwardIcon />
-								</Fab>
-							</Grid>
+												}
+											}}
+										/>
+										<ListItemSecondaryAction>
+											<IconButton
+												aria-label="Delete"
+												onClick={() => showDeleteDialog(decision)}
+												className={classes.paperButtons}
+											>
+												<DeleteIcon />
+											</IconButton>
+										</ListItemSecondaryAction>
+									</ListItem>
+								</Paper>
+							</List>
 						</Grid>
-					))}
-				</Grid>
+						<Grid item xs={1} className={classes.decisionsNegativeMargin}>
+							<Fab
+								className={classes.buttons}
+								size="small"
+								color="primary"
+								aria-label="Work on Decision"
+								onClick={() => history.push(`/decisions/${decision.id}`)}
+							>
+								<ArrowForwardIcon />
+							</Fab>
+						</Grid>
+					</React.Fragment>
+				))}
 			</Grid>
 			<TwoButtonsDialog
 				show={showAskBeforeDelete}
@@ -262,6 +257,7 @@ const Decisions: React.FC = () => {
 				onClickPrimary={onDeleteDecision}
 				onClickSecondary={onDismissDeleteDecision}
 			/>
+			</Grid>
 		</div>
 	);
 };
