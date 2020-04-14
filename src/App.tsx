@@ -26,7 +26,7 @@ import Decision from "./scenes/Decision/Decision";
 import AlertsBanner from "./components/AlertsBanner";
 import theme from "./muiTheme";
 import dcideLogo from "./images/d-cide_Logo.svg";
-import {verifyToken} from "./services/redux/actionsAndSlicers/SessionActions";
+import {logout, verifyToken} from "./services/redux/actionsAndSlicers/SessionActions";
 import Login from "./scenes/Login/Login";
 import Decisions from "./scenes/Decisions/Decisions";
 
@@ -152,7 +152,7 @@ const App: React.FC = () => {
             </Link>
             <Divider/>
             {/*TODO replace Link with button*/}
-            <Link onClick={handleClose} style={{textDecoration: "none"}}>
+            <Link onClick={()=>logout(dispatch)} style={{textDecoration: "none"}}>
                 <MenuItem>
                     <ListItemIcon>
                         <ExitToAppIcon/>

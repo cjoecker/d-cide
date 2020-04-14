@@ -35,7 +35,7 @@ export const login = (
 };
 
 export const logout = (dispatch: AppDispatch) => {
-	dispatch(SessionSlice.actions.deleteSession);
+	dispatch(SessionSlice.actions.deleteSession());
 	deleteTokenCookie();
 };
 
