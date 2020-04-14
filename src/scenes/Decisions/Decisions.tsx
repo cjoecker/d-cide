@@ -198,7 +198,7 @@ const Decisions: React.FC = () => {
 
 				<Grid item xs={12} className={classes.gridItemDecisions}>
 					{localDecisions.map((decision) => (
-						<Grid container justify="center" alignItems="center">
+						<Grid container justify="center" alignItems="center" key={decision.id}>
 							<Grid
 								item
 								xs={11}
