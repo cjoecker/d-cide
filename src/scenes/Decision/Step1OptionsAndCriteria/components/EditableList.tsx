@@ -64,6 +64,7 @@ const EditableList: React.FC<Props> = (props: Props) => {
 	const { decisionId } = useParams();
 	const { hidden, itemsKey } = props;
 
+	const [didMount, setDidMount] = useState(false);
 	const [newEntry, setNewEntry] = useState("");
 	const [localItems, setLocalItems] = useState<OptionAndCriteria[]>([]);
 	const [stopAnimation, setStopAnimation] = useState(false);
@@ -80,8 +81,10 @@ const EditableList: React.FC<Props> = (props: Props) => {
 	//TODO alerts needs to be created here
 
 	useEffect(() => {
-		if (!hidden)
+		if (!hidden){
 			getOptionsAndCriteria(dispatch, decisionId, itemsKey, false);
+			setDidMount(true);
+		}
 		else {
 			setLocalItems([]);
 			setStopAnimation(false);
@@ -89,7 +92,7 @@ const EditableList: React.FC<Props> = (props: Props) => {
 	}, [hidden]);
 
 	useEffect(() => {
-		if (items.length !== localItems.length && !hidden)
+		if (items.length !== localItems.length && !hidden && didMount)
 			setLocalItems(items);
 	}, [items]);
 

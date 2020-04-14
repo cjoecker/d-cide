@@ -72,7 +72,7 @@ const useStyles = makeStyles({
 });
 
 const Decisions: React.FC = () => {
-	const [componentLoaded, setComponentLoaded] = useState(false);
+	const [didMount, setDidMount] = useState(false);
 	const [newEntry, setNewEntry] = useState("");
 	const [showAskBeforeDelete, setShowAskBeforeDelete] = useState(false);
 	const [decisionToBeDeleted, setDecisionToBeDeleted] = useState<Decision>({
@@ -97,15 +97,15 @@ const Decisions: React.FC = () => {
 
 	useEffect(() => {
 		getDecisions(dispatch);
-		setComponentLoaded(true);
+		setDidMount(true);
 	}, []);
 
 	useEffect(() => {
-		if (componentLoaded && !user.registeredUser)
+		if (didMount && !user.registeredUser)
 			history.push(`/decisions/${decisions[0].id}`);
 
 		if (localDecisions.length > 1 && decisions.length > 0) {
-			if (componentLoaded && localDecisions[0].id == decisions[1].id)
+			if (didMount && localDecisions[0].id == decisions[1].id)
 				history.push(`/decisions/${decisions[0].id}`);
 		}
 

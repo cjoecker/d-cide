@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import Step from "@material-ui/core/Step";
 import Stepper from "@material-ui/core/Stepper";
 import StepButton from "@material-ui/core/StepButton";
@@ -77,6 +77,13 @@ const Decision: React.FC = () => {
 	]);
 
 	const classes = useStyles();
+
+	useEffect(() => {
+		return () => {
+			setActiveStepNum(0)
+		};
+	}, []);
+
 
 	const setStepCompleted = (stepNumber: number) => {
 		const newSteps = [...steps];

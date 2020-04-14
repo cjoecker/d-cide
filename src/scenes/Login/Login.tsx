@@ -96,7 +96,7 @@ const useStyles = makeStyles({
 });
 
 const Login: React.FC = () => {
-	const [componentLoaded, setComponentLoaded] = useState(false);
+	const [didMount, setDidMount] = useState(false);
 	const [username, setUsername] = useState("");
 	const [password, setPassword] = useState("");
 	const [showPassword, setShowPassword] = useState(false);
@@ -124,7 +124,7 @@ const Login: React.FC = () => {
 		if (user.registeredUser && token !== "") history.push("/decisions");
 		if (!user.registeredUser && decisions.length === 0) getDecisions(dispatch);
 		usernameInput.current.focus();
-		setComponentLoaded(true);
+		setDidMount(true);
 	}, []);
 
 	useEffect(() => {
@@ -143,7 +143,7 @@ const Login: React.FC = () => {
 	}, [user]);
 
 	useEffect(() => {
-		if (!showSaveDecisionDialog && componentLoaded) {
+		if (!showSaveDecisionDialog && didMount) {
 			saveTokenCookie(token);
 			history.push("/decisions");
 		}
