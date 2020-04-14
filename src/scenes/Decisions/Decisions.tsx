@@ -29,12 +29,8 @@ import { deleteOptionsAndCriteria } from "../../services/redux/actionsAndSlicers
 
 const useStyles = makeStyles({
 	divMain: {
-		paddingTop: theme.spacing(6),
+		paddingTop: theme.spacing(7),
 		textAlign: "center",
-	},
-
-	title: {
-		marginTop: theme.spacing(1),
 	},
 
 	gridItemPaper: {
@@ -165,7 +161,7 @@ const Decisions: React.FC = () => {
 
 	return (
 		<div className={classes.divMain}>
-			<Typography variant="h3" className={classes.title} gutterBottom>
+			<Typography variant="h3" gutterBottom>
 				Decisions
 			</Typography>
 			<Grid container justify="center" alignItems="center">
