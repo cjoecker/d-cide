@@ -105,7 +105,7 @@ const App: React.FC = () => {
     const classes = useStyles();
     const dispatch = useDispatch();
 
-    const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    const onClickUser = (event: React.MouseEvent<HTMLButtonElement>) => {
         if (user.registeredUser)
             setAnchorEl(event.currentTarget);
         else
@@ -113,22 +113,19 @@ const App: React.FC = () => {
 
     };
 
+    const onClickDecisions = () => {
+        history.push("/decisions");
+        handleClose()
+    };
+
+    const onClickLogout = () => {
+        logout(dispatch)
+        handleClose()
+    };
+
     const handleClose = () => {
         setAnchorEl(null);
     };
-
-    // componentDidMount() {
-    // 	ReactGA.pageview(window.location.pathname);
-    // }
-    //
-    // logout() {
-    // 	this.props.logout();
-    // }
-    //
-    //
-    // handleClose() {
-    // 	this.setState({ anchorEl: null });
-    // }
 
     ReactGA.initialize("UA-139517059-1");
 
@@ -142,7 +139,7 @@ const App: React.FC = () => {
             onClick={handleClose}
             disableAutoFocusItem
         >
-            <Link href="/decisions" style={{textDecoration: "none"}}>
+            <Link onClick={onClickDecisions} style={{textDecoration: "none"}}>
                 <MenuItem>
                     <ListItemIcon>
                         <ListAltIcon/>
@@ -152,7 +149,7 @@ const App: React.FC = () => {
             </Link>
             <Divider/>
             {/*TODO replace Link with button*/}
-            <Link onClick={()=>logout(dispatch)} style={{textDecoration: "none"}}>
+            <Link onClick={onClickLogout} style={{textDecoration: "none"}}>
                 <MenuItem>
                     <ListItemIcon>
                         <ExitToAppIcon/>
@@ -182,7 +179,7 @@ const App: React.FC = () => {
 
                             <IconButton
                                 className={classes.icon}
-                                onClick={handleClick}
+                                onClick={onClickUser}
                                 color="inherit"
                             >
                                 <AccountCircleIcon/>
