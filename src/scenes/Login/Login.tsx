@@ -275,8 +275,8 @@ const Login: React.FC = () => {
 						</Grid>
 						<TwoButtonsDialog
 							show={showSaveDecisionDialog}
-							title="Save actual decision into your user account?"
-							message="The decision you have been working on can be saved into your user account."
+							title="Save actual decision in your user account?"
+							message="The decision you have been working on can be saved in your user account."
 							primaryButtonText="Save it!"
 							secondaryButtonText="Dismiss it"
 							onClickPrimary={() => saveDecision()}

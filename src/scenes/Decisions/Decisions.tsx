@@ -102,7 +102,7 @@ const Decisions: React.FC = () => {
 		if (didMount && !user.registeredUser)
 			history.push(`/decisions/${decisions[0].id}`);
 
-		if (localDecisions.length > 1 && decisions.length > 0) {
+		if (localDecisions.length > 0 && decisions.length > 1) {
 			if (didMount && localDecisions[0].id == decisions[1].id)
 				history.push(`/decisions/${decisions[0].id}`);
 		}
