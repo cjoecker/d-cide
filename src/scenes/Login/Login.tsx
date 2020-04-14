@@ -122,7 +122,7 @@ const Login: React.FC = () => {
 
 	useEffect(() => {
 		if (user.registeredUser && token !== "") history.push("/decisions");
-		if (!user.registeredUser && decisions.length === 0) getDecisions(dispatch);
+		if (!user.registeredUser && decisions.length === 0 && user.id !== 0) getDecisions(dispatch);
 		usernameInput.current.focus();
 		setDidMount(true);
 	}, []);
