@@ -29,6 +29,7 @@ import dcideLogo from "./images/d-cide_Logo.svg";
 import {logout, verifyToken} from "./services/redux/actionsAndSlicers/SessionActions";
 import Login from "./scenes/Login/Login";
 import Decisions from "./scenes/Decisions/Decisions";
+import PrivateRoute from "./services/PrivateRoute";
 
 const {token} = localStorage;
 
@@ -148,7 +149,6 @@ const App: React.FC = () => {
                 </MenuItem>
             </Link>
             <Divider/>
-            {/*TODO replace Link with button*/}
             <Link onClick={onClickLogout} style={{textDecoration: "none"}}>
                 <MenuItem>
                     <ListItemIcon>
@@ -199,10 +199,8 @@ const App: React.FC = () => {
                             {/*<Route component={NotFound} />*/}
                             <Route exact path="/login" component={Login}/>
                             {/*	<Route exact path="/signUp" component={SignUp} />*/}
-
-                            {/*	/!*TODO Private Scenes*!/*/}
-                            	<Route exact path="/decisions" component={Decisions} />
-                            <Route exact path="/decisions/:decisionId" component={Decision}/>
+                            <PrivateRoute exact path="/decisions" component={Decisions} />
+                            <PrivateRoute exact path="/decisions/:decisionId" component={Decision}/>
                         </Switch>
                     </div>
                     <AlertsBanner/>
