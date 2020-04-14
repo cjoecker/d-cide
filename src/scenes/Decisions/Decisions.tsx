@@ -26,6 +26,7 @@ import { RootState } from "../../services/redux/rootReducer";
 import { useHistory } from "react-router-dom";
 import { Decision } from "../../services/redux/actionsAndSlicers/DecisionsSlice";
 import { deleteOptionsAndCriteria } from "../../services/redux/actionsAndSlicers/OptionsAndCriteriaActions";
+import { usePrevious } from "../../services/GeneralUtils";
 
 const useStyles = makeStyles({
 	divMain: {
@@ -38,7 +39,7 @@ const useStyles = makeStyles({
 	},
 
 	decisionsNegativeMargin: {
-		marginTop:-theme.spacing(1),
+		marginTop: -theme.spacing(1),
 	},
 
 	gridButtons: {
@@ -102,24 +103,14 @@ const Decisions: React.FC = () => {
 	useEffect(() => {
 		if (componentLoaded && !user.registeredUser)
 			history.push(`/decisions/${decisions[0].id}`);
+
+		if (localDecisions.length > 1 && decisions.length > 0) {
+			if (componentLoaded && localDecisions[0].id == decisions[1].id)
+				history.push(`/decisions/${decisions[0].id}`);
+		}
+
 		setLocalDecisions(decisions);
 	}, [decisions]);
-
-	//TODO go to the decision, when new decision is created
-	// if (
-	// 	prevProps.decision.decisions.length !== 0 &&
-	// 	prevProps.decision.decisions.length <
-	// 		this.props.decision.decisions.length &&
-	// 	this.state.isMounted === true
-	// ) {
-	// 	const prevSet = new Set(prevProps.decision.decisions.map((o) => o.id));
-	// 	const added = this.props.decision.decisions.filter(
-	// 		(o) => !prevSet.has(o.id)
-	// 	);
-	//
-	// 	let decisionId = added[0].id;
-	// 	this.goToDecision(decisionId);
-	// }
 
 	const createDecision = () => {
 		//Exit if entry
@@ -205,12 +196,13 @@ const Decisions: React.FC = () => {
 				<Grid item xs={12} className={classes.gridItemDecisions}>
 					{decisions.map((decision) => (
 						<Grid container justify="center" alignItems="center">
-							<Grid item xs={11} className={`${classes.gridItemPaper} ${classes.decisionsNegativeMargin}`}>
+							<Grid
+								item
+								xs={11}
+								className={`${classes.gridItemPaper} ${classes.decisionsNegativeMargin}`}
+							>
 								<List>
-									<Paper
-										elevation={2}
-										key={decision.id}
-									>
+									<Paper elevation={2} key={decision.id}>
 										<ListItem>
 											<InputBase
 												multiline
@@ -243,7 +235,6 @@ const Decisions: React.FC = () => {
 							<Grid
 								item
 								xs={1}
-								justify="center"
 								className={`${classes.gridButtons} ${classes.decisionsNegativeMargin}`}
 							>
 								<Fab

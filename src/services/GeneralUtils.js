@@ -1,3 +1,5 @@
+import {useEffect, useRef} from "react";
+
 export function getValueSafe(fn) {
 	try {
 		return fn();
@@ -5,7 +7,13 @@ export function getValueSafe(fn) {
 		return null;
 	}
 }
-
+export function usePrevious(value) {
+	const ref = useRef();
+	useEffect(() => {
+		ref.current = value;
+	});
+	return ref.current;
+}
 export const mergeWithoutDuplicates = (startArray, newArray) => [
 	...newArray.filter(
 		(item) => !JSON.stringify(startArray).includes(JSON.stringify(item))
