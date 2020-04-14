@@ -122,7 +122,8 @@ const Login: React.FC = () => {
 
 	useEffect(() => {
 		if (user.registeredUser && token !== "") history.push("/decisions");
-		if (!user.registeredUser && decisions.length === 0 && user.id !== 0) getDecisions(dispatch);
+		if (!user.registeredUser && decisions.length === 0 && user.id !== 0)
+			getDecisions(dispatch);
 		usernameInput.current.focus();
 		setDidMount(true);
 	}, []);
@@ -138,7 +139,11 @@ const Login: React.FC = () => {
 
 	useEffect(() => {
 		if (user.registeredUser) {
-			setShowSaveDecisionDialog(true);
+			if (decisions.length > 0) setShowSaveDecisionDialog(true);
+			else {
+				saveTokenCookie(token);
+				history.push("/decisions");
+			}
 		}
 	}, [user]);
 
