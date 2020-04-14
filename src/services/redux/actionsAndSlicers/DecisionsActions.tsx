@@ -50,7 +50,6 @@ export const getDecisions = (dispatch: AppDispatch) => {
 
 
 export const postDecision = (dispatch: AppDispatch, decision: newDecision) => {
-	console.log(decision)
 	dispatch(
 		AxiosRequest(
 			axios.post(`/api/decisions/`,decision),

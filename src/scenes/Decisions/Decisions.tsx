@@ -135,6 +135,11 @@ const Decisions: React.FC = () => {
 			showDeleteDialog(decision)
 	};
 
+	const onDeleteDecision = () => {
+		deleteDecision(dispatch, decisionToBeDeleted)
+		setShowAskBeforeDelete(false);
+	};
+
 
 	const showDeleteDialog = (decision: Decision)  => {
 		setShowAskBeforeDelete(true);
@@ -245,7 +250,7 @@ const Decisions: React.FC = () => {
 						message="Your decision will be permanently deleted. This cannot be undone."
 						primaryButtonText="Delete it"
 						secondaryButtonText="Cancel"
-						onClickPrimary={() => deleteDecision(dispatch, decisionToBeDeleted)}
+						onClickPrimary={onDeleteDecision}
 						onClickSecondary={() => setShowAskBeforeDelete(false)}
 					/>
 				</div>
