@@ -25,8 +25,6 @@ import theme from "../../muiTheme";
 import { RootState } from "../../services/redux/rootReducer";
 import { useHistory } from "react-router-dom";
 import { Decision } from "../../services/redux/actionsAndSlicers/DecisionsSlice";
-import { deleteOptionsAndCriteria } from "../../services/redux/actionsAndSlicers/OptionsAndCriteriaActions";
-import { usePrevious } from "../../services/GeneralUtils";
 
 const useStyles = makeStyles({
 	divMain: {
@@ -145,6 +143,11 @@ const Decisions: React.FC = () => {
 		setShowAskBeforeDelete(false);
 	};
 
+	const onDismissDeleteDecision = () => {
+		setLocalDecisions(decisions);
+		setShowAskBeforeDelete(false)
+	};
+
 	const showDeleteDialog = (decision: Decision) => {
 		setShowAskBeforeDelete(true);
 		setDecisionToBeDeleted(decision);
@@ -194,7 +197,7 @@ const Decisions: React.FC = () => {
 				</Grid>
 
 				<Grid item xs={12} className={classes.gridItemDecisions}>
-					{decisions.map((decision) => (
+					{localDecisions.map((decision) => (
 						<Grid container justify="center" alignItems="center">
 							<Grid
 								item
@@ -208,7 +211,7 @@ const Decisions: React.FC = () => {
 												multiline
 												className={classes.inputBaseExistingItems}
 												value={decision.name}
-												onChange={(event) => onChangeDecision(event, decision)}
+												onChange={(event) => onChangeDecision(event, decision.id)}
 												onBlur={() => onLeaveDecision(decision)}
 												onKeyPress={(event) => {
 													if (event.key === "Enter") {
@@ -257,7 +260,7 @@ const Decisions: React.FC = () => {
 				primaryButtonText="Delete it"
 				secondaryButtonText="Cancel"
 				onClickPrimary={onDeleteDecision}
-				onClickSecondary={() => setShowAskBeforeDelete(false)}
+				onClickSecondary={onDismissDeleteDecision}
 			/>
 		</div>
 	);
