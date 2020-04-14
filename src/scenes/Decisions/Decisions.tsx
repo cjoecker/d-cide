@@ -42,7 +42,7 @@ const useStyles = makeStyles({
 
 	gridButtons: {
 		maxWidth: theme.spacing(7),
-		marginLeft: theme.spacing(1.5),
+		marginLeft: theme.spacing(0.5),
 	},
 
 	paperNewDecision: {
