@@ -12,7 +12,7 @@ import {shallowEqual, useDispatch, useSelector} from "react-redux";
 import {
 	getDecisions,
 	postDecision,
-	changeDecision, deleteDecision,
+	changeDecision, deleteDecision, newDecision,
 } from "../../services/redux/actionsAndSlicers/DecisionsActions";
 import Fab from "@material-ui/core/Fab";
 import Grid from "@material-ui/core/Grid";
@@ -111,8 +111,7 @@ const Decisions: React.FC = () => {
 		//Exit if entry
 		if (newEntry === "") return;
 
-		const newDecision: Decision = {
-			id: 0,
+		const newDecision: newDecision = {
 			name: newEntry,
 		};
 
