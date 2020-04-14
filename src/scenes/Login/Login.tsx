@@ -159,8 +159,6 @@ const Login: React.FC = () => {
 	};
 
 	const saveDecision = () => {
-		console.log(decisions);
-
 		const newUser = {
 			username,
 			password,
