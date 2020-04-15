@@ -21,7 +21,7 @@ import { initialState } from "../../services/redux/actionsAndSlicers/SessionSlic
 const useStyles = makeStyles({
 	divMain: {
 		textAlign: "center",
-		paddingTop: theme.spacing(8),
+		paddingTop: theme.spacing(6),
 	},
 
 	gridContainer: {

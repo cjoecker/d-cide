@@ -5,7 +5,6 @@ import {makeStyles, ThemeProvider,} from "@material-ui/core/styles";
 import CardMedia from "@material-ui/core/CardMedia";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import {shallowEqual, useDispatch, useSelector} from "react-redux";
-// eslint-disable-next-line @typescript-eslint/camelcase
 import {createBrowserHistory} from "history";
 import ReactGA from "react-ga";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
