@@ -5,13 +5,12 @@ import {
 	ErrorActionType,
 	SuccessExtraActionType,
 } from "../AxiosRequest";
-import SessionSlice, { User } from "./SessionSlice";
+import SessionSlice, { SignUpRequest, User } from "./SessionSlice";
 import { showHTTPAlert } from "./AppActions";
 import jwt_decode from "jwt-decode";
 import DecisionsSlice from "./DecisionsSlice";
 import OptionsAndCriteriaSlice from "./OptionsAndCriteriaSlice";
 import RatedOptionsSlice from "./RatedOptionsSlice";
-import WeightCriteria from "../../../scenes/Decision/Step2WeightCriteria/WeightCriteria";
 import WeightedCriteriaSlice from "./WeightCriteriaSlice";
 
 export interface LoginRequest {
@@ -24,11 +23,7 @@ export interface LoginResponse {
 	token: string;
 }
 
-
-export const login = (
-	dispatch: AppDispatch,
-	loginRequest: LoginRequest
-) => {
+export const login = (dispatch: AppDispatch, loginRequest: LoginRequest) => {
 	dispatch(
 		AxiosRequest(
 			axios.post<LoginResponse>("/api/sessions/", loginRequest),
@@ -60,24 +55,17 @@ export const createUnregisteredUser = (dispatch: AppDispatch) => {
 	);
 };
 
-
-// TODO: needs to be tested
 export const signUp = (dispatch: AppDispatch, newUser: SignUpRequest) => {
 	dispatch(
 		AxiosRequest(
 			axios.post<SignUpResponse>("/api/users/", newUser),
-			SessionSlice.actions.setSignUpSuccessful.bind(null)
+			SessionSlice.actions.setSignUpSuccessful.bind(null),
+			null,
+			null,
+			true
 		)
 	);
 };
-
-export interface SignUpRequest {
-	username: string;
-	fullName: string;
-	registeredUser: boolean;
-	password: string;
-	confirmPassword: string;
-}
 
 export interface SignUpResponse {
 	id: number;
@@ -109,7 +97,6 @@ const resetWrongPasswordAnimation: ErrorActionType = (dispatch, error) => {
 		showHTTPAlert(dispatch, error);
 	}
 };
-
 
 export const verifyToken = (token: string) => {
 	if (token === "" || token === undefined) return;

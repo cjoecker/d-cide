@@ -8,6 +8,7 @@ type SessionState = {
 	wrongPassword: boolean;
 	token: string;
 	user: User;
+	signUpErrors: SignUpRequest;
 };
 
 export type User = {
@@ -19,7 +20,14 @@ export type User = {
 	username: string;
 };
 
-const initialState: SessionState = {
+export type SignUpRequest = {
+	username: string;
+	fullName: string;
+	password: string;
+	confirmPassword: string;
+}
+
+export const initialState: SessionState = {
 	signUpSuccessful: false,
 	wrongPassword: false,
 	token: "",
@@ -31,6 +39,12 @@ const initialState: SessionState = {
 		iat: 0,
 		username: "",
 	},
+	signUpErrors:{
+		username:"",
+		fullName:"",
+		password:"",
+		confirmPassword:"",
+	}
 };
 
 const SessionSlice = createSlice({

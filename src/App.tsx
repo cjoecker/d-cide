@@ -30,6 +30,7 @@ import {logout, verifyToken} from "./services/redux/actionsAndSlicers/SessionAct
 import Login from "./scenes/Login/Login";
 import Decisions from "./scenes/Decisions/Decisions";
 import PrivateRoute from "./services/PrivateRoute";
+import SignUp from "./scenes/SignUp/SignUp";
 
 const {token} = localStorage;
 
@@ -198,7 +199,7 @@ const App: React.FC = () => {
                             <Route exact path="/" component={LandingPage}/>
                             {/*<Route component={NotFound} />*/}
                             <Route exact path="/login" component={Login}/>
-                            {/*	<Route exact path="/signUp" component={SignUp} />*/}
+                            	<Route exact path="/signup" component={SignUp} />
                             <PrivateRoute exact path="/decisions" component={Decisions} />
                             <PrivateRoute exact path="/decisions/:decisionId" component={Decision}/>
                         </Switch>

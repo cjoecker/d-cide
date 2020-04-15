@@ -270,7 +270,7 @@ const Login: React.FC = () => {
 								gutterBottom
 							>
 								Don't have an account? &nbsp;
-								<Link href="/signUp">Sign up!</Link>
+								<Link href="/signup">Sign up!</Link>
 							</Typography>
 						</Grid>
 						<TwoButtonsDialog

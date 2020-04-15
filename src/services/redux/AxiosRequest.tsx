@@ -22,7 +22,7 @@ export const AxiosRequest = (
 	successExtraAction: SuccessExtraActionType = null,
 	errorAction: ErrorActionType = null,
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	predefinedPayload: any = null
+	predefinedSuccessPayload: any = null
 	// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 ): AppThunk => async (dispatch) => {
 	await dispatch(AppSlice.actions.startLoading());
@@ -30,10 +30,10 @@ export const AxiosRequest = (
 	axiosPromise
 		.then((answer) => {
 
-			if (predefinedPayload == null)
+			if (predefinedSuccessPayload == null)
 				dispatch(successAction(answer.data));
 			else
-				dispatch(successAction(predefinedPayload));
+				dispatch(successAction(predefinedSuccessPayload));
 
 			if (successExtraAction != null)
 				successExtraAction(dispatch, answer);
