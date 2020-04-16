@@ -23,6 +23,12 @@ export interface LoginResponse {
 	token: string;
 }
 
+export interface SignUpResponse {
+	id: number;
+	username: string;
+	fullName: string;
+}
+
 export const login = (dispatch: AppDispatch, loginRequest: LoginRequest) => {
 	dispatch(
 		AxiosRequest(
@@ -32,16 +38,6 @@ export const login = (dispatch: AppDispatch, loginRequest: LoginRequest) => {
 			resetWrongPasswordAnimation.bind(null)
 		)
 	);
-};
-
-export const logout = (dispatch: AppDispatch) => {
-	dispatch(DecisionsSlice.actions.setDecisions([]));
-	dispatch(OptionsAndCriteriaSlice.actions.setDecisionOptions([]));
-	dispatch(OptionsAndCriteriaSlice.actions.setSelectionCriteria([]));
-	dispatch(RatedOptionsSlice.actions.setRatedOptions([]));
-	dispatch(SessionSlice.actions.deleteSession());
-	dispatch(WeightedCriteriaSlice.actions.setWeightedCriteria([]));
-	deleteTokenCookie();
 };
 
 export const createUnregisteredUser = (dispatch: AppDispatch) => {
@@ -61,17 +57,21 @@ export const signUp = (dispatch: AppDispatch, newUser: SignUpRequest) => {
 			axios.post<SignUpResponse>("/api/users/", newUser),
 			SessionSlice.actions.setSignUpSuccessful.bind(null),
 			null,
-			null,
+			showSignUpErrors.bind(null),
 			true
 		)
 	);
 };
 
-export interface SignUpResponse {
-	id: number;
-	username: string;
-	fullName: string;
-}
+export const logout = (dispatch: AppDispatch) => {
+	dispatch(DecisionsSlice.actions.setDecisions([]));
+	dispatch(OptionsAndCriteriaSlice.actions.setDecisionOptions([]));
+	dispatch(OptionsAndCriteriaSlice.actions.setSelectionCriteria([]));
+	dispatch(RatedOptionsSlice.actions.setRatedOptions([]));
+	dispatch(SessionSlice.actions.deleteSession());
+	dispatch(WeightedCriteriaSlice.actions.setWeightedCriteria([]));
+	deleteTokenCookie();
+};
 
 export const saveTokenCookie = (token: string) => {
 	localStorage.setItem("token", token);
@@ -115,4 +115,10 @@ export const verifyToken = (token: string) => {
 		store.dispatch(SessionSlice.actions.setSession(tokenResponse));
 		saveTokenCookie(token);
 	}
+};
+
+const showSignUpErrors: ErrorActionType = (dispatch, error) => {
+	if (error.response.data != null)
+		dispatch(SessionSlice.actions.setSignUpErrors(error.response.data));
+	else showHTTPAlert(dispatch, error);
 };

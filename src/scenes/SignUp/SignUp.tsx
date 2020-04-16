@@ -11,7 +11,7 @@ import InfoDialog from "../../components/InfoDialog";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import {
-	login,
+	login, saveTokenCookie,
 	signUp,
 } from "../../services/redux/actionsAndSlicers/SessionActions";
 import theme from "../../muiTheme";
@@ -66,7 +66,7 @@ const SignUp: React.FC = () => {
 
 	const [signUpRequest, setSignUpRequest] = useState(initialState.signUpErrors);
 
-	const { signUpSuccessful, user, signUpErrors } = useSelector(
+	const { signUpSuccessful, user, signUpErrors, token } = useSelector(
 		(state: RootState) => state.Session,
 		shallowEqual
 	);
@@ -80,7 +80,8 @@ const SignUp: React.FC = () => {
 	}, []);
 
 	useEffect(() => {
-		if (isMounted && signUpSuccessful) {
+		console.log("hola")
+		if (signUpSuccessful) {
 			const user = {
 				username: signUpRequest.username,
 				password: signUpRequest.password,
@@ -91,18 +92,8 @@ const SignUp: React.FC = () => {
 	}, [signUpSuccessful]);
 
 	useEffect(() => {
-		if (isMounted && signUpSuccessful) {
-			const newUser = {
-				username: signUpRequest.username,
-				password: signUpRequest.password,
-			};
-
-			login(dispatch, newUser);
-		}
-	}, [signUpSuccessful]);
-
-	useEffect(() => {
 		if (isMounted && user.registeredUser) {
+			saveTokenCookie(token);
 			history.push("/decisions");
 		}
 	}, [user]);
@@ -110,7 +101,7 @@ const SignUp: React.FC = () => {
 	const onChange = (attributeName: string, value: string) => {
 		setSignUpRequest({ ...signUpRequest, [attributeName]: value });
 	};
-
+//TODO ask to save decision after login
 	return (
 		<div className={classes.divMain}>
 			<Grid container justify="center">
@@ -122,7 +113,6 @@ const SignUp: React.FC = () => {
 						spacing={0}
 						className={classes.gridContainer}
 					>
-						{/*Title*/}
 						<Grid item xs={12} className={classes.TitleGridItem}>
 							<Typography
 								variant="h4"
@@ -132,12 +122,11 @@ const SignUp: React.FC = () => {
 								SIGN UP
 							</Typography>
 						</Grid>
-						{/*Email*/}
 						<Grid item xs={12} className={classes.gridItem_textField}>
 							<TextField
 								id="outlined-email-input"
 								name="username"
-								error={signUpErrors.username !== ""}
+								error={signUpErrors.username != null && signUpErrors.username !==""}
 								helperText={signUpErrors.username}
 								value={signUpRequest.username}
 								onChange={(event) =>
@@ -155,12 +144,11 @@ const SignUp: React.FC = () => {
 								className={classes.textField}
 							/>
 						</Grid>
-						{/*Full Name*/}
 						<Grid item xs={12} className={classes.gridItem_textField}>
 							<TextField
 								id="outlined-fullName-input"
 								name="fullName"
-								error={signUpErrors.fullName !== ""}
+								error={signUpErrors.fullName != null && signUpErrors.fullName !==""}
 								helperText={signUpErrors.fullName}
 								value={signUpRequest.fullName}
 								onChange={(event) =>
@@ -177,13 +165,11 @@ const SignUp: React.FC = () => {
 								className={classes.textField}
 							/>
 						</Grid>
-
-						{/*Password*/}
 						<Grid item xs={12} className={classes.gridItem_textField}>
 							<TextField
 								id="outlined-password-input"
 								name="password"
-								error={signUpErrors.password !== ""}
+								error={signUpErrors.password != null && signUpErrors.password !==""}
 								helperText={signUpErrors.password}
 								value={signUpRequest.password}
 								onChange={(event) =>
@@ -201,13 +187,11 @@ const SignUp: React.FC = () => {
 								className={classes.textField}
 							/>
 						</Grid>
-
-						{/*Confirm Password*/}
 						<Grid item xs={12} className={classes.textField_password}>
 							<TextField
 								id="outlined-confirmPassword-input"
 								name="confirmPassword"
-								error={signUpErrors.confirmPassword !== ""}
+								error={signUpErrors.confirmPassword != null && signUpErrors.confirmPassword !==""}
 								helperText={signUpErrors.confirmPassword}
 								value={signUpRequest.confirmPassword}
 								onChange={(event) =>
@@ -225,8 +209,6 @@ const SignUp: React.FC = () => {
 								className={classes.textField}
 							/>
 						</Grid>
-
-						{/*Legal Link*/}
 						<Grid item xs={12} className={classes.gridItem_legalLink}>
 							<Typography variant="caption" gutterBottom>
 								By clicking Sign Up, you confirm that you have read and agree to
@@ -248,7 +230,6 @@ const SignUp: React.FC = () => {
 							</Typography>
 						</Grid>
 
-						{/*SignUp Button*/}
 						<Grid item xs={12} className={classes.button}>
 							<Fab
 								color="primary"
@@ -263,7 +244,6 @@ const SignUp: React.FC = () => {
 					</Grid>
 				</Paper>
 			</Grid>
-			{/*Info Dialogs*/}
 			<InfoDialog
 				text={LongStrings.PrivacyPolicy}
 				show={showPrivacyPolicy}

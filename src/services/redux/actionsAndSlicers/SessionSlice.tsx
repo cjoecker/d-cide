@@ -65,11 +65,14 @@ const SessionSlice = createSlice({
 			//TODO: check if at the end of refactoring, this is necessary
 			state.token = action.payload;
 		},
-		setSignUpSuccessful(state, action: PayloadAction<boolean>) {
-			state.signUpSuccessful = !action.payload;
-		},
 		setWrongPassword(state, action: PayloadAction<boolean>) {
 			state.wrongPassword = action.payload;
+		},
+		setSignUpSuccessful(state, action: PayloadAction<boolean>) {
+			state.signUpSuccessful = action.payload;
+		},
+		setSignUpErrors(state, action: PayloadAction<SignUpRequest>) {
+			state.signUpErrors = action.payload;
 		},
 	},
 });
