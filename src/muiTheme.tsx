@@ -7,9 +7,12 @@ const theme = createMuiTheme({
 			fontSize: 12,
 			color: "#272727",
 		},
-		fontWeightLight: 3000,
-		fontWeightRegular: 4000,
-		fontWeightMedium: 5000,
+		fontWeightRegular: 500,
+		h5: {
+			fontWeight: 600,
+		}
+
+
 	},
 
 	palette: {

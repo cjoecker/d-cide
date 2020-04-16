@@ -8,8 +8,6 @@ import IconButton from "@material-ui/core/IconButton";
 import InfoIcon from "@material-ui/icons/Info";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import Fade from "@material-ui/core/Fade";
-import { Subject } from "rxjs";
-import { debounceTime } from "rxjs/operators";
 import { useParams } from "react-router-dom";
 import * as LongStrings from "../../../services/LongTexts";
 import InfoDialog from "../../../components/InfoDialog";
@@ -258,7 +256,9 @@ const RateOptions: React.FC<Props> = (props: Props) => {
 													xs={4}
 													className={classes.gridItemGridContainerTitle}
 												>
-													{option.name}
+													<Typography variant="body1">
+														{option.name}
+													</Typography>
 												</Grid>
 												<Grid item xs={8}>
 													<Grid container>

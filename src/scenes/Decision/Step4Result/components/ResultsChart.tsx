@@ -35,6 +35,9 @@ const useStyles = makeStyles({
 	title: {
 		paddingTop: theme.spacing(2),
 	},
+	chartContainer: {
+		marginLeft: theme.spacing(2),
+	},
 	infoButton: {
 		bottom: theme.spacing(0.25),
 		left: theme.spacing(1.2),
@@ -85,11 +88,11 @@ const ResultsChart: React.FC<Props> = (props: Props) => {
 			setStartAnimation(true);
 		}
 	}, [items]);
-
+//TODO replace with theme spacing
 	const getYAxisWidth = () => {
 		const labelsMaxCharsNum = 18;
 		const maxNumOffset = 35;
-		const widthOffset = 100;
+		const widthOffset = 50;
 
 		const longest = Math.max(...localItems.map((item) => item.name.length));
 
@@ -110,9 +113,11 @@ const ResultsChart: React.FC<Props> = (props: Props) => {
 							<InfoIcon color="secondary" />
 						</IconButton>
 					</Typography>
+					<Typography variant="body1">
 					<ResponsiveContainer
 						height={localItems.length * 70 + 10}
 						width="100%"
+						className={classes.chartContainer}
 					>
 						<BarChart
 							data={localItems}
@@ -174,6 +179,7 @@ const ResultsChart: React.FC<Props> = (props: Props) => {
 							</Bar>
 						</BarChart>
 					</ResponsiveContainer>
+					</Typography>
 				</Paper>
 			</Fade>
 			<InfoDialog

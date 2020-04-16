@@ -28,8 +28,6 @@ export const DecisionOptionInfo = (
 				<li>To divorce</li>
 				<li>
 					Not to divorce.
-					<br />
-					<br />
 				</li>
 			</ul>
 		</p>
