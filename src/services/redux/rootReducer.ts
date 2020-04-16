@@ -6,7 +6,6 @@ import DecisionsSlice from "./actionsAndSlicers/DecisionsSlice";
 import WeightedCriteriaSlice from "./actionsAndSlicers/WeightCriteriaSlice";
 import RatedOptionsSlice from "./actionsAndSlicers/RatedOptionsSlice";
 
-
 const rootReducer = combineReducers({
 	App: AppSlice.reducer,
 	Session: SessionSlice.reducer,

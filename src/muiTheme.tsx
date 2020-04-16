@@ -17,7 +17,7 @@ const theme = createMuiTheme({
 		},
 		h3: {
 			fontWeight: 600,
-		}		,
+		},
 		h4: {
 			fontWeight: 600,
 		},
@@ -27,8 +27,6 @@ const theme = createMuiTheme({
 		h6: {
 			fontWeight: 600,
 		},
-
-
 	},
 
 	palette: {

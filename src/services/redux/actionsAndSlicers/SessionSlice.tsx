@@ -25,7 +25,7 @@ export type SignUpRequest = {
 	fullName: string;
 	password: string;
 	confirmPassword: string;
-}
+};
 
 export const initialState: SessionState = {
 	signUpSuccessful: false,
@@ -39,12 +39,12 @@ export const initialState: SessionState = {
 		iat: 0,
 		username: "",
 	},
-	signUpErrors:{
-		username:"",
-		fullName:"",
-		password:"",
-		confirmPassword:"",
-	}
+	signUpErrors: {
+		username: "",
+		fullName: "",
+		password: "",
+		confirmPassword: "",
+	},
 };
 
 const SessionSlice = createSlice({

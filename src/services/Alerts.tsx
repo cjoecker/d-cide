@@ -3,11 +3,11 @@ import React from "react";
 //TODO autohide and allow close http alerts
 
 export type AlertType = {
-	type: AlertTypes,
-	allowClose: boolean,
-	autoHide: boolean,
-	text: string,
-}
+	type: AlertTypes;
+	allowClose: boolean;
+	autoHide: boolean;
+	text: string;
+};
 
 export enum AlertTypes {
 	error = "error",
@@ -22,7 +22,6 @@ export const AlertInitialState: AlertType = {
 	autoHide: false,
 	text: "",
 };
-
 
 //ERRORS
 export const HTTP_ERROR: AlertType = {

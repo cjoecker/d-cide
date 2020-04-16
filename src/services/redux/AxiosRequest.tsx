@@ -29,20 +29,14 @@ export const AxiosRequest = (
 
 	axiosPromise
 		.then((answer) => {
+			if (predefinedPayload == null) dispatch(successAction(answer.data));
+			else dispatch(successAction(predefinedPayload));
 
-			if (predefinedPayload == null)
-				dispatch(successAction(answer.data));
-			else
-				dispatch(successAction(predefinedPayload));
-
-			if (successExtraAction != null)
-				successExtraAction(dispatch, answer);
+			if (successExtraAction != null) successExtraAction(dispatch, answer);
 		})
 		.catch((error: AxiosError) => {
-			if (errorAction != null)
-				errorAction(dispatch, error);
-			else
-				showHTTPAlert(dispatch, error);
+			if (errorAction != null) errorAction(dispatch, error);
+			else showHTTPAlert(dispatch, error);
 		})
 		.finally(() => {
 			dispatch(AppSlice.actions.endLoading());

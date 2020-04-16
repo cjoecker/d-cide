@@ -37,4 +37,3 @@ const AppSlice = createSlice({
 });
 
 export default AppSlice;
-

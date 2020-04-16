@@ -10,11 +10,11 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import {
-	getDecisions,
-	postDecision,
 	changeDecision,
 	deleteDecision,
+	getDecisions,
 	newDecision,
+	postDecision,
 } from "../../services/redux/actionsAndSlicers/DecisionsActions";
 import Fab from "@material-ui/core/Fab";
 import Grid from "@material-ui/core/Grid";
@@ -160,103 +160,108 @@ const Decisions: React.FC = () => {
 				Decisions
 			</Typography>
 			<Grid container justify="center">
-			<Grid container
-				  justify="center"
-				  alignItems="center" className={classes.gridContainer}>
-				<Grid item xs={11} className={classes.gridItemNewEntry}>
-					<List>
-						<Paper
-							elevation={2}
-							key="New Entry"
-							className={classes.paperNewDecision}
-						>
-							<ListItem>
-								<InputBase
-									name="newEntry"
-									className={classes.newEntry}
-									placeholder="New Decision"
-									value={newEntry}
-									onKeyPress={(event) => {
-										if (event.key === "Enter") {
-											event.preventDefault();
-											createDecision();
-										}
-									}}
-									onChange={(event) => setNewEntry(event.target.value)}
-									multiline
-								/>
-							</ListItem>
-						</Paper>
-					</List>
-				</Grid>
-				<Grid item xs={1} className={classes.gridItemNewEntry}>
-					<Fab
-						className={classes.buttons}
-						size="small"
-						color="primary"
-						aria-label="Add"
-						onClick={createDecision}
-					>
-						<AddIcon />
-					</Fab>
-				</Grid>
-				{localDecisions.map((decision) => (
-					<React.Fragment>
-						<Grid item xs={11} className={classes.decisionsNegativeMargin}>
-							<List>
-								<Paper elevation={2} key={decision.id}>
-									<ListItem>
-										<InputBase
-											multiline
-											className={classes.inputBaseExistingItems}
-											value={decision.name}
-											onChange={(event) => onChangeDecision(event, decision.id)}
-											onBlur={() => onLeaveDecision(decision)}
-											onKeyPress={(event) => {
-												if (event.key === "Enter") {
-													event.preventDefault();
-													if (document.activeElement instanceof HTMLElement) {
-														document.activeElement.blur();
-													}
-												}
-											}}
-										/>
-										<ListItemSecondaryAction>
-											<IconButton
-												aria-label="Delete"
-												onClick={() => showDeleteDialog(decision)}
-												className={classes.paperButtons}
-											>
-												<DeleteIcon />
-											</IconButton>
-										</ListItemSecondaryAction>
-									</ListItem>
-								</Paper>
-							</List>
-						</Grid>
-						<Grid item xs={1} className={classes.decisionsNegativeMargin}>
-							<Fab
-								className={classes.buttons}
-								size="small"
-								color="primary"
-								aria-label="Work on Decision"
-								onClick={() => history.push(`/decisions/${decision.id}`)}
+				<Grid
+					container
+					justify="center"
+					alignItems="center"
+					className={classes.gridContainer}
+				>
+					<Grid item xs={11} className={classes.gridItemNewEntry}>
+						<List>
+							<Paper
+								elevation={2}
+								key="New Entry"
+								className={classes.paperNewDecision}
 							>
-								<ArrowForwardIcon />
-							</Fab>
-						</Grid>
-					</React.Fragment>
-				))}
-			</Grid>
-			<TwoButtonsDialog
-				show={showAskBeforeDelete}
-				title={`Delete ${decisionToBeDeleted.name}?`}
-				message="Your decision will be permanently deleted. This cannot be undone."
-				primaryButtonText="Delete it"
-				secondaryButtonText="Cancel"
-				onClickPrimary={onDeleteDecision}
-				onClickSecondary={onDismissDeleteDecision}
-			/>
+								<ListItem>
+									<InputBase
+										name="newEntry"
+										className={classes.newEntry}
+										placeholder="New Decision"
+										value={newEntry}
+										onKeyPress={(event) => {
+											if (event.key === "Enter") {
+												event.preventDefault();
+												createDecision();
+											}
+										}}
+										onChange={(event) => setNewEntry(event.target.value)}
+										multiline
+									/>
+								</ListItem>
+							</Paper>
+						</List>
+					</Grid>
+					<Grid item xs={1} className={classes.gridItemNewEntry}>
+						<Fab
+							className={classes.buttons}
+							size="small"
+							color="primary"
+							aria-label="Add"
+							onClick={createDecision}
+						>
+							<AddIcon />
+						</Fab>
+					</Grid>
+					{localDecisions.map((decision) => (
+						<React.Fragment>
+							<Grid item xs={11} className={classes.decisionsNegativeMargin}>
+								<List>
+									<Paper elevation={2} key={decision.id}>
+										<ListItem>
+											<InputBase
+												multiline
+												className={classes.inputBaseExistingItems}
+												value={decision.name}
+												onChange={(event) =>
+													onChangeDecision(event, decision.id)
+												}
+												onBlur={() => onLeaveDecision(decision)}
+												onKeyPress={(event) => {
+													if (event.key === "Enter") {
+														event.preventDefault();
+														if (document.activeElement instanceof HTMLElement) {
+															document.activeElement.blur();
+														}
+													}
+												}}
+											/>
+											<ListItemSecondaryAction>
+												<IconButton
+													aria-label="Delete"
+													onClick={() => showDeleteDialog(decision)}
+													className={classes.paperButtons}
+												>
+													<DeleteIcon />
+												</IconButton>
+											</ListItemSecondaryAction>
+										</ListItem>
+									</Paper>
+								</List>
+							</Grid>
+							<Grid item xs={1} className={classes.decisionsNegativeMargin}>
+								<Fab
+									className={classes.buttons}
+									size="small"
+									color="primary"
+									aria-label="Work on Decision"
+									onClick={() => history.push(`/decisions/${decision.id}`)}
+								>
+									<ArrowForwardIcon />
+								</Fab>
+							</Grid>
+						</React.Fragment>
+					))}
+				</Grid>
+				<TwoButtonsDialog
+					show={showAskBeforeDelete}
+					title={`Delete ${decisionToBeDeleted.name}?`}
+					message="Your decision will be permanently deleted. This cannot be undone."
+					primaryButtonText="Delete it"
+					secondaryButtonText="Cancel"
+					onClickPrimary={onDeleteDecision}
+					onClickSecondary={onDismissDeleteDecision}
+				/>
 			</Grid>
 		</div>
 	);

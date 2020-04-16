@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Route, Redirect, RouteProps } from "react-router-dom";
+import { Redirect, Route, RouteProps } from "react-router-dom";
 import { shallowEqual, useSelector } from "react-redux";
 import { RootState } from "./redux/rootReducer";
 
@@ -27,8 +27,8 @@ const PrivateRoute = (props: PrivateRouteProps) => {
 				) : (
 					<Redirect
 						to={{
-							pathname: '/login',
-							state: { from: routeProps.location }
+							pathname: "/login",
+							state: { from: routeProps.location },
 						}}
 					/>
 				)

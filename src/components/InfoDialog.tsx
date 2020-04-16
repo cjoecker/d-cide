@@ -21,6 +21,7 @@ const useStyles = makeStyles({
 		textAlign: "justify",
 	},
 });
+
 interface Props {
 	text: JSX.Element;
 	show: boolean;

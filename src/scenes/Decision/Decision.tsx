@@ -120,7 +120,11 @@ const Decision: React.FC = () => {
 								completed={step.completed}
 								disabled={step.disabled}
 							>
-								<StepLabel  StepIconProps={{ classes: { root: classes.stepperLabel } }}>{step.name}</StepLabel>
+								<StepLabel
+									StepIconProps={{ classes: { root: classes.stepperLabel } }}
+								>
+									{step.name}
+								</StepLabel>
 							</StepButton>
 						</Step>
 					);

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { makeStyles, withStyles } from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import Slider from "@material-ui/core/Slider";
@@ -20,8 +20,6 @@ import {
 } from "../../../services/redux/actionsAndSlicers/RatedOptionsActions";
 import { getOptionsAndCriteria } from "../../../services/redux/actionsAndSlicers/OptionsAndCriteriaActions";
 import { OptionsAndCriteriaKeys } from "../../../services/redux/actionsAndSlicers/OptionsAndCriteriaSlice";
-import {updateWeightedCriteria} from "../../../services/redux/actionsAndSlicers/WeightCriteriaActions";
-
 
 const useStyles = makeStyles({
 	divMain: {
@@ -142,7 +140,6 @@ const RateOptions: React.FC<Props> = (props: Props) => {
 		},
 	];
 
-
 	useEffect(() => {
 		if (!hidden) {
 			getOptionsAndCriteria(
@@ -165,7 +162,7 @@ const RateOptions: React.FC<Props> = (props: Props) => {
 	}, [hidden]);
 
 	useEffect(() => {
-		if (ratedOptions.length !== LocalRatedOptions.length){
+		if (ratedOptions.length !== LocalRatedOptions.length) {
 			setLocalRatedOptions(ratedOptions);
 			setStartAnimation(true);
 		}
@@ -223,114 +220,128 @@ const RateOptions: React.FC<Props> = (props: Props) => {
 						</IconButton>
 					</Typography>
 				</Grid>
-				{!hidden && selectionCriteria.map((criteria, criteriaIndex) => (
-					<Fade
-						in={startAnimation}
-						timeout={500}
-						style={{
-							transitionDelay: `${criteriaIndex * 100}ms`,
-						}}
-					>
-						<Grid
-							item
-							xs={6}
-							className={classes.mainGridItem}
-							key={criteria.id}
+				{!hidden &&
+					selectionCriteria.map((criteria, criteriaIndex) => (
+						<Fade
+							in={startAnimation}
+							timeout={500}
+							style={{
+								transitionDelay: `${criteriaIndex * 100}ms`,
+							}}
 						>
-							<Paper className={classes.paper} elevation={2} key={criteria.id}>
-								<div>
-									<Grid container>
-										<Grid item xs={12} className={classes.titleGridItem}>
-											<Typography variant="h6">{criteria.name}</Typography>
-										</Grid>
-										{decisionOptions.map((option) => (
-											<Grid
-												container
-												justify="center"
-												alignItems="center"
-												className={classes.gridItemGridContainer}
-												key={option.id}
-											>
+							<Grid
+								item
+								xs={6}
+								className={classes.mainGridItem}
+								key={criteria.id}
+							>
+								<Paper
+									className={classes.paper}
+									elevation={2}
+									key={criteria.id}
+								>
+									<div>
+										<Grid container>
+											<Grid item xs={12} className={classes.titleGridItem}>
+												<Typography variant="h6">{criteria.name}</Typography>
+											</Grid>
+											{decisionOptions.map((option) => (
 												<Grid
-													item
-													xs={4}
-													className={classes.gridItemGridContainerTitle}
+													container
+													justify="center"
+													alignItems="center"
+													className={classes.gridItemGridContainer}
+													key={option.id}
 												>
-													<Typography variant="body1">
-														{option.name}
-													</Typography>
-												</Grid>
-												<Grid item xs={8}>
-													<Grid container>
-														<Grid
-															item
-															xs={6}
-															className={classes.sliderLeftText}
-														>
-															<Typography
-																variant="caption"
-																style={{
-																	fontSize: 11,
-																}}
+													<Grid
+														item
+														xs={4}
+														className={classes.gridItemGridContainerTitle}
+													>
+														<Typography variant="body1">
+															{option.name}
+														</Typography>
+													</Grid>
+													<Grid item xs={8}>
+														<Grid container>
+															<Grid
+																item
+																xs={6}
+																className={classes.sliderLeftText}
 															>
-																Bad
-															</Typography>
-														</Grid>
-														<Grid
-															item
-															xs={6}
-															className={classes.sliderRightText}
-														>
-															<Typography
-																variant="caption"
-																style={{
-																	fontSize: 11,
-																}}
+																<Typography
+																	variant="caption"
+																	style={{
+																		fontSize: 11,
+																	}}
+																>
+																	Bad
+																</Typography>
+															</Grid>
+															<Grid
+																item
+																xs={6}
+																className={classes.sliderRightText}
 															>
-																Good
-															</Typography>
-														</Grid>
-														<Grid
-															item
-															xs={12}
-															className={classes.gridItemSlider}
-														>
-															<Slider
-																classes={{
-																	track: classes.sliderTrack,
-																	rail: classes.sliderTrack,
-																	mark: classes.sliderMarks,
-																	markActive: classes.sliderMarks,
-																}}
-																value={getScore(criteria.id, option.id)}
-																min={0}
-																max={100}
-																step={1}
-																marks={sliderMarks}
-																onChange={(event, value) =>
-																	onChange(event, criteria.id, option.id, value)
-																}
-																onChangeCommitted={(event, value) =>
-																	onChangeCommitted(value, criteria.id, option.id)
-																}
-															/>
+																<Typography
+																	variant="caption"
+																	style={{
+																		fontSize: 11,
+																	}}
+																>
+																	Good
+																</Typography>
+															</Grid>
+															<Grid
+																item
+																xs={12}
+																className={classes.gridItemSlider}
+															>
+																<Slider
+																	classes={{
+																		track: classes.sliderTrack,
+																		rail: classes.sliderTrack,
+																		mark: classes.sliderMarks,
+																		markActive: classes.sliderMarks,
+																	}}
+																	value={getScore(criteria.id, option.id)}
+																	min={0}
+																	max={100}
+																	step={1}
+																	marks={sliderMarks}
+																	onChange={(event, value) =>
+																		onChange(
+																			event,
+																			criteria.id,
+																			option.id,
+																			value
+																		)
+																	}
+																	onChangeCommitted={(event, value) =>
+																		onChangeCommitted(
+																			value,
+																			criteria.id,
+																			option.id
+																		)
+																	}
+																/>
+															</Grid>
 														</Grid>
 													</Grid>
 												</Grid>
-											</Grid>
-										))}
-									</Grid>
-								</div>
-							</Paper>
-						</Grid>
-					</Fade>
-				))}
+											))}
+										</Grid>
+									</div>
+								</Paper>
+							</Grid>
+						</Fade>
+					))}
 			</Grid>
 			<div className={classes.emptySpace} />
 			<InfoDialog
 				text={LongStrings.OptionsRatingInfo}
 				show={showInfo}
-				onClose={()=>setShowInfo(false)}
+				onClose={() => setShowInfo(false)}
 			/>
 		</div>
 	);

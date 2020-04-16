@@ -1,17 +1,12 @@
 import axios from "axios";
 import { AppDispatch } from "../store";
 import { AxiosRequest } from "../AxiosRequest";
-import RatedOptionsSlice, {RatedOption} from "./RatedOptionsSlice";
+import RatedOptionsSlice, { RatedOption } from "./RatedOptionsSlice";
 
-export const getRatedOptions = (
-	dispatch: AppDispatch,
-	decisionId: string
-) => {
+export const getRatedOptions = (dispatch: AppDispatch, decisionId: string) => {
 	dispatch(
 		AxiosRequest(
-			axios.get<RatedOption[]>(
-				`/api/decisions/${decisionId}/ratedOptions`
-			),
+			axios.get<RatedOption[]>(`/api/decisions/${decisionId}/ratedOptions`),
 			RatedOptionsSlice.actions.setRatedOptions.bind(null)
 		)
 	);

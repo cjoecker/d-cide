@@ -104,8 +104,8 @@ export const deleteOptionsAndCriteria = (
 		AxiosRequest(
 			axios.delete(`/api/decisions/${decisionId}/${itemsKey}/${itemId}`),
 			successAction,
-			null
-			,null,
+			null,
+			null,
 			itemId
 		)
 	);

@@ -1,14 +1,11 @@
 import React, { useEffect } from "react";
-import { useDispatch, useSelector, shallowEqual } from "react-redux";
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { RootState } from "../services/redux/rootReducer";
 import { useHistory } from "react-router-dom";
 import { getDecisions } from "../services/redux/actionsAndSlicers/DecisionsActions";
 import { createUnregisteredUser } from "../services/redux/actionsAndSlicers/SessionActions";
 
-
-
 const LandingPage: React.FC = () => {
-
 	const { token } = useSelector(
 		(state: RootState) => state.Session,
 		shallowEqual

@@ -1,7 +1,7 @@
 import axios from "axios";
-import {AppDispatch} from "../store";
-import {AxiosRequest} from "../AxiosRequest";
-import DecisionsSlice, {Decision} from "./DecisionsSlice";
+import { AppDispatch } from "../store";
+import { AxiosRequest } from "../AxiosRequest";
+import DecisionsSlice, { Decision } from "./DecisionsSlice";
 
 // export const postDecision = (newEntry) => async (dispatch) => {
 // 	dispatch(httpRequest("post", `/api/decisions/`, newEntry, POST_DECISION));
@@ -16,9 +16,6 @@ import DecisionsSlice, {Decision} from "./DecisionsSlice";
 // export const putDecision = (newItem) => async (dispatch) => {
 // 	dispatch(httpRequest("put", `/api/decisions/`, newItem, PUT_DECISION));
 // };
-
-
-
 
 //
 // 	axiosPromise
@@ -38,7 +35,6 @@ import DecisionsSlice, {Decision} from "./DecisionsSlice";
 // 		});
 // };
 
-
 export const getDecisions = (dispatch: AppDispatch) => {
 	dispatch(
 		AxiosRequest(
@@ -48,11 +44,10 @@ export const getDecisions = (dispatch: AppDispatch) => {
 	);
 };
 
-
 export const postDecision = (dispatch: AppDispatch, decision: newDecision) => {
 	dispatch(
 		AxiosRequest(
-			axios.post(`/api/decisions/`,decision),
+			axios.post(`/api/decisions/`, decision),
 			DecisionsSlice.actions.addDecision.bind(null)
 		)
 	);
@@ -61,7 +56,7 @@ export const postDecision = (dispatch: AppDispatch, decision: newDecision) => {
 export const changeDecision = (dispatch: AppDispatch, decision: Decision) => {
 	dispatch(
 		AxiosRequest(
-			axios.put(`/api/decisions/`,decision),
+			axios.put(`/api/decisions/`, decision),
 			DecisionsSlice.actions.updateDecision.bind(null)
 		)
 	);

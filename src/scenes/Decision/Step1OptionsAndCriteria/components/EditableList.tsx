@@ -23,9 +23,6 @@ import {
 	postOptionsAndCriteria,
 } from "../../../../services/redux/actionsAndSlicers/OptionsAndCriteriaActions";
 import { RootState } from "../../../../services/redux/rootReducer";
-import { getWeightedCriteria } from "../../../../services/redux/actionsAndSlicers/WeightCriteriaActions";
-import { Grow } from "@material-ui/core";
-import Collapse from "@material-ui/core/Collapse";
 
 const useStyles = makeStyles({
 	divMain: {
@@ -81,11 +78,10 @@ const EditableList: React.FC<Props> = (props: Props) => {
 	//TODO alerts needs to be created here
 
 	useEffect(() => {
-		if (!hidden){
+		if (!hidden) {
 			getOptionsAndCriteria(dispatch, decisionId, itemsKey, false);
 			setDidMount(true);
-		}
-		else {
+		} else {
 			setLocalItems([]);
 			setStopAnimation(false);
 		}
@@ -116,13 +112,7 @@ const EditableList: React.FC<Props> = (props: Props) => {
 	const onLeaveItem = (itemLocal: OptionAndCriteria) => {
 		if (itemLocal.name !== "")
 			editOptionsAndCriteria(dispatch, decisionId, itemsKey, itemLocal);
-		else
-			deleteOptionsAndCriteria(
-				dispatch,
-				decisionId,
-				itemsKey,
-				itemLocal.id
-			);
+		else deleteOptionsAndCriteria(dispatch, decisionId, itemsKey, itemLocal.id);
 	};
 
 	const endOfAnimation = (index) => {

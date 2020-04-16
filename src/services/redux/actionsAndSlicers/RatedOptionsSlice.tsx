@@ -11,10 +11,7 @@ const RatedOptionsSlice = createSlice({
 	name: "RatedOptions",
 	initialState: [],
 	reducers: {
-		setRatedOptions(
-			state,
-			action: PayloadAction<RatedOption[]>
-		): typeof state {
+		setRatedOptions(state, action: PayloadAction<RatedOption[]>): typeof state {
 			return action.payload;
 		},
 		updateRatedOptions(

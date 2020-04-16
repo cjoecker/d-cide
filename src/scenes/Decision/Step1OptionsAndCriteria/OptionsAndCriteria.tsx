@@ -50,49 +50,53 @@ const OptionsAndCriteria: React.FC<Props> = (props: Props) => {
 	const classes = useStyles();
 
 	return (
-
-			<div className={classes.divMain}>
-				<Grid container justify="center" alignContent="center">
-					<Grid item xs={6} className={classes.gridItem}>
-						<Typography variant="h5" gutterBottom>
-							Decision Options
-							<IconButton
-								aria-label="Help"
-								className={classes.infoButton}
-								onClick={() => setShowOptionsInfo(true)}
-							>
-								<InfoIcon color="secondary" />
-							</IconButton>
-						</Typography>
-						<EditableList itemsKey={OptionsAndCriteriaKeys.decisionOptions} hidden={hidden} />
-					</Grid>
-					<Grid item xs={6} className={classes.gridItem}>
-						<Typography variant="h5" gutterBottom>
-							Selection Criteria
-							<IconButton
-								aria-label="Help"
-								className={classes.infoButton}
-								onClick={() => setShowCriteriaInfo(true)}
-							>
-								<InfoIcon color="secondary" />
-							</IconButton>
-						</Typography>
-						<EditableList itemsKey={OptionsAndCriteriaKeys.selectionCriteria} hidden={hidden} />
-					</Grid>
+		<div className={classes.divMain}>
+			<Grid container justify="center" alignContent="center">
+				<Grid item xs={6} className={classes.gridItem}>
+					<Typography variant="h5" gutterBottom>
+						Decision Options
+						<IconButton
+							aria-label="Help"
+							className={classes.infoButton}
+							onClick={() => setShowOptionsInfo(true)}
+						>
+							<InfoIcon color="secondary" />
+						</IconButton>
+					</Typography>
+					<EditableList
+						itemsKey={OptionsAndCriteriaKeys.decisionOptions}
+						hidden={hidden}
+					/>
 				</Grid>
-				<div className={classes.emptySpace} />
-				<InfoDialog
-					text={DecisionOptionInfo}
-					show={showOptionsInfo}
-					onClose={()=>setShowOptionsInfo(false)}
-				/>
-				<InfoDialog
-					text={SelectionCriteriaInfo}
-					show={showCriteriaInfo}
-					onClose={()=>setShowCriteriaInfo(false)}
-				/>
-			</div>
-
+				<Grid item xs={6} className={classes.gridItem}>
+					<Typography variant="h5" gutterBottom>
+						Selection Criteria
+						<IconButton
+							aria-label="Help"
+							className={classes.infoButton}
+							onClick={() => setShowCriteriaInfo(true)}
+						>
+							<InfoIcon color="secondary" />
+						</IconButton>
+					</Typography>
+					<EditableList
+						itemsKey={OptionsAndCriteriaKeys.selectionCriteria}
+						hidden={hidden}
+					/>
+				</Grid>
+			</Grid>
+			<div className={classes.emptySpace} />
+			<InfoDialog
+				text={DecisionOptionInfo}
+				show={showOptionsInfo}
+				onClose={() => setShowOptionsInfo(false)}
+			/>
+			<InfoDialog
+				text={SelectionCriteriaInfo}
+				show={showCriteriaInfo}
+				onClose={() => setShowCriteriaInfo(false)}
+			/>
+		</div>
 	);
 };
 

@@ -2,7 +2,7 @@ import React from "react";
 import { Provider } from "react-redux";
 import EditableList from "./EditableList";
 import store from "../../../../services/Redux/store";
-import { createMount, createShallow } from "@material-ui/core/test-utils";
+import { createMount } from "@material-ui/core/test-utils";
 import { InputBase } from "@material-ui/core";
 
 let mount;

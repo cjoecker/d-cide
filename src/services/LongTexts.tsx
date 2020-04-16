@@ -26,9 +26,7 @@ export const DecisionOptionInfo = (
 			For example:
 			<ul>
 				<li>To divorce</li>
-				<li>
-					Not to divorce.
-				</li>
+				<li>Not to divorce.</li>
 			</ul>
 		</p>
 	</div>

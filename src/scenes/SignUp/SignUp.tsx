@@ -11,7 +11,8 @@ import InfoDialog from "../../components/InfoDialog";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import {
-	login, saveTokenCookie,
+	login,
+	saveTokenCookie,
 	signUp,
 } from "../../services/redux/actionsAndSlicers/SessionActions";
 import theme from "../../muiTheme";
@@ -51,8 +52,8 @@ const useStyles = makeStyles({
 
 	gridItem_legalLink: {
 		paddingTop: theme.spacing(2),
-		marginLeft:theme.spacing(2),
-		marginRight:theme.spacing(2),
+		marginLeft: theme.spacing(2),
+		marginRight: theme.spacing(2),
 	},
 
 	button: {
@@ -82,7 +83,7 @@ const SignUp: React.FC = () => {
 	}, []);
 
 	useEffect(() => {
-		console.log("hola")
+		console.log("hola");
 		if (signUpSuccessful) {
 			const user = {
 				username: signUpRequest.username,
@@ -103,7 +104,7 @@ const SignUp: React.FC = () => {
 	const onChange = (attributeName: string, value: string) => {
 		setSignUpRequest({ ...signUpRequest, [attributeName]: value });
 	};
-//TODO ask to save decision after login
+	//TODO ask to save decision after login
 
 	return (
 		<div className={classes.divMain}>
@@ -129,7 +130,9 @@ const SignUp: React.FC = () => {
 							<TextField
 								id="outlined-email-input"
 								name="username"
-								error={signUpErrors.username != null && signUpErrors.username !==""}
+								error={
+									signUpErrors.username != null && signUpErrors.username !== ""
+								}
 								helperText={signUpErrors.username}
 								value={signUpRequest.username}
 								onChange={(event) =>
@@ -151,7 +154,9 @@ const SignUp: React.FC = () => {
 							<TextField
 								id="outlined-fullName-input"
 								name="fullName"
-								error={signUpErrors.fullName != null && signUpErrors.fullName !==""}
+								error={
+									signUpErrors.fullName != null && signUpErrors.fullName !== ""
+								}
 								helperText={signUpErrors.fullName}
 								value={signUpRequest.fullName}
 								onChange={(event) =>
@@ -172,7 +177,9 @@ const SignUp: React.FC = () => {
 							<TextField
 								id="outlined-password-input"
 								name="password"
-								error={signUpErrors.password != null && signUpErrors.password !==""}
+								error={
+									signUpErrors.password != null && signUpErrors.password !== ""
+								}
 								helperText={signUpErrors.password}
 								value={signUpRequest.password}
 								onChange={(event) =>
@@ -194,7 +201,10 @@ const SignUp: React.FC = () => {
 							<TextField
 								id="outlined-confirmPassword-input"
 								name="confirmPassword"
-								error={signUpErrors.confirmPassword != null && signUpErrors.confirmPassword !==""}
+								error={
+									signUpErrors.confirmPassword != null &&
+									signUpErrors.confirmPassword !== ""
+								}
 								helperText={signUpErrors.confirmPassword}
 								value={signUpRequest.confirmPassword}
 								onChange={(event) =>
