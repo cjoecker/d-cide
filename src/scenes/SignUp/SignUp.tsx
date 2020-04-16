@@ -21,7 +21,7 @@ import { initialState } from "../../services/redux/actionsAndSlicers/SessionSlic
 const useStyles = makeStyles({
 	divMain: {
 		textAlign: "center",
-		paddingTop: theme.spacing(6),
+		paddingTop: theme.spacing(4),
 	},
 
 	gridContainer: {
@@ -30,7 +30,7 @@ const useStyles = makeStyles({
 	},
 
 	TitleGridItem: {
-		paddingTop: theme.spacing(6),
+		paddingTop: theme.spacing(4),
 	},
 
 	paper: {
@@ -51,6 +51,8 @@ const useStyles = makeStyles({
 
 	gridItem_legalLink: {
 		paddingTop: theme.spacing(2),
+		marginLeft:theme.spacing(2),
+		marginRight:theme.spacing(2),
 	},
 
 	button: {
@@ -102,6 +104,7 @@ const SignUp: React.FC = () => {
 		setSignUpRequest({ ...signUpRequest, [attributeName]: value });
 	};
 //TODO ask to save decision after login
+
 	return (
 		<div className={classes.divMain}>
 			<Grid container justify="center">
