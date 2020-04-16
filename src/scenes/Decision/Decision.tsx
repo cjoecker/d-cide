@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import Step from "@material-ui/core/Step";
 import Stepper from "@material-ui/core/Stepper";
 import StepButton from "@material-ui/core/StepButton";
@@ -12,6 +12,7 @@ import OptionsAndCriteria from "./Step1OptionsAndCriteria/OptionsAndCriteria";
 import WeightCriteria from "./Step2WeightCriteria/WeightCriteria";
 import RateOptions from "./Step3RateOptions/RateOptions";
 import Results from "./Step4Result/Result";
+import { StepLabel } from "@material-ui/core";
 
 const useStyles = makeStyles({
 	divMain: {
@@ -22,6 +23,9 @@ const useStyles = makeStyles({
 
 	stepper: {
 		backgroundColor: "transparent",
+	},
+	stepperLabel: {
+		marginBottom: -theme.spacing(1.5),
 	},
 
 	buttonNext: {
@@ -80,10 +84,9 @@ const Decision: React.FC = () => {
 
 	useEffect(() => {
 		return () => {
-			setActiveStepNum(0)
+			setActiveStepNum(0);
 		};
 	}, []);
-
 
 	const setStepCompleted = (stepNumber: number) => {
 		const newSteps = [...steps];
@@ -117,7 +120,7 @@ const Decision: React.FC = () => {
 								completed={step.completed}
 								disabled={step.disabled}
 							>
-								{step.name}
+								<StepLabel  StepIconProps={{ classes: { root: classes.stepperLabel } }}>{step.name}</StepLabel>
 							</StepButton>
 						</Step>
 					);
