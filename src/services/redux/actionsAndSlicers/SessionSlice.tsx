@@ -61,10 +61,6 @@ const SessionSlice = createSlice({
 			state.user = initialState.user;
 			state.wrongPassword = false;
 		},
-		setToken(state, action: PayloadAction<string>) {
-			//TODO: check if at the end of refactoring, this is necessary
-			state.token = action.payload;
-		},
 		setWrongPassword(state, action: PayloadAction<boolean>) {
 			state.wrongPassword = action.payload;
 		},
