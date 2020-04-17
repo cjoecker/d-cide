@@ -99,9 +99,8 @@ const EditableList: React.FC<Props> = (props: Props) => {
 	useEffect(() => {
 		if (items.length !== localItems.length && !hidden && didMount){
 			setLocalItems(items);
-			if (items.length < 2)
-				dispatch(AppSlice.actions.addAlert(notEnoughItemsAlert));
-			else dispatch(AppSlice.actions.deleteAlert(notEnoughItemsAlert));
+			deleteEntryWhenCreated()
+			manageNotEnoughItemsAlerts()
 		}
 
 	}, [items]);
@@ -109,11 +108,7 @@ const EditableList: React.FC<Props> = (props: Props) => {
 
 	const onCreateItem = () => {
 		if (newEntry === "") return;
-
 		postOptionsAndCriteria(dispatch, decisionId, itemsKey, newEntry);
-
-		//TODO check if new entry is null even if service was not working
-		setNewEntry("");
 	};
 
 	const onChangeItem = (event, itemId: number) => {
@@ -134,6 +129,17 @@ const EditableList: React.FC<Props> = (props: Props) => {
 		if (index === localItems.length) {
 			setStopAnimation(true);
 		}
+	};
+
+	const deleteEntryWhenCreated = () => {
+		if(items[0].name === newEntry)
+			setNewEntry("");
+	};
+
+	const manageNotEnoughItemsAlerts = () => {
+		if (items.length < 2)
+			dispatch(AppSlice.actions.addAlert(notEnoughItemsAlert));
+		else dispatch(AppSlice.actions.deleteAlert(notEnoughItemsAlert));
 	};
 
 	return (
