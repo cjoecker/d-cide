@@ -23,7 +23,6 @@ const useStyles = makeStyles({
 type Props = {
 	hidden: boolean;
 };
-//TODO check responsiveness for iphone
 const Results: React.FC<Props> = (props: Props) => {
 	const { hidden } = props;
 	const classes = useStyles();
