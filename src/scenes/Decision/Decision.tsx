@@ -85,8 +85,10 @@ const Decision: React.FC = () => {
 	useEffect(() => {
 		return () => {
 			setActiveStepNum(0);
+			setLoadedStepNum(0);
 		};
 	}, []);
+
 
 	const setStepCompleted = (stepNumber: number) => {
 		const newSteps = [...steps];

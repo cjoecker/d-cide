@@ -23,6 +23,8 @@ import {
 	postOptionsAndCriteria,
 } from "../../../../services/redux/actionsAndSlicers/OptionsAndCriteriaActions";
 import { RootState } from "../../../../services/redux/rootReducer";
+import AppSlice from "../../../../services/redux/actionsAndSlicers/AppSlice";
+import {AlertType, NOT_ENOUGH_CRITERIA} from "../../../../services/Alerts";
 
 const useStyles = makeStyles({
 	divMain: {
@@ -54,12 +56,13 @@ const useStyles = makeStyles({
 
 interface Props {
 	itemsKey: OptionsAndCriteriaKeys;
+	notEnoughItemsAlert: AlertType;
 	hidden: boolean;
 }
 
 const EditableList: React.FC<Props> = (props: Props) => {
 	const { decisionId } = useParams();
-	const { hidden, itemsKey } = props;
+	const { hidden, notEnoughItemsAlert, itemsKey } = props;
 
 	const [didMount, setDidMount] = useState(false);
 	const [newEntry, setNewEntry] = useState("");
@@ -75,7 +78,12 @@ const EditableList: React.FC<Props> = (props: Props) => {
 	const classes = useStyles();
 	const dispatch = useDispatch();
 
-	//TODO alerts needs to be created here
+	useEffect(() => {
+		return () => {
+			dispatch(AppSlice.actions.deleteAlert(notEnoughItemsAlert));
+		};
+	}, []);
+
 
 	useEffect(() => {
 		if (!hidden) {
@@ -84,13 +92,20 @@ const EditableList: React.FC<Props> = (props: Props) => {
 		} else {
 			setLocalItems([]);
 			setStopAnimation(false);
+			dispatch(AppSlice.actions.deleteAlert(notEnoughItemsAlert));
 		}
 	}, [hidden]);
 
 	useEffect(() => {
-		if (items.length !== localItems.length && !hidden && didMount)
+		if (items.length !== localItems.length && !hidden && didMount){
 			setLocalItems(items);
+			if (items.length < 2)
+				dispatch(AppSlice.actions.addAlert(notEnoughItemsAlert));
+			else dispatch(AppSlice.actions.deleteAlert(notEnoughItemsAlert));
+		}
+
 	}, [items]);
+
 
 	const onCreateItem = () => {
 		if (newEntry === "") return;

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Grid from "@material-ui/core/Grid";
 import InfoIcon from "@material-ui/icons/Info";
 import IconButton from "@material-ui/core/IconButton";
@@ -12,6 +12,13 @@ import {
 	SelectionCriteriaInfo,
 } from "../../../services/LongTexts";
 import { OptionsAndCriteriaKeys } from "../../../services/redux/actionsAndSlicers/OptionsAndCriteriaSlice";
+import AppSlice from "../../../services/redux/actionsAndSlicers/AppSlice";
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../../services/redux/rootReducer";
+import {
+	NOT_ENOUGH_CRITERIA,
+	NOT_ENOUGH_OPTIONS,
+} from "../../../services/Alerts";
 
 const useStyles = makeStyles({
 	divMain: {
@@ -46,7 +53,6 @@ const OptionsAndCriteria: React.FC<Props> = (props: Props) => {
 	const [showCriteriaInfo, setShowCriteriaInfo] = useState(false);
 
 	const { hidden } = props;
-
 	const classes = useStyles();
 
 	return (
@@ -65,6 +71,7 @@ const OptionsAndCriteria: React.FC<Props> = (props: Props) => {
 					</Typography>
 					<EditableList
 						itemsKey={OptionsAndCriteriaKeys.decisionOptions}
+						notEnoughItemsAlert={NOT_ENOUGH_OPTIONS}
 						hidden={hidden}
 					/>
 				</Grid>
@@ -81,6 +88,7 @@ const OptionsAndCriteria: React.FC<Props> = (props: Props) => {
 					</Typography>
 					<EditableList
 						itemsKey={OptionsAndCriteriaKeys.selectionCriteria}
+						notEnoughItemsAlert={NOT_ENOUGH_CRITERIA}
 						hidden={hidden}
 					/>
 				</Grid>
