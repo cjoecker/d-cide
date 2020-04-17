@@ -16,6 +16,7 @@ import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
 import InfoIcon from "@material-ui/icons/Info";
+import Fade from "@material-ui/core/Fade";
 import { getOptionsAndCriteria } from "../../../../services/redux/actionsAndSlicers/OptionsAndCriteriaActions";
 import theme from "../../../../muiTheme";
 import { RootState } from "../../../../services/redux/rootReducer";
@@ -24,7 +25,6 @@ import {
 	OptionsAndCriteriaKeys,
 } from "../../../../services/redux/actionsAndSlicers/OptionsAndCriteriaSlice";
 import InfoDialog from "../../../../components/InfoDialog";
-import Fade from "@material-ui/core/Fade";
 
 const useStyles = makeStyles({
 	divMain: {
@@ -51,7 +51,6 @@ const useStyles = makeStyles({
 interface Props {
 	itemsKey: OptionsAndCriteriaKeys;
 	hidden: boolean;
-	YKey: string;
 	title: string;
 	infoText: JSX.Element;
 }
@@ -67,7 +66,7 @@ const ResultsChart: React.FC<Props> = (props: Props) => {
 	);
 
 	const { decisionId } = useParams();
-	const { hidden, itemsKey, YKey, title, infoText } = props;
+	const { hidden, itemsKey, title, infoText } = props;
 
 	const classes = useStyles();
 	const dispatch = useDispatch();
@@ -85,6 +84,7 @@ const ResultsChart: React.FC<Props> = (props: Props) => {
 			setLocalItems(wrapLongWords(items));
 			setStartAnimation(true);
 		}
+		console.log(JSON.stringify(items));
 	}, [items]);
 
 	const wrapLongWords = (originalItems: OptionAndCriteria[]) => {
@@ -154,7 +154,11 @@ const ResultsChart: React.FC<Props> = (props: Props) => {
 									stroke="#a0a0a0"
 									tick={{ fontSize: "0.8rem" }}
 								/>
-								<YAxis type="category" dataKey={YKey} width={theme.spacing(10)} />
+								<YAxis
+									type="category"
+									dataKey="name"
+									width={theme.spacing(10)}
+								/>
 								<Bar
 									dataKey="score"
 									animationDuration={1000}

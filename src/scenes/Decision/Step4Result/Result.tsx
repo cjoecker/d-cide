@@ -34,7 +34,6 @@ const Results: React.FC<Props> = (props: Props) => {
 				<Grid className={classes.gridItem} key="1" item xs={12}>
 					<ResultsChart
 						itemsKey={OptionsAndCriteriaKeys.decisionOptions}
-						YKey="name"
 						hidden={hidden}
 						title="Decision Options Ranking"
 						infoText={LongStrings.OptionsResultInfo}
@@ -43,7 +42,6 @@ const Results: React.FC<Props> = (props: Props) => {
 				<Grid className={classes.gridItem} key="2" item xs={12}>
 					<ResultsChart
 						itemsKey={OptionsAndCriteriaKeys.selectionCriteria}
-						YKey="name"
 						hidden={hidden}
 						title="Selection Criteria Ranking"
 						infoText={LongStrings.CriteriaResultInfo}
