@@ -108,8 +108,6 @@ const Decision: React.FC = () => {
 		setActiveStepNum(stepNumber);
 	};
 
-	// TODO disable steps for alerts
-
 	return (
 		<div className={classes.divMain}>
 			<Stepper
