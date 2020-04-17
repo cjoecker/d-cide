@@ -256,7 +256,7 @@ const Login: React.FC = () => {
 							<Fab
 								color="primary"
 								variant="extended"
-								aria-label="Login"
+								aria-label="Log in"
 								className={classes.textField}
 								onClick={onSubmitLogin}
 							>
