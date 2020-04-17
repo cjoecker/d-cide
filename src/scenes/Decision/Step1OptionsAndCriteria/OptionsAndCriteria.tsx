@@ -12,9 +12,6 @@ import {
 	SelectionCriteriaInfo,
 } from "../../../services/LongTexts";
 import { OptionsAndCriteriaKeys } from "../../../services/redux/actionsAndSlicers/OptionsAndCriteriaSlice";
-import AppSlice from "../../../services/redux/actionsAndSlicers/AppSlice";
-import { shallowEqual, useDispatch, useSelector } from "react-redux";
-import { RootState } from "../../../services/redux/rootReducer";
 import {
 	NOT_ENOUGH_CRITERIA,
 	NOT_ENOUGH_OPTIONS,
