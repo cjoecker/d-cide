@@ -72,8 +72,6 @@ const ResultsChart: React.FC<Props> = (props: Props) => {
 	const classes = useStyles();
 	const dispatch = useDispatch();
 
-	//TODO show axis values
-
 	useEffect(() => {
 		if (!hidden) getOptionsAndCriteria(dispatch, decisionId, itemsKey, true);
 		else {
@@ -84,19 +82,27 @@ const ResultsChart: React.FC<Props> = (props: Props) => {
 
 	useEffect(() => {
 		if (items.length !== localItems.length && !hidden) {
-			setLocalItems(items);
+			setLocalItems(wrapLongWords(items));
 			setStartAnimation(true);
 		}
 	}, [items]);
-	//TODO replace with theme spacing
-	const getYAxisWidth = () => {
-		const labelsMaxCharsNum = 18;
-		const maxNumOffset = 35;
-		const widthOffset = 50;
 
-		const longest = Math.max(...localItems.map((item) => item.name.length));
+	const wrapLongWords = (originalItems: OptionAndCriteria[]) => {
+		const maxCharsPerLine = 13;
 
-		return (longest / labelsMaxCharsNum) * maxNumOffset + widthOffset;
+		return originalItems.map((item) => {
+			if (item.name.length > maxCharsPerLine) {
+				const breakLongWords = new RegExp(`([^\s]{${maxCharsPerLine}})`, "g");
+				const dropLastDash = new RegExp(`-\n$`, "g");
+
+				const newName = item.name
+					.replace(breakLongWords, "$1-\n")
+					.replace(dropLastDash, "");
+
+				return { ...item, name: newName };
+			}
+			return item;
+		});
 	};
 
 	return (
@@ -115,7 +121,7 @@ const ResultsChart: React.FC<Props> = (props: Props) => {
 					</Typography>
 					<Typography variant="body1">
 						<ResponsiveContainer
-							height={localItems.length * 70 + 10}
+							height={localItems.length * theme.spacing(9) + theme.spacing(4)}
 							width="100%"
 							className={classes.chartContainer}
 						>
@@ -129,7 +135,6 @@ const ResultsChart: React.FC<Props> = (props: Props) => {
 								}}
 								layout="vertical"
 								barCategoryGap="20%"
-								barGap={2}
 								maxBarSize={10}
 							>
 								<CartesianGrid
@@ -149,7 +154,7 @@ const ResultsChart: React.FC<Props> = (props: Props) => {
 									stroke="#a0a0a0"
 									tick={{ fontSize: "0.8rem" }}
 								/>
-								<YAxis type="category" dataKey={YKey} width={getYAxisWidth()} />
+								<YAxis type="category" dataKey={YKey} width={theme.spacing(10)} />
 								<Bar
 									dataKey="score"
 									animationDuration={1000}
