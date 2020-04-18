@@ -5,7 +5,6 @@ import { makeStyles, ThemeProvider } from "@material-ui/core/styles";
 import CardMedia from "@material-ui/core/CardMedia";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
-import { createBrowserHistory } from "history";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import Link from "@material-ui/core/Link";
@@ -17,7 +16,7 @@ import IconButton from "@material-ui/core/IconButton";
 import Toolbar from "@material-ui/core/Toolbar";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
-import { Route, Router, Switch } from "react-router-dom";
+import {Route, Switch, BrowserRouter as Router, useHistory} from "react-router-dom";
 import { RootState } from "./services/redux/rootReducer";
 import LandingPage from "./scenes/LandingPage";
 import Decision from "./scenes/Decision/Decision";
@@ -32,12 +31,12 @@ import Login from "./scenes/Login/Login";
 import Decisions from "./scenes/Decisions/Decisions";
 import PrivateRoute from "./services/PrivateRoute";
 import SignUp from "./scenes/SignUp/SignUp";
+import NotFound from "./scenes/NotFound/NotFound";
+import { createBrowserHistory } from "history";
 
 const { token } = localStorage;
 
 verifyToken(token);
-
-//TODO see if this is necessary
 const history = createBrowserHistory();
 
 const useStyles = makeStyles({
@@ -74,7 +73,7 @@ const useStyles = makeStyles({
 	},
 
 	divRouter: {
-		marginTop: theme.spacing(6),
+		marginTop: theme.spacing(4),
 	},
 
 	logo: {
@@ -102,6 +101,7 @@ const App: React.FC = () => {
 
 	const classes = useStyles();
 	const dispatch = useDispatch();
+	const history = useHistory();
 
 	const onClickUser = (event: React.MouseEvent<HTMLButtonElement>) => {
 		if (user.registeredUser) setAnchorEl(event.currentTarget);
@@ -152,9 +152,7 @@ const App: React.FC = () => {
 
 	return (
 		<ThemeProvider theme={theme}>
-			<Router history={history}>
 				<div className={classes.divMain}>
-					{/*Title Bar*/}
 					<AppBar position="static" color="primary" className={classes.appBar}>
 						<Toolbar>
 							<div className={classes.divLogo}>
@@ -181,12 +179,9 @@ const App: React.FC = () => {
 					<div className={classes.linearProgress}>
 						{isLoading > 0 && <LinearProgress color="secondary" />}
 					</div>
-
 					<div className={classes.divRouter}>
 						<Switch>
-							{/*	/!*Public Scenes*!/*/}
 							<Route exact path="/" component={LandingPage} />
-							{/*<Route component={NotFound} />*/}
 							<Route exact path="/login" component={Login} />
 							<Route exact path="/signup" component={SignUp} />
 							<PrivateRoute exact path="/decisions" component={Decisions} />
@@ -195,11 +190,11 @@ const App: React.FC = () => {
 								path="/decisions/:decisionId"
 								component={Decision}
 							/>
+							<Route component={NotFound} />
 						</Switch>
 					</div>
 					<AlertsBanner />
 				</div>
-			</Router>
 		</ThemeProvider>
 	);
 };
