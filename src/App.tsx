@@ -32,12 +32,10 @@ import Decisions from "./scenes/Decisions/Decisions";
 import PrivateRoute from "./services/PrivateRoute";
 import SignUp from "./scenes/SignUp/SignUp";
 import NotFound from "./scenes/NotFound/NotFound";
-import { createBrowserHistory } from "history";
 
 const { token } = localStorage;
 
 verifyToken(token);
-const history = createBrowserHistory();
 
 const useStyles = makeStyles({
 	divMain: {
