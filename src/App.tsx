@@ -16,7 +16,7 @@ import IconButton from "@material-ui/core/IconButton";
 import Toolbar from "@material-ui/core/Toolbar";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
-import {Route, Switch, BrowserRouter as Router, useHistory} from "react-router-dom";
+import {Route, Switch, useHistory} from "react-router-dom";
 import { RootState } from "./services/redux/rootReducer";
 import LandingPage from "./scenes/LandingPage";
 import Decision from "./scenes/Decision/Decision";
@@ -73,7 +73,7 @@ const useStyles = makeStyles({
 	},
 
 	divRouter: {
-		marginTop: theme.spacing(4),
+		marginTop: theme.spacing(6),
 	},
 
 	logo: {
