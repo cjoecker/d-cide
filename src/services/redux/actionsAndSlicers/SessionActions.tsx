@@ -1,44 +1,17 @@
 import axios, { AxiosResponse } from "axios";
 import store, { AppDispatch } from "../store";
-import {
-	AxiosRequest,
-	ErrorActionType,
-	SuccessExtraActionType,
-} from "../AxiosRequest";
-import SessionSlice, { SignUpRequest, User } from "./SessionSlice";
-import { showHTTPAlert } from "./AppActions";
+import { AxiosRequest, SuccessExtraActionType } from "../AxiosRequest";
+import SessionSlice, { User } from "./SessionSlice";
 import jwt_decode from "jwt-decode";
 import DecisionsSlice from "./DecisionsSlice";
 import OptionsAndCriteriaSlice from "./OptionsAndCriteriaSlice";
 import RatedOptionsSlice from "./RatedOptionsSlice";
 import WeightedCriteriaSlice from "./WeightCriteriaSlice";
 
-export interface LoginRequest {
-	username: string;
-	password: string;
-}
-
 export interface LoginResponse {
 	success: boolean;
 	token: string;
 }
-
-export interface SignUpResponse {
-	id: number;
-	username: string;
-	fullName: string;
-}
-
-export const login = (dispatch: AppDispatch, loginRequest: LoginRequest) => {
-	dispatch(
-		AxiosRequest(
-			axios.post<LoginResponse>("/api/sessions/", loginRequest),
-			SessionSlice.actions.setSession.bind(null),
-			null,
-			resetWrongPasswordAnimation.bind(null)
-		)
-	);
-};
 
 export const createUnregisteredUser = (dispatch: AppDispatch) => {
 	dispatch(
@@ -47,18 +20,6 @@ export const createUnregisteredUser = (dispatch: AppDispatch) => {
 			SessionSlice.actions.setSession.bind(null),
 			saveCookieAfterLogin.bind(null),
 			null
-		)
-	);
-};
-
-export const signUp = (dispatch: AppDispatch, newUser: SignUpRequest) => {
-	dispatch(
-		AxiosRequest(
-			axios.post<SignUpResponse>("/api/users/", newUser),
-			SessionSlice.actions.setSignUpSuccessful.bind(null),
-			null,
-			showSignUpErrors.bind(null),
-			true
 		)
 	);
 };
@@ -89,15 +50,6 @@ const saveCookieAfterLogin: SuccessExtraActionType = (
 	saveTokenCookie(answer.data.token);
 };
 
-const resetWrongPasswordAnimation: ErrorActionType = (dispatch, error) => {
-	if (error.response?.data.password != null) {
-		dispatch(SessionSlice.actions.setWrongPassword(false));
-		dispatch(SessionSlice.actions.setWrongPassword(true));
-	} else {
-		showHTTPAlert(dispatch, error);
-	}
-};
-
 export const verifyToken = (token: string) => {
 	if (token === "" || token === undefined) return;
 
@@ -115,10 +67,4 @@ export const verifyToken = (token: string) => {
 		store.dispatch(SessionSlice.actions.setSession(tokenResponse));
 		saveTokenCookie(token);
 	}
-};
-
-const showSignUpErrors: ErrorActionType = (dispatch, error) => {
-	if (error.response.data != null)
-		dispatch(SessionSlice.actions.setSignUpErrors(error.response.data));
-	else showHTTPAlert(dispatch, error);
 };

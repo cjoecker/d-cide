@@ -24,13 +24,8 @@ const LandingPage: React.FC = () => {
 	const history = useHistory();
 
 	useEffect(() => {
-		if (token === "") {
-			createUnregisteredUser(dispatch);
-		} else if (user.registeredUser) {
-			history.push("/decisions");
-		} else {
-			getDecisions(dispatch);
-		}
+		if (token === "") createUnregisteredUser(dispatch);
+		else getDecisions(dispatch);
 	}, []);
 
 	useEffect(() => {
@@ -39,7 +34,7 @@ const LandingPage: React.FC = () => {
 
 	useEffect(() => {
 		if (decisions.length > 0)
-			history.push("/decisions/" + decisions[decisions.length - 1].id);
+			history.push(`/decisions/${decisions[decisions.length - 1].id}`);
 	}, [decisions]);
 
 	return null;

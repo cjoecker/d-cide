@@ -61,15 +61,6 @@ const SessionSlice = createSlice({
 			state.user = initialState.user;
 			state.wrongPassword = false;
 		},
-		setWrongPassword(state, action: PayloadAction<boolean>) {
-			state.wrongPassword = action.payload;
-		},
-		setSignUpSuccessful(state, action: PayloadAction<boolean>) {
-			state.signUpSuccessful = action.payload;
-		},
-		setSignUpErrors(state, action: PayloadAction<SignUpRequest>) {
-			state.signUpErrors = action.payload;
-		},
 	},
 });
 

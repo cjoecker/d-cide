@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Grid from "@material-ui/core/Grid";
 import InfoIcon from "@material-ui/icons/Info";
 import IconButton from "@material-ui/core/IconButton";

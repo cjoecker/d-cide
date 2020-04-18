@@ -24,7 +24,7 @@ import {
 } from "../../../../services/redux/actionsAndSlicers/OptionsAndCriteriaActions";
 import { RootState } from "../../../../services/redux/rootReducer";
 import AppSlice from "../../../../services/redux/actionsAndSlicers/AppSlice";
-import {AlertType, NOT_ENOUGH_CRITERIA} from "../../../../services/Alerts";
+import { AlertType } from "../../../../services/Alerts";
 
 const useStyles = makeStyles({
 	divMain: {
@@ -84,7 +84,6 @@ const EditableList: React.FC<Props> = (props: Props) => {
 		};
 	}, []);
 
-
 	useEffect(() => {
 		if (!hidden) {
 			getOptionsAndCriteria(dispatch, decisionId, itemsKey, false);
@@ -97,14 +96,12 @@ const EditableList: React.FC<Props> = (props: Props) => {
 	}, [hidden]);
 
 	useEffect(() => {
-		if (items.length !== localItems.length && !hidden && didMount){
+		if (items.length !== localItems.length && !hidden && didMount) {
 			setLocalItems(items);
-			deleteEntryWhenCreated()
-			manageNotEnoughItemsAlerts()
+			deleteEntryWhenCreated();
+			manageNotEnoughItemsAlerts();
 		}
-
 	}, [items]);
-
 
 	const onCreateItem = () => {
 		if (newEntry === "") return;
@@ -132,8 +129,7 @@ const EditableList: React.FC<Props> = (props: Props) => {
 	};
 
 	const deleteEntryWhenCreated = () => {
-		if(items[0].name === newEntry)
-			setNewEntry("");
+		if (items[0].name === newEntry) setNewEntry("");
 	};
 
 	const manageNotEnoughItemsAlerts = () => {
