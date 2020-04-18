@@ -1,7 +1,5 @@
 import React from "react";
 
-//TODO autohide and allow close http alerts
-
 export type AlertType = {
 	type: AlertTypes;
 	allowClose: boolean;

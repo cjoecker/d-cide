@@ -6,7 +6,6 @@ import CardMedia from "@material-ui/core/CardMedia";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import { createBrowserHistory } from "history";
-import ReactGA from "react-ga";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import Link from "@material-ui/core/Link";
@@ -40,10 +39,6 @@ verifyToken(token);
 
 //TODO see if this is necessary
 const history = createBrowserHistory();
-history.listen((location) => {
-	ReactGA.set({ page: location.pathname });
-	ReactGA.pageview(location.pathname);
-});
 
 const useStyles = makeStyles({
 	divMain: {
@@ -126,10 +121,6 @@ const App: React.FC = () => {
 	const handleClose = () => {
 		setAnchorEl(null);
 	};
-
-	ReactGA.initialize("UA-139517059-1");
-
-	// const { isLoading } = this.props.app;
 
 	const userMenu = (
 		<Menu
