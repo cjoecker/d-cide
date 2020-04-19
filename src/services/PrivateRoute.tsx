@@ -1,17 +1,18 @@
 import * as React from "react";
-import { Redirect, Route, RouteProps } from "react-router-dom";
-import { shallowEqual, useSelector } from "react-redux";
-import { RootState } from "./redux/rootReducer";
+import {Redirect, Route, RouteProps} from "react-router-dom";
+import {shallowEqual, useSelector} from "react-redux";
+import {RootState} from "./redux/rootReducer";
+/* eslint-disable react/jsx-props-no-spreading */
 
-interface PrivateRouteProps extends RouteProps {
+type PrivateRouteProps = RouteProps & {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	component?: any;
-}
+};
 
 const PrivateRoute = (props: PrivateRouteProps) => {
-	const { component: Component, children, ...rest } = props;
+	const {component: Component, children, ...rest} = props;
 
-	const { token, user } = useSelector(
+	const {token, user} = useSelector(
 		(state: RootState) => state.Session,
 		shallowEqual
 	);

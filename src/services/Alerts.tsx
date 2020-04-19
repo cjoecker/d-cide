@@ -1,5 +1,4 @@
-import React from "react";
-
+//TYPES
 export type AlertType = {
 	type: AlertTypes;
 	allowClose: boolean;

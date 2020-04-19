@@ -1,25 +1,23 @@
-import React, { useEffect, useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import React, {useEffect, useState} from "react";
+import {makeStyles} from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import Slider from "@material-ui/core/Slider";
 import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
 import InfoIcon from "@material-ui/icons/Info";
-import { shallowEqual, useDispatch, useSelector } from "react-redux";
+import {shallowEqual, useDispatch, useSelector} from "react-redux";
 import Fade from "@material-ui/core/Fade";
-import { useParams } from "react-router-dom";
+import {useParams} from "react-router-dom";
 import * as LongStrings from "../../../services/LongTexts";
 import InfoDialog from "../../../components/InfoDialog";
-import { RootState } from "../../../services/redux/rootReducer";
+import {RootState} from "../../../services/redux/rootReducer";
 import theme from "../../../muiTheme";
-import { RatedOption } from "../../../services/redux/actionsAndSlicers/RatedOptionsSlice";
-import {
-	getRatedOptions,
-	updateRatedOptions,
-} from "../../../services/redux/actionsAndSlicers/RatedOptionsActions";
-import { getOptionsAndCriteria } from "../../../services/redux/actionsAndSlicers/OptionsAndCriteriaActions";
-import { OptionsAndCriteriaKeys } from "../../../services/redux/actionsAndSlicers/OptionsAndCriteriaSlice";
+import {RatedOption} from "../../../services/redux/actionsAndSlicers/RatedOptionsSlice";
+import {getRatedOptions, updateRatedOptions,} from "../../../services/redux/actionsAndSlicers/RatedOptionsActions";
+import {getOptionsAndCriteria} from "../../../services/redux/actionsAndSlicers/OptionsAndCriteriaActions";
+import {OptionsAndCriteriaKeys} from "../../../services/redux/actionsAndSlicers/OptionsAndCriteriaSlice";
+import {ParamTypes} from "../../../App";
 
 const useStyles = makeStyles({
 	divMain: {
@@ -101,15 +99,15 @@ type Props = {
 };
 
 const RateOptions: React.FC<Props> = (props: Props) => {
-	const { decisionId } = useParams();
-	const { hidden } = props;
+	const {decisionId} = useParams<ParamTypes>();
+	const {hidden} = props;
 
 	const [showInfo, setShowInfo] = useState(false);
 	const [startAnimation, setStartAnimation] = useState(false);
 
 	const [LocalRatedOptions, setLocalRatedOptions] = useState<RatedOption[]>([]);
 
-	const { selectionCriteria, decisionOptions } = useSelector(
+	const {selectionCriteria, decisionOptions} = useSelector(
 		(state: RootState) => state.OptionsAndCriteria,
 		shallowEqual
 	);
@@ -168,21 +166,21 @@ const RateOptions: React.FC<Props> = (props: Props) => {
 		}
 	}, [ratedOptions]);
 
-	const onChange = (event, criteriaId, optionId, score) => {
+	const onChange = (event: React.BaseSyntheticEvent, criteriaId: number, optionId: number, score: number) => {
 		setLocalRatedOptions(
 			LocalRatedOptions.map((option) => {
 				if (
 					option.selectionCriteriaId === criteriaId &&
 					option.decisionOptionId === optionId
 				) {
-					return { ...option, score };
+					return {...option, score};
 				}
 				return option;
 			})
 		);
 	};
 
-	const onChangeCommitted = (value, criteriaId, optionId) => {
+	const onChangeCommitted = (value: number, criteriaId: number, optionId: number) => {
 		const FoundRatedOption = LocalRatedOptions.find(
 			(obj) =>
 				obj.selectionCriteriaId === criteriaId &&
@@ -314,12 +312,12 @@ const RateOptions: React.FC<Props> = (props: Props) => {
 																			event,
 																			criteria.id,
 																			option.id,
-																			value
+																			value as number
 																		)
 																	}
 																	onChangeCommitted={(event, value) =>
 																		onChangeCommitted(
-																			value,
+																			value as number,
 																			criteria.id,
 																			option.id
 																		)

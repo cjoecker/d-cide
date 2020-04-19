@@ -1,26 +1,29 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "ESNext",
+    "typeRoots": [
+      "node_modules/@types/"
+    ],
     "lib": [
       "dom",
       "dom.iterable",
       "esnext"
     ],
-    "noImplicitAny": false,
+    "noImplicitAny": true,
     "noImplicitThis": true,
     "allowJs": true,
-    "skipLibCheck": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "strict": false, //TODO set to true after conversion done
+    "strict": true,
     "forceConsistentCasingInFileNames": true,
     "module": "esnext",
     "moduleResolution": "node",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "noEmit": true,
     "jsx": "react",
-    "baseUrl": "src"
+    "baseUrl": "src",
+    "noEmit": true,
+    "skipLibCheck": true
   },
   "include": [
     "src"

@@ -1,4 +1,4 @@
-import { createMuiTheme } from "@material-ui/core/styles";
+import {createMuiTheme} from "@material-ui/core/styles";
 
 const theme = createMuiTheme({
 	typography: {
@@ -9,23 +9,24 @@ const theme = createMuiTheme({
 			color: "#000000",
 		},
 		fontWeightRegular: 500,
+		fontWeightBold: 600,
 		h1: {
-			fontWeight: 600,
+			fontWeight: 600
 		},
 		h2: {
-			fontWeight: 600,
+			fontWeight: 600
 		},
 		h3: {
-			fontWeight: 600,
+			fontWeight: 600
 		},
 		h4: {
-			fontWeight: 600,
+			fontWeight: 600
 		},
 		h5: {
-			fontWeight: 600,
+			fontWeight: 600
 		},
 		h6: {
-			fontWeight: 600,
+			fontWeight: 600
 		},
 	},
 

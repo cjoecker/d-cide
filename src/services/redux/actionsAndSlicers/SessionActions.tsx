@@ -1,14 +1,14 @@
-import axios, { AxiosResponse } from "axios";
-import store, { AppDispatch } from "../store";
-import { AxiosRequest, SuccessExtraActionType } from "../AxiosRequest";
-import SessionSlice, { User } from "./SessionSlice";
+import axios, {AxiosResponse} from "axios";
+import store, {AppDispatch} from "../store";
+import {AxiosRequest, SuccessExtraActionType} from "../AxiosRequest";
+import SessionSlice, {User} from "./SessionSlice";
 import jwt_decode from "jwt-decode";
 import DecisionsSlice from "./DecisionsSlice";
 import OptionsAndCriteriaSlice from "./OptionsAndCriteriaSlice";
 import RatedOptionsSlice from "./RatedOptionsSlice";
 import WeightedCriteriaSlice from "./WeightCriteriaSlice";
 
-export interface LoginResponse {
+export type LoginResponse = {
 	success: boolean;
 	token: string;
 }

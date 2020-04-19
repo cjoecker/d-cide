@@ -1,24 +1,24 @@
 import React from "react";
 import "./index.css";
 import AppBar from "@material-ui/core/AppBar";
-import { makeStyles, ThemeProvider } from "@material-ui/core/styles";
+import {makeStyles, ThemeProvider} from "@material-ui/core/styles";
 import CardMedia from "@material-ui/core/CardMedia";
 import LinearProgress from "@material-ui/core/LinearProgress";
-import { shallowEqual, useSelector } from "react-redux";
+import {shallowEqual, useSelector} from "react-redux";
 import Link from "@material-ui/core/Link";
 import Toolbar from "@material-ui/core/Toolbar";
-import { Route, Switch } from "react-router-dom";
-import { RootState } from "./services/redux/rootReducer";
+import {Route, Switch} from "react-router-dom";
+import {RootState} from "./services/redux/rootReducer";
 import LandingPage from "./components/LandingPage";
 import Decision from "./scenes/Decision/Decision";
 import AlertsBanner from "./components/AlertsBanner";
 import theme from "./muiTheme";
 import dcideLogo from "./images/d-cide_Logo.svg";
-import { verifyToken } from "./services/redux/actionsAndSlicers/SessionActions";
+import {verifyToken} from "./services/redux/actionsAndSlicers/SessionActions";
 import PrivateRoute from "./services/PrivateRoute";
 import NotFound from "./scenes/NotFound/NotFound";
 
-const { token } = localStorage;
+const {token} = localStorage;
 
 verifyToken(token);
 
@@ -112,3 +112,7 @@ const App: React.FC = () => {
 };
 
 export default App;
+
+export type ParamTypes = {
+	decisionId: string
+}

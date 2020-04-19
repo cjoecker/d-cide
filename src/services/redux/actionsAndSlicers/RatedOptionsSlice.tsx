@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 
 export type RatedOption = {
 	id: number;
@@ -7,9 +7,11 @@ export type RatedOption = {
 	selectionCriteriaId: number;
 };
 
+const initialState: RatedOption[] = [];
+
 const RatedOptionsSlice = createSlice({
 	name: "RatedOptions",
-	initialState: [],
+	initialState,
 	reducers: {
 		setRatedOptions(state, action: PayloadAction<RatedOption[]>): typeof state {
 			return action.payload;

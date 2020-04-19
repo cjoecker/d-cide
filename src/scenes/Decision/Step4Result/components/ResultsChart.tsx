@@ -1,30 +1,22 @@
-import React, { useEffect, useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import {
-	Bar,
-	BarChart,
-	CartesianGrid,
-	Cell,
-	Rectangle,
-	ResponsiveContainer,
-	XAxis,
-	YAxis,
-} from "recharts";
-import { shallowEqual, useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
+import React, {useEffect, useState} from "react";
+import {makeStyles} from "@material-ui/core/styles";
+import {Bar, BarChart, CartesianGrid, Cell, Rectangle, ResponsiveContainer, XAxis, YAxis,} from "recharts";
+import {shallowEqual, useDispatch, useSelector} from "react-redux";
+import {useParams} from "react-router-dom";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
 import InfoIcon from "@material-ui/icons/Info";
 import Fade from "@material-ui/core/Fade";
-import { getOptionsAndCriteria } from "../../../../services/redux/actionsAndSlicers/OptionsAndCriteriaActions";
+import {getOptionsAndCriteria} from "../../../../services/redux/actionsAndSlicers/OptionsAndCriteriaActions";
 import theme from "../../../../muiTheme";
-import { RootState } from "../../../../services/redux/rootReducer";
+import {RootState} from "../../../../services/redux/rootReducer";
 import {
 	OptionAndCriteria,
 	OptionsAndCriteriaKeys,
 } from "../../../../services/redux/actionsAndSlicers/OptionsAndCriteriaSlice";
 import InfoDialog from "../../../../components/InfoDialog";
+import {ParamTypes} from "../../../../App";
 
 const useStyles = makeStyles({
 	divMain: {
@@ -48,7 +40,7 @@ const useStyles = makeStyles({
 	},
 });
 
-interface Props {
+type Props = {
 	itemsKey: OptionsAndCriteriaKeys;
 	hidden: boolean;
 	title: string;
@@ -65,8 +57,8 @@ const ResultsChart: React.FC<Props> = (props: Props) => {
 		shallowEqual
 	);
 
-	const { decisionId } = useParams();
-	const { hidden, itemsKey, title, infoText } = props;
+	const {decisionId} = useParams<ParamTypes>();
+	const {hidden, itemsKey, title, infoText} = props;
 
 	const classes = useStyles();
 	const dispatch = useDispatch();
@@ -150,7 +142,6 @@ const ResultsChart: React.FC<Props> = (props: Props) => {
 									tickLine={false}
 									domain={[0, 10]}
 									ticks={[0, 2.5, 5, 7.5, 10]}
-									strokeWidth={0.5}
 									stroke="#a0a0a0"
 									tick={{ fontSize: "0.8rem" }}
 								/>
@@ -164,7 +155,6 @@ const ResultsChart: React.FC<Props> = (props: Props) => {
 									animationDuration={1000}
 									label={{
 										position: "right",
-										backgroundColor: "#fff",
 									}}
 									shape={
 										<Rectangle

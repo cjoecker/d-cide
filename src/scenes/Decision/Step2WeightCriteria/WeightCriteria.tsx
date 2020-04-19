@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import Slider from "@material-ui/core/Slider";
 import Typography from "@material-ui/core/Typography";
 import InfoIcon from "@material-ui/icons/Info";
 import IconButton from "@material-ui/core/IconButton";
-import { shallowEqual, useDispatch, useSelector } from "react-redux";
+import {shallowEqual, useDispatch, useSelector} from "react-redux";
 import Fade from "@material-ui/core/Fade";
-import { makeStyles } from "@material-ui/core/styles";
-import { useParams } from "react-router-dom";
+import {makeStyles} from "@material-ui/core/styles";
+import {useParams} from "react-router-dom";
 import theme from "../../../muiTheme";
 import * as LongStrings from "../../../services/LongTexts";
 import InfoDialog from "../../../components/InfoDialog";
@@ -16,10 +16,11 @@ import {
 	getWeightedCriteria,
 	updateWeightedCriteria,
 } from "../../../services/redux/actionsAndSlicers/WeightCriteriaActions";
-import { RootState } from "../../../services/redux/rootReducer";
-import { WeightedCriteria } from "../../../services/redux/actionsAndSlicers/WeightCriteriaSlice";
-import { getOptionsAndCriteria } from "../../../services/redux/actionsAndSlicers/OptionsAndCriteriaActions";
-import { OptionsAndCriteriaKeys } from "../../../services/redux/actionsAndSlicers/OptionsAndCriteriaSlice";
+import {RootState} from "../../../services/redux/rootReducer";
+import {WeightedCriteria} from "../../../services/redux/actionsAndSlicers/WeightCriteriaSlice";
+import {getOptionsAndCriteria} from "../../../services/redux/actionsAndSlicers/OptionsAndCriteriaActions";
+import {OptionsAndCriteriaKeys} from "../../../services/redux/actionsAndSlicers/OptionsAndCriteriaSlice";
+import {ParamTypes} from "../../../App";
 
 const useStyles = makeStyles({
 	divMain: {
@@ -81,13 +82,11 @@ type Props = {
 };
 
 const WeightCriteria: React.FC<Props> = (props: Props) => {
-	const { decisionId } = useParams();
-	const { hidden } = props;
+	const {decisionId} = useParams<ParamTypes>();
+	const {hidden} = props;
 
 	const [showInfo, setShowInfo] = useState(false);
-	const [LocalWeightedCriteria, setLocalWeightedCriteria] = useState<
-		WeightedCriteria[]
-	>([]);
+	const [LocalWeightedCriteria, setLocalWeightedCriteria] = useState<WeightedCriteria[]>([]);
 	const selectionCriteria = useSelector(
 		(state: RootState) => state.OptionsAndCriteria.selectionCriteria,
 		shallowEqual
@@ -136,25 +135,25 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
 			setLocalWeightedCriteria(weightedCriteria);
 	}, [weightedCriteria]);
 
-	const onChange = (event, value, itemLocal, index) => {
+	const onChange = (event: React.BaseSyntheticEvent, value: number, itemLocal: WeightedCriteria) => {
 		setLocalWeightedCriteria(
 			LocalWeightedCriteria.map((criteria) => {
 				if (criteria.id === itemLocal.id) {
-					return { ...criteria, weight: value };
+					return {...criteria, weight: value};
 				}
 				return criteria;
 			})
 		);
 	};
 
-	const onChangeCommitted = (value, itemLocal) => {
+	const onChangeCommitted = (value: number, itemLocal: WeightedCriteria) => {
 		updateWeightedCriteria(dispatch, decisionId, {
 			...itemLocal,
 			weight: value,
 		});
 	};
 
-	const getSelectionCriteriaName = (selectionCriteriaId) => {
+	const getSelectionCriteriaName = (selectionCriteriaId: number) => {
 		const FoundSelectionCriteria = selectionCriteria.find(
 			(obj) => obj.id === selectionCriteriaId
 		);
@@ -254,10 +253,10 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
 											step={1}
 											marks={sliderMarks}
 											onChange={(event, value) =>
-												onChange(event, value, criteria, index)
+												onChange(event, value as number, criteria)
 											}
 											onChangeCommitted={(event, value) =>
-												onChangeCommitted(value, criteria)
+												onChangeCommitted(value as number, criteria)
 											}
 										/>
 									</Grid>

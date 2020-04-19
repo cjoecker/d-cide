@@ -1,10 +1,10 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import {makeStyles} from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
-import { useHistory } from "react-router-dom";
+import {useHistory} from "react-router-dom";
 import theme from "../../muiTheme";
 
 const useStyles = makeStyles({
@@ -40,10 +40,6 @@ const NotFound: React.FC = () => {
 	const classes = useStyles();
 	const history = useHistory();
 
-	const handleClick = () => {
-		history.push("/");
-	};
-
 	return (
 		<div className={classes.divMain}>
 			<Grid container justify="center">
@@ -65,7 +61,7 @@ const NotFound: React.FC = () => {
 							</Typography>
 						</Grid>
 						<Grid item xs={12} className={classes.button}>
-							<Button variant="contained" color="primary" onClick={handleClick}>
+							<Button variant="contained" color="primary" onClick={() => history.push("/")}>
 								GO HOME
 							</Button>
 						</Grid>

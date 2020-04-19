@@ -1,10 +1,8 @@
 import axios from "axios";
-import { AppDispatch } from "../store";
-import { AxiosRequest, SuccessActionType } from "../AxiosRequest";
-import OptionsAndCriteriaSlice, {
-	OptionAndCriteria,
-	OptionsAndCriteriaKeys,
-} from "./OptionsAndCriteriaSlice";
+import {ActionCreatorWithPayload} from "@reduxjs/toolkit";
+import {AppDispatch} from "../store";
+import {AxiosRequest} from "../AxiosRequest";
+import OptionsAndCriteriaSlice, {OptionAndCriteria, OptionsAndCriteriaKeys,} from "./OptionsAndCriteriaSlice";
 
 export const getOptionsAndCriteria = (
 	dispatch: AppDispatch,
@@ -18,7 +16,7 @@ export const getOptionsAndCriteria = (
 		},
 	};
 
-	const successAction: SuccessActionType =
+	const successAction: ActionCreatorWithPayload<OptionAndCriteria[]> =
 		itemsKey === OptionsAndCriteriaKeys.decisionOptions
 			? OptionsAndCriteriaSlice.actions.setDecisionOptions.bind(null)
 			: OptionsAndCriteriaSlice.actions.setSelectionCriteria.bind(null);
@@ -44,7 +42,7 @@ export const postOptionsAndCriteria = (
 		name: itemName,
 	};
 
-	const successAction: SuccessActionType =
+	const successAction: ActionCreatorWithPayload<OptionAndCriteria> =
 		itemsKey === OptionsAndCriteriaKeys.decisionOptions
 			? OptionsAndCriteriaSlice.actions.addDecisionOption.bind(null)
 			: OptionsAndCriteriaSlice.actions.addSelectionCriteria.bind(null);
@@ -70,7 +68,7 @@ export const editOptionsAndCriteria = (
 		id: item.id,
 		name: item.name,
 	};
-	const successAction: SuccessActionType =
+	const successAction: ActionCreatorWithPayload<OptionAndCriteria> =
 		itemsKey === OptionsAndCriteriaKeys.decisionOptions
 			? OptionsAndCriteriaSlice.actions.updateDecisionOption.bind(null)
 			: OptionsAndCriteriaSlice.actions.updateSelectionCriteria.bind(null);
@@ -95,7 +93,7 @@ export const deleteOptionsAndCriteria = (
 	itemsKey: OptionsAndCriteriaKeys,
 	itemId: number
 ) => {
-	const successAction: SuccessActionType =
+	const successAction: ActionCreatorWithPayload<number> =
 		itemsKey === OptionsAndCriteriaKeys.decisionOptions
 			? OptionsAndCriteriaSlice.actions.deleteDecisionOption.bind(null)
 			: OptionsAndCriteriaSlice.actions.deleteSelectionCriteria.bind(null);
