@@ -9,7 +9,7 @@ import InfoIcon from "@material-ui/icons/Info";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import Fade from "@material-ui/core/Fade";
 import { useParams } from "react-router-dom";
-import * as LongStrings from "../../../services/LongTexts";
+import * as LongStrings from "../../../services/InfoDialogTexts";
 import InfoDialog from "../../../components/InfoDialog";
 import { RootState } from "../../../services/redux/rootReducer";
 import theme from "../../../muiTheme";

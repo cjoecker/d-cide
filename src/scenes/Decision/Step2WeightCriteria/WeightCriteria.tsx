@@ -10,7 +10,7 @@ import Fade from "@material-ui/core/Fade";
 import { makeStyles } from "@material-ui/core/styles";
 import { useParams } from "react-router-dom";
 import theme from "../../../muiTheme";
-import * as LongStrings from "../../../services/LongTexts";
+import * as LongStrings from "../../../services/InfoDialogTexts";
 import InfoDialog from "../../../components/InfoDialog";
 import {
 	getWeightedCriteria,
