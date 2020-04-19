@@ -51,6 +51,7 @@
     "@typescript-eslint/parser": "^2.26.0",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",
+    "eslint": "^6.8.0",
     "eslint-config-airbnb": "^18.1.0",
     "eslint-config-prettier": "^6.10.1",
     "eslint-plugin-import": "^2.20.2",
@@ -59,8 +60,12 @@
     "eslint-plugin-react": "^7.19.0",
     "eslint-plugin-react-hooks": "^3.0.0",
     "eslint-plugin-typescript": "^0.14.0",
+    "husky": "^4.2.5",
     "jest-enzyme": "^7.1.2",
+    "lint-staged": "^10.1.6",
+    "prettier": "^2.0.4",
     "source-map-loader": "^0.2.4",
     "typescript": "^3.8.3"
   }
+
 }

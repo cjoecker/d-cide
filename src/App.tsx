@@ -32,7 +32,7 @@ const useStyles = makeStyles({
 	},
 
 	appBar: {
-		position: 'fixed',
+							position: 'fixed',
 		Top: 0,
 		marginBottom: theme.spacing(2),
 		height: theme.spacing(6),
