@@ -1,8 +1,8 @@
 import axios from "axios";
-import {ActionCreatorWithPayload} from "@reduxjs/toolkit";
-import {AppDispatch} from "../store";
-import {AxiosRequest} from "../AxiosRequest";
-import OptionsAndCriteriaSlice, {OptionAndCriteria, OptionsAndCriteriaKeys,} from "./OptionsAndCriteriaSlice";
+import { ActionCreatorWithPayload } from "@reduxjs/toolkit";
+import { AppDispatch } from "../store";
+import { AxiosRequest } from "../AxiosRequest";
+import OptionsAndCriteriaSlice, { OptionAndCriteria, OptionsAndCriteriaKeys } from "./OptionsAndCriteriaSlice";
 
 export const getOptionsAndCriteria = (
 	dispatch: AppDispatch,
@@ -22,13 +22,7 @@ export const getOptionsAndCriteria = (
 			: OptionsAndCriteriaSlice.actions.setSelectionCriteria.bind(null);
 
 	dispatch(
-		AxiosRequest(
-			axios.get<OptionAndCriteria[]>(
-				`/api/decisions/${decisionId}/${itemsKey}/`,
-				params
-			),
-			successAction
-		)
+		AxiosRequest(axios.get<OptionAndCriteria[]>(`/api/decisions/${decisionId}/${itemsKey}/`, params), successAction)
 	);
 };
 
@@ -48,13 +42,7 @@ export const postOptionsAndCriteria = (
 			: OptionsAndCriteriaSlice.actions.addSelectionCriteria.bind(null);
 
 	dispatch(
-		AxiosRequest(
-			axios.post<OptionAndCriteria>(
-				`/api/decisions/${decisionId}/${itemsKey}/`,
-				newItem
-			),
-			successAction
-		)
+		AxiosRequest(axios.post<OptionAndCriteria>(`/api/decisions/${decisionId}/${itemsKey}/`, newItem), successAction)
 	);
 };
 
@@ -75,10 +63,7 @@ export const editOptionsAndCriteria = (
 
 	dispatch(
 		AxiosRequest(
-			axios.put<OptionAndCriteria>(
-				`/api/decisions/${decisionId}/${itemsKey}/`,
-				newItem
-			),
+			axios.put<OptionAndCriteria>(`/api/decisions/${decisionId}/${itemsKey}/`, newItem),
 			successAction,
 			null,
 			null,
@@ -99,12 +84,6 @@ export const deleteOptionsAndCriteria = (
 			: OptionsAndCriteriaSlice.actions.deleteSelectionCriteria.bind(null);
 
 	dispatch(
-		AxiosRequest(
-			axios.delete(`/api/decisions/${decisionId}/${itemsKey}/${itemId}`),
-			successAction,
-			null,
-			null,
-			itemId
-		)
+		AxiosRequest(axios.delete(`/api/decisions/${decisionId}/${itemsKey}/${itemId}`), successAction, null, null, itemId)
 	);
 };

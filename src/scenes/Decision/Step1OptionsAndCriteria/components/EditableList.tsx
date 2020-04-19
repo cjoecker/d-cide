@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from "react";
-import {makeStyles} from "@material-ui/core/styles";
+import React, { useEffect, useState } from "react";
+import { makeStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
@@ -8,24 +8,24 @@ import DeleteIcon from "@material-ui/icons/DeleteOutlineRounded";
 import AddIcon from "@material-ui/icons/AddRounded";
 import InputBase from "@material-ui/core/InputBase";
 import Paper from "@material-ui/core/Paper";
-import {shallowEqual, useDispatch, useSelector} from "react-redux";
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import Fade from "@material-ui/core/Fade";
-import {useParams} from "react-router-dom";
+import { useParams } from "react-router-dom";
 import theme from "../../../../muiTheme";
 import {
 	OptionAndCriteria,
-	OptionsAndCriteriaKeys,
+	OptionsAndCriteriaKeys
 } from "../../../../services/redux/actionsAndSlicers/OptionsAndCriteriaSlice";
 import {
 	deleteOptionsAndCriteria,
 	editOptionsAndCriteria,
 	getOptionsAndCriteria,
-	postOptionsAndCriteria,
+	postOptionsAndCriteria
 } from "../../../../services/redux/actionsAndSlicers/OptionsAndCriteriaActions";
-import {RootState} from "../../../../services/redux/rootReducer";
+import { RootState } from "../../../../services/redux/rootReducer";
 import AppSlice from "../../../../services/redux/actionsAndSlicers/AppSlice";
-import {AlertType} from "../../../../services/Alerts";
-import {ParamTypes} from "../../../../App";
+import { AlertType } from "../../../../services/Alerts";
+import { ParamTypes } from "../../../../App";
 
 const useStyles = makeStyles({
 	divMain: {
@@ -50,8 +50,8 @@ const useStyles = makeStyles({
 
 	inputBase: {
 		marginRight: theme.spacing(2),
-		width: "100%",
-		wordWrap: "break-word",
+		width: '100%',
+		wordWrap: 'break-word',
 	},
 });
 
@@ -59,20 +59,17 @@ type Props = {
 	itemsKey: OptionsAndCriteriaKeys;
 	notEnoughItemsAlert: AlertType;
 	hidden: boolean;
-}
+};
 
 const EditableList: React.FC<Props> = (props: Props) => {
 	const {decisionId} = useParams<ParamTypes>();
 	const {hidden, notEnoughItemsAlert, itemsKey} = props;
 
 	const [didMount, setDidMount] = useState(false);
-	const [newEntry, setNewEntry] = useState("");
+	const [newEntry, setNewEntry] = useState('');
 	const [localItems, setLocalItems] = useState<OptionAndCriteria[]>([]);
 	const [stopAnimation, setStopAnimation] = useState(false);
-	const items = useSelector(
-		(state: RootState) => state.OptionsAndCriteria[itemsKey],
-		shallowEqual
-	);
+	const items = useSelector((state: RootState) => state.OptionsAndCriteria[itemsKey], shallowEqual);
 
 	const animationDelay = 100;
 
@@ -105,21 +102,16 @@ const EditableList: React.FC<Props> = (props: Props) => {
 	}, [items]);
 
 	const onCreateItem = () => {
-		if (newEntry === "") return;
+		if (newEntry === '') return;
 		postOptionsAndCriteria(dispatch, decisionId, itemsKey, newEntry);
 	};
 
 	const onChangeItem = (event: React.BaseSyntheticEvent, itemId: number) => {
-		setLocalItems(
-			localItems.map((item) =>
-				item.id === itemId ? {...item, name: event.target.value} : item
-			)
-		);
+		setLocalItems(localItems.map(item => (item.id === itemId ? {...item, name: event.target.value} : item)));
 	};
 
 	const onLeaveItem = (itemLocal: OptionAndCriteria) => {
-		if (itemLocal.name !== "")
-			editOptionsAndCriteria(dispatch, decisionId, itemsKey, itemLocal);
+		if (itemLocal.name !== '') editOptionsAndCriteria(dispatch, decisionId, itemsKey, itemLocal);
 		else deleteOptionsAndCriteria(dispatch, decisionId, itemsKey, itemLocal.id);
 	};
 
@@ -130,39 +122,38 @@ const EditableList: React.FC<Props> = (props: Props) => {
 	};
 
 	const deleteEntryWhenCreated = () => {
-		if (items[0].name === newEntry) setNewEntry("");
+		if (items[0].name === newEntry) setNewEntry('');
 	};
 
 	const manageNotEnoughItemsAlerts = () => {
-		if (items.length < 2)
-			dispatch(AppSlice.actions.addAlert(notEnoughItemsAlert));
+		if (items.length < 2) dispatch(AppSlice.actions.addAlert(notEnoughItemsAlert));
 		else dispatch(AppSlice.actions.deleteAlert(notEnoughItemsAlert));
 	};
 
 	return (
 		<div className={classes.divMain}>
 			<List>
-				<Paper className={classes.paperTitle} elevation={2} key="NewEntry">
+				<Paper className={classes.paperTitle} elevation={2} key='NewEntry'>
 					<ListItem>
 						<InputBase
-							data-testid="input-base"
+							data-testid='input-base'
 							className={classes.inputBase}
-							placeholder="New Entry"
+							placeholder='New Entry'
 							value={newEntry}
-							onKeyPress={(event) => {
-								if (event.key === "Enter") {
+							onKeyPress={event => {
+								if (event.key === 'Enter') {
 									event.preventDefault();
 									onCreateItem();
 								}
 							}}
-							onChange={(event) => setNewEntry(event.target.value)}
+							onChange={event => setNewEntry(event.target.value)}
 							multiline
 						/>
 
 						<ListItemSecondaryAction>
 							<IconButton
-								test-data="button-add-item"
-								aria-label="Add"
+								test-data='button-add-item'
+								aria-label='Add'
 								className={classes.paperButtons}
 								onClick={() => onCreateItem()}
 							>
@@ -176,9 +167,7 @@ const EditableList: React.FC<Props> = (props: Props) => {
 					<Fade
 						in
 						style={{
-							transitionDelay: `${
-								index * (stopAnimation ? 0 : animationDelay)
-							}ms`,
+							transitionDelay: `${index * (stopAnimation ? 0 : animationDelay)}ms`,
 						}}
 						timeout={500}
 						onEntered={() => endOfAnimation(index)}
@@ -189,11 +178,11 @@ const EditableList: React.FC<Props> = (props: Props) => {
 								<InputBase
 									className={classes.inputBase}
 									value={item.name}
-									onChange={(event) => onChangeItem(event, item.id)}
+									onChange={event => onChangeItem(event, item.id)}
 									onBlur={() => onLeaveItem(item)}
 									multiline
-									onKeyDown={(event) => {
-										if (event.key === "Enter") {
+									onKeyDown={event => {
+										if (event.key === 'Enter') {
 											event.preventDefault();
 											if (document.activeElement instanceof HTMLElement) {
 												document.activeElement.blur();
@@ -203,15 +192,8 @@ const EditableList: React.FC<Props> = (props: Props) => {
 								/>
 								<ListItemSecondaryAction>
 									<IconButton
-										aria-label="Delete"
-										onClick={() =>
-											deleteOptionsAndCriteria(
-												dispatch,
-												decisionId,
-												itemsKey,
-												item.id
-											)
-										}
+										aria-label='Delete'
+										onClick={() => deleteOptionsAndCriteria(dispatch, decisionId, itemsKey, item.id)}
 										className={classes.paperButtons}
 									>
 										<DeleteIcon />

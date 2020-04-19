@@ -7,7 +7,7 @@ import { RootState } from "../services/redux/rootReducer";
 import AppSlice from "../services/redux/actionsAndSlicers/AppSlice";
 
 const AlertsBanner: React.FC = () => {
-	const { alerts } = useSelector((state: RootState) => state.App, shallowEqual);
+	const {alerts} = useSelector((state: RootState) => state.App, shallowEqual);
 
 	const [autoHideTime, setAutoHideTime] = useState(0);
 	const [open, setOpen] = useState(false);
@@ -16,7 +16,7 @@ const AlertsBanner: React.FC = () => {
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		if (alerts[0] != null && alerts[0].text !== "") {
+		if (alerts[0] != null && alerts[0].text !== '') {
 			setAlert(sortAlerts(alerts));
 			setAutoHideTime(calculateHideTime(alerts[0]));
 			setOpen(true);
@@ -25,11 +25,8 @@ const AlertsBanner: React.FC = () => {
 		}
 	}, [alerts]);
 
-	const handleClose = (
-		event: React.SyntheticEvent | React.MouseEvent,
-		reason?: string
-	) => {
-		if (reason === "clickaway") {
+	const handleClose = (event: React.SyntheticEvent | React.MouseEvent, reason?: string) => {
+		if (reason === 'clickaway') {
 			return;
 		}
 
@@ -49,30 +46,22 @@ const AlertsBanner: React.FC = () => {
 	};
 
 	const sortAlerts = (localAlerts: AlertType[]) => {
-		const errors = localAlerts.filter(
-			(filteredAlert) => filteredAlert.type === AlertTypes.error
-		);
+		const errors = localAlerts.filter(filteredAlert => filteredAlert.type === AlertTypes.error);
 		if (errors.length > 0) {
 			return errors[0];
 		}
 
-		const warning = localAlerts.filter(
-			(filteredAlert) => filteredAlert.type === AlertTypes.warning
-		);
+		const warning = localAlerts.filter(filteredAlert => filteredAlert.type === AlertTypes.warning);
 		if (warning.length > 0) {
 			return warning[0];
 		}
 
-		const success = localAlerts.filter(
-			(filteredAlert) => filteredAlert.type === AlertTypes.success
-		);
+		const success = localAlerts.filter(filteredAlert => filteredAlert.type === AlertTypes.success);
 		if (success.length > 0) {
 			return success[0];
 		}
 
-		const info = localAlerts.filter(
-			(filteredAlert) => filteredAlert.type === AlertTypes.info
-		);
+		const info = localAlerts.filter(filteredAlert => filteredAlert.type === AlertTypes.info);
 		if (info.length > 0) {
 			return info[0];
 		}
@@ -82,16 +71,8 @@ const AlertsBanner: React.FC = () => {
 
 	return (
 		<div>
-			<Snackbar
-				open={open}
-				autoHideDuration={autoHideTime !== 0 ? autoHideTime : undefined}
-				onClose={handleClose}
-			>
-				<Alert
-					onClose={alert.allowClose ? handleClose : undefined}
-					variant="filled"
-					severity={alert.type}
-				>
+			<Snackbar open={open} autoHideDuration={autoHideTime !== 0 ? autoHideTime : undefined} onClose={handleClose}>
+				<Alert onClose={alert.allowClose ? handleClose : undefined} variant='filled' severity={alert.type}>
 					{alert.text}
 				</Alert>
 			</Snackbar>

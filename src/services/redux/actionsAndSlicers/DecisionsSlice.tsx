@@ -1,4 +1,4 @@
-import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export type Decision = {
 	id: number;
@@ -14,7 +14,7 @@ type user = {
 const initialState: Decision[] = [];
 
 const DecisionsSlice = createSlice({
-	name: "Decision",
+	name: 'Decision',
 	initialState,
 	reducers: {
 		setDecisions(state, action: PayloadAction<Decision[]>): typeof state {

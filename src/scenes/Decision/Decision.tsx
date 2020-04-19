@@ -20,26 +20,26 @@ import { NOT_ENOUGH_CRITERIA, NOT_ENOUGH_OPTIONS } from "../../services/Alerts";
 const useStyles = makeStyles({
 	divMain: {
 		flexGrow: 1,
-		width: "100%",
-		overflowX: "hidden",
+		width: '100%',
+		overflowX: 'hidden',
 	},
 
 	stepper: {
-		backgroundColor: "transparent",
+		backgroundColor: 'transparent',
 	},
 	stepperLabel: {
 		marginBottom: -theme.spacing(1.5),
 	},
 
 	buttonNext: {
-		position: "fixed",
+		position: 'fixed',
 		bottom: 0,
 		right: 0,
 		margin: theme.spacing(1),
 	},
 
 	buttonBack: {
-		position: "fixed",
+		position: 'fixed',
 		bottom: 0,
 		left: 0,
 		margin: theme.spacing(1),
@@ -59,31 +59,31 @@ const Decision: React.FC = () => {
 	const [steps, setSteps] = useState<stepsType[]>([
 		{
 			number: 1,
-			name: "Options and selection criteria",
+			name: 'Options and selection criteria',
 			disabled: false,
 			completed: false,
 		},
 		{
 			number: 2,
-			name: "Weight criteria",
+			name: 'Weight criteria',
 			disabled: false,
 			completed: false,
 		},
 		{
 			number: 3,
-			name: "Rate options",
+			name: 'Rate options',
 			disabled: false,
 			completed: false,
 		},
 		{
 			number: 4,
-			name: "Result",
+			name: 'Result',
 			disabled: false,
 			completed: false,
 		},
 	]);
 
-	const { alerts } = useSelector((state: RootState) => state.App, shallowEqual);
+	const {alerts} = useSelector((state: RootState) => state.App, shallowEqual);
 
 	const classes = useStyles();
 
@@ -96,7 +96,7 @@ const Decision: React.FC = () => {
 
 	const setStepCompleted = (stepNumber: number) => {
 		const newSteps = [...steps];
-		const index = newSteps.findIndex((obj) => obj.number === stepNumber);
+		const index = newSteps.findIndex(obj => obj.number === stepNumber);
 		newSteps[index].completed = true;
 
 		setSteps(newSteps);
@@ -110,32 +110,19 @@ const Decision: React.FC = () => {
 
 	return (
 		<div className={classes.divMain}>
-			<Stepper
-				className={classes.stepper}
-				alternativeLabel
-				nonLinear
-				activeStep={activeStepNum - 1}
-			>
-				{steps.map((step) => {
+			<Stepper className={classes.stepper} alternativeLabel nonLinear activeStep={activeStepNum - 1}>
+				{steps.map(step => {
 					return (
 						<Step key={step.number}>
-							<StepButton
-								onClick={() => changeStep(step.number)}
-								completed={step.completed}
-								disabled={step.disabled}
-							>
-								<StepLabel
-									StepIconProps={{ classes: { root: classes.stepperLabel } }}
-								>
-									{step.name}
-								</StepLabel>
+							<StepButton onClick={() => changeStep(step.number)} completed={step.completed} disabled={step.disabled}>
+								<StepLabel StepIconProps={{classes: {root: classes.stepperLabel}}}>{step.name}</StepLabel>
 							</StepButton>
 						</Step>
 					);
 				})}
 			</Stepper>
 			<SwipeableViews
-				axis={theme.direction === "rtl" ? "x-reverse" : "x"}
+				axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
 				index={activeStepNum - 1}
 				onTransitionEnd={() => setLoadedStepNum(activeStepNum)}
 			>
@@ -146,9 +133,9 @@ const Decision: React.FC = () => {
 			</SwipeableViews>
 			{activeStepNum !== 1 ? (
 				<Fab
-					color="secondary"
-					aria-label="Previous Step"
-					size="medium"
+					color='secondary'
+					aria-label='Previous Step'
+					size='medium'
 					className={classes.buttonBack}
 					onClick={() => changeStep(activeStepNum - 1)}
 				>
@@ -157,15 +144,12 @@ const Decision: React.FC = () => {
 			) : null}
 			{activeStepNum !== steps.length ? (
 				<Fab
-					color="primary"
-					aria-label="Next Step"
-					size="medium"
+					color='primary'
+					aria-label='Next Step'
+					size='medium'
 					className={classes.buttonNext}
 					onClick={() => changeStep(activeStepNum + 1)}
-					disabled={
-						alerts.includes(NOT_ENOUGH_OPTIONS) ||
-						alerts.includes(NOT_ENOUGH_CRITERIA)
-					}
+					disabled={alerts.includes(NOT_ENOUGH_OPTIONS) || alerts.includes(NOT_ENOUGH_CRITERIA)}
 				>
 					<ArrowForwardIcon />
 				</Fab>

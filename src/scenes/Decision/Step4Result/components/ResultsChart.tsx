@@ -1,22 +1,22 @@
-import React, {useEffect, useState} from "react";
-import {makeStyles} from "@material-ui/core/styles";
-import {Bar, BarChart, CartesianGrid, Cell, Rectangle, ResponsiveContainer, XAxis, YAxis,} from "recharts";
-import {shallowEqual, useDispatch, useSelector} from "react-redux";
-import {useParams} from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import { Bar, BarChart, CartesianGrid, Cell, Rectangle, ResponsiveContainer, XAxis, YAxis } from "recharts";
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
 import InfoIcon from "@material-ui/icons/Info";
 import Fade from "@material-ui/core/Fade";
-import {getOptionsAndCriteria} from "../../../../services/redux/actionsAndSlicers/OptionsAndCriteriaActions";
+import { getOptionsAndCriteria } from "../../../../services/redux/actionsAndSlicers/OptionsAndCriteriaActions";
 import theme from "../../../../muiTheme";
-import {RootState} from "../../../../services/redux/rootReducer";
+import { RootState } from "../../../../services/redux/rootReducer";
 import {
 	OptionAndCriteria,
-	OptionsAndCriteriaKeys,
+	OptionsAndCriteriaKeys
 } from "../../../../services/redux/actionsAndSlicers/OptionsAndCriteriaSlice";
 import InfoDialog from "../../../../components/InfoDialog";
-import {ParamTypes} from "../../../../App";
+import { ParamTypes } from "../../../../App";
 
 const useStyles = makeStyles({
 	divMain: {
@@ -45,17 +45,14 @@ type Props = {
 	hidden: boolean;
 	title: string;
 	infoText: JSX.Element;
-}
+};
 
 const ResultsChart: React.FC<Props> = (props: Props) => {
 	const [localItems, setLocalItems] = useState<OptionAndCriteria[]>([]);
 	const [showInfo, setShowInfo] = useState(false);
 	const [startAnimation, setStartAnimation] = useState(false);
 
-	const items = useSelector(
-		(state: RootState) => state.OptionsAndCriteria[props.itemsKey],
-		shallowEqual
-	);
+	const items = useSelector((state: RootState) => state.OptionsAndCriteria[props.itemsKey], shallowEqual);
 
 	const {decisionId} = useParams<ParamTypes>();
 	const {hidden, itemsKey, title, infoText} = props;
@@ -82,16 +79,14 @@ const ResultsChart: React.FC<Props> = (props: Props) => {
 	const wrapLongWords = (originalItems: OptionAndCriteria[]) => {
 		const maxCharsPerLine = 13;
 
-		return originalItems.map((item) => {
+		return originalItems.map(item => {
 			if (item.name.length > maxCharsPerLine) {
-				const breakLongWords = new RegExp(`([^\s]{${maxCharsPerLine}})`, "g");
-				const dropLastDash = new RegExp(`-\n$`, "g");
+				const breakLongWords = new RegExp(`([^\s]{${maxCharsPerLine}})`, 'g');
+				const dropLastDash = new RegExp(`-\n$`, 'g');
 
-				const newName = item.name
-					.replace(breakLongWords, "$1-\n")
-					.replace(dropLastDash, "");
+				const newName = item.name.replace(breakLongWords, '$1-\n').replace(dropLastDash, '');
 
-				return { ...item, name: newName };
+				return {...item, name: newName};
 			}
 			return item;
 		});
@@ -100,21 +95,17 @@ const ResultsChart: React.FC<Props> = (props: Props) => {
 	return (
 		<div className={classes.divMain}>
 			<Fade in={startAnimation} timeout={500}>
-				<Paper elevation={2} key="Option">
-					<Typography variant="h5" gutterBottom className={classes.title}>
+				<Paper elevation={2} key='Option'>
+					<Typography variant='h5' gutterBottom className={classes.title}>
 						{title}
-						<IconButton
-							aria-label="Help"
-							className={classes.infoButton}
-							onClick={() => setShowInfo(true)}
-						>
-							<InfoIcon color="secondary" />
+						<IconButton aria-label='Help' className={classes.infoButton} onClick={() => setShowInfo(true)}>
+							<InfoIcon color='secondary' />
 						</IconButton>
 					</Typography>
-					<Typography variant="body1">
+					<Typography variant='body1'>
 						<ResponsiveContainer
 							height={localItems.length * theme.spacing(9) + theme.spacing(4)}
-							width="100%"
+							width='100%'
 							className={classes.chartContainer}
 						>
 							<BarChart
@@ -125,43 +116,30 @@ const ResultsChart: React.FC<Props> = (props: Props) => {
 									left: theme.spacing(5),
 									bottom: theme.spacing(1),
 								}}
-								layout="vertical"
-								barCategoryGap="20%"
+								layout='vertical'
+								barCategoryGap='20%'
 								maxBarSize={10}
 							>
-								<CartesianGrid
-									horizontal={false}
-									stroke="#a0a0a0"
-									strokeWidth={0.5}
-								/>
+								<CartesianGrid horizontal={false} stroke='#a0a0a0' strokeWidth={0.5} />
 								<XAxis
-									dataKey="score"
-									type="number"
+									dataKey='score'
+									type='number'
 									dy={-5}
 									axisLine={false}
 									tickLine={false}
 									domain={[0, 10]}
 									ticks={[0, 2.5, 5, 7.5, 10]}
-									stroke="#a0a0a0"
-									tick={{ fontSize: "0.8rem" }}
+									stroke='#a0a0a0'
+									tick={{fontSize: '0.8rem'}}
 								/>
-								<YAxis
-									type="category"
-									dataKey="name"
-									width={theme.spacing(10)}
-								/>
+								<YAxis type='category' dataKey='name' width={theme.spacing(10)} />
 								<Bar
-									dataKey="score"
+									dataKey='score'
 									animationDuration={1000}
 									label={{
-										position: "right",
+										position: 'right',
 									}}
-									shape={
-										<Rectangle
-											className={classes.bars}
-											radius={[0, 10, 10, 0]}
-										/>
-									}
+									shape={<Rectangle className={classes.bars} radius={[0, 10, 10, 0]} />}
 								>
 									{localItems.map((entry, index) => (
 										<Cell
@@ -169,11 +147,11 @@ const ResultsChart: React.FC<Props> = (props: Props) => {
 											fill={(() => {
 												switch (index) {
 													case 0:
-														return "#0f61a0";
+														return '#0f61a0';
 													case 1:
-														return "#646464";
+														return '#646464';
 													default:
-														return "#a0a0a0";
+														return '#a0a0a0';
 												}
 											})()}
 										/>
@@ -184,11 +162,7 @@ const ResultsChart: React.FC<Props> = (props: Props) => {
 					</Typography>
 				</Paper>
 			</Fade>
-			<InfoDialog
-				text={infoText}
-				show={showInfo}
-				onClose={() => setShowInfo(false)}
-			/>
+			<InfoDialog text={infoText} show={showInfo} onClose={() => setShowInfo(false)} />
 		</div>
 	);
 };

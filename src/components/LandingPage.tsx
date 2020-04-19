@@ -6,25 +6,16 @@ import { getDecisions } from "../services/redux/actionsAndSlicers/DecisionsActio
 import { createUnregisteredUser } from "../services/redux/actionsAndSlicers/SessionActions";
 
 const LandingPage: React.FC = () => {
-	const { token } = useSelector(
-		(state: RootState) => state.Session,
-		shallowEqual
-	);
-	const { user } = useSelector(
-		(state: RootState) => state.Session,
-		shallowEqual
-	);
+	const {token} = useSelector((state: RootState) => state.Session, shallowEqual);
+	const {user} = useSelector((state: RootState) => state.Session, shallowEqual);
 
-	const decisions = useSelector(
-		(state: RootState) => state.Decisions,
-		shallowEqual
-	);
+	const decisions = useSelector((state: RootState) => state.Decisions, shallowEqual);
 
 	const dispatch = useDispatch();
 	const history = useHistory();
 
 	useEffect(() => {
-		if (token === "") createUnregisteredUser(dispatch);
+		if (token === '') createUnregisteredUser(dispatch);
 		else getDecisions(dispatch);
 	}, []);
 
@@ -33,8 +24,7 @@ const LandingPage: React.FC = () => {
 	}, [user]);
 
 	useEffect(() => {
-		if (decisions.length > 0)
-			history.push(`/decisions/${decisions[decisions.length - 1].id}`);
+		if (decisions.length > 0) history.push(`/decisions/${decisions[decisions.length - 1].id}`);
 	}, [decisions]);
 
 	return null;

@@ -12,17 +12,10 @@ export const getRatedOptions = (dispatch: AppDispatch, decisionId: string) => {
 	);
 };
 
-export const updateRatedOptions = (
-	dispatch: AppDispatch,
-	decisionId: string,
-	ratedOption: unknown
-) => {
+export const updateRatedOptions = (dispatch: AppDispatch, decisionId: string, ratedOption: unknown) => {
 	dispatch(
 		AxiosRequest(
-			axios.put<RatedOption[]>(
-				`/api/decisions/${decisionId}/ratedOptions/`,
-				ratedOption
-			),
+			axios.put<RatedOption[]>(`/api/decisions/${decisionId}/ratedOptions/`, ratedOption),
 			RatedOptionsSlice.actions.updateRatedOptions.bind(null),
 			null,
 			null,

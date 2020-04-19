@@ -1,9 +1,8 @@
-import {AxiosError, AxiosPromise, AxiosResponse} from "axios";
-import {ActionCreatorWithPayload} from "@reduxjs/toolkit";
-import {AppDispatch, AppThunk} from "./store";
+import { AxiosError, AxiosPromise, AxiosResponse } from "axios";
+import { ActionCreatorWithPayload } from "@reduxjs/toolkit";
+import { AppDispatch, AppThunk } from "./store";
 import AppSlice from "./actionsAndSlicers/AppSlice";
-import {showHTTPAlert} from "./actionsAndSlicers/AppActions";
-
+import { showHTTPAlert } from "./actionsAndSlicers/AppActions";
 
 export interface SuccessExtraActionType {
 	(dispatch: AppDispatch, answer: AxiosResponse): void;
@@ -11,7 +10,7 @@ export interface SuccessExtraActionType {
 
 export type ErrorActionType = {
 	(dispatch: AppDispatch, error: AxiosError): void;
-}
+};
 
 export const AxiosRequest = (
 	axiosPromise: AxiosPromise,
@@ -21,11 +20,11 @@ export const AxiosRequest = (
 	errorAction: ErrorActionType | null = null,
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	predefinedPayload: any = null
-): AppThunk => async (dispatch) => {
+): AppThunk => async dispatch => {
 	await dispatch(AppSlice.actions.startLoading());
 
 	axiosPromise
-		.then((answer) => {
+		.then(answer => {
 			if (predefinedPayload == null) dispatch(successAction(answer.data));
 			else dispatch(successAction(predefinedPayload));
 

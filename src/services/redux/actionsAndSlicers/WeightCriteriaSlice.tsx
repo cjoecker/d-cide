@@ -1,4 +1,4 @@
-import {createSlice, PayloadAction} from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export type WeightedCriteria = {
 	id: number;
@@ -10,22 +10,14 @@ export type WeightedCriteria = {
 const initialState: WeightedCriteria[] = [];
 
 const WeightedCriteriaSlice = createSlice({
-	name: "WeightedCriteria",
+	name: 'WeightedCriteria',
 	initialState,
 	reducers: {
-		setWeightedCriteria(
-			state,
-			action: PayloadAction<WeightedCriteria[]>
-		): typeof state {
+		setWeightedCriteria(state, action: PayloadAction<WeightedCriteria[]>): typeof state {
 			return action.payload;
 		},
-		updateWeightedCriteria(
-			state,
-			action: PayloadAction<WeightedCriteria>
-		): typeof state {
-			return state.map((item) =>
-				item.id === action.payload.id ? action.payload : item
-			);
+		updateWeightedCriteria(state, action: PayloadAction<WeightedCriteria>): typeof state {
+			return state.map(item => (item.id === action.payload.id ? action.payload : item));
 		},
 	},
 });

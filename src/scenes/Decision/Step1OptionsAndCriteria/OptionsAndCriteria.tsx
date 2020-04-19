@@ -7,21 +7,15 @@ import { makeStyles } from "@material-ui/core/styles";
 import InfoDialog from "../../../components/InfoDialog";
 import EditableList from "./components/EditableList";
 import theme from "../../../muiTheme";
-import {
-	DecisionOptionInfo,
-	SelectionCriteriaInfo,
-} from "../../../services/LongTexts";
+import { DecisionOptionInfo, SelectionCriteriaInfo } from "../../../services/LongTexts";
 import { OptionsAndCriteriaKeys } from "../../../services/redux/actionsAndSlicers/OptionsAndCriteriaSlice";
-import {
-	NOT_ENOUGH_CRITERIA,
-	NOT_ENOUGH_OPTIONS,
-} from "../../../services/Alerts";
+import { NOT_ENOUGH_CRITERIA, NOT_ENOUGH_OPTIONS } from "../../../services/Alerts";
 
 const useStyles = makeStyles({
 	divMain: {
 		paddingTop: theme.spacing(2.5),
 		paddingBottom: theme.spacing(5.5),
-		textAlign: "center",
+		textAlign: 'center',
 	},
 
 	infoButton: {
@@ -49,21 +43,17 @@ const OptionsAndCriteria: React.FC<Props> = (props: Props) => {
 	const [showOptionsInfo, setShowOptionsInfo] = useState(false);
 	const [showCriteriaInfo, setShowCriteriaInfo] = useState(false);
 
-	const { hidden } = props;
+	const {hidden} = props;
 	const classes = useStyles();
 
 	return (
 		<div className={classes.divMain}>
-			<Grid container justify="center" alignContent="center">
+			<Grid container justify='center' alignContent='center'>
 				<Grid item xs={6} className={classes.gridItem}>
-					<Typography variant="h5" gutterBottom>
+					<Typography variant='h5' gutterBottom>
 						Decision Options
-						<IconButton
-							aria-label="Help"
-							className={classes.infoButton}
-							onClick={() => setShowOptionsInfo(true)}
-						>
-							<InfoIcon color="secondary" />
+						<IconButton aria-label='Help' className={classes.infoButton} onClick={() => setShowOptionsInfo(true)}>
+							<InfoIcon color='secondary' />
 						</IconButton>
 					</Typography>
 					<EditableList
@@ -73,14 +63,10 @@ const OptionsAndCriteria: React.FC<Props> = (props: Props) => {
 					/>
 				</Grid>
 				<Grid item xs={6} className={classes.gridItem}>
-					<Typography variant="h5" gutterBottom>
+					<Typography variant='h5' gutterBottom>
 						Selection Criteria
-						<IconButton
-							aria-label="Help"
-							className={classes.infoButton}
-							onClick={() => setShowCriteriaInfo(true)}
-						>
-							<InfoIcon color="secondary" />
+						<IconButton aria-label='Help' className={classes.infoButton} onClick={() => setShowCriteriaInfo(true)}>
+							<InfoIcon color='secondary' />
 						</IconButton>
 					</Typography>
 					<EditableList
@@ -91,16 +77,8 @@ const OptionsAndCriteria: React.FC<Props> = (props: Props) => {
 				</Grid>
 			</Grid>
 			<div className={classes.emptySpace} />
-			<InfoDialog
-				text={DecisionOptionInfo}
-				show={showOptionsInfo}
-				onClose={() => setShowOptionsInfo(false)}
-			/>
-			<InfoDialog
-				text={SelectionCriteriaInfo}
-				show={showCriteriaInfo}
-				onClose={() => setShowCriteriaInfo(false)}
-			/>
+			<InfoDialog text={DecisionOptionInfo} show={showOptionsInfo} onClose={() => setShowOptionsInfo(false)} />
+			<InfoDialog text={SelectionCriteriaInfo} show={showCriteriaInfo} onClose={() => setShowCriteriaInfo(false)} />
 		</div>
 	);
 };

@@ -1,30 +1,30 @@
-import React, {useEffect, useState} from "react";
-import {makeStyles} from "@material-ui/core/styles";
+import React, { useEffect, useState } from "react";
+import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import Slider from "@material-ui/core/Slider";
 import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
 import InfoIcon from "@material-ui/icons/Info";
-import {shallowEqual, useDispatch, useSelector} from "react-redux";
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import Fade from "@material-ui/core/Fade";
-import {useParams} from "react-router-dom";
+import { useParams } from "react-router-dom";
 import * as LongStrings from "../../../services/LongTexts";
 import InfoDialog from "../../../components/InfoDialog";
-import {RootState} from "../../../services/redux/rootReducer";
+import { RootState } from "../../../services/redux/rootReducer";
 import theme from "../../../muiTheme";
-import {RatedOption} from "../../../services/redux/actionsAndSlicers/RatedOptionsSlice";
-import {getRatedOptions, updateRatedOptions,} from "../../../services/redux/actionsAndSlicers/RatedOptionsActions";
-import {getOptionsAndCriteria} from "../../../services/redux/actionsAndSlicers/OptionsAndCriteriaActions";
-import {OptionsAndCriteriaKeys} from "../../../services/redux/actionsAndSlicers/OptionsAndCriteriaSlice";
-import {ParamTypes} from "../../../App";
+import { RatedOption } from "../../../services/redux/actionsAndSlicers/RatedOptionsSlice";
+import { getRatedOptions, updateRatedOptions } from "../../../services/redux/actionsAndSlicers/RatedOptionsActions";
+import { getOptionsAndCriteria } from "../../../services/redux/actionsAndSlicers/OptionsAndCriteriaActions";
+import { OptionsAndCriteriaKeys } from "../../../services/redux/actionsAndSlicers/OptionsAndCriteriaSlice";
+import { ParamTypes } from "../../../App";
 
 const useStyles = makeStyles({
 	divMain: {
 		paddingTop: theme.spacing(2.5),
 		paddingBottom: theme.spacing(5.5),
-		textAlign: "center",
-		alignContent: "center",
+		textAlign: 'center',
+		alignContent: 'center',
 	},
 
 	infoButton: {
@@ -62,14 +62,14 @@ const useStyles = makeStyles({
 		paddingLeft: theme.spacing(1.8),
 		paddingRight: theme.spacing(1.8),
 		marginTop: theme.spacing(1),
-		textAlign: "left",
+		textAlign: 'left',
 	},
 
 	sliderRightText: {
 		paddingLeft: theme.spacing(1.8),
 		paddingRight: theme.spacing(1.8),
 		marginTop: theme.spacing(1),
-		textAlign: "right",
+		textAlign: 'right',
 	},
 
 	gridItemSlider: {
@@ -107,15 +107,9 @@ const RateOptions: React.FC<Props> = (props: Props) => {
 
 	const [LocalRatedOptions, setLocalRatedOptions] = useState<RatedOption[]>([]);
 
-	const {selectionCriteria, decisionOptions} = useSelector(
-		(state: RootState) => state.OptionsAndCriteria,
-		shallowEqual
-	);
+	const {selectionCriteria, decisionOptions} = useSelector((state: RootState) => state.OptionsAndCriteria, shallowEqual);
 
-	const ratedOptions = useSelector(
-		(state: RootState) => state.RatedOptions,
-		shallowEqual
-	);
+	const ratedOptions = useSelector((state: RootState) => state.RatedOptions, shallowEqual);
 
 	const classes = useStyles();
 	const dispatch = useDispatch();
@@ -140,18 +134,8 @@ const RateOptions: React.FC<Props> = (props: Props) => {
 
 	useEffect(() => {
 		if (!hidden) {
-			getOptionsAndCriteria(
-				dispatch,
-				decisionId,
-				OptionsAndCriteriaKeys.selectionCriteria,
-				false
-			);
-			getOptionsAndCriteria(
-				dispatch,
-				decisionId,
-				OptionsAndCriteriaKeys.decisionOptions,
-				false
-			);
+			getOptionsAndCriteria(dispatch, decisionId, OptionsAndCriteriaKeys.selectionCriteria, false);
+			getOptionsAndCriteria(dispatch, decisionId, OptionsAndCriteriaKeys.decisionOptions, false);
 			getRatedOptions(dispatch, decisionId);
 		} else {
 			setLocalRatedOptions([]);
@@ -168,11 +152,8 @@ const RateOptions: React.FC<Props> = (props: Props) => {
 
 	const onChange = (event: React.BaseSyntheticEvent, criteriaId: number, optionId: number, score: number) => {
 		setLocalRatedOptions(
-			LocalRatedOptions.map((option) => {
-				if (
-					option.selectionCriteriaId === criteriaId &&
-					option.decisionOptionId === optionId
-				) {
+			LocalRatedOptions.map(option => {
+				if (option.selectionCriteriaId === criteriaId && option.decisionOptionId === optionId) {
 					return {...option, score};
 				}
 				return option;
@@ -182,9 +163,7 @@ const RateOptions: React.FC<Props> = (props: Props) => {
 
 	const onChangeCommitted = (value: number, criteriaId: number, optionId: number) => {
 		const FoundRatedOption = LocalRatedOptions.find(
-			(obj) =>
-				obj.selectionCriteriaId === criteriaId &&
-				obj.decisionOptionId === optionId
+			obj => obj.selectionCriteriaId === criteriaId && obj.decisionOptionId === optionId
 		);
 
 		updateRatedOptions(dispatch, decisionId, {
@@ -195,9 +174,7 @@ const RateOptions: React.FC<Props> = (props: Props) => {
 
 	const getScore = (criteriaId: number, optionId: number): number => {
 		const FoundRatedOption = LocalRatedOptions.find(
-			(obj) =>
-				obj.selectionCriteriaId === criteriaId &&
-				obj.decisionOptionId === optionId
+			obj => obj.selectionCriteriaId === criteriaId && obj.decisionOptionId === optionId
 		);
 
 		return FoundRatedOption == null ? 50 : FoundRatedOption.score;
@@ -205,16 +182,12 @@ const RateOptions: React.FC<Props> = (props: Props) => {
 
 	return (
 		<div className={classes.divMain}>
-			<Grid container justify="center" alignContent="center">
+			<Grid container justify='center' alignContent='center'>
 				<Grid item xs={12}>
-					<Typography variant="h5" gutterBottom>
+					<Typography variant='h5' gutterBottom>
 						Rate Options
-						<IconButton
-							aria-label="Help"
-							className={classes.infoButton}
-							onClick={() => setShowInfo(true)}
-						>
-							<InfoIcon color="secondary" />
+						<IconButton aria-label='Help' className={classes.infoButton} onClick={() => setShowInfo(true)}>
+							<InfoIcon color='secondary' />
 						</IconButton>
 					</Typography>
 				</Grid>
@@ -227,48 +200,29 @@ const RateOptions: React.FC<Props> = (props: Props) => {
 								transitionDelay: `${criteriaIndex * 100}ms`,
 							}}
 						>
-							<Grid
-								item
-								xs={6}
-								className={classes.mainGridItem}
-								key={criteria.id}
-							>
-								<Paper
-									className={classes.paper}
-									elevation={2}
-									key={criteria.id}
-								>
+							<Grid item xs={6} className={classes.mainGridItem} key={criteria.id}>
+								<Paper className={classes.paper} elevation={2} key={criteria.id}>
 									<div>
 										<Grid container>
 											<Grid item xs={12} className={classes.titleGridItem}>
-												<Typography variant="h6">{criteria.name}</Typography>
+												<Typography variant='h6'>{criteria.name}</Typography>
 											</Grid>
-											{decisionOptions.map((option) => (
+											{decisionOptions.map(option => (
 												<Grid
 													container
-													justify="center"
-													alignItems="center"
+													justify='center'
+													alignItems='center'
 													className={classes.gridItemGridContainer}
 													key={option.id}
 												>
-													<Grid
-														item
-														xs={4}
-														className={classes.gridItemGridContainerTitle}
-													>
-														<Typography variant="body1">
-															{option.name}
-														</Typography>
+													<Grid item xs={4} className={classes.gridItemGridContainerTitle}>
+														<Typography variant='body1'>{option.name}</Typography>
 													</Grid>
 													<Grid item xs={8}>
 														<Grid container>
-															<Grid
-																item
-																xs={6}
-																className={classes.sliderLeftText}
-															>
+															<Grid item xs={6} className={classes.sliderLeftText}>
 																<Typography
-																	variant="caption"
+																	variant='caption'
 																	style={{
 																		fontSize: 11,
 																	}}
@@ -276,13 +230,9 @@ const RateOptions: React.FC<Props> = (props: Props) => {
 																	Bad
 																</Typography>
 															</Grid>
-															<Grid
-																item
-																xs={6}
-																className={classes.sliderRightText}
-															>
+															<Grid item xs={6} className={classes.sliderRightText}>
 																<Typography
-																	variant="caption"
+																	variant='caption'
 																	style={{
 																		fontSize: 11,
 																	}}
@@ -290,11 +240,7 @@ const RateOptions: React.FC<Props> = (props: Props) => {
 																	Good
 																</Typography>
 															</Grid>
-															<Grid
-																item
-																xs={12}
-																className={classes.gridItemSlider}
-															>
+															<Grid item xs={12} className={classes.gridItemSlider}>
 																<Slider
 																	classes={{
 																		track: classes.sliderTrack,
@@ -307,21 +253,8 @@ const RateOptions: React.FC<Props> = (props: Props) => {
 																	max={100}
 																	step={1}
 																	marks={sliderMarks}
-																	onChange={(event, value) =>
-																		onChange(
-																			event,
-																			criteria.id,
-																			option.id,
-																			value as number
-																		)
-																	}
-																	onChangeCommitted={(event, value) =>
-																		onChangeCommitted(
-																			value as number,
-																			criteria.id,
-																			option.id
-																		)
-																	}
+																	onChange={(event, value) => onChange(event, criteria.id, option.id, value as number)}
+																	onChangeCommitted={(event, value) => onChangeCommitted(value as number, criteria.id, option.id)}
 																/>
 															</Grid>
 														</Grid>
@@ -336,11 +269,7 @@ const RateOptions: React.FC<Props> = (props: Props) => {
 					))}
 			</Grid>
 			<div className={classes.emptySpace} />
-			<InfoDialog
-				text={LongStrings.OptionsRatingInfo}
-				show={showInfo}
-				onClose={() => setShowInfo(false)}
-			/>
+			<InfoDialog text={LongStrings.OptionsRatingInfo} show={showInfo} onClose={() => setShowInfo(false)} />
 		</div>
 	);
 };

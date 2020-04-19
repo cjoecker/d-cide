@@ -10,7 +10,7 @@ const useStyles = makeStyles({
 	divMain: {
 		paddingTop: theme.spacing(2.5),
 		paddingBottom: theme.spacing(5.5),
-		textAlign: "center",
+		textAlign: 'center',
 	},
 
 	gridItem: {
@@ -24,25 +24,25 @@ type Props = {
 	hidden: boolean;
 };
 const Results: React.FC<Props> = (props: Props) => {
-	const { hidden } = props;
+	const {hidden} = props;
 	const classes = useStyles();
 
 	return (
 		<div className={classes.divMain}>
-			<Grid container justify="center" alignContent="center">
-				<Grid className={classes.gridItem} key="1" item xs={12}>
+			<Grid container justify='center' alignContent='center'>
+				<Grid className={classes.gridItem} key='1' item xs={12}>
 					<ResultsChart
 						itemsKey={OptionsAndCriteriaKeys.decisionOptions}
 						hidden={hidden}
-						title="Decision Options Ranking"
+						title='Decision Options Ranking'
 						infoText={LongStrings.OptionsResultInfo}
 					/>
 				</Grid>
-				<Grid className={classes.gridItem} key="2" item xs={12}>
+				<Grid className={classes.gridItem} key='2' item xs={12}>
 					<ResultsChart
 						itemsKey={OptionsAndCriteriaKeys.selectionCriteria}
 						hidden={hidden}
-						title="Selection Criteria Ranking"
+						title='Selection Criteria Ranking'
 						infoText={LongStrings.CriteriaResultInfo}
 					/>
 				</Grid>

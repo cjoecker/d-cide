@@ -1,15 +1,15 @@
 import React from "react";
-import {makeStyles} from "@material-ui/core/styles";
+import { makeStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import Button from "@material-ui/core/Button";
-import {useHistory} from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import theme from "../../muiTheme";
 
 const useStyles = makeStyles({
 	divMain: {
-		textAlign: "center",
+		textAlign: 'center',
 		marginTop: theme.spacing(2),
 	},
 
@@ -42,26 +42,20 @@ const NotFound: React.FC = () => {
 
 	return (
 		<div className={classes.divMain}>
-			<Grid container justify="center">
-				<Paper elevation={2} key="mainPaper" className={classes.paper}>
-					<Grid
-						container
-						justify="center"
-						alignItems="center"
-						spacing={0}
-						className={classes.gridContainer}
-					>
+			<Grid container justify='center'>
+				<Paper elevation={2} key='mainPaper' className={classes.paper}>
+					<Grid container justify='center' alignItems='center' spacing={0} className={classes.gridContainer}>
 						{/*Title*/}
 						<Grid item xs={12} className={classes.TitleGridItem}>
-							<Typography variant="h4" gutterBottom>
+							<Typography variant='h4' gutterBottom>
 								Oops!
 							</Typography>
-							<Typography variant="body1" gutterBottom>
+							<Typography variant='body1' gutterBottom>
 								Page not found...
 							</Typography>
 						</Grid>
 						<Grid item xs={12} className={classes.button}>
-							<Button variant="contained" color="primary" onClick={() => history.push("/")}>
+							<Button variant='contained' color='primary' onClick={() => history.push('/')}>
 								GO HOME
 							</Button>
 						</Grid>

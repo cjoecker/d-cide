@@ -1,33 +1,33 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import Grid from "@material-ui/core/Grid";
 import Paper from "@material-ui/core/Paper";
 import Slider from "@material-ui/core/Slider";
 import Typography from "@material-ui/core/Typography";
 import InfoIcon from "@material-ui/icons/Info";
 import IconButton from "@material-ui/core/IconButton";
-import {shallowEqual, useDispatch, useSelector} from "react-redux";
+import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import Fade from "@material-ui/core/Fade";
-import {makeStyles} from "@material-ui/core/styles";
-import {useParams} from "react-router-dom";
+import { makeStyles } from "@material-ui/core/styles";
+import { useParams } from "react-router-dom";
 import theme from "../../../muiTheme";
 import * as LongStrings from "../../../services/LongTexts";
 import InfoDialog from "../../../components/InfoDialog";
 import {
 	getWeightedCriteria,
-	updateWeightedCriteria,
+	updateWeightedCriteria
 } from "../../../services/redux/actionsAndSlicers/WeightCriteriaActions";
-import {RootState} from "../../../services/redux/rootReducer";
-import {WeightedCriteria} from "../../../services/redux/actionsAndSlicers/WeightCriteriaSlice";
-import {getOptionsAndCriteria} from "../../../services/redux/actionsAndSlicers/OptionsAndCriteriaActions";
-import {OptionsAndCriteriaKeys} from "../../../services/redux/actionsAndSlicers/OptionsAndCriteriaSlice";
-import {ParamTypes} from "../../../App";
+import { RootState } from "../../../services/redux/rootReducer";
+import { WeightedCriteria } from "../../../services/redux/actionsAndSlicers/WeightCriteriaSlice";
+import { getOptionsAndCriteria } from "../../../services/redux/actionsAndSlicers/OptionsAndCriteriaActions";
+import { OptionsAndCriteriaKeys } from "../../../services/redux/actionsAndSlicers/OptionsAndCriteriaSlice";
+import { ParamTypes } from "../../../App";
 
 const useStyles = makeStyles({
 	divMain: {
 		paddingTop: theme.spacing(2.5),
 		paddingBottom: theme.spacing(5.5),
-		textAlign: "center",
-		alignContent: "center",
+		textAlign: 'center',
+		alignContent: 'center',
 	},
 
 	infoButton: {
@@ -40,14 +40,14 @@ const useStyles = makeStyles({
 		marginBottom: theme.spacing(2),
 		marginRight: theme.spacing(1),
 		marginLeft: theme.spacing(1),
-		width: "100%",
+		width: '100%',
 	},
 
 	gridItemCriteria: {
 		minWidth: theme.spacing(40),
 		maxWidth: theme.spacing(50),
-		display: "flex",
-		alignItems: "center",
+		display: 'flex',
+		alignItems: 'center',
 	},
 
 	sliderMarks: {
@@ -87,14 +87,8 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
 
 	const [showInfo, setShowInfo] = useState(false);
 	const [LocalWeightedCriteria, setLocalWeightedCriteria] = useState<WeightedCriteria[]>([]);
-	const selectionCriteria = useSelector(
-		(state: RootState) => state.OptionsAndCriteria.selectionCriteria,
-		shallowEqual
-	);
-	const weightedCriteria = useSelector(
-		(state: RootState) => state.WeightedCriteria,
-		shallowEqual
-	);
+	const selectionCriteria = useSelector((state: RootState) => state.OptionsAndCriteria.selectionCriteria, shallowEqual);
+	const weightedCriteria = useSelector((state: RootState) => state.WeightedCriteria, shallowEqual);
 
 	const classes = useStyles();
 	const dispatch = useDispatch();
@@ -119,25 +113,19 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
 
 	useEffect(() => {
 		if (!hidden) {
-			getOptionsAndCriteria(
-				dispatch,
-				decisionId,
-				OptionsAndCriteriaKeys.selectionCriteria,
-				false
-			);
+			getOptionsAndCriteria(dispatch, decisionId, OptionsAndCriteriaKeys.selectionCriteria, false);
 
 			getWeightedCriteria(dispatch, decisionId);
 		} else setLocalWeightedCriteria([]);
 	}, [hidden]);
 
 	useEffect(() => {
-		if (weightedCriteria.length !== LocalWeightedCriteria.length)
-			setLocalWeightedCriteria(weightedCriteria);
+		if (weightedCriteria.length !== LocalWeightedCriteria.length) setLocalWeightedCriteria(weightedCriteria);
 	}, [weightedCriteria]);
 
 	const onChange = (event: React.BaseSyntheticEvent, value: number, itemLocal: WeightedCriteria) => {
 		setLocalWeightedCriteria(
-			LocalWeightedCriteria.map((criteria) => {
+			LocalWeightedCriteria.map(criteria => {
 				if (criteria.id === itemLocal.id) {
 					return {...criteria, weight: value};
 				}
@@ -154,26 +142,14 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
 	};
 
 	const getSelectionCriteriaName = (selectionCriteriaId: number) => {
-		const FoundSelectionCriteria = selectionCriteria.find(
-			(obj) => obj.id === selectionCriteriaId
-		);
+		const FoundSelectionCriteria = selectionCriteria.find(obj => obj.id === selectionCriteriaId);
 
-		return FoundSelectionCriteria == null
-			? "Loading..."
-			: FoundSelectionCriteria.name;
+		return FoundSelectionCriteria == null ? 'Loading...' : FoundSelectionCriteria.name;
 	};
 
-	const getWeightInfoText = (
-		weight: number,
-		selectionCriteria1Id: number,
-		selectionCriteria2Id: number
-	): string => {
-		const selectionCriteria1Name = getSelectionCriteriaName(
-			selectionCriteria1Id
-		);
-		const selectionCriteria2Name = getSelectionCriteriaName(
-			selectionCriteria2Id
-		);
+	const getWeightInfoText = (weight: number, selectionCriteria1Id: number, selectionCriteria2Id: number): string => {
+		const selectionCriteria1Name = getSelectionCriteriaName(selectionCriteria1Id);
+		const selectionCriteria2Name = getSelectionCriteriaName(selectionCriteria2Id);
 
 		switch (true) {
 			case weight < -66:
@@ -191,55 +167,33 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
 			case weight <= 100:
 				return `${selectionCriteria2Name} is way more important than ${selectionCriteria1Name}`;
 			default:
-				return "";
+				return '';
 		}
 	};
 
 	return (
 		<div className={classes.divMain}>
-			<Grid container justify="center" alignContent="center">
+			<Grid container justify='center' alignContent='center'>
 				<Grid item xs={12}>
-					<Typography variant="h5" gutterBottom>
+					<Typography variant='h5' gutterBottom>
 						Weight Criteria
-						<IconButton
-							aria-label="Help"
-							className={classes.infoButton}
-							onClick={() => setShowInfo(true)}
-						>
-							<InfoIcon color="secondary" />
+						<IconButton aria-label='Help' className={classes.infoButton} onClick={() => setShowInfo(true)}>
+							<InfoIcon color='secondary' />
 						</IconButton>
 					</Typography>
 				</Grid>
 				{LocalWeightedCriteria.map((criteria, index) => (
-					<Fade
-						in
-						timeout={500}
-						style={{ transitionDelay: `${index * 100}ms` }}
-					>
-						<Grid
-							item
-							xs={6}
-							className={classes.gridItemCriteria}
-							key={criteria.id}
-						>
+					<Fade in timeout={500} style={{transitionDelay: `${index * 100}ms`}}>
+						<Grid item xs={6} className={classes.gridItemCriteria} key={criteria.id}>
 							<Paper elevation={2} className={classes.paper}>
-								<Grid container spacing={2} alignItems="center">
+								<Grid container spacing={2} alignItems='center'>
 									<Grid item xs={6}>
-										<Typography variant="body1">
-											{getSelectionCriteriaName(criteria.selectionCriteria1Id)}
-										</Typography>
+										<Typography variant='body1'>{getSelectionCriteriaName(criteria.selectionCriteria1Id)}</Typography>
 									</Grid>
 									<Grid item xs={6}>
-										<Typography variant="body1">
-											{getSelectionCriteriaName(criteria.selectionCriteria2Id)}
-										</Typography>
+										<Typography variant='body1'>{getSelectionCriteriaName(criteria.selectionCriteria2Id)}</Typography>
 									</Grid>
-									<Grid
-										item
-										xs={12}
-										zeroMinWidth
-										className={classes.gridItemSlider}
-									>
+									<Grid item xs={12} zeroMinWidth className={classes.gridItemSlider}>
 										<Slider
 											classes={{
 												track: classes.sliderTrack,
@@ -252,21 +206,13 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
 											max={100}
 											step={1}
 											marks={sliderMarks}
-											onChange={(event, value) =>
-												onChange(event, value as number, criteria)
-											}
-											onChangeCommitted={(event, value) =>
-												onChangeCommitted(value as number, criteria)
-											}
+											onChange={(event, value) => onChange(event, value as number, criteria)}
+											onChangeCommitted={(event, value) => onChangeCommitted(value as number, criteria)}
 										/>
 									</Grid>
 									<Grid item xs={12} className={classes.gridItemSliderInfo}>
-										<Typography variant="caption">
-											{getWeightInfoText(
-												criteria.weight,
-												criteria.selectionCriteria1Id,
-												criteria.selectionCriteria2Id
-											)}
+										<Typography variant='caption'>
+											{getWeightInfoText(criteria.weight, criteria.selectionCriteria1Id, criteria.selectionCriteria2Id)}
 										</Typography>
 									</Grid>
 								</Grid>
@@ -276,11 +222,7 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
 				))}
 			</Grid>
 			<div className={classes.emptySpace} />
-			<InfoDialog
-				text={LongStrings.WeightCriteriaInfo}
-				show={showInfo}
-				onClose={() => setShowInfo(false)}
-			/>
+			<InfoDialog text={LongStrings.WeightCriteriaInfo} show={showInfo} onClose={() => setShowInfo(false)} />
 		</div>
 	);
 };

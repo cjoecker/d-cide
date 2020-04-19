@@ -30,25 +30,25 @@ export type SignUpRequest = {
 export const initialState: SessionState = {
 	signUpSuccessful: false,
 	wrongPassword: false,
-	token: "",
+	token: '',
 	user: {
 		registeredUser: false,
-		fullName: "",
+		fullName: '',
 		id: 0,
 		exp: 0,
 		iat: 0,
-		username: "",
+		username: '',
 	},
 	signUpErrors: {
-		username: "",
-		fullName: "",
-		password: "",
-		confirmPassword: "",
+		username: '',
+		fullName: '',
+		password: '',
+		confirmPassword: '',
 	},
 };
 
 const SessionSlice = createSlice({
-	name: "Session",
+	name: 'Session',
 	initialState,
 	reducers: {
 		setSession(state, action: PayloadAction<LoginResponse>) {
@@ -57,7 +57,7 @@ const SessionSlice = createSlice({
 			state.wrongPassword = false;
 		},
 		deleteSession(state) {
-			state.token = "";
+			state.token = '';
 			state.user = initialState.user;
 			state.wrongPassword = false;
 		},
