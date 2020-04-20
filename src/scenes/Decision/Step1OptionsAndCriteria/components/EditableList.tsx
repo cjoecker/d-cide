@@ -136,7 +136,10 @@ const EditableList: React.FC<Props> = (props: Props) => {
 				<Paper className={classes.paperTitle} elevation={2} key='NewEntry'>
 					<ListItem>
 						<InputBase
-							data-testid='input-base'
+							inputProps={{
+								'data-testid': "entryInput"
+							}}
+							type="text"
 							className={classes.inputBase}
 							placeholder='New Entry'
 							value={newEntry}
