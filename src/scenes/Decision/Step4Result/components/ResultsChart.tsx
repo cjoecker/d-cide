@@ -73,7 +73,6 @@ const ResultsChart: React.FC<Props> = (props: Props) => {
 			setLocalItems(wrapLongWords(items));
 			setStartAnimation(true);
 		}
-		console.log(JSON.stringify(items));
 	}, [items]);
 
 	const wrapLongWords = (originalItems: OptionAndCriteria[]) => {

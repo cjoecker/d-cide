@@ -1,38 +1,68 @@
 import React from "react";
-import { Provider } from "react-redux";
-import { MemoryRouter } from "react-router-dom";
-import { fireEvent, render } from "@testing-library/react";
-import store from "../../../../services/redux/store";
+import { fireEvent, waitFor } from "@testing-library/react";
+import axios from "axios";
 import EditableList from "./EditableList";
 import { OptionsAndCriteriaKeys } from "../../../../services/redux/actionsAndSlicers/OptionsAndCriteriaSlice";
 import { NOT_ENOUGH_OPTIONS } from "../../../../services/Alerts";
 import "@testing-library/jest-dom/extend-expect";
+import { renderWithRoute } from "../../../../services/testRender";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 let getByTestId: any;
-
-
+const decisionId = 1;
+jest.mock('axios');
 
 beforeEach(() => {
-	getByTestId = render(
-		<MemoryRouter initialEntries={['/decisions/1']}>
-			<Provider store={store}>
-				<EditableList
-					itemsKey={OptionsAndCriteriaKeys.decisionOptions}
-					notEnoughItemsAlert={NOT_ENOUGH_OPTIONS}
-					hidden={false}
-				/>
-			</Provider>
-		</MemoryRouter>
-	).getByTestId;
+	(axios.get as jest.Mock).mockResolvedValueOnce({
+		data: [{
+			id: 56,
+			name: "Existing Option 1",
+			score: 99,
+		}],
+	});
+
+	getByTestId = renderWithRoute(
+		<EditableList
+			itemsKey={OptionsAndCriteriaKeys.decisionOptions}
+			notEnoughItemsAlert={NOT_ENOUGH_OPTIONS}
+			hidden={false}
+		/>,'/decisions/:decisionId',{param: "decisionId", value: "1"}).getByTestId
+
+
 });
 
-it('is possible to write new entry', () => {
-	const entryInput = getByTestId('entryInput');
+it('writes a new entry', () => {
+	const newEntryInput = getByTestId('entryInput');
+	const newEntryValue = "New Option"
 
-	expect(entryInput).toBeInTheDocument();
-	expect(entryInput).toHaveValue('');
+	expect(newEntryInput).toBeInTheDocument();
+	expect(newEntryInput).toHaveValue('');
 
-	fireEvent.change(entryInput, {target: {value: 'hola'}});
-	expect(entryInput).toHaveValue('hola');
+	fireEvent.change(newEntryInput, {target: {value: newEntryValue}});
+	expect(newEntryInput).toHaveValue(newEntryValue);
 });
+
+
+test('creates a new item with add button', async () => {
+	const newEntryInput = getByTestId('entryInput');
+	const addButton = getByTestId('addButton');
+	const newEntryValue = "New Option";
+
+	(axios.post as jest.Mock).mockResolvedValueOnce({
+		data: {
+			id: 56,
+			name: newEntryValue,
+			score: 99,
+		},
+	});
+
+	fireEvent.change(newEntryInput, {target: {value: newEntryValue}});
+	fireEvent.click(addButton);
+
+	await waitFor(() => expect(getByTestId("itemInput0")).toHaveValue(newEntryValue))
+
+	expect(axios.post as jest.Mock).toHaveBeenCalledTimes(1);
+	expect(axios.post as jest.Mock).toHaveBeenCalledWith(`/api/decisions/${decisionId}/${OptionsAndCriteriaKeys.decisionOptions}/`, {name: newEntryValue});
+});
+
+

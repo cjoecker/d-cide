@@ -24,7 +24,7 @@
 	"scripts": {
 		"start": "react-scripts start",
 		"build": "react-scripts build",
-		"test": "react-scripts test",
+		"test": "react-scripts test --env=jest-environment-jsdom-sixteen",
 		"eject": "react-scripts eject"
 	},
 	"proxy": "http://localhost:8080/",
@@ -65,6 +65,7 @@
 		"eslint-plugin-react-hooks": "^3.0.0",
 		"eslint-plugin-typescript": "^0.14.0",
 		"husky": "^4.2.5",
+		"jest-environment-jsdom-sixteen": "^1.0.3",
 		"lint-staged": "^10.1.6",
 		"prettier": "^2.0.4",
 		"source-map-loader": "^0.2.4",

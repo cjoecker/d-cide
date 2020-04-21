@@ -155,7 +155,7 @@ const EditableList: React.FC<Props> = (props: Props) => {
 
 						<ListItemSecondaryAction>
 							<IconButton
-								test-data='button-add-item'
+								data-testid='addButton'
 								aria-label='Add'
 								className={classes.paperButtons}
 								onClick={() => onCreateItem()}
@@ -179,6 +179,9 @@ const EditableList: React.FC<Props> = (props: Props) => {
 						<Paper className={classes.paperItems} elevation={2}>
 							<ListItem>
 								<InputBase
+									inputProps={{
+										'data-testid': `itemInput${index}`
+									}}
 									className={classes.inputBase}
 									value={item.name}
 									onChange={event => onChangeItem(event, item.id)}
