@@ -46,18 +46,18 @@ const OptionsAndCriteria: React.FC<Props> = (props: Props) => {
 	const {hidden} = props;
 	const classes = useStyles();
 
+
 	return (
 		<div className={classes.divMain}>
 			<Grid container justify='center' alignContent='center'>
 				<Grid item xs={6} className={classes.gridItem}>
-					<Typography variant='h5' gutterBottom data-cy="hola">
+					<Typography variant='h5' gutterBottom>
 						Decision Options
 						<IconButton aria-label='Help' className={classes.infoButton} onClick={() => setShowOptionsInfo(true)}>
 							<InfoIcon color='secondary' />
 						</IconButton>
 					</Typography>
 					<EditableList
-						data-cy="decisionOptionsList"
 						itemsKey={OptionsAndCriteriaKeys.decisionOptions}
 						notEnoughItemsAlert={NOT_ENOUGH_OPTIONS}
 						hidden={hidden}

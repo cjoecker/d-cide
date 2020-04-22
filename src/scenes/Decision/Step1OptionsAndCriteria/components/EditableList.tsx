@@ -128,7 +128,7 @@ const EditableList: React.FC<Props> = (props: Props) => {
 	};
 
 	return (
-		<div className={classes.divMain}>
+		<div className={classes.divMain} data-testid={`${itemsKey}List`}>
 			<List>
 				<Paper className={classes.paperTitle} elevation={2} key='NewEntry'>
 					<ListItem>
