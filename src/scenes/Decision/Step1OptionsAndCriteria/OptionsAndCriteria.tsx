@@ -7,9 +7,9 @@ import { makeStyles } from "@material-ui/core/styles";
 import InfoDialog from "../../../components/InfoDialog";
 import EditableList from "./components/EditableList";
 import theme from "../../../muiTheme";
-import { DecisionOptionInfo, SelectionCriteriaInfo } from "../../../services/InfoDialogTexts";
-import { OptionsAndCriteriaKeys } from "../../../services/redux/actionsAndSlicers/OptionsAndCriteriaSlice";
-import { NOT_ENOUGH_CRITERIA, NOT_ENOUGH_OPTIONS } from "../../../services/Alerts";
+import { DecisionOptionInfo, SelectionCriteriaInfo } from "../../../constants/InfoDialogTexts";
+import { OptionsAndCriteriaKeys } from "../../../redux/actionsAndSlicers/OptionsAndCriteriaSlice";
+import { NOT_ENOUGH_CRITERIA, NOT_ENOUGH_OPTIONS } from "../../../constants/Alerts";
 
 const useStyles = makeStyles({
 	divMain: {

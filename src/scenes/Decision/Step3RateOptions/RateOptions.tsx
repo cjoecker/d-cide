@@ -9,14 +9,14 @@ import InfoIcon from "@material-ui/icons/Info";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import Fade from "@material-ui/core/Fade";
 import { useParams } from "react-router-dom";
-import * as LongStrings from "../../../services/InfoDialogTexts";
+import * as LongStrings from "../../../constants/InfoDialogTexts";
 import InfoDialog from "../../../components/InfoDialog";
-import { RootState } from "../../../services/redux/rootReducer";
+import { RootState } from "../../../redux/rootReducer";
 import theme from "../../../muiTheme";
-import { RatedOption } from "../../../services/redux/actionsAndSlicers/RatedOptionsSlice";
-import { getRatedOptions, updateRatedOptions } from "../../../services/redux/actionsAndSlicers/RatedOptionsActions";
-import { getOptionsAndCriteria } from "../../../services/redux/actionsAndSlicers/OptionsAndCriteriaActions";
-import { OptionsAndCriteriaKeys } from "../../../services/redux/actionsAndSlicers/OptionsAndCriteriaSlice";
+import { RatedOption } from "../../../redux/actionsAndSlicers/RatedOptionsSlice";
+import { getRatedOptions, updateRatedOptions } from "../../../redux/actionsAndSlicers/RatedOptionsActions";
+import { getOptionsAndCriteria } from "../../../redux/actionsAndSlicers/OptionsAndCriteriaActions";
+import { OptionsAndCriteriaKeys } from "../../../redux/actionsAndSlicers/OptionsAndCriteriaSlice";
 import { ParamTypes } from "../../../App";
 
 const useStyles = makeStyles({

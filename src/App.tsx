@@ -8,14 +8,14 @@ import { shallowEqual, useSelector } from "react-redux";
 import Link from "@material-ui/core/Link";
 import Toolbar from "@material-ui/core/Toolbar";
 import { Route, Switch } from "react-router-dom";
-import { RootState } from "./services/redux/rootReducer";
+import { RootState } from "./redux/rootReducer";
 import LandingPage from "./components/LandingPage";
 import Decision from "./scenes/Decision/Decision";
 import AlertsBanner from "./components/AlertsBanner";
 import theme from "./muiTheme";
 import dcideLogo from "./images/d-cide_Logo.svg";
-import { verifyToken } from "./services/redux/actionsAndSlicers/SessionActions";
-import PrivateRoute from "./services/PrivateRoute";
+import { verifyToken } from "./redux/actionsAndSlicers/SessionActions";
+import PrivateRoute from "./components/PrivateRoute";
 import NotFound from "./scenes/NotFound/NotFound";
 
 const {token} = localStorage;

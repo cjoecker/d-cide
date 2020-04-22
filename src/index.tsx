@@ -3,7 +3,7 @@ import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import "./index.css";
 import { BrowserRouter as Router } from "react-router-dom";
-import store from "./services/redux/store";
+import store from "./redux/store";
 
 const App = require('./App').default;
 

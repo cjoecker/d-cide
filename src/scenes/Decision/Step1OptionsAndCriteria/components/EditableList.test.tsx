@@ -2,10 +2,10 @@ import React from "react";
 import { fireEvent, waitFor } from "@testing-library/react";
 import axios from "axios";
 import EditableList from "./EditableList";
-import { OptionsAndCriteriaKeys } from "../../../../services/redux/actionsAndSlicers/OptionsAndCriteriaSlice";
-import { NOT_ENOUGH_OPTIONS } from "../../../../services/Alerts";
+import { OptionsAndCriteriaKeys } from "../../../../redux/actionsAndSlicers/OptionsAndCriteriaSlice";
+import { NOT_ENOUGH_OPTIONS } from "../../../../constants/Alerts";
 import "@testing-library/jest-dom/extend-expect";
-import { renderWithRoute } from "../../../../services/testRender";
+import { renderWithRoute } from "../../../../utils/testRender";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 let getByTestId: any;

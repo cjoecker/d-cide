@@ -8,13 +8,10 @@ import Typography from "@material-ui/core/Typography";
 import IconButton from "@material-ui/core/IconButton";
 import InfoIcon from "@material-ui/icons/Info";
 import Fade from "@material-ui/core/Fade";
-import { getOptionsAndCriteria } from "../../../../services/redux/actionsAndSlicers/OptionsAndCriteriaActions";
+import { getOptionsAndCriteria } from "../../../../redux/actionsAndSlicers/OptionsAndCriteriaActions";
 import theme from "../../../../muiTheme";
-import { RootState } from "../../../../services/redux/rootReducer";
-import {
-	OptionAndCriteria,
-	OptionsAndCriteriaKeys
-} from "../../../../services/redux/actionsAndSlicers/OptionsAndCriteriaSlice";
+import { RootState } from "../../../../redux/rootReducer";
+import { OptionAndCriteria, OptionsAndCriteriaKeys } from "../../../../redux/actionsAndSlicers/OptionsAndCriteriaSlice";
 import InfoDialog from "../../../../components/InfoDialog";
 import { ParamTypes } from "../../../../App";
 

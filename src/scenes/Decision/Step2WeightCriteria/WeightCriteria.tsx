@@ -10,16 +10,13 @@ import Fade from "@material-ui/core/Fade";
 import { makeStyles } from "@material-ui/core/styles";
 import { useParams } from "react-router-dom";
 import theme from "../../../muiTheme";
-import * as LongStrings from "../../../services/InfoDialogTexts";
+import * as LongStrings from "../../../constants/InfoDialogTexts";
 import InfoDialog from "../../../components/InfoDialog";
-import {
-	getWeightedCriteria,
-	updateWeightedCriteria
-} from "../../../services/redux/actionsAndSlicers/WeightCriteriaActions";
-import { RootState } from "../../../services/redux/rootReducer";
-import { WeightedCriteria } from "../../../services/redux/actionsAndSlicers/WeightCriteriaSlice";
-import { getOptionsAndCriteria } from "../../../services/redux/actionsAndSlicers/OptionsAndCriteriaActions";
-import { OptionsAndCriteriaKeys } from "../../../services/redux/actionsAndSlicers/OptionsAndCriteriaSlice";
+import { getWeightedCriteria, updateWeightedCriteria } from "../../../redux/actionsAndSlicers/WeightCriteriaActions";
+import { RootState } from "../../../redux/rootReducer";
+import { WeightedCriteria } from "../../../redux/actionsAndSlicers/WeightCriteriaSlice";
+import { getOptionsAndCriteria } from "../../../redux/actionsAndSlicers/OptionsAndCriteriaActions";
+import { OptionsAndCriteriaKeys } from "../../../redux/actionsAndSlicers/OptionsAndCriteriaSlice";
 import { ParamTypes } from "../../../App";
 
 const useStyles = makeStyles({

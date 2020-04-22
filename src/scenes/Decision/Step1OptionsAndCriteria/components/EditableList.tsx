@@ -12,19 +12,16 @@ import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import Fade from "@material-ui/core/Fade";
 import { useParams } from "react-router-dom";
 import theme from "../../../../muiTheme";
-import {
-	OptionAndCriteria,
-	OptionsAndCriteriaKeys
-} from "../../../../services/redux/actionsAndSlicers/OptionsAndCriteriaSlice";
+import { OptionAndCriteria, OptionsAndCriteriaKeys } from "../../../../redux/actionsAndSlicers/OptionsAndCriteriaSlice";
 import {
 	deleteOptionsAndCriteria,
 	editOptionsAndCriteria,
 	getOptionsAndCriteria,
 	postOptionsAndCriteria
-} from "../../../../services/redux/actionsAndSlicers/OptionsAndCriteriaActions";
-import { RootState } from "../../../../services/redux/rootReducer";
-import AppSlice from "../../../../services/redux/actionsAndSlicers/AppSlice";
-import { AlertType } from "../../../../services/Alerts";
+} from "../../../../redux/actionsAndSlicers/OptionsAndCriteriaActions";
+import { RootState } from "../../../../redux/rootReducer";
+import AppSlice from "../../../../redux/actionsAndSlicers/AppSlice";
+import { AlertType } from "../../../../constants/Alerts";
 import { ParamTypes } from "../../../../App";
 
 const useStyles = makeStyles({

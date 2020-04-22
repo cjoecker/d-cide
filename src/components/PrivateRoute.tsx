@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Redirect, Route, RouteProps } from "react-router-dom";
 import { shallowEqual, useSelector } from "react-redux";
-import { RootState } from "./redux/rootReducer";
+import { RootState } from "../redux/rootReducer";
 /* eslint-disable react/jsx-props-no-spreading */
 
 type PrivateRouteProps = RouteProps & {

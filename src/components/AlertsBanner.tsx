@@ -2,9 +2,9 @@ import React, { useEffect, useState } from "react";
 import Snackbar from "@material-ui/core/Snackbar";
 import Alert from "@material-ui/lab/Alert";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
-import { AlertInitialState, AlertType, AlertTypes } from "../services/Alerts";
-import { RootState } from "../services/redux/rootReducer";
-import AppSlice from "../services/redux/actionsAndSlicers/AppSlice";
+import { AlertInitialState, AlertType, AlertTypes } from "../constants/Alerts";
+import { RootState } from "../redux/rootReducer";
+import AppSlice from "../redux/actionsAndSlicers/AppSlice";
 
 const AlertsBanner: React.FC = () => {
 	const {alerts} = useSelector((state: RootState) => state.App, shallowEqual);

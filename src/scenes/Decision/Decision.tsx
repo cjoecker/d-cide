@@ -14,8 +14,8 @@ import OptionsAndCriteria from "./Step1OptionsAndCriteria/OptionsAndCriteria";
 import WeightCriteria from "./Step2WeightCriteria/WeightCriteria";
 import RateOptions from "./Step3RateOptions/RateOptions";
 import Results from "./Step4Result/Result";
-import { RootState } from "../../services/redux/rootReducer";
-import { NOT_ENOUGH_CRITERIA, NOT_ENOUGH_OPTIONS } from "../../services/Alerts";
+import { RootState } from "../../redux/rootReducer";
+import { NOT_ENOUGH_CRITERIA, NOT_ENOUGH_OPTIONS } from "../../constants/Alerts";
 
 const useStyles = makeStyles({
 	divMain: {
