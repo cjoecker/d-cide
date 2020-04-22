@@ -57,6 +57,7 @@ const OptionsAndCriteria: React.FC<Props> = (props: Props) => {
 						</IconButton>
 					</Typography>
 					<EditableList
+						data-testid="decisionOptionsList"
 						itemsKey={OptionsAndCriteriaKeys.decisionOptions}
 						notEnoughItemsAlert={NOT_ENOUGH_OPTIONS}
 						hidden={hidden}
@@ -70,6 +71,7 @@ const OptionsAndCriteria: React.FC<Props> = (props: Props) => {
 						</IconButton>
 					</Typography>
 					<EditableList
+						data-testid="selectionCriteriaList"
 						itemsKey={OptionsAndCriteriaKeys.selectionCriteria}
 						notEnoughItemsAlert={NOT_ENOUGH_CRITERIA}
 						hidden={hidden}

@@ -4,6 +4,7 @@
     "module": "esnext",
     "sourceMap": true,
     "skipLibCheck": true,
+    "types": ["cypress"],
     "typeRoots": [
       "node_modules/@types/"
     ],
