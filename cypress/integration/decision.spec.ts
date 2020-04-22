@@ -8,6 +8,6 @@ context('Actions', () => {
 	})
 
 	it('creates a decision option', () => {
-		cy.get('[data-test-id="decisionOptionsList"]').should('have.length', 1)
+		cy.find('[data-cy="decisionOptionsList"]').should('have.length', 1)
 	})
 })

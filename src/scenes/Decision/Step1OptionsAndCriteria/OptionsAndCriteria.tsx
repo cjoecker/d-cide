@@ -50,14 +50,14 @@ const OptionsAndCriteria: React.FC<Props> = (props: Props) => {
 		<div className={classes.divMain}>
 			<Grid container justify='center' alignContent='center'>
 				<Grid item xs={6} className={classes.gridItem}>
-					<Typography variant='h5' gutterBottom>
+					<Typography variant='h5' gutterBottom data-cy="hola">
 						Decision Options
 						<IconButton aria-label='Help' className={classes.infoButton} onClick={() => setShowOptionsInfo(true)}>
 							<InfoIcon color='secondary' />
 						</IconButton>
 					</Typography>
 					<EditableList
-						data-testid="decisionOptionsList"
+						data-cy="decisionOptionsList"
 						itemsKey={OptionsAndCriteriaKeys.decisionOptions}
 						notEnoughItemsAlert={NOT_ENOUGH_OPTIONS}
 						hidden={hidden}
