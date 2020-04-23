@@ -30,6 +30,10 @@ context('Actions', () => {
 		showInfoDialog("decisionOptions", "Decision Options")
 	});
 
+	it('shows decision options title', () => {
+		cy.contains("Decision Options")
+	});
+
 	//selection criteria
 	it('creates a selection criteria', () => {
 		addItemToList('selectionCriteriaList', 'New Item');
@@ -53,6 +57,10 @@ context('Actions', () => {
 
 	it('shows selection criteria info', () => {
 		showInfoDialog("selectionCriteria", "Selection Criteria")
+	});
+
+	it('shows selection criteria title', () => {
+		cy.contains("Selection Criteria")
 	});
 
 	//functions
