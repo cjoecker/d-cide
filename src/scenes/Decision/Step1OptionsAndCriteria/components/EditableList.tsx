@@ -134,9 +134,9 @@ const EditableList: React.FC<Props> = (props: Props) => {
 					<ListItem>
 						<InputBase
 							inputProps={{
-								'data-testid': "entryInput"
+								'data-testid': 'entryInput',
 							}}
-							type="text"
+							type='text'
 							className={classes.inputBase}
 							placeholder='New Entry'
 							value={newEntry}
@@ -177,7 +177,7 @@ const EditableList: React.FC<Props> = (props: Props) => {
 							<ListItem>
 								<InputBase
 									inputProps={{
-										'data-testid': `itemInput${index}`
+										'data-testid': `itemInput${index}`,
 									}}
 									className={classes.inputBase}
 									value={item.name}
@@ -195,6 +195,7 @@ const EditableList: React.FC<Props> = (props: Props) => {
 								/>
 								<ListItemSecondaryAction>
 									<IconButton
+										data-testid={`deleteButton${index}`}
 										aria-label='Delete'
 										onClick={() => deleteOptionsAndCriteria(dispatch, decisionId, itemsKey, item.id)}
 										className={classes.paperButtons}
