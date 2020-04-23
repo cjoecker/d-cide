@@ -93,7 +93,10 @@ const EditableList: React.FC<Props> = (props: Props) => {
 	useEffect(() => {
 		if (items.length !== localItems.length && !hidden && didMount) {
 			setLocalItems(items);
-			deleteEntryWhenCreated();
+			clearNewEntryWhenCreated();
+			manageNotEnoughItemsAlerts();
+		}
+		if (items.length === 0 && didMount) {
 			manageNotEnoughItemsAlerts();
 		}
 	}, [items]);
@@ -118,8 +121,8 @@ const EditableList: React.FC<Props> = (props: Props) => {
 		}
 	};
 
-	const deleteEntryWhenCreated = () => {
-		if (items[0].name === newEntry) setNewEntry('');
+	const clearNewEntryWhenCreated = () => {
+		if (items.length > 0 && items[0].name === newEntry) setNewEntry('');
 	};
 
 	const manageNotEnoughItemsAlerts = () => {
@@ -177,7 +180,7 @@ const EditableList: React.FC<Props> = (props: Props) => {
 							<ListItem>
 								<InputBase
 									inputProps={{
-										'data-testid': `itemInput${index}`,
+										'data-testid': `itemInput`,
 									}}
 									className={classes.inputBase}
 									value={item.name}

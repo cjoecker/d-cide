@@ -72,7 +72,7 @@ const AlertsBanner: React.FC = () => {
 	return (
 		<div>
 			<Snackbar open={open} autoHideDuration={autoHideTime !== 0 ? autoHideTime : undefined} onClose={handleClose}>
-				<Alert onClose={alert.allowClose ? handleClose : undefined} variant='filled' severity={alert.type}>
+				<Alert data-testid={`${alert.type}Alert`} onClose={alert.allowClose ? handleClose : undefined} variant='filled' severity={alert.type}>
 					{alert.text}
 				</Alert>
 			</Snackbar>
