@@ -41,10 +41,10 @@ const InfoDialog: React.FC<Props> = (props: Props) => {
 		<div>
 			<Dialog onClose={handleClose} aria-labelledby='customized-dialog-title' open={show}>
 				<DialogContent className={classes.dialogContent}>
-					<Typography component={'span'} variant='body2' className={classes.text}>
+					<Typography data-testid='infoText' component={'span'} variant='body2' className={classes.text}>
 						{text}
 					</Typography>
-					<IconButton aria-label='Close' className={classes.closeButton} onClick={handleClose}>
+					<IconButton aria-label='Close' data-testid='infoCloseButton' className={classes.closeButton} onClick={handleClose}>
 						<CloseIcon />
 					</IconButton>
 				</DialogContent>

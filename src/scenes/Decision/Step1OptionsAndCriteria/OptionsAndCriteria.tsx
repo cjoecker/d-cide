@@ -46,14 +46,18 @@ const OptionsAndCriteria: React.FC<Props> = (props: Props) => {
 	const {hidden} = props;
 	const classes = useStyles();
 
-
 	return (
 		<div className={classes.divMain}>
 			<Grid container justify='center' alignContent='center'>
 				<Grid item xs={6} className={classes.gridItem}>
 					<Typography variant='h5' gutterBottom>
 						Decision Options
-						<IconButton aria-label='Help' className={classes.infoButton} onClick={() => setShowOptionsInfo(true)}>
+						<IconButton
+							aria-label='Help'
+							data-testid={`${OptionsAndCriteriaKeys.decisionOptions}InfoButton`}
+							className={classes.infoButton}
+							onClick={() => setShowOptionsInfo(true)}
+						>
 							<InfoIcon color='secondary' />
 						</IconButton>
 					</Typography>
@@ -66,12 +70,17 @@ const OptionsAndCriteria: React.FC<Props> = (props: Props) => {
 				<Grid item xs={6} className={classes.gridItem}>
 					<Typography variant='h5' gutterBottom>
 						Selection Criteria
-						<IconButton aria-label='Help' className={classes.infoButton} onClick={() => setShowCriteriaInfo(true)}>
+						<IconButton
+							aria-label='Help'
+							data-testid={`${OptionsAndCriteriaKeys.selectionCriteria}InfoButton`}
+							className={classes.infoButton}
+							onClick={() => setShowCriteriaInfo(true)}
+						>
 							<InfoIcon color='secondary' />
 						</IconButton>
 					</Typography>
 					<EditableList
-						data-testid="selectionCriteriaList"
+						data-testid='selectionCriteriaList'
 						itemsKey={OptionsAndCriteriaKeys.selectionCriteria}
 						notEnoughItemsAlert={NOT_ENOUGH_CRITERIA}
 						hidden={hidden}

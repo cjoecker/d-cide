@@ -19,13 +19,15 @@ context('Actions', () => {
 	});
 
 	it('deletes a decision option', () => {
-		const listName = 'decisionOptionsList';
-		const newItemText = 'New Item';
-		deleteItemFromList(listName, newItemText);
+		deleteItemFromList('decisionOptionsList', 'New Item');
 	});
 
 	it('shows warning for not enough options', () => {
 		showsWarningForNotEnoughItems('decisionOptionsList');
+	});
+
+	it('shows decision options info', () => {
+		showInfoDialog("decisionOptions", "Decision Options")
 	});
 
 	//selection criteria
@@ -47,6 +49,10 @@ context('Actions', () => {
 
 	it('creates a decision option\'s info', () => {
 		addItemToList('decisionOptionsList', "New Item");
+	});
+
+	it('shows selection criteria info', () => {
+		showInfoDialog("selectionCriteria", "Selection Criteria")
 	});
 
 	//functions
@@ -169,4 +175,18 @@ context('Actions', () => {
 			.getTestElement('warningAlert')
 			.should('have.length', 0);
 	};
+
+	const showInfoDialog = (infoName:string, title:string) =>{
+		cy.getTestElement( `${infoName}InfoButton`)
+			.click()
+
+			.getTestElement('infoText')
+			.contains(title)
+
+			.getTestElement('infoCloseButton')
+			.click()
+
+			.getTestElement('infoText')
+			.should('have.length',0);
+	}
 });
