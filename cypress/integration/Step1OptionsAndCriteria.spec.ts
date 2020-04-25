@@ -14,7 +14,7 @@ context('Actions', () => {
 		editItemFromList('decisionOptionsList', 'New Item', 'Edited Item');
 	});
 
-	it("deletes item if it's left empty", () => {
+	it("deletes decision option if it's left empty", () => {
 		deleteItemWhenLeftEmpty('decisionOptionsList', 'New Item');
 	});
 
@@ -26,7 +26,7 @@ context('Actions', () => {
 		showsWarningForNotEnoughItems('decisionOptionsList');
 	});
 
-	it('shows decision options info', () => {
+	it('shows and hides decision options info', () => {
 		showInfoDialog("decisionOptions", "Decision Options")
 	});
 
@@ -43,6 +43,10 @@ context('Actions', () => {
 		editItemFromList('selectionCriteriaList', 'New Item', 'Edited Item');
 	});
 
+	it("deletes selection criteria if it's left empty", () => {
+		deleteItemWhenLeftEmpty('decisionOptionsList', 'New Item');
+	});
+
 	it('deletes a selection criteria', () => {
 		deleteItemFromList('selectionCriteriaList', 'New Item');
 	});
@@ -51,11 +55,7 @@ context('Actions', () => {
 		showsWarningForNotEnoughItems('selectionCriteriaList');
 	});
 
-	it('creates a decision option\'s info', () => {
-		addItemToList('decisionOptionsList', "New Item");
-	});
-
-	it('shows selection criteria info', () => {
+	it('shows and hides selection criteria info', () => {
 		showInfoDialog("selectionCriteria", "Selection Criteria")
 	});
 
@@ -94,16 +94,7 @@ context('Actions', () => {
 
 	const editItemFromList = (listName: string, itemText: string, newItemText: string) => {
 		cy.getTestElement(listName).within(() => {
-			cy
-				.getTestElement('entryInput')
-				.type(itemText)
-				.type('{enter}')
-
-				.getTestElement('itemInput')
-				.first()
-				.should('have.value', itemText)
-
-				.getTestElement('itemInput')
+			cy.getTestElement('itemInput')
 				.first()
 				.clear()
 				.type(newItemText)
@@ -117,16 +108,7 @@ context('Actions', () => {
 
 	const deleteItemWhenLeftEmpty = (listName: string, itemText: string) => {
 		cy.getTestElement(listName).within(() => {
-			cy
-				.getTestElement('entryInput')
-				.type(itemText)
-				.type('{enter}')
-
-				.getTestElement('itemInput')
-				.first()
-				.should('have.value', itemText)
-
-				.getTestElement('itemInput')
+			cy.getTestElement('itemInput')
 				.first()
 				.clear()
 				.blur()
@@ -138,15 +120,7 @@ context('Actions', () => {
 
 	const deleteItemFromList = (listName: string, itemText: string) => {
 		cy.getTestElement(listName).within(() => {
-			cy.getTestElement('entryInput')
-				.type(itemText)
-				.type('{enter}')
-
-				.getTestElement('itemInput')
-				.first()
-				.should('have.value', itemText)
-
-				.getTestElement('deleteButton0')
+			cy.getTestElement('deleteButton0')
 				.click()
 
 				.getTestElement('itemInput')
@@ -165,15 +139,16 @@ context('Actions', () => {
 						.should('have.length', 0);
 				});
 			})
-
 			.getTestElement('warningAlert')
 			.should('have.length', 1)
+
 
 		.getTestElement(listName).within(() => {
 			cy.getTestElement('entryInput').type('Item 1').type('{enter}');
 		})
 			.getTestElement('warningAlert')
 			.should('have.length', 1)
+
 
 			.getTestElement(listName)
 			.within(() => {
