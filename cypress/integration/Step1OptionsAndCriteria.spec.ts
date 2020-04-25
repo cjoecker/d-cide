@@ -27,11 +27,11 @@ context('Actions', () => {
 	});
 
 	it('shows and hides decision options info', () => {
-		showInfoDialog("decisionOptions", "Decision Options")
+		showInfoDialog('decisionOptions', 'Decision Options');
 	});
 
 	it('shows decision options title', () => {
-		cy.contains("Decision Options")
+		cy.contains('Decision Options');
 	});
 
 	//selection criteria
@@ -56,11 +56,11 @@ context('Actions', () => {
 	});
 
 	it('shows and hides selection criteria info', () => {
-		showInfoDialog("selectionCriteria", "Selection Criteria")
+		showInfoDialog('selectionCriteria', 'Selection Criteria');
 	});
 
 	it('shows selection criteria title', () => {
-		cy.contains("Selection Criteria")
+		cy.contains('Selection Criteria');
 	});
 
 	//functions
@@ -94,7 +94,8 @@ context('Actions', () => {
 
 	const editItemFromList = (listName: string, itemText: string, newItemText: string) => {
 		cy.getTestElement(listName).within(() => {
-			cy.getTestElement('itemInput')
+			cy
+				.getTestElement('itemInput')
 				.first()
 				.clear()
 				.type(newItemText)
@@ -108,7 +109,8 @@ context('Actions', () => {
 
 	const deleteItemWhenLeftEmpty = (listName: string, itemText: string) => {
 		cy.getTestElement(listName).within(() => {
-			cy.getTestElement('itemInput')
+			cy
+				.getTestElement('itemInput')
 				.first()
 				.clear()
 				.blur()
@@ -120,20 +122,23 @@ context('Actions', () => {
 
 	const deleteItemFromList = (listName: string, itemText: string) => {
 		cy.getTestElement(listName).within(() => {
-			cy.getTestElement('deleteButton0')
+			cy
+				.getTestElement('deleteButton0')
 				.click()
 
 				.getTestElement('itemInput')
-				.should('not.have.value',itemText);
+				.should('not.have.value', itemText);
 		});
 	};
 
 	const showsWarningForNotEnoughItems = (listName: string) => {
-		cy.getTestElement(listName)
+		cy
+			.getTestElement(listName)
 			.within(() => {
 				cy.getTestElement('itemInput').each((element, index, list) => {
 					const itemIndex = list.length - index - 1;
-					cy.getTestElement(`deleteButton${itemIndex}`)
+					cy
+						.getTestElement(`deleteButton${itemIndex}`)
 						.click()
 						.getTestElement(`deleteButton${itemIndex}`)
 						.should('have.length', 0);
@@ -142,13 +147,12 @@ context('Actions', () => {
 			.getTestElement('warningAlert')
 			.should('have.length', 1)
 
-
-		.getTestElement(listName).within(() => {
-			cy.getTestElement('entryInput').type('Item 1').type('{enter}');
-		})
+			.getTestElement(listName)
+			.within(() => {
+				cy.getTestElement('entryInput').type('Item 1').type('{enter}');
+			})
 			.getTestElement('warningAlert')
 			.should('have.length', 1)
-
 
 			.getTestElement(listName)
 			.within(() => {
@@ -159,8 +163,9 @@ context('Actions', () => {
 			.should('have.length', 0);
 	};
 
-	const showInfoDialog = (infoName:string, title:string) =>{
-		cy.getTestElement( `${infoName}InfoButton`)
+	const showInfoDialog = (infoName: string, title: string) => {
+		cy
+			.getTestElement(`${infoName}InfoButton`)
 			.click()
 
 			.getTestElement('infoText')
@@ -170,6 +175,6 @@ context('Actions', () => {
 			.click()
 
 			.getTestElement('infoText')
-			.should('have.length',0);
-	}
+			.should('have.length', 0);
+	};
 });

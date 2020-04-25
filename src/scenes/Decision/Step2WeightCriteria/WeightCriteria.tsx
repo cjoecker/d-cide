@@ -174,7 +174,7 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
 				<Grid item xs={12}>
 					<Typography variant='h5' gutterBottom>
 						Weight Criteria
-						<IconButton aria-label='Help' className={classes.infoButton} onClick={() => setShowInfo(true)}>
+						<IconButton data-testid="WeightCriteriaInfoButton" aria-label='Help' className={classes.infoButton} onClick={() => setShowInfo(true)}>
 							<InfoIcon color='secondary' />
 						</IconButton>
 					</Typography>

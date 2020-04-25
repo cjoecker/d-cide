@@ -114,7 +114,7 @@ const Decision: React.FC = () => {
 				{steps.map(step => {
 					return (
 						<Step key={step.number}>
-							<StepButton onClick={() => changeStep(step.number)} completed={step.completed} disabled={step.disabled}>
+							<StepButton data-testid={`Step${step.number}Button`} onClick={() => changeStep(step.number)} completed={step.completed} disabled={step.disabled}>
 								<StepLabel StepIconProps={{classes: {root: classes.stepperLabel}}}>{step.name}</StepLabel>
 							</StepButton>
 						</Step>
