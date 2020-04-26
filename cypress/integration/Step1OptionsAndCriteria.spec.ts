@@ -6,7 +6,10 @@ context('Actions', () => {
 		cy.visit('/');
 	});
 
-	//TODO test behavior when server is down
+	const firstDecisionOption = "House 1"
+	const firstSelectionCriteria = "Size"
+
+
 	//decision options
 	it('creates a decision option', () => {
 		addItemToList('decisionOptionsList', 'New Item');
@@ -16,11 +19,11 @@ context('Actions', () => {
 	});
 
 	it("deletes decision option if it's left empty", () => {
-		deleteItemWhenLeftEmpty('decisionOptionsList', 'New Item');
+		deleteItemWhenLeftEmpty('decisionOptionsList', firstDecisionOption);
 	});
 
 	it('deletes a decision option', () => {
-		deleteItemFromList('decisionOptionsList', 'New Item');
+		deleteItemFromList('decisionOptionsList', firstDecisionOption);
 	});
 
 	it('shows warning for not enough options', () => {
@@ -35,6 +38,18 @@ context('Actions', () => {
 		cy.contains('Decision Options');
 	});
 
+	it("doesn't  create new decision option on server error", () => {
+		ErrorOnAddItem('decisionOptionsList', 'New Item');
+	});
+
+	it('restores decision option value after edit on server error', () => {
+		ErrorOnEditItem('decisionOptionsList', 'New Item', firstDecisionOption);
+	});
+
+	it("doesn't  delete decision option on server error", () => {
+		ErrorOnDeleteItem('decisionOptionsList', firstDecisionOption);
+	});
+
 	//selection criteria
 	it('creates a selection criteria', () => {
 		addItemToList('selectionCriteriaList', 'New Item');
@@ -45,11 +60,11 @@ context('Actions', () => {
 	});
 
 	it("deletes selection criteria if it's left empty", () => {
-		deleteItemWhenLeftEmpty('decisionOptionsList', 'New Item');
+		deleteItemWhenLeftEmpty('decisionOptionsList', firstSelectionCriteria);
 	});
 
 	it('deletes a selection criteria', () => {
-		deleteItemFromList('selectionCriteriaList', 'New Item');
+		deleteItemFromList('selectionCriteriaList', firstSelectionCriteria);
 	});
 
 	it('shows warning for not enough options', () => {
@@ -62,6 +77,18 @@ context('Actions', () => {
 
 	it('shows selection criteria title', () => {
 		cy.contains('Selection Criteria');
+	});
+
+	it("doesn't  create new selection criteria on server error", () => {
+		ErrorOnAddItem('selectionCriteriaList', 'New Item');
+	});
+
+	it('restores selection criteria value after edit on server error', () => {
+		ErrorOnEditItem('selectionCriteriaList', 'New Item', firstSelectionCriteria);
+	});
+
+	it("doesn't  delete selection criteria on server error", () => {
+		ErrorOnDeleteItem('selectionCriteriaList', firstSelectionCriteria);
 	});
 
 	//functions
@@ -110,8 +137,8 @@ context('Actions', () => {
 
 	const deleteItemWhenLeftEmpty = (listName: string, itemText: string) => {
 		cy.getTestElement(listName).within(() => {
-			cy
-				.getTestElement('itemInput')
+
+				cy.getTestElement('itemInput')
 				.first()
 				.clear()
 				.blur()
@@ -121,10 +148,10 @@ context('Actions', () => {
 		});
 	};
 
-	const deleteItemFromList = (listName: string, itemText: string) => {
+	const deleteItemFromList = (listName: string, itemText:string) => {
 		cy.getTestElement(listName).within(() => {
-			cy
-				.getTestElement('deleteButton0')
+
+				cy.getTestElement('deleteButton0')
 				.click()
 
 				.getTestElement('itemInput')
@@ -177,5 +204,63 @@ context('Actions', () => {
 
 			.getTestElement('infoText')
 			.should('have.length', 0);
+	};
+
+	const ErrorOnAddItem = (listName: string, itemText: string) => {
+		cy
+			.getTestElement(listName)
+			.within(() => {
+				cy
+					.server({force404: true})
+					.getTestElement('entryInput')
+					.type(itemText)
+					.getTestElement('addButton')
+					.click()
+
+					.getTestElement('entryInput')
+					.should('have.value', itemText)
+
+					.getTestElement('itemInput')
+					.first()
+					.should('not.have.value', itemText)
+			})
+			.getTestElement('errorAlert')
+			.should('have.length', 1);
+	};
+
+	const ErrorOnEditItem = (listName: string, newItemText: string, initialItemText: string) => {
+		cy
+			.getTestElement(listName)
+			.within(() => {
+
+					cy.server({force404: true})
+					.getTestElement('itemInput')
+					.first()
+					.clear()
+					.type(newItemText)
+					.blur()
+
+					.getTestElement('itemInput')
+					.first()
+					.should('have.value', initialItemText);
+			})
+			.getTestElement('errorAlert')
+			.should('have.length', 1);
+	};
+
+	const ErrorOnDeleteItem = (listName: string, itemText: string) => {
+		cy
+			.getTestElement(listName)
+			.within(() => {
+
+					cy.server({force404: true})
+					.getTestElement('deleteButton0')
+					.click()
+
+					.getTestElement('itemInput')
+					.should('have.value', itemText);
+			})
+			.getTestElement('errorAlert')
+			.should('have.length', 1);
 	};
 });

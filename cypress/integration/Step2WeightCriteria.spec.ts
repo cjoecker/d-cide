@@ -31,13 +31,13 @@ context('Actions', () => {
 
 		cy
 			.get(`[data-testid="slider0CriteriaLeft"]`)
-			.invoke('text') // for input or textarea, .invoke('val')
+			.invoke('text')
 			.then(text => {
 				criteriaLeft = text;
 			})
 
 			.get(`[data-testid="slider0CriteriaRight"]`)
-			.invoke('text') // for input or textarea, .invoke('val')
+			.invoke('text')
 			.then(text => {
 				criteriaRight = text;
 			})
@@ -92,13 +92,13 @@ context('Actions', () => {
 
 		cy
 			.get(`[data-testid="slider0CriteriaLeft"]`)
-			.invoke('text') // for input or textarea, .invoke('val')
+			.invoke('text')
 			.then(text => {
 				criteriaLeft = text;
 			})
 
 			.get(`[data-testid="slider0CriteriaRight"]`)
-			.invoke('text') // for input or textarea, .invoke('val')
+			.invoke('text')
 			.then(text => {
 				criteriaRight = text;
 			})
@@ -108,7 +108,9 @@ context('Actions', () => {
 			.trigger('mousedown', 'left')
 			.getTestElement(`sliderText0`)
 			.trigger('mouseup',{force: true})
+
 			.contains(`${criteriaLeft} is as important as ${criteriaRight}`)
+
 			.getTestElement('errorAlert')
 			.should('have.length', 1)
 

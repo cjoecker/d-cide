@@ -95,7 +95,7 @@ const EditableList: React.FC<Props> = (props: Props) => {
 			clearNewEntryWhenCreated();
 			manageNotEnoughItemsAlerts();
 		}
-		if (items.length > 0 && !hidden && didMount) setLocalItems(items);
+		if (!hidden && didMount) setLocalItems(items);
 
 		if (items.length === 0 && didMount) {
 			manageNotEnoughItemsAlerts();
