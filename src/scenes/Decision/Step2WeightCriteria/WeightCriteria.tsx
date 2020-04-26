@@ -185,13 +185,14 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
 							<Paper elevation={2} className={classes.paper}>
 								<Grid container spacing={2} alignItems='center'>
 									<Grid item xs={6}>
-										<Typography variant='body1'>{getSelectionCriteriaName(criteria.selectionCriteria1Id)}</Typography>
+										<Typography data-testid={`slider${index}CriteriaLeft`} variant='body1'>{getSelectionCriteriaName(criteria.selectionCriteria1Id)}</Typography>
 									</Grid>
 									<Grid item xs={6}>
-										<Typography variant='body1'>{getSelectionCriteriaName(criteria.selectionCriteria2Id)}</Typography>
+										<Typography data-testid={`slider${index}CriteriaRight`}  variant='body1'>{getSelectionCriteriaName(criteria.selectionCriteria2Id)}</Typography>
 									</Grid>
 									<Grid item xs={12} zeroMinWidth className={classes.gridItemSlider}>
 										<Slider
+											data-testid={`slider${index}`}
 											classes={{
 												track: classes.sliderTrack,
 												rail: classes.sliderTrack,
@@ -208,7 +209,7 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
 										/>
 									</Grid>
 									<Grid item xs={12} className={classes.gridItemSliderInfo}>
-										<Typography variant='caption'>
+										<Typography data-testid={`sliderText${index}`} variant='caption'>
 											{getWeightInfoText(criteria.weight, criteria.selectionCriteria1Id, criteria.selectionCriteria2Id)}
 										</Typography>
 									</Grid>

@@ -3,28 +3,79 @@
 
 context('Actions', () => {
 	beforeEach(() => {
-		cy.visit('/')
-			.getTestElement( `Step2Button`)
-			.click()
+		cy.visit('/').getTestElement(`Step2Button`).click();
 	});
 
 	//decision options
 	it('shows and hides info', () => {
-		cy.getTestElement( `WeightCriteriaInfoButton`)
+		cy
+			.getTestElement(`WeightCriteriaInfoButton`)
 			.click()
 
 			.getTestElement('infoText')
-			.contains("Weight Criteria")
+			.contains('Weight Criteria')
 
 			.getTestElement('infoCloseButton')
 			.click()
 
 			.getTestElement('infoText')
-			.should('have.length',0);
+			.should('have.length', 0);
 	});
 
 	it('shows title', () => {
-		cy.contains("Weight Criteria")
+		cy.contains('Weight Criteria');
 	});
 
+	it('moves slider', () => {
+		let criteriaLeft = '';
+		let criteriaRight = '';
+
+		cy
+			.get(`[data-testid="slider0CriteriaLeft"]`)
+			.invoke('text') // for input or textarea, .invoke('val')
+			.then(text => {
+				criteriaLeft = text;
+			})
+
+			.get(`[data-testid="slider0CriteriaRight"]`)
+			.invoke('text') // for input or textarea, .invoke('val')
+			.then(text => {
+				criteriaRight = text;
+			})
+
+			.getTestElement(`slider0`)
+			.trigger('mousedown', 'left')
+			.getTestElement(`sliderText0`)
+			.contains(`${criteriaLeft} is way more important than ${criteriaRight}`)
+
+			.getTestElement(`slider0`)
+			.trigger('mousedown', 75, 10)
+			.getTestElement(`sliderText0`)
+			.contains(`${criteriaLeft} is more important than ${criteriaRight}`)
+
+			.getTestElement(`slider0`)
+			.trigger('mousedown', 150, 10)
+			.getTestElement(`sliderText0`)
+			.contains(`${criteriaLeft} is a little more important than ${criteriaRight}`)
+
+			.getTestElement(`slider0`)
+			.trigger('mousedown', 'center')
+			.getTestElement(`sliderText0`)
+			.contains(`${criteriaLeft} is as important as ${criteriaRight}`)
+
+			.getTestElement(`slider0`)
+			.trigger('mousedown', 200, 10)
+			.getTestElement(`sliderText0`)
+			.contains(`${criteriaRight} is a little more important than ${criteriaLeft}`)
+
+			.getTestElement(`slider0`)
+			.trigger('mousedown', 260, 10)
+			.getTestElement(`sliderText0`)
+			.contains(`${criteriaRight} is more important than ${criteriaLeft}`)
+
+			.getTestElement(`slider0`)
+			.trigger('mousedown', 'right')
+			.getTestElement(`sliderText0`)
+			.contains(`${criteriaRight} is way more important than ${criteriaLeft}`);
+	});
 });
