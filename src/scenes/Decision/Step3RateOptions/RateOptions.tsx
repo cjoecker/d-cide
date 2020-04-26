@@ -144,10 +144,8 @@ const RateOptions: React.FC<Props> = (props: Props) => {
 	}, [hidden]);
 
 	useEffect(() => {
-		if (ratedOptions.length !== LocalRatedOptions.length) {
-			setLocalRatedOptions(ratedOptions);
-			setStartAnimation(true);
-		}
+		if (ratedOptions.length !== LocalRatedOptions.length) setStartAnimation(true);
+		if (ratedOptions.length > 0) setLocalRatedOptions(ratedOptions);
 	}, [ratedOptions]);
 
 	const onChange = (event: React.BaseSyntheticEvent, criteriaId: number, optionId: number, score: number) => {
