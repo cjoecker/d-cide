@@ -9,7 +9,7 @@ export interface SuccessExtraActionType {
 }
 
 export type ErrorActionType = {
-	(dispatch: AppDispatch, error: AxiosError): void;
+	(dispatch: AppDispatch, error: AxiosError, predefinedPayload?: any): void;
 };
 
 export const AxiosRequest = (
@@ -31,7 +31,7 @@ export const AxiosRequest = (
 			if (successExtraAction != null) successExtraAction(dispatch, answer);
 		})
 		.catch((error: AxiosError) => {
-			if (errorAction != null) errorAction(dispatch, error);
+			if (errorAction != null) errorAction(dispatch, error, predefinedPayload);
 			else showHTTPAlert(dispatch, error);
 		})
 		.finally(() => {

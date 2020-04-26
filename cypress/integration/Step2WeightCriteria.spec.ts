@@ -6,7 +6,6 @@ context('Actions', () => {
 		cy.visit('/').getTestElement(`Step2Button`).click();
 	});
 
-	//decision options
 	it('shows and hides info', () => {
 		cy
 			.getTestElement(`WeightCriteriaInfoButton`)

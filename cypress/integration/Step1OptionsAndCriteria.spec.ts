@@ -6,6 +6,7 @@ context('Actions', () => {
 		cy.visit('/');
 	});
 
+	//TODO test behavior when server is down
 	//decision options
 	it('creates a decision option', () => {
 		addItemToList('decisionOptionsList', 'New Item');

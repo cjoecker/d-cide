@@ -111,13 +111,12 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
 	useEffect(() => {
 		if (!hidden) {
 			getOptionsAndCriteria(dispatch, decisionId, OptionsAndCriteriaKeys.selectionCriteria, false);
-
 			getWeightedCriteria(dispatch, decisionId);
 		} else setLocalWeightedCriteria([]);
 	}, [hidden]);
 
 	useEffect(() => {
-		if (weightedCriteria.length !== LocalWeightedCriteria.length) setLocalWeightedCriteria(weightedCriteria);
+		if (weightedCriteria.length > 0) setLocalWeightedCriteria(weightedCriteria)
 	}, [weightedCriteria]);
 
 	const onChange = (event: React.BaseSyntheticEvent, value: number, itemLocal: WeightedCriteria) => {
