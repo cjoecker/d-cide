@@ -85,4 +85,33 @@ context('Actions', () => {
 			.contains(`${criteriaRight} is way more important than ${criteriaLeft}`)
 
 	});
+
+	it('moves slider to original position on server down', () => {
+		let criteriaLeft = '';
+		let criteriaRight = '';
+
+		cy
+			.get(`[data-testid="slider0CriteriaLeft"]`)
+			.invoke('text') // for input or textarea, .invoke('val')
+			.then(text => {
+				criteriaLeft = text;
+			})
+
+			.get(`[data-testid="slider0CriteriaRight"]`)
+			.invoke('text') // for input or textarea, .invoke('val')
+			.then(text => {
+				criteriaRight = text;
+			})
+
+			.server({ force404: true })
+			.getTestElement(`slider0`)
+			.trigger('mousedown', 'left')
+			.getTestElement(`sliderText0`)
+			.trigger('mouseup',{force: true})
+			.contains(`${criteriaLeft} is as important as ${criteriaRight}`)
+			.getTestElement('errorAlert')
+			.should('have.length', 1)
+
+
+	});
 });
