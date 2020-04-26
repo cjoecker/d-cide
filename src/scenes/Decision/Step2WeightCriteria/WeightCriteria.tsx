@@ -116,7 +116,7 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
 	}, [hidden]);
 
 	useEffect(() => {
-		if (weightedCriteria.length > 0) setLocalWeightedCriteria(weightedCriteria)
+		if (weightedCriteria.length > 0) setLocalWeightedCriteria(weightedCriteria);
 	}, [weightedCriteria]);
 
 	const onChange = (event: React.BaseSyntheticEvent, value: number, itemLocal: WeightedCriteria) => {
@@ -173,7 +173,12 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
 				<Grid item xs={12}>
 					<Typography variant='h5' gutterBottom>
 						Weight Criteria
-						<IconButton data-testid="WeightCriteriaInfoButton" aria-label='Help' className={classes.infoButton} onClick={() => setShowInfo(true)}>
+						<IconButton
+							data-testid='WeightCriteriaInfoButton'
+							aria-label='Help'
+							className={classes.infoButton}
+							onClick={() => setShowInfo(true)}
+						>
 							<InfoIcon color='secondary' />
 						</IconButton>
 					</Typography>
@@ -184,10 +189,14 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
 							<Paper elevation={2} className={classes.paper}>
 								<Grid container spacing={2} alignItems='center'>
 									<Grid item xs={6}>
-										<Typography data-testid={`slider${index}CriteriaLeft`} variant='body1'>{getSelectionCriteriaName(criteria.selectionCriteria1Id)}</Typography>
+										<Typography data-testid={`slider${index}CriteriaLeft`} variant='body1'>
+											{getSelectionCriteriaName(criteria.selectionCriteria1Id)}
+										</Typography>
 									</Grid>
 									<Grid item xs={6}>
-										<Typography data-testid={`slider${index}CriteriaRight`}  variant='body1'>{getSelectionCriteriaName(criteria.selectionCriteria2Id)}</Typography>
+										<Typography data-testid={`slider${index}CriteriaRight`} variant='body1'>
+											{getSelectionCriteriaName(criteria.selectionCriteria2Id)}
+										</Typography>
 									</Grid>
 									<Grid item xs={12} zeroMinWidth className={classes.gridItemSlider}>
 										<Slider
