@@ -103,7 +103,6 @@ const RateOptions: React.FC<Props> = (props: Props) => {
 	const {hidden} = props;
 
 	const [showInfo, setShowInfo] = useState(false);
-	const [startAnimation, setStartAnimation] = useState(false);
 
 	const [LocalRatedOptions, setLocalRatedOptions] = useState<RatedOption[]>([]);
 
@@ -139,14 +138,12 @@ const RateOptions: React.FC<Props> = (props: Props) => {
 			getRatedOptions(dispatch, decisionId);
 		} else {
 			setLocalRatedOptions([]);
-			setStartAnimation(false);
 		}
 	}, [hidden]);
 
 	useEffect(() => {
 		if (ratedOptions.length !== LocalRatedOptions.length) {
 			setLocalRatedOptions(ratedOptions);
-			setStartAnimation(true);
 		}
 	}, [ratedOptions]);
 
@@ -194,7 +191,7 @@ const RateOptions: React.FC<Props> = (props: Props) => {
 				{!hidden &&
 					selectionCriteria.map((criteria, criteriaIndex) => (
 						<Fade
-							in={startAnimation}
+							in
 							timeout={500}
 							style={{
 								transitionDelay: `${criteriaIndex * 100}ms`,
