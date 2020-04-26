@@ -46,36 +46,44 @@ context('Actions', () => {
 			.getTestElement(`slider0`)
 			.trigger('mousedown', 'left')
 			.getTestElement(`sliderText0`)
+			.trigger('mouseup',{force: true})
 			.contains(`${criteriaLeft} is way more important than ${criteriaRight}`)
 
 			.getTestElement(`slider0`)
 			.trigger('mousedown', 75, 10)
 			.getTestElement(`sliderText0`)
+			.trigger('mouseup',{force: true})
 			.contains(`${criteriaLeft} is more important than ${criteriaRight}`)
 
 			.getTestElement(`slider0`)
 			.trigger('mousedown', 150, 10)
 			.getTestElement(`sliderText0`)
+			.trigger('mouseup',{force: true})
 			.contains(`${criteriaLeft} is a little more important than ${criteriaRight}`)
 
 			.getTestElement(`slider0`)
 			.trigger('mousedown', 'center')
 			.getTestElement(`sliderText0`)
+			.trigger('mouseup',{force: true})
 			.contains(`${criteriaLeft} is as important as ${criteriaRight}`)
 
 			.getTestElement(`slider0`)
 			.trigger('mousedown', 200, 10)
 			.getTestElement(`sliderText0`)
+			.trigger('mouseup',{force: true})
 			.contains(`${criteriaRight} is a little more important than ${criteriaLeft}`)
 
 			.getTestElement(`slider0`)
 			.trigger('mousedown', 260, 10)
 			.getTestElement(`sliderText0`)
+			.trigger('mouseup',{force: true})
 			.contains(`${criteriaRight} is more important than ${criteriaLeft}`)
 
 			.getTestElement(`slider0`)
 			.trigger('mousedown', 'right')
 			.getTestElement(`sliderText0`)
-			.contains(`${criteriaRight} is way more important than ${criteriaLeft}`);
+			.trigger('mouseup',{force: true})
+			.contains(`${criteriaRight} is way more important than ${criteriaLeft}`)
+
 	});
 });
