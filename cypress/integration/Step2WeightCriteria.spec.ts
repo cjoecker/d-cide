@@ -112,6 +112,5 @@ context('Actions', () => {
 			.getTestElement('errorAlert')
 			.should('have.length', 1)
 
-
 	});
 });

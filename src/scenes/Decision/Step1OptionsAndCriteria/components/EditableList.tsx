@@ -92,10 +92,11 @@ const EditableList: React.FC<Props> = (props: Props) => {
 
 	useEffect(() => {
 		if (items.length !== localItems.length && !hidden && didMount) {
-			setLocalItems(items);
 			clearNewEntryWhenCreated();
 			manageNotEnoughItemsAlerts();
 		}
+		if (items.length > 0 && !hidden && didMount) setLocalItems(items);
+
 		if (items.length === 0 && didMount) {
 			manageNotEnoughItemsAlerts();
 		}

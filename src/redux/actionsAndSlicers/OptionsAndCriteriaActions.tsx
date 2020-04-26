@@ -1,8 +1,9 @@
 import axios from "axios";
 import { ActionCreatorWithPayload } from "@reduxjs/toolkit";
-import { AppDispatch } from "../store";
-import { AxiosRequest } from "../AxiosRequest";
+import store, { AppDispatch } from "../store";
+import { AxiosRequest, ErrorActionType } from "../AxiosRequest";
 import OptionsAndCriteriaSlice, { OptionAndCriteria, OptionsAndCriteriaKeys } from "./OptionsAndCriteriaSlice";
+import { showHTTPAlert } from "./AppActions";
 
 export const getOptionsAndCriteria = (
 	dispatch: AppDispatch,
@@ -61,12 +62,17 @@ export const editOptionsAndCriteria = (
 			? OptionsAndCriteriaSlice.actions.updateDecisionOption.bind(null)
 			: OptionsAndCriteriaSlice.actions.updateSelectionCriteria.bind(null);
 
+	const errorAction: ErrorActionType =
+		itemsKey === OptionsAndCriteriaKeys.decisionOptions
+			? editOptionErrorAction.bind(null)
+			: editCriteriaErrorAction.bind(null);
+
 	dispatch(
 		AxiosRequest(
 			axios.put<OptionAndCriteria>(`/api/decisions/${decisionId}/${itemsKey}/`, newItem),
 			successAction,
 			null,
-			null,
+			errorAction,
 			item
 		)
 	);
@@ -86,4 +92,26 @@ export const deleteOptionsAndCriteria = (
 	dispatch(
 		AxiosRequest(axios.delete(`/api/decisions/${decisionId}/${itemsKey}/${itemId}`), successAction, null, null, itemId)
 	);
+};
+
+const editOptionErrorAction: ErrorActionType = (dispatch, error, predefinedPayload: OptionAndCriteria) => {
+	showHTTPAlert(dispatch, error);
+	resetOptionOnError(dispatch, predefinedPayload)
+};
+
+const resetOptionOnError = (dispatch: AppDispatch, predefinedPayload: OptionAndCriteria) => {
+	const state = store.getState();
+	const initialCriteria = state.OptionsAndCriteria.decisionOptions.find(option => option.id === predefinedPayload.id)
+	dispatch(OptionsAndCriteriaSlice.actions.updateDecisionOption(initialCriteria as OptionAndCriteria))
+};
+
+const editCriteriaErrorAction: ErrorActionType = (dispatch, error, predefinedPayload: OptionAndCriteria) => {
+	showHTTPAlert(dispatch, error);
+	resetCriteriaOnError(dispatch, predefinedPayload)
+};
+
+const resetCriteriaOnError = (dispatch: AppDispatch, predefinedPayload: OptionAndCriteria) => {
+	const state = store.getState();
+	const initialCriteria = state.OptionsAndCriteria.selectionCriteria.find(criteria => criteria.id === predefinedPayload.id)
+	dispatch(OptionsAndCriteriaSlice.actions.updateSelectionCriteria(initialCriteria as OptionAndCriteria))
 };
