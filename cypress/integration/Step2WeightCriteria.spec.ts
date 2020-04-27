@@ -6,6 +6,17 @@ context('Actions', () => {
 		cy.visit('/').getTestElement(`Step2Button`).click();
 	});
 
+	it('moves slider', () => {
+		cy
+			.getTestElement(`slider0`)
+			.trigger('mousedown', 'left')
+			.getTestElement(`sliderText0`)
+			.trigger('mouseup', { force: true })
+
+
+	});
+
+
 	it('shows and hides info', () => {
 		cy
 			.getTestElement(`WeightCriteriaInfoButton`)

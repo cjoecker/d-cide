@@ -6,9 +6,8 @@ context('Actions', () => {
 		cy.visit('/');
 	});
 
-	const firstDecisionOption = "House 1"
-	const firstSelectionCriteria = "Size"
-
+	const firstDecisionOption = 'House 1';
+	const firstSelectionCriteria = 'Size';
 
 	//decision options
 	it('creates a decision option', () => {
@@ -137,25 +136,27 @@ context('Actions', () => {
 
 	const deleteItemWhenLeftEmpty = (listName: string, itemText: string) => {
 		cy.getTestElement(listName).within(() => {
-
-				cy.getTestElement('itemInput')
+			cy
+				.getTestElement('itemInput')
 				.first()
 				.clear()
 				.blur()
 
+				.getTestElement('itemInput')
 				.contains(itemText)
 				.should('not.exist');
 		});
 	};
 
-	const deleteItemFromList = (listName: string, itemText:string) => {
+	const deleteItemFromList = (listName: string, itemText: string) => {
 		cy.getTestElement(listName).within(() => {
-
-				cy.getTestElement('deleteButton0')
+			cy
+				.getTestElement('deleteButton0')
 				.click()
 
 				.getTestElement('itemInput')
-				.should('not.have.value', itemText);
+				.contains(itemText)
+				.should('not.exist');
 		});
 	};
 
@@ -221,8 +222,8 @@ context('Actions', () => {
 					.should('have.value', itemText)
 
 					.getTestElement('itemInput')
-					.first()
-					.should('not.have.value', itemText)
+					.contains(itemText)
+					.should('not.exist');
 			})
 			.getTestElement('errorAlert')
 			.should('have.length', 1);
@@ -232,8 +233,8 @@ context('Actions', () => {
 		cy
 			.getTestElement(listName)
 			.within(() => {
-
-					cy.server({force404: true})
+				cy
+					.server({force404: true})
 					.getTestElement('itemInput')
 					.first()
 					.clear()
@@ -252,8 +253,8 @@ context('Actions', () => {
 		cy
 			.getTestElement(listName)
 			.within(() => {
-
-					cy.server({force404: true})
+				cy
+					.server({force404: true})
 					.getTestElement('deleteButton0')
 					.click()
 
