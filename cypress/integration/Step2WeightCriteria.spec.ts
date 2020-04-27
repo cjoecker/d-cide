@@ -1,19 +1,16 @@
 /// <reference types="cypress" />
 /* eslint-disable no-undef*/
 
-
 context('Actions', () => {
 	beforeEach(() => {
 		cy.visit('/').getTestElement(`Step2Button`).click();
 	});
 
-//TODO Test API call on slider change after cypress issue is solved
-// Code is in commit 0955a32C
-// https://github.com/cypress-io/cypress/issues/1570
-
+	//TODO Test API call on slider change after cypress issue is solved
+	// Code is in commit 0955a32C
+	// https://github.com/cypress-io/cypress/issues/1570
 
 	it('shows and hides info', () => {
-
 		cy
 			.getTestElement(`WeightCriteriaInfoButton`)
 			.click()
@@ -120,5 +117,4 @@ context('Actions', () => {
 			.getTestElement('errorAlert')
 			.should('have.length', 1);
 	});
-
 });

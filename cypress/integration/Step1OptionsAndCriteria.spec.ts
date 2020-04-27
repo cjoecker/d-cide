@@ -10,8 +10,8 @@ context('Actions', () => {
 	const firstSelectionCriteria = 'Size';
 
 	describe('Decision Options', () => {
-		const listName = "decisionOptionsList"
-		
+		const listName = 'decisionOptionsList';
+
 		it('creates a decision option', () => {
 			addItemToList(listName, 'New Item');
 		});
@@ -39,23 +39,24 @@ context('Actions', () => {
 			cy.contains('Decision Options');
 		});
 
-		it("doesn't  create new decision option on server error", () => {
-			ErrorOnAddItem(listName, 'New Item');
-		});
+		describe('Error Cases', () => {
+			it("doesn't  create new decision option on server error", () => {
+				ErrorOnAddItem(listName, 'New Item');
+			});
 
-		it('restores decision option value after edit on server error', () => {
-			ErrorOnEditItem(listName, 'New Item', firstDecisionOption);
-		});
+			it('restores decision option value after edit on server error', () => {
+				ErrorOnEditItem(listName, 'New Item', firstDecisionOption);
+			});
 
-		it("doesn't  delete decision option on server error", () => {
-			ErrorOnDeleteItem(listName, firstDecisionOption);
+			it("doesn't  delete decision option on server error", () => {
+				ErrorOnDeleteItem(listName, firstDecisionOption);
+			});
 		});
-	})
-
+	});
 
 	describe('Selection Criteria', () => {
-		const listName = "selectionCriteriaList"
-		
+		const listName = 'selectionCriteriaList';
+
 		it('creates a selection criteria', () => {
 			addItemToList(listName, 'New Item');
 		});
@@ -84,18 +85,20 @@ context('Actions', () => {
 			cy.contains('Selection Criteria');
 		});
 
-		it("doesn't  create new selection criteria on server error", () => {
-			ErrorOnAddItem(listName, 'New Item');
-		});
+		describe('Error Cases', () => {
+			it("doesn't  create new selection criteria on server error", () => {
+				ErrorOnAddItem(listName, 'New Item');
+			});
 
-		it('restores selection criteria value after edit on server error', () => {
-			ErrorOnEditItem(listName, 'New Item', firstSelectionCriteria);
-		});
+			it('restores selection criteria value after edit on server error', () => {
+				ErrorOnEditItem(listName, 'New Item', firstSelectionCriteria);
+			});
 
-		it("doesn't  delete selection criteria on server error", () => {
-			ErrorOnDeleteItem(listName, firstSelectionCriteria);
+			it("doesn't  delete selection criteria on server error", () => {
+				ErrorOnDeleteItem(listName, firstSelectionCriteria);
+			});
 		});
-	})
+	});
 
 	//functions
 	const addItemToList = (listName: string, itemText: string) => {
