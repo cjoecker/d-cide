@@ -1,27 +1,30 @@
 /// <reference types="cypress" />
 /* eslint-disable no-undef*/
 
+
 context('Actions', () => {
 	beforeEach(() => {
 		cy.visit('/').getTestElement(`Step2Button`).click();
 	});
 
-	// it('moves slider', () => {
-	// 	initializePutRoute();
-	//
-	// 	cy
-	// 		.getTestElement(`slider0`)
-	// 		.trigger('mousedown', 'left')
-	// 		.getTestElement(`sliderText0`)
-	// 		.trigger('mouseup', {force: true})
-	//
-	// 		.wait('@put')
-	// 		.should(req => {
-	// 			expect(req.requestBody).to.have.property('weight').to.be.within(-2, 2);
-	// 		});
-	// });
+
+
+	it('moves slider', () => {
+		cy.server().route('PUT', '/api/decisions/*/weightedCriteria/').as('put');
+		cy
+			.getTestElement(`slider0`)
+			.trigger('mousedown', 'left')
+			.getTestElement(`sliderText0`)
+			.trigger('mouseup', {force: true})
+
+			.wait('@put')
+			.should(req => {
+				expect(req.requestBody).to.have.property('weight').to.be.within(-2, 2);
+			});
+	});
 
 	it('shows and hides info', () => {
+
 		cy
 			.getTestElement(`WeightCriteriaInfoButton`)
 			.click()
@@ -129,7 +132,4 @@ context('Actions', () => {
 			.should('have.length', 1);
 	});
 
-	const initializePutRoute = () => {
-		cy.server().route('PUT', '/api/decisions/*/weightedCriteria/').as('put');
-	};
 });
