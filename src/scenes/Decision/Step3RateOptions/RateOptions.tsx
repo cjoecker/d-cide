@@ -184,7 +184,7 @@ const RateOptions: React.FC<Props> = (props: Props) => {
 				<Grid item xs={12}>
 					<Typography variant='h5' gutterBottom>
 						Rate Options
-						<IconButton aria-label='Help' className={classes.infoButton} onClick={() => setShowInfo(true)}>
+						<IconButton data-testid='RateOptionsInfoButton' aria-label='Help' className={classes.infoButton} onClick={() => setShowInfo(true)}>
 							<InfoIcon color='secondary' />
 						</IconButton>
 					</Typography>
@@ -205,7 +205,7 @@ const RateOptions: React.FC<Props> = (props: Props) => {
 											<Grid item xs={12} className={classes.titleGridItem}>
 												<Typography variant='h6'>{criteria.name}</Typography>
 											</Grid>
-											{decisionOptions.map(option => (
+											{decisionOptions.map((option, optionIndex) => (
 												<Grid
 													container
 													justify='center'
@@ -240,6 +240,7 @@ const RateOptions: React.FC<Props> = (props: Props) => {
 															</Grid>
 															<Grid item xs={12} className={classes.gridItemSlider}>
 																<Slider
+																	data-testid={`slider${criteriaIndex}${optionIndex}`}
 																	classes={{
 																		track: classes.sliderTrack,
 																		rail: classes.sliderTrack,
