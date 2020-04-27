@@ -6,16 +6,20 @@ context('Actions', () => {
 		cy.visit('/').getTestElement(`Step2Button`).click();
 	});
 
-	it('moves slider', () => {
-		cy
-			.getTestElement(`slider0`)
-			.trigger('mousedown', 'left')
-			.getTestElement(`sliderText0`)
-			.trigger('mouseup', { force: true })
-
-
-	});
-
+	// it('moves slider', () => {
+	// 	initializePutRoute();
+	//
+	// 	cy
+	// 		.getTestElement(`slider0`)
+	// 		.trigger('mousedown', 'left')
+	// 		.getTestElement(`sliderText0`)
+	// 		.trigger('mouseup', {force: true})
+	//
+	// 		.wait('@put')
+	// 		.should(req => {
+	// 			expect(req.requestBody).to.have.property('weight').to.be.within(-2, 2);
+	// 		});
+	// });
 
 	it('shows and hides info', () => {
 		cy
@@ -56,45 +60,44 @@ context('Actions', () => {
 			.getTestElement(`slider0`)
 			.trigger('mousedown', 'left')
 			.getTestElement(`sliderText0`)
-			.trigger('mouseup',{force: true})
+			.trigger('mouseup', {force: true})
 			.contains(`${criteriaLeft} is way more important than ${criteriaRight}`)
 
 			.getTestElement(`slider0`)
 			.trigger('mousedown', 75, 10)
 			.getTestElement(`sliderText0`)
-			.trigger('mouseup',{force: true})
+			.trigger('mouseup', {force: true})
 			.contains(`${criteriaLeft} is more important than ${criteriaRight}`)
 
 			.getTestElement(`slider0`)
 			.trigger('mousedown', 150, 10)
 			.getTestElement(`sliderText0`)
-			.trigger('mouseup',{force: true})
+			.trigger('mouseup', {force: true})
 			.contains(`${criteriaLeft} is a little more important than ${criteriaRight}`)
 
 			.getTestElement(`slider0`)
 			.trigger('mousedown', 'center')
 			.getTestElement(`sliderText0`)
-			.trigger('mouseup',{force: true})
+			.trigger('mouseup', {force: true})
 			.contains(`${criteriaLeft} is as important as ${criteriaRight}`)
 
 			.getTestElement(`slider0`)
 			.trigger('mousedown', 200, 10)
 			.getTestElement(`sliderText0`)
-			.trigger('mouseup',{force: true})
+			.trigger('mouseup', {force: true})
 			.contains(`${criteriaRight} is a little more important than ${criteriaLeft}`)
 
 			.getTestElement(`slider0`)
 			.trigger('mousedown', 260, 10)
 			.getTestElement(`sliderText0`)
-			.trigger('mouseup',{force: true})
+			.trigger('mouseup', {force: true})
 			.contains(`${criteriaRight} is more important than ${criteriaLeft}`)
 
 			.getTestElement(`slider0`)
 			.trigger('mousedown', 'right')
 			.getTestElement(`sliderText0`)
-			.trigger('mouseup',{force: true})
-			.contains(`${criteriaRight} is way more important than ${criteriaLeft}`)
-
+			.trigger('mouseup', {force: true})
+			.contains(`${criteriaRight} is way more important than ${criteriaLeft}`);
 	});
 
 	it('moves slider to original position on server down', () => {
@@ -114,16 +117,19 @@ context('Actions', () => {
 				criteriaRight = text;
 			})
 
-			.server({ force404: true })
+			.server({force404: true})
 			.getTestElement(`slider0`)
 			.trigger('mousedown', 'left')
 			.getTestElement(`sliderText0`)
-			.trigger('mouseup',{force: true})
+			.trigger('mouseup', {force: true})
 
 			.contains(`${criteriaLeft} is as important as ${criteriaRight}`)
 
 			.getTestElement('errorAlert')
-			.should('have.length', 1)
-
+			.should('have.length', 1);
 	});
+
+	const initializePutRoute = () => {
+		cy.server().route('PUT', '/api/decisions/*/weightedCriteria/').as('put');
+	};
 });

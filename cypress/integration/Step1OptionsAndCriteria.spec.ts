@@ -9,86 +9,93 @@ context('Actions', () => {
 	const firstDecisionOption = 'House 1';
 	const firstSelectionCriteria = 'Size';
 
-	//decision options
-	it('creates a decision option', () => {
-		addItemToList('decisionOptionsList', 'New Item');
-	});
-	it('edits a decision option', () => {
-		editItemFromList('decisionOptionsList', 'New Item', 'Edited Item');
-	});
+	describe('Decision Options', () => {
+		const listName = "decisionOptionsList"
+		
+		it('creates a decision option', () => {
+			addItemToList(listName, 'New Item');
+		});
+		it('edits a decision option', () => {
+			editItemFromList(listName, 'New Item', 'Edited Item');
+		});
 
-	it("deletes decision option if it's left empty", () => {
-		deleteItemWhenLeftEmpty('decisionOptionsList', firstDecisionOption);
-	});
+		it("deletes decision option if it's left empty", () => {
+			deleteItemWhenLeftEmpty(listName, firstDecisionOption);
+		});
 
-	it('deletes a decision option', () => {
-		deleteItemFromList('decisionOptionsList', firstDecisionOption);
-	});
+		it('deletes a decision option', () => {
+			deleteItemFromList(listName, firstDecisionOption);
+		});
 
-	it('shows warning for not enough options', () => {
-		showsWarningForNotEnoughItems('decisionOptionsList');
-	});
+		it('shows warning for not enough options', () => {
+			showsWarningForNotEnoughItems(listName);
+		});
 
-	it('shows and hides decision options info', () => {
-		showInfoDialog('decisionOptions', 'Decision Options');
-	});
+		it('shows and hides decision options info', () => {
+			showInfoDialog('decisionOptions', 'Decision Options');
+		});
 
-	it('shows decision options title', () => {
-		cy.contains('Decision Options');
-	});
+		it('shows decision options title', () => {
+			cy.contains('Decision Options');
+		});
 
-	it("doesn't  create new decision option on server error", () => {
-		ErrorOnAddItem('decisionOptionsList', 'New Item');
-	});
+		it("doesn't  create new decision option on server error", () => {
+			ErrorOnAddItem(listName, 'New Item');
+		});
 
-	it('restores decision option value after edit on server error', () => {
-		ErrorOnEditItem('decisionOptionsList', 'New Item', firstDecisionOption);
-	});
+		it('restores decision option value after edit on server error', () => {
+			ErrorOnEditItem(listName, 'New Item', firstDecisionOption);
+		});
 
-	it("doesn't  delete decision option on server error", () => {
-		ErrorOnDeleteItem('decisionOptionsList', firstDecisionOption);
-	});
+		it("doesn't  delete decision option on server error", () => {
+			ErrorOnDeleteItem(listName, firstDecisionOption);
+		});
+	})
 
-	//selection criteria
-	it('creates a selection criteria', () => {
-		addItemToList('selectionCriteriaList', 'New Item');
-	});
 
-	it('edits a decision option', () => {
-		editItemFromList('selectionCriteriaList', 'New Item', 'Edited Item');
-	});
+	describe('Selection Criteria', () => {
+		const listName = "selectionCriteriaList"
+		
+		it('creates a selection criteria', () => {
+			addItemToList(listName, 'New Item');
+		});
 
-	it("deletes selection criteria if it's left empty", () => {
-		deleteItemWhenLeftEmpty('decisionOptionsList', firstSelectionCriteria);
-	});
+		it('edits a decision option', () => {
+			editItemFromList(listName, 'New Item', 'Edited Item');
+		});
 
-	it('deletes a selection criteria', () => {
-		deleteItemFromList('selectionCriteriaList', firstSelectionCriteria);
-	});
+		it("deletes selection criteria if it's left empty", () => {
+			deleteItemWhenLeftEmpty(listName, firstSelectionCriteria);
+		});
 
-	it('shows warning for not enough options', () => {
-		showsWarningForNotEnoughItems('selectionCriteriaList');
-	});
+		it('deletes a selection criteria', () => {
+			deleteItemFromList(listName, firstSelectionCriteria);
+		});
 
-	it('shows and hides selection criteria info', () => {
-		showInfoDialog('selectionCriteria', 'Selection Criteria');
-	});
+		it('shows warning for not enough options', () => {
+			showsWarningForNotEnoughItems(listName);
+		});
 
-	it('shows selection criteria title', () => {
-		cy.contains('Selection Criteria');
-	});
+		it('shows and hides selection criteria info', () => {
+			showInfoDialog('selectionCriteria', 'Selection Criteria');
+		});
 
-	it("doesn't  create new selection criteria on server error", () => {
-		ErrorOnAddItem('selectionCriteriaList', 'New Item');
-	});
+		it('shows selection criteria title', () => {
+			cy.contains('Selection Criteria');
+		});
 
-	it('restores selection criteria value after edit on server error', () => {
-		ErrorOnEditItem('selectionCriteriaList', 'New Item', firstSelectionCriteria);
-	});
+		it("doesn't  create new selection criteria on server error", () => {
+			ErrorOnAddItem(listName, 'New Item');
+		});
 
-	it("doesn't  delete selection criteria on server error", () => {
-		ErrorOnDeleteItem('selectionCriteriaList', firstSelectionCriteria);
-	});
+		it('restores selection criteria value after edit on server error', () => {
+			ErrorOnEditItem(listName, 'New Item', firstSelectionCriteria);
+		});
+
+		it("doesn't  delete selection criteria on server error", () => {
+			ErrorOnDeleteItem(listName, firstSelectionCriteria);
+		});
+	})
 
 	//functions
 	const addItemToList = (listName: string, itemText: string) => {
