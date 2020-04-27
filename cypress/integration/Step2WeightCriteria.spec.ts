@@ -34,13 +34,13 @@ context('Actions', () => {
 		let criteriaRight = '';
 
 		cy
-			.get(`[data-testid="slider0CriteriaLeft"]`)
+			.get(`[data-testid="textSlider0CriteriaLeft"]`)
 			.invoke('text')
 			.then(text => {
 				criteriaLeft = text;
 			})
 
-			.get(`[data-testid="slider0CriteriaRight"]`)
+			.get(`[data-testid="textSlider0CriteriaRight"]`)
 			.invoke('text')
 			.then(text => {
 				criteriaRight = text;
@@ -48,43 +48,43 @@ context('Actions', () => {
 
 			.getTestElement(`slider0`)
 			.trigger('mousedown', 'left')
-			.getTestElement(`sliderText0`)
+			.getTestElement(`infoTextSlider0`)
 			.trigger('mouseup', {force: true})
 			.contains(`${criteriaLeft} is way more important than ${criteriaRight}`)
 
 			.getTestElement(`slider0`)
 			.trigger('mousedown', 75, 10)
-			.getTestElement(`sliderText0`)
+			.getTestElement(`infoTextSlider0`)
 			.trigger('mouseup', {force: true})
 			.contains(`${criteriaLeft} is more important than ${criteriaRight}`)
 
 			.getTestElement(`slider0`)
 			.trigger('mousedown', 150, 10)
-			.getTestElement(`sliderText0`)
+			.getTestElement(`infoTextSlider0`)
 			.trigger('mouseup', {force: true})
 			.contains(`${criteriaLeft} is a little more important than ${criteriaRight}`)
 
 			.getTestElement(`slider0`)
 			.trigger('mousedown', 'center')
-			.getTestElement(`sliderText0`)
+			.getTestElement(`infoTextSlider0`)
 			.trigger('mouseup', {force: true})
 			.contains(`${criteriaLeft} is as important as ${criteriaRight}`)
 
 			.getTestElement(`slider0`)
 			.trigger('mousedown', 200, 10)
-			.getTestElement(`sliderText0`)
+			.getTestElement(`infoTextSlider0`)
 			.trigger('mouseup', {force: true})
 			.contains(`${criteriaRight} is a little more important than ${criteriaLeft}`)
 
 			.getTestElement(`slider0`)
 			.trigger('mousedown', 260, 10)
-			.getTestElement(`sliderText0`)
+			.getTestElement(`infoTextSlider0`)
 			.trigger('mouseup', {force: true})
 			.contains(`${criteriaRight} is more important than ${criteriaLeft}`)
 
 			.getTestElement(`slider0`)
 			.trigger('mousedown', 'right')
-			.getTestElement(`sliderText0`)
+			.getTestElement(`infoTextSlider0`)
 			.trigger('mouseup', {force: true})
 			.contains(`${criteriaRight} is way more important than ${criteriaLeft}`);
 	});
@@ -94,13 +94,13 @@ context('Actions', () => {
 		let criteriaRight = '';
 
 		cy
-			.get(`[data-testid="slider0CriteriaLeft"]`)
+			.get(`[data-testid="textSlider0CriteriaLeft"]`)
 			.invoke('text')
 			.then(text => {
 				criteriaLeft = text;
 			})
 
-			.get(`[data-testid="slider0CriteriaRight"]`)
+			.get(`[data-testid="textSlider0CriteriaRight"]`)
 			.invoke('text')
 			.then(text => {
 				criteriaRight = text;
@@ -109,12 +109,16 @@ context('Actions', () => {
 			.server({force404: true})
 			.getTestElement(`slider0`)
 			.trigger('mousedown', 'left')
-			.getTestElement(`sliderText0`)
+			.getTestElement(`infoTextSlider0`)
 			.trigger('mouseup', {force: true})
 
 			.contains(`${criteriaLeft} is as important as ${criteriaRight}`)
 
 			.getTestElement('errorAlert')
 			.should('have.length', 1);
+	});
+
+	it('shows sliders', () => {
+		cy.getTestElementStartingWith(`slider`).should('have.length', 6);
 	});
 });
