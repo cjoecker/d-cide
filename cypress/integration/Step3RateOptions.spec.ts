@@ -29,4 +29,8 @@ context('Actions', () => {
 		cy.contains('Rate Options');
 	});
 
+	it('shows sliders', () => {
+		cy.getTestElementStartingWith(`slider`).should('have.length', 12);
+	});
+
 });
