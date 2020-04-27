@@ -7,21 +7,10 @@ context('Actions', () => {
 		cy.visit('/').getTestElement(`Step2Button`).click();
 	});
 
+//TODO Test API call on slider change after cypress issue is solved
+// Code is in commit 0955a32C
+// https://github.com/cypress-io/cypress/issues/1570
 
-
-	it('moves slider', () => {
-		cy.server().route('PUT', '/api/decisions/*/weightedCriteria/').as('put');
-		cy
-			.getTestElement(`slider0`)
-			.trigger('mousedown', 'left')
-			.getTestElement(`sliderText0`)
-			.trigger('mouseup', {force: true})
-
-			.wait('@put')
-			.should(req => {
-				expect(req.requestBody).to.have.property('weight').to.be.within(-2, 2);
-			});
-	});
 
 	it('shows and hides info', () => {
 
