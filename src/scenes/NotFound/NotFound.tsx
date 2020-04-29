@@ -10,7 +10,7 @@ import theme from "../../muiTheme";
 const useStyles = makeStyles({
 	divMain: {
 		textAlign: 'center',
-		marginTop: theme.spacing(2),
+		marginTop: theme.spacing(9),
 	},
 
 	TitleTypography: {
