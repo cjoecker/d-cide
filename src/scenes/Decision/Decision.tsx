@@ -56,6 +56,7 @@ type stepsType = {
 const Decision: React.FC = () => {
 	const [activeStepNum, setActiveStepNum] = useState(1);
 	const [loadedStepNum, setLoadedStepNum] = useState(1);
+	const [disableStepButtons, setDisableStepButtons] = useState(false);
 	const [steps, setSteps] = useState<stepsType[]>([
 		{
 			number: 1,
@@ -94,6 +95,20 @@ const Decision: React.FC = () => {
 		};
 	}, []);
 
+	useEffect(() => {
+		disableButtons(alerts.includes(NOT_ENOUGH_OPTIONS) || alerts.includes(NOT_ENOUGH_CRITERIA));
+	}, [alerts]);
+
+	const disableButtons = (disabled: boolean) => {
+		setDisableStepButtons(disabled);
+		setSteps(
+			steps.map(step => {
+				if (step.number > 1) return {...step, disabled};
+				return step;
+			})
+		);
+	};
+
 	const setStepCompleted = (stepNumber: number) => {
 		const newSteps = [...steps];
 		const index = newSteps.findIndex(obj => obj.number === stepNumber);
@@ -114,7 +129,12 @@ const Decision: React.FC = () => {
 				{steps.map(step => {
 					return (
 						<Step key={step.number}>
-							<StepButton data-testid={`Step${step.number}Button`} onClick={() => changeStep(step.number)} completed={step.completed} disabled={step.disabled}>
+							<StepButton
+								data-testid={`Step${step.number}Button`}
+								onClick={() => changeStep(step.number)}
+								completed={step.completed}
+								disabled={step.disabled}
+							>
 								<StepLabel StepIconProps={{classes: {root: classes.stepperLabel}}}>{step.name}</StepLabel>
 							</StepButton>
 						</Step>
@@ -133,7 +153,7 @@ const Decision: React.FC = () => {
 			</SwipeableViews>
 			{activeStepNum !== 1 ? (
 				<Fab
-					data-testid="PrevStepButton"
+					data-testid='PrevStepButton'
 					color='secondary'
 					aria-label='Previous Step'
 					size='medium'
@@ -145,13 +165,13 @@ const Decision: React.FC = () => {
 			) : null}
 			{activeStepNum !== steps.length ? (
 				<Fab
-					data-testid="NextStepButton"
+					data-testid='NextStepButton'
 					color='primary'
 					aria-label='Next Step'
 					size='medium'
 					className={classes.buttonNext}
 					onClick={() => changeStep(activeStepNum + 1)}
-					disabled={alerts.includes(NOT_ENOUGH_OPTIONS) || alerts.includes(NOT_ENOUGH_CRITERIA)}
+					disabled={disableStepButtons}
 				>
 					<ArrowForwardIcon />
 				</Fab>
