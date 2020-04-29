@@ -102,7 +102,7 @@ const ResultsChart: React.FC<Props> = (props: Props) => {
 					<Typography variant='body1'>
 						<ResponsiveContainer
 							height={localItems.length * theme.spacing(9) + theme.spacing(4)}
-							width='100%'
+							width='98%'
 							className={classes.chartContainer}
 						>
 							<BarChart
