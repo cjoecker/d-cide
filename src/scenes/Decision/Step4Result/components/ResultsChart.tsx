@@ -49,10 +49,11 @@ const ResultsChart: React.FC<Props> = (props: Props) => {
 	const [showInfo, setShowInfo] = useState(false);
 	const [startAnimation, setStartAnimation] = useState(false);
 
-	const items = useSelector((state: RootState) => state.OptionsAndCriteria[props.itemsKey], shallowEqual);
+	const {hidden, itemsKey, title, infoText} = props;
+
+	const items = useSelector((state: RootState) => state.OptionsAndCriteria[itemsKey], shallowEqual);
 
 	const {decisionId} = useParams<ParamTypes>();
-	const {hidden, itemsKey, title, infoText} = props;
 
 	const classes = useStyles();
 	const dispatch = useDispatch();
@@ -89,12 +90,12 @@ const ResultsChart: React.FC<Props> = (props: Props) => {
 	};
 
 	return (
-		<div className={classes.divMain}>
+		<div className={classes.divMain} data-testid={`${itemsKey}Diagram`}>
 			<Fade in={startAnimation} timeout={500}>
 				<Paper elevation={2} key='Option'>
 					<Typography variant='h5' gutterBottom className={classes.title}>
 						{title}
-						<IconButton aria-label='Help' className={classes.infoButton} onClick={() => setShowInfo(true)}>
+						<IconButton data-testid={`${itemsKey}ResultsInfoButton`} aria-label='Help' className={classes.infoButton} onClick={() => setShowInfo(true)}>
 							<InfoIcon color='secondary' />
 						</IconButton>
 					</Typography>
