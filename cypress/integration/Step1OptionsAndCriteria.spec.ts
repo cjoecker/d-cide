@@ -39,7 +39,7 @@ context('Actions', () => {
 			cy.contains('Decision Options');
 		});
 
-		describe('Error Cases', () => {
+		describe('Server Error', () => {
 			it("doesn't  create new decision option on server error", () => {
 				ErrorOnAddItem(listName, 'New Item');
 			});
@@ -85,7 +85,7 @@ context('Actions', () => {
 			cy.contains('Selection Criteria');
 		});
 
-		describe('Error Cases', () => {
+		describe('Server Error', () => {
 			it("doesn't  create new selection criteria on server error", () => {
 				ErrorOnAddItem(listName, 'New Item');
 			});
