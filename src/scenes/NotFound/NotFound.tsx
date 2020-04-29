@@ -54,7 +54,7 @@ const NotFound: React.FC = () => {
 							</Typography>
 						</Grid>
 						<Grid item xs={12} className={classes.button}>
-							<Button data-testid={`GoHomeButton`} variant='contained' color='primary' onClick={() => history.push('/')}>
+							<Button data-testid="GoHomeButton" variant='contained' color='primary' onClick={() => history.push('/')}>
 								GO HOME
 							</Button>
 						</Grid>

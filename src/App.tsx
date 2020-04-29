@@ -74,7 +74,7 @@ const App: React.FC = () => {
 			<div className={classes.divMain}>
 				<AppBar position='static' color='primary' className={classes.appBar}>
 					<Toolbar>
-						<div className={classes.divLogo}>
+						<div className={classes.divLogo} data-testid="d-cideLogo">
 							<Link
 								href='/'
 								style={{
