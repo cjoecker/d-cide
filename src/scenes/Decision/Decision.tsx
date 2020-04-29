@@ -133,6 +133,7 @@ const Decision: React.FC = () => {
 			</SwipeableViews>
 			{activeStepNum !== 1 ? (
 				<Fab
+					data-testid="PrevStepButton"
 					color='secondary'
 					aria-label='Previous Step'
 					size='medium'
@@ -144,6 +145,7 @@ const Decision: React.FC = () => {
 			) : null}
 			{activeStepNum !== steps.length ? (
 				<Fab
+					data-testid="NextStepButton"
 					color='primary'
 					aria-label='Next Step'
 					size='medium'
