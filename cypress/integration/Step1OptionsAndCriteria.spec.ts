@@ -192,6 +192,14 @@ context('Actions', () => {
 			})
 			.getTestElement('warningAlert')
 			.should('have.length', 1)
+			.getTestElement('NextStepButton')
+			.should('be.disabled')
+			.getTestElement('Step2Button')
+			.should('be.disabled')
+			.getTestElement('Step3Button')
+			.should('be.disabled')
+			.getTestElement('Step4Button')
+			.should('be.disabled')
 
 			.getTestElement(listName)
 			.within(() => {
@@ -199,7 +207,14 @@ context('Actions', () => {
 			})
 
 			.getTestElement('warningAlert')
-			.should('have.length', 0);
+			.should('have.length', 0)			.getTestElement('NextStepButton')
+			.should('not.be.disabled')
+			.getTestElement('Step2Button')
+			.should('not.be.disabled')
+			.getTestElement('Step3Button')
+			.should('not.be.disabled')
+			.getTestElement('Step4Button')
+			.should('not.be.disabled')
 	};
 
 	const showInfoDialog = (infoName: string, title: string) => {
