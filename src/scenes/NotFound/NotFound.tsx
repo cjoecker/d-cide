@@ -45,7 +45,6 @@ const NotFound: React.FC = () => {
 			<Grid container justify='center'>
 				<Paper elevation={2} key='mainPaper' className={classes.paper}>
 					<Grid container justify='center' alignItems='center' spacing={0} className={classes.gridContainer}>
-						{/*Title*/}
 						<Grid item xs={12} className={classes.TitleGridItem}>
 							<Typography variant='h4' gutterBottom>
 								Oops!
@@ -55,7 +54,7 @@ const NotFound: React.FC = () => {
 							</Typography>
 						</Grid>
 						<Grid item xs={12} className={classes.button}>
-							<Button variant='contained' color='primary' onClick={() => history.push('/')}>
+							<Button data-testid={`GoHomeButton`} variant='contained' color='primary' onClick={() => history.push('/')}>
 								GO HOME
 							</Button>
 						</Grid>
