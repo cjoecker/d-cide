@@ -49,12 +49,10 @@ const useStyles = makeStyles({
 	},
 
 	divLogo: {
-		flex: 1,
-		flexGrow: 1,
 		height: '100%',
 		overflow: 'hidden',
 		float: 'left',
-		marginLeft: theme.spacing(-1),
+		marginLeft: theme.spacing(-1)
 	},
 
 	divRouter: {
