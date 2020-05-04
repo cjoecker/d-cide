@@ -28,7 +28,7 @@ const useStyles = makeStyles({
 		backgroundColor: 'transparent',
 	},
 	stepperLabel: {
-		marginBottom: -theme.spacing(1.5),
+		marginBottom: theme.spacing(-1.5),
 	},
 
 	buttonNext: {

@@ -59,14 +59,14 @@ const useStyles = makeStyles({
 	},
 
 	gridItemSlider: {
-		marginTop: -theme.spacing(2),
-		marginBottom: -theme.spacing(1),
+		marginTop: theme.spacing(-2),
+		marginBottom: theme.spacing(-1),
 		marginLeft: theme.spacing(1),
 		marginRight: theme.spacing(1),
 	},
 
 	gridItemSliderInfo: {
-		marginTop: -theme.spacing(2.5),
+		marginTop: theme.spacing(-2.5),
 	},
 
 	emptySpace: {

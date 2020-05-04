@@ -73,7 +73,7 @@ const useStyles = makeStyles({
 	},
 
 	gridItemSlider: {
-		marginTop: -theme.spacing(2),
+		marginTop: theme.spacing(-2),
 		marginLeft: theme.spacing(1),
 		marginRight: theme.spacing(1),
 	},

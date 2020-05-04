@@ -9,7 +9,7 @@ import theme from "../muiTheme";
 
 const useStyles = makeStyles({
 	dialogContent: {
-		marginTop: -theme.spacing(2),
+		marginTop: theme.spacing(-2),
 	},
 	closeButton: {
 		position: 'absolute',

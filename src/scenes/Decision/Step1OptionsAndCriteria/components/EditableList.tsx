@@ -43,11 +43,11 @@ const useStyles = makeStyles({
 	},
 
 	editButton: {
-		marginRight: -theme.spacing(1),
+		marginRight: theme.spacing(-1),
 	},
 
 	deleteButton: {
-		marginRight: -theme.spacing(1.5),
+		marginRight: theme.spacing(-1.5),
 	},
 
 	inputBase: {
