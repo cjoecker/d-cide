@@ -1,14 +1,11 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/DeleteOutlineRounded";
-import EditIcon from "@material-ui/icons/EditOutlined";
-import SaveIcon from "@material-ui/icons/SaveOutlined";
 import AddIcon from "@material-ui/icons/AddRounded";
-import InputBase from "@material-ui/core/InputBase";
 import Paper from "@material-ui/core/Paper";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import Fade from "@material-ui/core/Fade";
@@ -25,6 +22,7 @@ import { RootState } from "../../../../redux/rootReducer";
 import AppSlice from "../../../../redux/actionsAndSlicers/AppSlice";
 import { AlertType } from "../../../../constants/Alerts";
 import { ParamTypes } from "../../../../App";
+import { TextField } from "@material-ui/core";
 
 const useStyles = makeStyles({
 	divMain: {
@@ -41,7 +39,7 @@ const useStyles = makeStyles({
 		marginTop: theme.spacing(0.5),
 		marginRight: theme.spacing(1.5),
 		marginLeft: theme.spacing(1.5),
-		cursor: 'pointer',
+		cursor: "pointer"
 	},
 
 	editButton: {
@@ -52,19 +50,11 @@ const useStyles = makeStyles({
 		marginRight: -theme.spacing(1.5),
 	},
 
-	newEntryInputBase: {
+	inputBase: {
 		marginRight: theme.spacing(2),
 		width: '100%',
 		wordWrap: 'break-word',
 	},
-
-	itemsInputBase: {
-		marginRight: theme.spacing(2),
-		width: '100%',
-		wordWrap: 'break-word',
-		cursor: "pointer"
-	},
-
 
 });
 
@@ -80,14 +70,11 @@ const EditableList: React.FC<Props> = (props: Props) => {
 
 	const [didMount, setDidMount] = useState(false);
 	const [newEntry, setNewEntry] = useState('');
-	const [indexInEditMode, setIndexInEditMode] = useState(-1);
 	const [localItems, setLocalItems] = useState<OptionAndCriteria[]>([]);
 	const [stopAnimation, setStopAnimation] = useState(false);
 	const items = useSelector((state: RootState) => state.OptionsAndCriteria[itemsKey], shallowEqual);
 
 	const animationDelay = 100;
-
-	const textInputs = useRef<(HTMLDivElement | null)[]>([]);
 
 	const classes = useStyles();
 	const dispatch = useDispatch();
@@ -126,24 +113,13 @@ const EditableList: React.FC<Props> = (props: Props) => {
 		postOptionsAndCriteria(dispatch, decisionId, itemsKey, newEntry);
 	};
 
-	const onEditItem = (event: React.BaseSyntheticEvent, itemIndex: number) => {
-		textInputs.current[itemIndex]?.focus();
-		setIndexInEditMode(itemIndex);
-	};
-
 	const onChangeItem = (event: React.BaseSyntheticEvent, itemId: number) => {
 		setLocalItems(localItems.map(item => (item.id === itemId ? {...item, name: event.target.value} : item)));
 	};
 
-	const onBlurItem = () => {
-		setLocalItems(items)
-		setIndexInEditMode(-1);
-	};
-
-	const onSaveEditedItem = (itemLocal: OptionAndCriteria, itemIndex: number) => {
+	const onLeaveItem = (itemLocal: OptionAndCriteria) => {
 		if (itemLocal.name !== '') editOptionsAndCriteria(dispatch, decisionId, itemsKey, itemLocal);
 		else deleteOptionsAndCriteria(dispatch, decisionId, itemsKey, itemLocal.id);
-		setIndexInEditMode(-1);
 	};
 
 	const endOfAnimation = (index: number) => {
@@ -166,12 +142,12 @@ const EditableList: React.FC<Props> = (props: Props) => {
 			<List>
 				<Paper className={classes.paperTitle} elevation={2} key='NewEntry'>
 					<ListItem>
-						<InputBase
+						<TextField
 							inputProps={{
 								'data-testid': 'entryInput',
 							}}
-							type='text'
-							className={classes.newEntryInputBase}
+							variant="standard"
+							className={classes.inputBase}
 							placeholder='New Entry'
 							value={newEntry}
 							onKeyPress={event => {
@@ -209,67 +185,35 @@ const EditableList: React.FC<Props> = (props: Props) => {
 					>
 						<Paper className={classes.paperItems} elevation={2}>
 							<ListItem>
-								<InputBase
+								<TextField
 									inputProps={{
 										'data-testid': `itemInput`,
 									}}
-									className={classes.itemsInputBase}
-									multiline
-									disabled ={indexInEditMode !== index && indexInEditMode !== -1}
-									inputRef={ref => {
-										textInputs.current[index] = ref
-									}}
+									className={classes.inputBase}
+									variant="standard"
 									value={item.name}
 									onChange={event => onChangeItem(event, item.id)}
-									onFocus={event => {
-										event.target.select();
-									}}
-									onBlur={() =>
-										onBlurItem()
-									}
+									onBlur={() => onLeaveItem(item)}
+									multiline
 									onKeyDown={event => {
 										if (event.key === 'Enter') {
 											event.preventDefault();
-											if (indexInEditMode !== index) {
-												onSaveEditedItem(item, index);
+											if (document.activeElement instanceof HTMLElement) {
+												document.activeElement.blur();
 											}
 										}
 									}}
 								/>
-								{indexInEditMode !== index ? (
-									indexInEditMode === -1 && (
-										<ListItemSecondaryAction>
-											<IconButton
-												data-testid={`editButton${index}`}
-												aria-label='Edit'
-												onClick={event => onEditItem(event, index)}
-												className={classes.editButton}
-											>
-												<EditIcon />
-											</IconButton>
-											<IconButton
-												data-testid={`deleteButton${index}`}
-												aria-label='Delete'
-												onClick={() => deleteOptionsAndCriteria(dispatch, decisionId, itemsKey, item.id)}
-												className={classes.deleteButton}
-											>
-												<DeleteIcon />
-											</IconButton>
-										</ListItemSecondaryAction>
-									)
-								) : (
-									<ListItemSecondaryAction>
-										<IconButton
-											data-testid={`saveButton${index}`}
-											aria-label='Save'
-											onClick={() => {
-												onSaveEditedItem(item, index);
-											}}
-										>
-											<SaveIcon />
-										</IconButton>
-									</ListItemSecondaryAction>
-								)}
+								<ListItemSecondaryAction>
+									<IconButton
+										data-testid={`deleteButton${index}`}
+										aria-label='Delete'
+										onClick={() => deleteOptionsAndCriteria(dispatch, decisionId, itemsKey, item.id)}
+										className={classes.deleteButton}
+									>
+										<DeleteIcon />
+									</IconButton>
+								</ListItemSecondaryAction>
 							</ListItem>
 						</Paper>
 					</Fade>
