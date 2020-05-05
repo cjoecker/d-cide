@@ -10,6 +10,7 @@ import Paper from "@material-ui/core/Paper";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
 import Fade from "@material-ui/core/Fade";
 import { useParams } from "react-router-dom";
+import { TextField } from "@material-ui/core";
 import theme from "../../../../muiTheme";
 import { OptionAndCriteria, OptionsAndCriteriaKeys } from "../../../../redux/actionsAndSlicers/OptionsAndCriteriaSlice";
 import {
@@ -22,7 +23,6 @@ import { RootState } from "../../../../redux/rootReducer";
 import AppSlice from "../../../../redux/actionsAndSlicers/AppSlice";
 import { AlertType } from "../../../../constants/Alerts";
 import { ParamTypes } from "../../../../App";
-import { TextField } from "@material-ui/core";
 
 const useStyles = makeStyles({
 	divMain: {
