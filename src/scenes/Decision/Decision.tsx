@@ -96,20 +96,18 @@ const Decision: React.FC = () => {
 	}, []);
 
 	useEffect(() => {
-
-		const disableButtons = (disabled: boolean) => {
-			setDisableStepButtons(disabled);
-			setSteps(
-				steps.map(step => {
-					if (step.number > 1) return {...step, disabled};
-					return step;
-				})
-			);
-		};
-
 		disableButtons(alerts.includes(NOT_ENOUGH_OPTIONS) || alerts.includes(NOT_ENOUGH_CRITERIA));
 	}, [alerts]);
 
+	const disableButtons = (disabled: boolean) => {
+		setDisableStepButtons(disabled);
+		setSteps(
+			steps.map(step => {
+				if (step.number > 1) return {...step, disabled};
+				return step;
+			})
+		);
+	};
 
 
 	const setStepCompleted = (stepNumber: number) => {

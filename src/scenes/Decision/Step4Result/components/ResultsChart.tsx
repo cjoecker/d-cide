@@ -78,7 +78,7 @@ const ResultsChart: React.FC<Props> = (props: Props) => {
 
 		return originalItems.map(item => {
 			if (item.name.length > maxCharsPerLine) {
-				const breakLongWords = new RegExp(`([^\s]{${maxCharsPerLine}})`, 'g');
+				const breakLongWords = new RegExp(`([^s]{${maxCharsPerLine}})`, 'g');
 				const dropLastDash = new RegExp(`-\n$`, 'g');
 
 				const newName = item.name.replace(breakLongWords, '$1-\n').replace(dropLastDash, '');

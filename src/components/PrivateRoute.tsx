@@ -10,7 +10,7 @@ type PrivateRouteProps = RouteProps & {
 };
 
 const PrivateRoute = (props: PrivateRouteProps) => {
-	const {component: Component, children, ...rest} = props;
+	const {component: Component, ...rest} = props;
 
 	const {token, user} = useSelector((state: RootState) => state.Session, shallowEqual);
 

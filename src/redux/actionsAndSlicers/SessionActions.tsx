@@ -1,8 +1,9 @@
 import axios, { AxiosResponse } from "axios";
+// eslint-disable-next-line @typescript-eslint/camelcase
+import jwt_decode from "jwt-decode";
 import store, { AppDispatch } from "../store";
 import { AxiosRequest, SuccessExtraActionType } from "../AxiosRequest";
 import SessionSlice, { User } from "./SessionSlice";
-import jwt_decode from "jwt-decode";
 import DecisionsSlice from "./DecisionsSlice";
 import OptionsAndCriteriaSlice from "./OptionsAndCriteriaSlice";
 import RatedOptionsSlice from "./RatedOptionsSlice";

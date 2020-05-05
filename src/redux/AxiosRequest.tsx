@@ -9,6 +9,7 @@ export interface SuccessExtraActionType {
 }
 
 export type ErrorActionType = {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	(dispatch: AppDispatch, error: AxiosError, predefinedPayload?: any): void;
 };
 

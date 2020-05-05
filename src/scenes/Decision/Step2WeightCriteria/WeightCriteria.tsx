@@ -187,7 +187,7 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
 							<InfoIcon color='secondary' />
 						</IconButton>
 					</Typography>
-		</div>
+     </div>
 				</Grid>
 				{LocalWeightedCriteria.map((criteria, index) => (
 					<Fade in timeout={500} style={{transitionDelay: `${index * 100}ms`}} key={criteria.id}>

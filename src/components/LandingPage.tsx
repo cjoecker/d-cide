@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { shallowEqual, useDispatch, useSelector } from "react-redux";
-import { RootState } from "../redux/rootReducer";
 import { useHistory } from "react-router-dom";
+import { RootState } from "../redux/rootReducer";
 import { getDecisions } from "../redux/actionsAndSlicers/DecisionsActions";
 import { createUnregisteredUser } from "../redux/actionsAndSlicers/SessionActions";
 

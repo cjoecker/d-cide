@@ -8,34 +8,30 @@
 		"plugin:@typescript-eslint/recommended",
 		"prettier/@typescript-eslint"
 	],
-
+	"plugins": ["react", "react-hooks"],
 	"parser": "@typescript-eslint/parser",
 	"rules": {
-      "no-param-reassign": [
-        2,
-        {
-          "props": false
-        }
-      ],
-      "import/extensions": "off",
-      "import/no-unresolved": "off",
-      "spaced-comment": "off",
-      "react/jsx-indent": "off",
-      "react/jsx-indent-props": "off",
-      "no-use-before-define": "off",
-      "@typescript-eslint/no-use-before-define": "off",
-      "@typescript-eslint/explicit-function-return-type": "off",
-      "react/jsx-curly-newline": "off",
-      "react/jsx-filename-extension": [
-        2,
-        {
-          "extensions": [
-            ".js",
-            ".jsx",
-            ".ts",
-            ".tsx"
-          ]
-        }
-      ]
-    }
+		"no-param-reassign": [
+			2,
+			{
+				"props": false
+			}
+		],
+		"import/extensions": "off",
+		"import/no-unresolved": "off",
+		"spaced-comment": "off",
+		"react/jsx-indent": "off",
+		"react/jsx-indent-props": "off",
+		"no-use-before-define": "off",
+		"@typescript-eslint/no-use-before-define": "off",
+		"@typescript-eslint/explicit-function-return-type": "off",
+		"react/jsx-curly-newline": "off",
+		"react-hooks/exhaustive-deps": "off",
+		"react/jsx-filename-extension": [
+			2,
+			{
+				"extensions": [".js", ".jsx", ".ts", ".tsx"]
+			}
+		]
+	}
 }
