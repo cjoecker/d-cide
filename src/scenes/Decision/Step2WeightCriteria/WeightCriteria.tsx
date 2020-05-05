@@ -171,7 +171,7 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
 		<div className={classes.divMain}>
 			<Grid container justify='center' alignContent='center'>
 				<Grid item xs={12}>
-					<Typography variant='h5' gutterBottom>
+					<Typography component={'span'} variant='h5' gutterBottom>
 						Weight Criteria
 						<IconButton
 							data-testid='WeightCriteriaInfoButton'
@@ -189,12 +189,12 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
 							<Paper elevation={2} className={classes.paper}>
 								<Grid container spacing={2} alignItems='center'>
 									<Grid item xs={6}>
-										<Typography data-testid={`textSlider${index}CriteriaLeft`} variant='body1'>
+										<Typography component={'span'} data-testid={`textSlider${index}CriteriaLeft`} variant='body1'>
 											{getSelectionCriteriaName(criteria.selectionCriteria1Id)}
 										</Typography>
 									</Grid>
 									<Grid item xs={6}>
-										<Typography data-testid={`textSlider${index}CriteriaRight`} variant='body1'>
+										<Typography component={'span'} data-testid={`textSlider${index}CriteriaRight`} variant='body1'>
 											{getSelectionCriteriaName(criteria.selectionCriteria2Id)}
 										</Typography>
 									</Grid>
@@ -217,7 +217,7 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
 										/>
 									</Grid>
 									<Grid item xs={12} className={classes.gridItemSliderInfo}>
-										<Typography data-testid={`infoTextSlider${index}`} variant='caption'>
+										<Typography component={'span'} data-testid={`infoTextSlider${index}`} variant='caption'>
 											{getWeightInfoText(criteria.weight, criteria.selectionCriteria1Id, criteria.selectionCriteria2Id)}
 										</Typography>
 									</Grid>

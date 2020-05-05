@@ -46,10 +46,10 @@ const NotFound: React.FC = () => {
 				<Paper elevation={2} key='mainPaper' className={classes.paper}>
 					<Grid container justify='center' alignItems='center' spacing={0} className={classes.gridContainer}>
 						<Grid item xs={12} className={classes.TitleGridItem}>
-							<Typography variant='h4' gutterBottom>
+							<Typography component={'span'} variant='h4' gutterBottom>
 								Oops!
 							</Typography>
-							<Typography variant='body1' gutterBottom>
+							<Typography component={'span'} variant='body1' gutterBottom>
 								Page not found...
 							</Typography>
 						</Grid>

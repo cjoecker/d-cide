@@ -50,7 +50,7 @@ const OptionsAndCriteria: React.FC<Props> = (props: Props) => {
 		<div className={classes.divMain}>
 			<Grid container justify='center' alignContent='center'>
 				<Grid item xs={6} className={classes.gridItem}>
-					<Typography variant='h5' gutterBottom>
+					<Typography component={'span'} variant='h5' gutterBottom>
 						Decision Options
 						<IconButton
 							aria-label='Help'
@@ -68,7 +68,7 @@ const OptionsAndCriteria: React.FC<Props> = (props: Props) => {
 					/>
 				</Grid>
 				<Grid item xs={6} className={classes.gridItem}>
-					<Typography variant='h5' gutterBottom>
+					<Typography component={'span'} variant='h5' gutterBottom>
 						Selection Criteria
 						<IconButton
 							aria-label='Help'

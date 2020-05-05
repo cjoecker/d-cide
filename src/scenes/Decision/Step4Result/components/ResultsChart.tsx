@@ -93,13 +93,13 @@ const ResultsChart: React.FC<Props> = (props: Props) => {
 		<div className={classes.divMain} data-testid={`${itemsKey}Diagram`}>
 			<Fade in={startAnimation} timeout={500}>
 				<Paper elevation={2} key='Option'>
-					<Typography variant='h5' gutterBottom className={classes.title}>
+					<Typography component={'span'} variant='h5' gutterBottom className={classes.title}>
 						{title}
 						<IconButton data-testid={`${itemsKey}ResultsInfoButton`} aria-label='Help' className={classes.infoButton} onClick={() => setShowInfo(true)}>
 							<InfoIcon color='secondary' />
 						</IconButton>
 					</Typography>
-					<Typography variant='body1'>
+					<Typography component={'span'} variant='body1'>
 						<ResponsiveContainer
 							height={localItems.length * theme.spacing(9) + theme.spacing(4)}
 							width='98%'
