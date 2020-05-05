@@ -93,15 +93,15 @@ const ResultsChart: React.FC<Props> = (props: Props) => {
 		<div className={classes.divMain} data-testid={`${itemsKey}Diagram`}>
 			<Fade in={startAnimation} timeout={500}>
 				<Paper elevation={2} key='Option'>
-					<Typography component={'span'} variant='h5' gutterBottom className={classes.title}>
+					<Typography variant='h5' gutterBottom className={classes.title}>
 						{title}
 						<IconButton data-testid={`${itemsKey}ResultsInfoButton`} aria-label='Help' className={classes.infoButton} onClick={() => setShowInfo(true)}>
 							<InfoIcon color='secondary' />
 						</IconButton>
 					</Typography>
-					<Typography component={'span'} variant='body1'>
+					<Typography component='span' variant='body1'>
 						<ResponsiveContainer
-							height={localItems.length * theme.spacing(9) + theme.spacing(4)}
+							height={localItems.length * theme.spacing(9) + theme.spacing(5)}
 							width='98%'
 							className={classes.chartContainer}
 						>
@@ -140,7 +140,7 @@ const ResultsChart: React.FC<Props> = (props: Props) => {
 								>
 									{localItems.map((entry, index) => (
 										<Cell
-											key={`cell-${entry.id}`}
+											key={entry.id}
 											fill={(() => {
 												switch (index) {
 													case 0:

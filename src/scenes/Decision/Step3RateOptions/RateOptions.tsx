@@ -182,7 +182,7 @@ const RateOptions: React.FC<Props> = (props: Props) => {
 		<div className={classes.divMain}>
 			<Grid container justify='center' alignContent='center'>
 				<Grid item xs={12}>
-					<Typography component={'span'} variant='h5' gutterBottom>
+					<Typography component='span' variant='h5' gutterBottom>
 						Rate Options
 						<IconButton data-testid='RateOptionsInfoButton' aria-label='Help' className={classes.infoButton} onClick={() => setShowInfo(true)}>
 							<InfoIcon color='secondary' />
@@ -192,6 +192,7 @@ const RateOptions: React.FC<Props> = (props: Props) => {
 				{!hidden &&
 					selectionCriteria.map((criteria, criteriaIndex) => (
 						<Fade
+							key={criteria.id}
 							in={startAnimation}
 							timeout={500}
 							style={{
@@ -203,7 +204,7 @@ const RateOptions: React.FC<Props> = (props: Props) => {
 									<div>
 										<Grid container>
 											<Grid item xs={12} className={classes.titleGridItem}>
-												<Typography component={'span'} variant='h6'>{criteria.name}</Typography>
+												<Typography component='span' variant='h6'>{criteria.name}</Typography>
 											</Grid>
 											{decisionOptions.map((option, optionIndex) => (
 												<Grid
@@ -214,7 +215,7 @@ const RateOptions: React.FC<Props> = (props: Props) => {
 													key={option.id}
 												>
 													<Grid item xs={4} className={classes.gridItemGridContainerTitle}>
-														<Typography component={'span'} variant='body1'>{option.name}</Typography>
+														<Typography component='span' variant='body1'>{option.name}</Typography>
 													</Grid>
 													<Grid item xs={8}>
 														<Grid container>
