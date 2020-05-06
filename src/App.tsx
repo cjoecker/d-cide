@@ -22,8 +22,6 @@ const {token} = localStorage;
 
 verifyToken(token);
 
-//TODO rename longTexts.tsx
-
 const useStyles = makeStyles({
 	divMain: {
 		flexGrow: 1,
