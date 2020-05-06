@@ -1,19 +1,19 @@
-import React, { useEffect, useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import { Bar, BarChart, CartesianGrid, Cell, Rectangle, ResponsiveContainer, XAxis, YAxis } from "recharts";
-import { shallowEqual, useDispatch, useSelector } from "react-redux";
-import { useParams } from "react-router-dom";
-import Paper from "@material-ui/core/Paper";
-import Typography from "@material-ui/core/Typography";
-import IconButton from "@material-ui/core/IconButton";
-import InfoIcon from "@material-ui/icons/Info";
-import Fade from "@material-ui/core/Fade";
-import { getOptionsAndCriteria } from "../../../../redux/actionsAndSlicers/OptionsAndCriteriaActions";
-import theme from "../../../../muiTheme";
-import { RootState } from "../../../../redux/rootReducer";
-import { OptionAndCriteria, OptionsAndCriteriaKeys } from "../../../../redux/actionsAndSlicers/OptionsAndCriteriaSlice";
-import InfoDialog from "../../../../components/InfoDialog";
-import { ParamTypes } from "../../../../App";
+import React, {useEffect, useState} from 'react';
+import {makeStyles} from '@material-ui/core/styles';
+import {Bar, BarChart, CartesianGrid, Cell, Rectangle, ResponsiveContainer, XAxis, YAxis} from 'recharts';
+import {shallowEqual, useDispatch, useSelector} from 'react-redux';
+import {useParams} from 'react-router-dom';
+import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
+import IconButton from '@material-ui/core/IconButton';
+import InfoIcon from '@material-ui/icons/Info';
+import Fade from '@material-ui/core/Fade';
+import {getOptionsAndCriteria} from '../../../../redux/actionsAndSlicers/OptionsAndCriteriaActions';
+import theme from '../../../../muiTheme';
+import {RootState} from '../../../../redux/rootReducer';
+import {OptionAndCriteria, OptionsAndCriteriaKeys} from '../../../../redux/actionsAndSlicers/OptionsAndCriteriaSlice';
+import InfoDialog from '../../../../components/InfoDialog';
+import {ParamTypes} from '../../../../App';
 
 const useStyles = makeStyles({
 	divMain: {
@@ -95,7 +95,12 @@ const ResultsChart: React.FC<Props> = (props: Props) => {
 				<Paper elevation={2} key='Option'>
 					<Typography variant='h5' gutterBottom className={classes.title}>
 						{title}
-						<IconButton data-testid={`${itemsKey}ResultsInfoButton`} aria-label='Help' className={classes.infoButton} onClick={() => setShowInfo(true)}>
+						<IconButton
+							data-testid={`${itemsKey}ResultsInfoButton`}
+							aria-label='Help'
+							className={classes.infoButton}
+							onClick={() => setShowInfo(true)}
+						>
 							<InfoIcon color='secondary' />
 						</IconButton>
 					</Typography>

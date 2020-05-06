@@ -1,22 +1,22 @@
-import React from "react";
-import "./index.css";
-import AppBar from "@material-ui/core/AppBar";
-import { makeStyles, ThemeProvider } from "@material-ui/core/styles";
-import CardMedia from "@material-ui/core/CardMedia";
-import LinearProgress from "@material-ui/core/LinearProgress";
-import { shallowEqual, useSelector } from "react-redux";
-import Link from "@material-ui/core/Link";
-import Toolbar from "@material-ui/core/Toolbar";
-import { Route, Switch } from "react-router-dom";
-import { RootState } from "./redux/rootReducer";
-import LandingPage from "./components/LandingPage";
-import Decision from "./scenes/Decision/Decision";
-import AlertsBanner from "./components/AlertsBanner";
-import theme from "./muiTheme";
-import dcideLogo from "./images/d-cide_Logo.svg";
-import { verifyToken } from "./redux/actionsAndSlicers/SessionActions";
-import PrivateRoute from "./components/PrivateRoute";
-import NotFound from "./scenes/NotFound/NotFound";
+import React from 'react';
+import './index.css';
+import AppBar from '@material-ui/core/AppBar';
+import {makeStyles, ThemeProvider} from '@material-ui/core/styles';
+import CardMedia from '@material-ui/core/CardMedia';
+import LinearProgress from '@material-ui/core/LinearProgress';
+import {shallowEqual, useSelector} from 'react-redux';
+import Link from '@material-ui/core/Link';
+import Toolbar from '@material-ui/core/Toolbar';
+import {Route, Switch} from 'react-router-dom';
+import {RootState} from './redux/rootReducer';
+import LandingPage from './components/LandingPage';
+import Decision from './scenes/Decision/Decision';
+import AlertsBanner from './components/AlertsBanner';
+import theme from './muiTheme';
+import dcideLogo from './images/d-cide_Logo.svg';
+import {verifyToken} from './redux/actionsAndSlicers/SessionActions';
+import PrivateRoute from './components/PrivateRoute';
+import NotFound from './scenes/NotFound/NotFound';
 
 const {token} = localStorage;
 
@@ -32,7 +32,7 @@ const useStyles = makeStyles({
 	},
 
 	appBar: {
-							position: 'fixed',
+		position: 'fixed',
 		Top: 0,
 		marginBottom: theme.spacing(2),
 		height: theme.spacing(6),
@@ -52,13 +52,12 @@ const useStyles = makeStyles({
 		height: '100%',
 		overflow: 'hidden',
 		float: 'left',
-		marginLeft: theme.spacing(-1)
+		marginLeft: theme.spacing(-1),
 	},
 
 	divRouter: {
 		marginTop: theme.spacing(6),
 	},
-
 	logo: {
 		width: theme.spacing(17),
 		height: '100%',
@@ -74,7 +73,7 @@ const App: React.FC = () => {
 			<div className={classes.divMain}>
 				<AppBar position='static' color='primary' className={classes.appBar}>
 					<Toolbar>
-						<div className={classes.divLogo} data-testid="d-cideLogo">
+						<div className={classes.divLogo} data-testid='d-cideLogo'>
 							<Link
 								href='/'
 								style={{

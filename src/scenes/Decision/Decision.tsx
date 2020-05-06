@@ -1,21 +1,21 @@
-import React, { useEffect, useState } from "react";
-import Step from "@material-ui/core/Step";
-import Stepper from "@material-ui/core/Stepper";
-import StepButton from "@material-ui/core/StepButton";
-import Fab from "@material-ui/core/Fab";
-import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
-import ArrowBackIcon from "@material-ui/icons/ArrowBack";
-import { makeStyles } from "@material-ui/core/styles";
-import SwipeableViews from "react-swipeable-views";
-import { StepLabel } from "@material-ui/core";
-import { shallowEqual, useSelector } from "react-redux";
-import theme from "../../muiTheme";
-import OptionsAndCriteria from "./Step1OptionsAndCriteria/OptionsAndCriteria";
-import WeightCriteria from "./Step2WeightCriteria/WeightCriteria";
-import RateOptions from "./Step3RateOptions/RateOptions";
-import Results from "./Step4Result/Result";
-import { RootState } from "../../redux/rootReducer";
-import { NOT_ENOUGH_CRITERIA, NOT_ENOUGH_OPTIONS } from "../../constants/Alerts";
+import React, {useEffect, useState} from 'react';
+import Step from '@material-ui/core/Step';
+import Stepper from '@material-ui/core/Stepper';
+import StepButton from '@material-ui/core/StepButton';
+import Fab from '@material-ui/core/Fab';
+import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import {makeStyles} from '@material-ui/core/styles';
+import SwipeableViews from 'react-swipeable-views';
+import {StepLabel} from '@material-ui/core';
+import {shallowEqual, useSelector} from 'react-redux';
+import theme from '../../muiTheme';
+import OptionsAndCriteria from './Step1OptionsAndCriteria/OptionsAndCriteria';
+import WeightCriteria from './Step2WeightCriteria/WeightCriteria';
+import RateOptions from './Step3RateOptions/RateOptions';
+import Results from './Step4Result/Result';
+import {RootState} from '../../redux/rootReducer';
+import {NOT_ENOUGH_CRITERIA, NOT_ENOUGH_OPTIONS} from '../../constants/Alerts';
 
 const useStyles = makeStyles({
 	divMain: {
@@ -108,7 +108,6 @@ const Decision: React.FC = () => {
 			})
 		);
 	};
-
 
 	const setStepCompleted = (stepNumber: number) => {
 		const newSteps = [...steps];

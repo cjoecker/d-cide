@@ -1,8 +1,8 @@
-import axios from "axios";
-import store, { AppDispatch } from "../store";
-import { AxiosRequest, ErrorActionType } from "../AxiosRequest";
-import WeightedCriteriaSlice, { WeightedCriteria } from "./WeightCriteriaSlice";
-import { showHTTPAlert } from "./AppActions";
+import axios from 'axios';
+import store, {AppDispatch} from '../store';
+import {AxiosRequest, ErrorActionType} from '../AxiosRequest';
+import WeightedCriteriaSlice, {WeightedCriteria} from './WeightCriteriaSlice';
+import {showHTTPAlert} from './AppActions';
 
 export const getWeightedCriteria = (dispatch: AppDispatch, decisionId: string) => {
 	dispatch(
@@ -27,11 +27,11 @@ export const updateWeightedCriteria = (dispatch: AppDispatch, decisionId: string
 
 const updateErrorAction: ErrorActionType = (dispatch, error, predefinedPayload: WeightedCriteria) => {
 	showHTTPAlert(dispatch, error);
-	resetSliderOnError(dispatch, predefinedPayload)
+	resetSliderOnError(dispatch, predefinedPayload);
 };
 
 const resetSliderOnError = (dispatch: AppDispatch, predefinedPayload: WeightedCriteria) => {
 	const state = store.getState();
-	const initialCriteria = state.WeightedCriteria.find(criteria => criteria.id === predefinedPayload.id)
-	dispatch(WeightedCriteriaSlice.actions.updateWeightedCriteria(initialCriteria as WeightedCriteria))
+	const initialCriteria = state.WeightedCriteria.find(criteria => criteria.id === predefinedPayload.id);
+	dispatch(WeightedCriteriaSlice.actions.updateWeightedCriteria(initialCriteria as WeightedCriteria));
 };

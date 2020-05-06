@@ -1,23 +1,23 @@
-import React, { useEffect, useState } from "react";
-import Grid from "@material-ui/core/Grid";
-import Paper from "@material-ui/core/Paper";
-import Slider from "@material-ui/core/Slider";
-import Typography from "@material-ui/core/Typography";
-import InfoIcon from "@material-ui/icons/Info";
-import IconButton from "@material-ui/core/IconButton";
-import { shallowEqual, useDispatch, useSelector } from "react-redux";
-import Fade from "@material-ui/core/Fade";
-import { makeStyles } from "@material-ui/core/styles";
-import { useParams } from "react-router-dom";
-import theme from "../../../muiTheme";
-import * as LongStrings from "../../../constants/InfoDialogTexts";
-import InfoDialog from "../../../components/InfoDialog";
-import { getWeightedCriteria, updateWeightedCriteria } from "../../../redux/actionsAndSlicers/WeightCriteriaActions";
-import { RootState } from "../../../redux/rootReducer";
-import { WeightedCriteria } from "../../../redux/actionsAndSlicers/WeightCriteriaSlice";
-import { getOptionsAndCriteria } from "../../../redux/actionsAndSlicers/OptionsAndCriteriaActions";
-import { OptionsAndCriteriaKeys } from "../../../redux/actionsAndSlicers/OptionsAndCriteriaSlice";
-import { ParamTypes } from "../../../App";
+import React, {useEffect, useState} from 'react';
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
+import Slider from '@material-ui/core/Slider';
+import Typography from '@material-ui/core/Typography';
+import InfoIcon from '@material-ui/icons/Info';
+import IconButton from '@material-ui/core/IconButton';
+import {shallowEqual, useDispatch, useSelector} from 'react-redux';
+import Fade from '@material-ui/core/Fade';
+import {makeStyles} from '@material-ui/core/styles';
+import {useParams} from 'react-router-dom';
+import theme from '../../../muiTheme';
+import * as LongStrings from '../../../constants/InfoDialogTexts';
+import InfoDialog from '../../../components/InfoDialog';
+import {getWeightedCriteria, updateWeightedCriteria} from '../../../redux/actionsAndSlicers/WeightCriteriaActions';
+import {RootState} from '../../../redux/rootReducer';
+import {WeightedCriteria} from '../../../redux/actionsAndSlicers/WeightCriteriaSlice';
+import {getOptionsAndCriteria} from '../../../redux/actionsAndSlicers/OptionsAndCriteriaActions';
+import {OptionsAndCriteriaKeys} from '../../../redux/actionsAndSlicers/OptionsAndCriteriaSlice';
+import {ParamTypes} from '../../../App';
 
 const useStyles = makeStyles({
 	divMain: {
@@ -176,18 +176,18 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
 			<Grid container justify='center' alignContent='center'>
 				<Grid item xs={12}>
 					<div className={classes.title}>
-					<Typography component='span' variant='h5' gutterBottom>
-						Weight Criteria
-						<IconButton
-							data-testid='WeightCriteriaInfoButton'
-							aria-label='Help'
-							className={classes.infoButton}
-							onClick={() => setShowInfo(true)}
-						>
-							<InfoIcon color='secondary' />
-						</IconButton>
-					</Typography>
-     </div>
+						<Typography component='span' variant='h5' gutterBottom>
+							Weight Criteria
+							<IconButton
+								data-testid='WeightCriteriaInfoButton'
+								aria-label='Help'
+								className={classes.infoButton}
+								onClick={() => setShowInfo(true)}
+							>
+								<InfoIcon color='secondary' />
+							</IconButton>
+						</Typography>
+					</div>
 				</Grid>
 				{LocalWeightedCriteria.map((criteria, index) => (
 					<Fade in timeout={500} style={{transitionDelay: `${index * 100}ms`}} key={criteria.id}>

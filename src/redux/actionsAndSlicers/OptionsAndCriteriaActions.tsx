@@ -1,9 +1,9 @@
-import axios from "axios";
-import { ActionCreatorWithPayload } from "@reduxjs/toolkit";
-import store, { AppDispatch } from "../store";
-import { AxiosRequest, ErrorActionType } from "../AxiosRequest";
-import OptionsAndCriteriaSlice, { OptionAndCriteria, OptionsAndCriteriaKeys } from "./OptionsAndCriteriaSlice";
-import { showHTTPAlert } from "./AppActions";
+import axios from 'axios';
+import {ActionCreatorWithPayload} from '@reduxjs/toolkit';
+import store, {AppDispatch} from '../store';
+import {AxiosRequest, ErrorActionType} from '../AxiosRequest';
+import OptionsAndCriteriaSlice, {OptionAndCriteria, OptionsAndCriteriaKeys} from './OptionsAndCriteriaSlice';
+import {showHTTPAlert} from './AppActions';
 
 export const getOptionsAndCriteria = (
 	dispatch: AppDispatch,
@@ -96,22 +96,24 @@ export const deleteOptionsAndCriteria = (
 
 const editOptionErrorAction: ErrorActionType = (dispatch, error, predefinedPayload: OptionAndCriteria) => {
 	showHTTPAlert(dispatch, error);
-	resetOptionOnError(dispatch, predefinedPayload)
+	resetOptionOnError(dispatch, predefinedPayload);
 };
 
 const resetOptionOnError = (dispatch: AppDispatch, predefinedPayload: OptionAndCriteria) => {
 	const state = store.getState();
-	const initialCriteria = state.OptionsAndCriteria.decisionOptions.find(option => option.id === predefinedPayload.id)
-	dispatch(OptionsAndCriteriaSlice.actions.updateDecisionOption(initialCriteria as OptionAndCriteria))
+	const initialCriteria = state.OptionsAndCriteria.decisionOptions.find(option => option.id === predefinedPayload.id);
+	dispatch(OptionsAndCriteriaSlice.actions.updateDecisionOption(initialCriteria as OptionAndCriteria));
 };
 
 const editCriteriaErrorAction: ErrorActionType = (dispatch, error, predefinedPayload: OptionAndCriteria) => {
 	showHTTPAlert(dispatch, error);
-	resetCriteriaOnError(dispatch, predefinedPayload)
+	resetCriteriaOnError(dispatch, predefinedPayload);
 };
 
 const resetCriteriaOnError = (dispatch: AppDispatch, predefinedPayload: OptionAndCriteria) => {
 	const state = store.getState();
-	const initialCriteria = state.OptionsAndCriteria.selectionCriteria.find(criteria => criteria.id === predefinedPayload.id)
-	dispatch(OptionsAndCriteriaSlice.actions.updateSelectionCriteria(initialCriteria as OptionAndCriteria))
+	const initialCriteria = state.OptionsAndCriteria.selectionCriteria.find(
+		criteria => criteria.id === predefinedPayload.id
+	);
+	dispatch(OptionsAndCriteriaSlice.actions.updateSelectionCriteria(initialCriteria as OptionAndCriteria));
 };

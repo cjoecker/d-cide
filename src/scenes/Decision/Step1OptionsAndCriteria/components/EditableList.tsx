@@ -1,28 +1,28 @@
-import React, { useEffect, useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemSecondaryAction from "@material-ui/core/ListItemSecondaryAction";
-import IconButton from "@material-ui/core/IconButton";
-import DeleteIcon from "@material-ui/icons/DeleteOutlineRounded";
-import AddIcon from "@material-ui/icons/AddRounded";
-import Paper from "@material-ui/core/Paper";
-import { shallowEqual, useDispatch, useSelector } from "react-redux";
-import Fade from "@material-ui/core/Fade";
-import { useParams } from "react-router-dom";
-import { TextField } from "@material-ui/core";
-import theme from "../../../../muiTheme";
-import { OptionAndCriteria, OptionsAndCriteriaKeys } from "../../../../redux/actionsAndSlicers/OptionsAndCriteriaSlice";
+import React, {useEffect, useState} from 'react';
+import {makeStyles} from '@material-ui/core/styles';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
+import IconButton from '@material-ui/core/IconButton';
+import DeleteIcon from '@material-ui/icons/DeleteOutlineRounded';
+import AddIcon from '@material-ui/icons/AddRounded';
+import Paper from '@material-ui/core/Paper';
+import {shallowEqual, useDispatch, useSelector} from 'react-redux';
+import Fade from '@material-ui/core/Fade';
+import {useParams} from 'react-router-dom';
+import {TextField} from '@material-ui/core';
+import theme from '../../../../muiTheme';
+import {OptionAndCriteria, OptionsAndCriteriaKeys} from '../../../../redux/actionsAndSlicers/OptionsAndCriteriaSlice';
 import {
 	deleteOptionsAndCriteria,
 	editOptionsAndCriteria,
 	getOptionsAndCriteria,
-	postOptionsAndCriteria
-} from "../../../../redux/actionsAndSlicers/OptionsAndCriteriaActions";
-import { RootState } from "../../../../redux/rootReducer";
-import AppSlice from "../../../../redux/actionsAndSlicers/AppSlice";
-import { AlertType } from "../../../../constants/Alerts";
-import { ParamTypes } from "../../../../App";
+	postOptionsAndCriteria,
+} from '../../../../redux/actionsAndSlicers/OptionsAndCriteriaActions';
+import {RootState} from '../../../../redux/rootReducer';
+import AppSlice from '../../../../redux/actionsAndSlicers/AppSlice';
+import {AlertType} from '../../../../constants/Alerts';
+import {ParamTypes} from '../../../../App';
 
 const useStyles = makeStyles({
 	divMain: {
@@ -39,7 +39,7 @@ const useStyles = makeStyles({
 		marginTop: theme.spacing(0.5),
 		marginRight: theme.spacing(1.5),
 		marginLeft: theme.spacing(1.5),
-		cursor: "pointer"
+		cursor: 'pointer',
 	},
 
 	editButton: {
@@ -55,7 +55,6 @@ const useStyles = makeStyles({
 		width: '100%',
 		wordWrap: 'break-word',
 	},
-
 });
 
 type Props = {
@@ -146,7 +145,7 @@ const EditableList: React.FC<Props> = (props: Props) => {
 							inputProps={{
 								'data-testid': 'entryInput',
 							}}
-							variant="standard"
+							variant='standard'
 							className={classes.inputBase}
 							placeholder='New Entry'
 							value={newEntry}
@@ -190,7 +189,7 @@ const EditableList: React.FC<Props> = (props: Props) => {
 										'data-testid': `itemInput`,
 									}}
 									className={classes.inputBase}
-									variant="standard"
+									variant='standard'
 									value={item.name}
 									onChange={event => onChangeItem(event, item.id)}
 									onBlur={() => onLeaveItem(item)}

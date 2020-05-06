@@ -1,23 +1,23 @@
-import React, { useEffect, useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import Paper from "@material-ui/core/Paper";
-import Grid from "@material-ui/core/Grid";
-import Slider from "@material-ui/core/Slider";
-import Typography from "@material-ui/core/Typography";
-import IconButton from "@material-ui/core/IconButton";
-import InfoIcon from "@material-ui/icons/Info";
-import { shallowEqual, useDispatch, useSelector } from "react-redux";
-import Fade from "@material-ui/core/Fade";
-import { useParams } from "react-router-dom";
-import * as LongStrings from "../../../constants/InfoDialogTexts";
-import InfoDialog from "../../../components/InfoDialog";
-import { RootState } from "../../../redux/rootReducer";
-import theme from "../../../muiTheme";
-import { RatedOption } from "../../../redux/actionsAndSlicers/RatedOptionsSlice";
-import { getRatedOptions, updateRatedOptions } from "../../../redux/actionsAndSlicers/RatedOptionsActions";
-import { getOptionsAndCriteria } from "../../../redux/actionsAndSlicers/OptionsAndCriteriaActions";
-import { OptionsAndCriteriaKeys } from "../../../redux/actionsAndSlicers/OptionsAndCriteriaSlice";
-import { ParamTypes } from "../../../App";
+import React, {useEffect, useState} from 'react';
+import {makeStyles} from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
+import Grid from '@material-ui/core/Grid';
+import Slider from '@material-ui/core/Slider';
+import Typography from '@material-ui/core/Typography';
+import IconButton from '@material-ui/core/IconButton';
+import InfoIcon from '@material-ui/icons/Info';
+import {shallowEqual, useDispatch, useSelector} from 'react-redux';
+import Fade from '@material-ui/core/Fade';
+import {useParams} from 'react-router-dom';
+import * as LongStrings from '../../../constants/InfoDialogTexts';
+import InfoDialog from '../../../components/InfoDialog';
+import {RootState} from '../../../redux/rootReducer';
+import theme from '../../../muiTheme';
+import {RatedOption} from '../../../redux/actionsAndSlicers/RatedOptionsSlice';
+import {getRatedOptions, updateRatedOptions} from '../../../redux/actionsAndSlicers/RatedOptionsActions';
+import {getOptionsAndCriteria} from '../../../redux/actionsAndSlicers/OptionsAndCriteriaActions';
+import {OptionsAndCriteriaKeys} from '../../../redux/actionsAndSlicers/OptionsAndCriteriaSlice';
+import {ParamTypes} from '../../../App';
 
 const useStyles = makeStyles({
 	divMain: {
@@ -184,7 +184,12 @@ const RateOptions: React.FC<Props> = (props: Props) => {
 				<Grid item xs={12}>
 					<Typography component='span' variant='h5' gutterBottom>
 						Rate Options
-						<IconButton data-testid='RateOptionsInfoButton' aria-label='Help' className={classes.infoButton} onClick={() => setShowInfo(true)}>
+						<IconButton
+							data-testid='RateOptionsInfoButton'
+							aria-label='Help'
+							className={classes.infoButton}
+							onClick={() => setShowInfo(true)}
+						>
 							<InfoIcon color='secondary' />
 						</IconButton>
 					</Typography>
@@ -204,7 +209,9 @@ const RateOptions: React.FC<Props> = (props: Props) => {
 									<div>
 										<Grid container>
 											<Grid item xs={12} className={classes.titleGridItem}>
-												<Typography component='span' variant='h6'>{criteria.name}</Typography>
+												<Typography component='span' variant='h6'>
+													{criteria.name}
+												</Typography>
 											</Grid>
 											{decisionOptions.map((option, optionIndex) => (
 												<Grid
@@ -215,7 +222,9 @@ const RateOptions: React.FC<Props> = (props: Props) => {
 													key={option.id}
 												>
 													<Grid item xs={4} className={classes.gridItemGridContainerTitle}>
-														<Typography component='span' variant='body1'>{option.name}</Typography>
+														<Typography component='span' variant='body1'>
+															{option.name}
+														</Typography>
 													</Grid>
 													<Grid item xs={8}>
 														<Grid container>

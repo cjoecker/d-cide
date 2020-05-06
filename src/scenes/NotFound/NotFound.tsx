@@ -1,11 +1,11 @@
-import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import Grid from "@material-ui/core/Grid";
-import Paper from "@material-ui/core/Paper";
-import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
-import { useHistory } from "react-router-dom";
-import theme from "../../muiTheme";
+import React from 'react';
+import {makeStyles} from '@material-ui/core/styles';
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+import {useHistory} from 'react-router-dom';
+import theme from '../../muiTheme';
 
 const useStyles = makeStyles({
 	divMain: {
@@ -29,7 +29,6 @@ const useStyles = makeStyles({
 	TitleGridItem: {
 		paddingTop: theme.spacing(4),
 	},
-
 	button: {
 		paddingTop: theme.spacing(3),
 		paddingBottom: theme.spacing(3),
@@ -54,7 +53,7 @@ const NotFound: React.FC = () => {
 							</Typography>
 						</Grid>
 						<Grid item xs={12} className={classes.button}>
-							<Button data-testid="GoHomeButton" variant='contained' color='primary' onClick={() => history.push('/')}>
+							<Button data-testid='GoHomeButton' variant='contained' color='primary' onClick={() => history.push('/')}>
 								GO HOME
 							</Button>
 						</Grid>

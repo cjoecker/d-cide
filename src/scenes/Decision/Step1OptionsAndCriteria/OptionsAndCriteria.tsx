@@ -1,15 +1,15 @@
-import React, { useState } from "react";
-import Grid from "@material-ui/core/Grid";
-import InfoIcon from "@material-ui/icons/Info";
-import IconButton from "@material-ui/core/IconButton";
-import Typography from "@material-ui/core/Typography";
-import { makeStyles } from "@material-ui/core/styles";
-import InfoDialog from "../../../components/InfoDialog";
-import EditableList from "./components/EditableList";
-import theme from "../../../muiTheme";
-import { DecisionOptionInfo, SelectionCriteriaInfo } from "../../../constants/InfoDialogTexts";
-import { OptionsAndCriteriaKeys } from "../../../redux/actionsAndSlicers/OptionsAndCriteriaSlice";
-import { NOT_ENOUGH_CRITERIA, NOT_ENOUGH_OPTIONS } from "../../../constants/Alerts";
+import React, {useState} from 'react';
+import Grid from '@material-ui/core/Grid';
+import InfoIcon from '@material-ui/icons/Info';
+import IconButton from '@material-ui/core/IconButton';
+import Typography from '@material-ui/core/Typography';
+import {makeStyles} from '@material-ui/core/styles';
+import InfoDialog from '../../../components/InfoDialog';
+import EditableList from './components/EditableList';
+import theme from '../../../muiTheme';
+import {DecisionOptionInfo, SelectionCriteriaInfo} from '../../../constants/InfoDialogTexts';
+import {OptionsAndCriteriaKeys} from '../../../redux/actionsAndSlicers/OptionsAndCriteriaSlice';
+import {NOT_ENOUGH_CRITERIA, NOT_ENOUGH_OPTIONS} from '../../../constants/Alerts';
 
 const useStyles = makeStyles({
 	divMain: {
@@ -68,17 +68,17 @@ const OptionsAndCriteria: React.FC<Props> = (props: Props) => {
 					/>
 				</Grid>
 				<Grid item xs={6} className={classes.gridItem}>
-						<Typography component='span' variant='h5'>
-							Selection Criteria
-							<IconButton
-								aria-label='Help'
-								data-testid={`${OptionsAndCriteriaKeys.selectionCriteria}InfoButton`}
-								className={classes.infoButton}
-								onClick={() => setShowCriteriaInfo(true)}
-							>
-								<InfoIcon color='secondary' />
-							</IconButton>
-						</Typography>
+					<Typography component='span' variant='h5'>
+						Selection Criteria
+						<IconButton
+							aria-label='Help'
+							data-testid={`${OptionsAndCriteriaKeys.selectionCriteria}InfoButton`}
+							className={classes.infoButton}
+							onClick={() => setShowCriteriaInfo(true)}
+						>
+							<InfoIcon color='secondary' />
+						</IconButton>
+					</Typography>
 					<EditableList
 						itemsKey={OptionsAndCriteriaKeys.selectionCriteria}
 						notEnoughItemsAlert={NOT_ENOUGH_CRITERIA}

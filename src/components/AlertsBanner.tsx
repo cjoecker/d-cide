@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
-import Snackbar from "@material-ui/core/Snackbar";
-import Alert from "@material-ui/lab/Alert";
-import { shallowEqual, useDispatch, useSelector } from "react-redux";
-import { AlertInitialState, AlertType, AlertTypes } from "../constants/Alerts";
-import { RootState } from "../redux/rootReducer";
-import AppSlice from "../redux/actionsAndSlicers/AppSlice";
+import React, {useEffect, useState} from 'react';
+import Snackbar from '@material-ui/core/Snackbar';
+import Alert from '@material-ui/lab/Alert';
+import {shallowEqual, useDispatch, useSelector} from 'react-redux';
+import {AlertInitialState, AlertType, AlertTypes} from '../constants/Alerts';
+import {RootState} from '../redux/rootReducer';
+import AppSlice from '../redux/actionsAndSlicers/AppSlice';
 
 const AlertsBanner: React.FC = () => {
 	const {alerts} = useSelector((state: RootState) => state.App, shallowEqual);
@@ -72,7 +72,12 @@ const AlertsBanner: React.FC = () => {
 	return (
 		<div>
 			<Snackbar open={open} autoHideDuration={autoHideTime !== 0 ? autoHideTime : undefined} onClose={handleClose}>
-				<Alert data-testid={`${alert.type}Alert`} onClose={alert.allowClose ? handleClose : undefined} variant='filled' severity={alert.type}>
+				<Alert
+					data-testid={`${alert.type}Alert`}
+					onClose={alert.allowClose ? handleClose : undefined}
+					variant='filled'
+					severity={alert.type}
+				>
 					{alert.text}
 				</Alert>
 			</Snackbar>
