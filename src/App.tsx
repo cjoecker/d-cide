@@ -15,7 +15,8 @@ import LandingPage from './components/LandingPage';
 import Decision from './scenes/Decision/Decision';
 import AlertsBanner from './components/AlertsBanner';
 import theme from './muiTheme';
-import dcideLogo from './images/d-cide_Logo.svg';
+import imgDcideLogo from './images/d-cide_Logo.svg';
+import MaibornWolffLogo from './images/MaibornWolff_Logo.svg';
 import {verifyToken} from './redux/actionsAndSlicers/SessionActions';
 import PrivateRoute from './components/PrivateRoute';
 import NotFound from './scenes/NotFound/NotFound';
@@ -51,24 +52,40 @@ const useStyles = makeStyles({
 		width: '100%',
 	},
 
-	divLogo: {
+	divLogoDcide: {
 		height: '100%',
-		overflow: 'hidden',
-		float: 'left',
 		marginLeft: theme.spacing(-1),
+	},
+
+	imgDcideLogo: {
+		width: theme.spacing(17),
+		height: '100%',
+	},
+
+	divLogoMaibornWolff: {
+		position: 'absolute',
+		right: theme.spacing(1),
+		height: '60%',
+	},
+
+	imgMaibornWolffLogo: {
+		width: theme.spacing(7),
+		height: '100%',
 	},
 
 	divRouter: {
 		marginTop: theme.spacing(6),
 	},
-	logo: {
-		width: theme.spacing(17),
-		height: '100%',
-	},
 
 	footer: {
 		marginTop: 'auto',
 		marginBottom: theme.spacing(0.5),
+	},
+	footerLegalText: {
+		marginTop: -theme.spacing(0.5),
+	},
+	link: {
+		cursor: 'pointer',
 	},
 });
 
@@ -81,14 +98,24 @@ const App: React.FC = () => {
 			<div className={classes.divMain}>
 				<AppBar position='static' color='primary' className={classes.appBar}>
 					<Toolbar>
-						<div className={classes.divLogo} data-testid='d-cideLogo'>
+						<div className={classes.divLogoDcide} data-testid='d-cideLogo'>
 							<Link
 								href='/'
 								style={{
 									textDecoration: 'none',
 								}}
 							>
-								<CardMedia className={classes.logo} image={dcideLogo} title='d-cide' />
+								<CardMedia className={classes.imgDcideLogo} image={imgDcideLogo} title='d-cide imgDcideLogo' />
+							</Link>
+						</div>
+						<div className={classes.divLogoMaibornWolff} data-testid='imgMaibornWolffLogo'>
+							<Link
+								href='https://www.maibornwolff.de/'
+								style={{
+									textDecoration: 'none',
+								}}
+							>
+								<CardMedia className={classes.imgMaibornWolffLogo} image={MaibornWolffLogo} title='MaibornWolff imgDcideLogo' />
 							</Link>
 						</div>
 					</Toolbar>
@@ -104,13 +131,22 @@ const App: React.FC = () => {
 				</div>
 				<Grid className={classes.footer} container justify='center' alignContent='center'>
 					<Typography component='span' variant='caption' align='center'>
-						Made with
-{' '}
-						<span role='img' aria-label='love'>
-							💖
-						</span>
-{' '}
-						by Christian Jöcker
+						<Grid item xs={12}>
+							Made with &nbsp;
+							<span role='img' aria-label='love'>
+								💖
+							</span>
+							&nbsp; by Christian Jöcker
+						</Grid>
+						<Grid style={{marginTop: theme.spacing(-0.5)}} item xs={12}>
+							<Link href='https://www.maibornwolff.de/en/privacy' className={classes.link} underline='always'>
+								Privacy
+							</Link>
+							&nbsp;&nbsp;&nbsp;
+							<Link href='https://www.maibornwolff.de/en/about-site' className={classes.link} underline='always'>
+								Imprint
+							</Link>
+						</Grid>
 					</Typography>
 				</Grid>
 				<AlertsBanner />
