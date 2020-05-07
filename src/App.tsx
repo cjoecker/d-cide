@@ -8,6 +8,8 @@ import {shallowEqual, useSelector} from 'react-redux';
 import Link from '@material-ui/core/Link';
 import Toolbar from '@material-ui/core/Toolbar';
 import {Route, Switch} from 'react-router-dom';
+import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
 import {RootState} from './redux/rootReducer';
 import LandingPage from './components/LandingPage';
 import Decision from './scenes/Decision/Decision';
@@ -27,6 +29,9 @@ const useStyles = makeStyles({
 		flexGrow: 1,
 		width: '100%',
 		overflowX: 'hidden', //Avoid negative margin from mainGrid
+		display: 'flex',
+		flexDirection: 'column',
+		minHeight: '100vh',
 	},
 
 	appBar: {
@@ -60,6 +65,11 @@ const useStyles = makeStyles({
 		width: theme.spacing(17),
 		height: '100%',
 	},
+
+	footer: {
+		marginTop: 'auto',
+		marginBottom: theme.spacing(0.5),
+	},
 });
 
 const App: React.FC = () => {
@@ -92,6 +102,17 @@ const App: React.FC = () => {
 						<Route component={NotFound} />
 					</Switch>
 				</div>
+				<Grid className={classes.footer} container justify='center' alignContent='center'>
+					<Typography component='span' variant='caption' align='center'>
+						Made with
+{' '}
+						<span role='img' aria-label='love'>
+							💖
+						</span>
+{' '}
+						by Christian Jöcker
+					</Typography>
+				</Grid>
 				<AlertsBanner />
 			</div>
 		</ThemeProvider>
