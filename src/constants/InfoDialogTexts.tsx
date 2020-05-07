@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 /* eslint-disable */
 //Info Texts
 export const DecisionOptionInfo = (
@@ -10,9 +10,9 @@ export const DecisionOptionInfo = (
 			If for example, you need to decide which house you want to buy, you may write something like this:
 		</p>
 		<ul>
-			<li>House in yellowsnow road</li>
-			<li>House in seldom seen avenue</li>
-			<li>House in pleasant street</li>
+			<li>House in Albert road</li>
+			<li>House in Crown avenue</li>
+			<li>House in East street</li>
 		</ul>
 		<p>
 			Take some time to think about every other option "out of the box" that may also exist.
