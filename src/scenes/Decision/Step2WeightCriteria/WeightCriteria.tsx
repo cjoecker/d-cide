@@ -12,7 +12,6 @@ import {useParams} from 'react-router-dom';
 import theme from '../../../muiTheme';
 import * as LongStrings from '../../../constants/InfoDialogTexts';
 import InfoDialog from '../../../components/InfoDialog';
-import {updateWeightedCriteria} from '../../../redux/actionsAndSlicers/WeightCriteriaActions';
 import {RootState} from '../../../redux/rootReducer';
 import WeightedCriteriaSlice, {WeightedCriteria} from '../../../redux/actionsAndSlicers/WeightCriteriaSlice';
 import {ParamTypes} from '../../../App';
@@ -85,7 +84,7 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
 	const {hidden} = props;
 
 	const [showInfo, setShowInfo] = useState(false);
-	const [LocalWeightedCriteria, setLocalWeightedCriteria] = useState<WeightedCriteria[]>([]);
+	const [localWeightedCriteria, setLocalWeightedCriteria] = useState<WeightedCriteria[]>([]);
 	const selectionCriteria = useSelector((state: RootState) => state.OptionsAndCriteria.selectionCriteria, shallowEqual);
 	const weightedCriteria = useSelector((state: RootState) => state.WeightedCriteria, shallowEqual);
 
@@ -151,8 +150,15 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
 	};
 
 	const onChange = (event: React.BaseSyntheticEvent, value: number, itemLocal: WeightedCriteria) => {
+		dispatch(
+			WeightedCriteriaSlice.actions.updateWeightedCriteria({
+				...itemLocal,
+				weight: value,
+			})
+		);
+
 		setLocalWeightedCriteria(
-			LocalWeightedCriteria.map(criteria => {
+			localWeightedCriteria.map(criteria => {
 				if (criteria.id === itemLocal.id) {
 					return {...criteria, weight: value};
 				}
@@ -162,10 +168,12 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
 	};
 
 	const onChangeCommitted = (value: number, itemLocal: WeightedCriteria) => {
-		updateWeightedCriteria(dispatch, decisionId, {
-			...itemLocal,
-			weight: value,
-		});
+		dispatch(
+			WeightedCriteriaSlice.actions.updateWeightedCriteria({
+				...itemLocal,
+				weight: value,
+			})
+		);
 	};
 
 	const getSelectionCriteriaName = (selectionCriteriaId: number) => {
