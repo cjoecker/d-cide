@@ -11,13 +11,11 @@ import {Route, Switch} from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import {RootState} from './redux/rootReducer';
-import LandingPage from './components/LandingPage';
 import Decision from './scenes/Decision/Decision';
 import AlertsBanner from './components/AlertsBanner';
 import theme from './muiTheme';
 import imgDcideLogo from './images/d-cide_Logo.svg';
 import {verifyToken} from './redux/actionsAndSlicers/SessionActions';
-import PrivateRoute from './components/PrivateRoute';
 import NotFound from './scenes/NotFound/NotFound';
 
 //TODO imprint and privacy links
@@ -115,8 +113,7 @@ const App: React.FC = () => {
 				<div className={classes.linearProgress}>{isLoading > 0 && <LinearProgress color='secondary' />}</div>
 				<div className={classes.divRouter}>
 					<Switch>
-						<Route exact path='/' component={LandingPage} />
-						<PrivateRoute exact path='/decisions/:decisionId' component={Decision} />
+						<Route exact path='/' component={Decision} />
 						<Route component={NotFound} />
 					</Switch>
 				</div>
