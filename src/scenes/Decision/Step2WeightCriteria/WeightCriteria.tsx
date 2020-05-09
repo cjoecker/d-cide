@@ -112,6 +112,7 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
 	useEffect(() => {
 		if (!hidden) {
 			createWeightedCriteria();
+			setLocalWeightedCriteria(weightedCriteria);
 		} else setLocalWeightedCriteria([]);
 	}, [hidden]);
 
