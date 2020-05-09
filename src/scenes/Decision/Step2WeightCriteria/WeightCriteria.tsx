@@ -115,6 +115,10 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
 		} else setLocalWeightedCriteria([]);
 	}, [hidden]);
 
+	useEffect(() => {
+		if (weightedCriteria.length > 0) setLocalWeightedCriteria(weightedCriteria);
+	}, [weightedCriteria]);
+
 	const createWeightedCriteria = () => {
 		let newWeightedCriteria: WeightedCriteria[] = weightedCriteria;
 
@@ -150,13 +154,6 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
 	};
 
 	const onChange = (event: React.BaseSyntheticEvent, value: number, itemLocal: WeightedCriteria) => {
-		dispatch(
-			WeightedCriteriaSlice.actions.updateWeightedCriteria({
-				...itemLocal,
-				weight: value,
-			})
-		);
-
 		setLocalWeightedCriteria(
 			localWeightedCriteria.map(criteria => {
 				if (criteria.id === itemLocal.id) {
@@ -224,7 +221,7 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
 						</Typography>
 					</div>
 				</Grid>
-				{weightedCriteria.map((criteria, index) => (
+				{localWeightedCriteria.map((criteria, index) => (
 					<Fade in timeout={500} style={{transitionDelay: `${index * 100}ms`}} key={criteria.id}>
 						<Grid item xs={6} className={classes.gridItemCriteria} key={criteria.id}>
 							<Paper elevation={2} className={classes.paper}>

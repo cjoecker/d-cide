@@ -52,7 +52,7 @@ type stepsType = {
 	disabled: boolean;
 	completed: boolean;
 };
-
+//TODO remove swipeable view
 const Decision: React.FC = () => {
 	const [activeStepNum, setActiveStepNum] = useState(1);
 	const [loadedStepNum, setLoadedStepNum] = useState(1);
