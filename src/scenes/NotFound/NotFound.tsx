@@ -10,7 +10,7 @@ import theme from '../../muiTheme';
 const useStyles = makeStyles({
 	divMain: {
 		textAlign: 'center',
-		marginTop: theme.spacing(9),
+		marginTop: theme.spacing(3),
 	},
 
 	TitleTypography: {
@@ -28,6 +28,9 @@ const useStyles = makeStyles({
 
 	TitleGridItem: {
 		paddingTop: theme.spacing(4),
+	},
+	TextGridItem: {
+		paddingTop: theme.spacing(2),
 	},
 	button: {
 		paddingTop: theme.spacing(3),
@@ -48,6 +51,8 @@ const NotFound: React.FC = () => {
 							<Typography component='span' variant='h4' gutterBottom>
 								Oops!
 							</Typography>
+						</Grid>
+						<Grid item xs={12} className={classes.TextGridItem}>
 							<Typography component='span' variant='body1' gutterBottom>
 								Page not found...
 							</Typography>
