@@ -7,7 +7,7 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 import {shallowEqual, useSelector} from 'react-redux';
 import Link from '@material-ui/core/Link';
 import Toolbar from '@material-ui/core/Toolbar';
-import {HashRouter, Route} from 'react-router-dom';
+import {HashRouter, Route, Switch} from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import {RootState} from './redux/rootReducer';
@@ -112,9 +112,11 @@ const App: React.FC = () => {
 
 				<div className={classes.linearProgress}>{isLoading > 0 && <LinearProgress color='secondary' />}</div>
 				<div className={classes.divRouter}>
-					<HashRouter basename='/'>
-						<Route exact path='/' component={Decision} />
-						<Route component={NotFound} />
+					<HashRouter basename={process.env.PUBLIC_URL}>
+						<Switch>
+							<Route exact path='/' component={Decision} />
+							<Route component={NotFound} />
+						</Switch>
 					</HashRouter>
 				</div>
 				<Grid className={classes.footer} container justify='center' alignContent='center'>
