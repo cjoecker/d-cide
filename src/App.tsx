@@ -16,10 +16,11 @@ import Decision from './scenes/Decision/Decision';
 import AlertsBanner from './components/AlertsBanner';
 import theme from './muiTheme';
 import imgDcideLogo from './images/d-cide_Logo.svg';
-import MaibornWolffLogo from './images/MaibornWolff_Logo.svg';
 import {verifyToken} from './redux/actionsAndSlicers/SessionActions';
 import PrivateRoute from './components/PrivateRoute';
 import NotFound from './scenes/NotFound/NotFound';
+
+//TODO imprint and privacy links
 
 const {token} = localStorage;
 
@@ -108,16 +109,6 @@ const App: React.FC = () => {
 								<CardMedia className={classes.imgDcideLogo} image={imgDcideLogo} title='d-cide imgDcideLogo' />
 							</Link>
 						</div>
-						<div className={classes.divLogoMaibornWolff} data-testid='imgMaibornWolffLogo'>
-							<Link
-								href='https://www.maibornwolff.de/'
-								style={{
-									textDecoration: 'none',
-								}}
-							>
-								<CardMedia className={classes.imgMaibornWolffLogo} image={MaibornWolffLogo} title='MaibornWolff imgDcideLogo' />
-							</Link>
-						</div>
 					</Toolbar>
 				</AppBar>
 
@@ -139,11 +130,11 @@ const App: React.FC = () => {
 							&nbsp; by Christian Jöcker
 						</Grid>
 						<Grid style={{marginTop: theme.spacing(-0.5)}} item xs={12}>
-							<Link href='https://www.maibornwolff.de/en/privacy' className={classes.link} underline='always'>
+							<Link href='/' className={classes.link} underline='always'>
 								Privacy
 							</Link>
 							&nbsp;&nbsp;&nbsp;
-							<Link href='https://www.maibornwolff.de/en/about-site' className={classes.link} underline='always'>
+							<Link href='/' className={classes.link} underline='always'>
 								Imprint
 							</Link>
 						</Grid>
