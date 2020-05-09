@@ -81,10 +81,11 @@ const EditableList: React.FC<Props> = (props: Props) => {
 			dispatch(AppSlice.actions.deleteAlert(notEnoughItemsAlert));
 		};
 	}, []);
-
+	//TODO don't have local items
 	useEffect(() => {
 		if (!hidden) {
 			if (items.length === 0) createStartItems();
+			setLocalItems(items);
 			setDidMount(true);
 		} else {
 			setLocalItems([]);
@@ -128,8 +129,8 @@ const EditableList: React.FC<Props> = (props: Props) => {
 				dispatch(OptionsAndCriteriaSlice.actions.updateDecisionOption(itemLocal));
 			else dispatch(OptionsAndCriteriaSlice.actions.updateSelectionCriteria(itemLocal));
 		} else if (itemsKey === OptionsAndCriteriaKeys.decisionOptions)
-				dispatch(OptionsAndCriteriaSlice.actions.deleteDecisionOption(itemLocal.id));
-			else dispatch(OptionsAndCriteriaSlice.actions.deleteSelectionCriteria(itemLocal.id));
+			dispatch(OptionsAndCriteriaSlice.actions.deleteDecisionOption(itemLocal.id));
+		else dispatch(OptionsAndCriteriaSlice.actions.deleteSelectionCriteria(itemLocal.id));
 	};
 
 	const onDeleteItem = (itemLocal: OptionAndCriteria) => {

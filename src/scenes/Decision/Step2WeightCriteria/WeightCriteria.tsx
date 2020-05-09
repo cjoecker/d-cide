@@ -12,11 +12,9 @@ import {useParams} from 'react-router-dom';
 import theme from '../../../muiTheme';
 import * as LongStrings from '../../../constants/InfoDialogTexts';
 import InfoDialog from '../../../components/InfoDialog';
-import {getWeightedCriteria, updateWeightedCriteria} from '../../../redux/actionsAndSlicers/WeightCriteriaActions';
+import {updateWeightedCriteria} from '../../../redux/actionsAndSlicers/WeightCriteriaActions';
 import {RootState} from '../../../redux/rootReducer';
-import {WeightedCriteria} from '../../../redux/actionsAndSlicers/WeightCriteriaSlice';
-import {getOptionsAndCriteria} from '../../../redux/actionsAndSlicers/OptionsAndCriteriaActions';
-import {OptionsAndCriteriaKeys} from '../../../redux/actionsAndSlicers/OptionsAndCriteriaSlice';
+import WeightedCriteriaSlice, {WeightedCriteria} from '../../../redux/actionsAndSlicers/WeightCriteriaSlice';
 import {ParamTypes} from '../../../App';
 
 const useStyles = makeStyles({
@@ -114,14 +112,43 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
 
 	useEffect(() => {
 		if (!hidden) {
-			getOptionsAndCriteria(dispatch, decisionId, OptionsAndCriteriaKeys.selectionCriteria, false);
-			getWeightedCriteria(dispatch, decisionId);
+			createWeightedCriteria();
 		} else setLocalWeightedCriteria([]);
 	}, [hidden]);
 
-	useEffect(() => {
-		if (weightedCriteria.length > 0) setLocalWeightedCriteria(weightedCriteria);
-	}, [weightedCriteria]);
+	const createWeightedCriteria = () => {
+		let newWeightedCriteria: WeightedCriteria[] = weightedCriteria;
+
+		let id = Math.max(...weightedCriteria.map(object => object.id), 0) + 1;
+
+		for (let i = 0; i < selectionCriteria.length; i += 1) {
+			for (let j = i + 1; j < selectionCriteria.length; j += 1) {
+				const existingWeightedCriteria = newWeightedCriteria.find(
+					weightedCriteriaObj =>
+						(weightedCriteriaObj.selectionCriteria1Id === selectionCriteria[i].id &&
+							weightedCriteriaObj.selectionCriteria2Id === selectionCriteria[j].id) ||
+						(weightedCriteriaObj.selectionCriteria1Id === selectionCriteria[j].id &&
+							weightedCriteriaObj.selectionCriteria2Id === selectionCriteria[i].id)
+				);
+
+				if (existingWeightedCriteria == null) {
+					newWeightedCriteria = [
+						...newWeightedCriteria,
+						{
+							id,
+							weight: 0,
+							selectionCriteria1Id: selectionCriteria[i].id,
+							selectionCriteria2Id: selectionCriteria[j].id,
+						},
+					];
+
+					id += 1;
+				}
+			}
+		}
+
+		dispatch(WeightedCriteriaSlice.actions.setWeightedCriteria(newWeightedCriteria));
+	};
 
 	const onChange = (event: React.BaseSyntheticEvent, value: number, itemLocal: WeightedCriteria) => {
 		setLocalWeightedCriteria(
@@ -189,7 +216,7 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
 						</Typography>
 					</div>
 				</Grid>
-				{LocalWeightedCriteria.map((criteria, index) => (
+				{weightedCriteria.map((criteria, index) => (
 					<Fade in timeout={500} style={{transitionDelay: `${index * 100}ms`}} key={criteria.id}>
 						<Grid item xs={6} className={classes.gridItemCriteria} key={criteria.id}>
 							<Paper elevation={2} className={classes.paper}>
