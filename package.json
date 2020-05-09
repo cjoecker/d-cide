@@ -1,6 +1,7 @@
 {
-	"name": "frontend",
-	"version": "0.1.0",
+	"homepage": "http://cjoecker.github.io/d-cide",
+	"name": "d-cide",
+	"version": "1.0.0",
 	"private": true,
 	"dependencies": {
 		"@material-ui/core": "^4.9.13",
@@ -25,7 +26,9 @@
 		"build": "react-scripts build",
 		"cy:run": "cypress run",
 		"cy:open": "cypress open",
-		"preinstall": "npx npm-force-resolutions"
+		"preinstall": "npx npm-force-resolutions",
+		"predeploy": "npm run build",
+		"deploy": "gh-pages -d build"
 	},
 	"proxy": "http://localhost:8080/",
 	"eslintConfig": {
@@ -59,6 +62,7 @@
 		"eslint-plugin-jsx-a11y": "^6.2.3",
 		"eslint-plugin-react": "^7.19.0",
 		"eslint-plugin-react-hooks": "^4.0.0",
+		"gh-pages": "^2.2.0",
 		"husky": "^4.2.5",
 		"lint-staged": "^10.2.2",
 		"typescript": "^3.8.3"
