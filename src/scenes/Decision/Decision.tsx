@@ -52,7 +52,7 @@ type stepsType = {
 	disabled: boolean;
 	completed: boolean;
 };
-//TODO remove swipeable view
+
 const Decision: React.FC = () => {
 	const [activeStepNum, setActiveStepNum] = useState(1);
 	const [loadedStepNum, setLoadedStepNum] = useState(1);
@@ -142,6 +142,7 @@ const Decision: React.FC = () => {
 				})}
 			</Stepper>
 			<SwipeableViews
+				disabled
 				axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
 				index={activeStepNum - 1}
 				onTransitionEnd={() => setLoadedStepNum(activeStepNum)}
