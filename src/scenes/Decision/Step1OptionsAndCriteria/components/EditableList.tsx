@@ -9,20 +9,19 @@ import AddIcon from '@material-ui/icons/AddRounded';
 import Paper from '@material-ui/core/Paper';
 import {shallowEqual, useDispatch, useSelector} from 'react-redux';
 import Fade from '@material-ui/core/Fade';
-import {useParams} from 'react-router-dom';
 import {TextField} from '@material-ui/core';
 import theme from '../../../../muiTheme';
-import {OptionAndCriteria, OptionsAndCriteriaKeys} from '../../../../redux/actionsAndSlicers/OptionsAndCriteriaSlice';
-import {
-	deleteOptionsAndCriteria,
-	editOptionsAndCriteria,
-	getOptionsAndCriteria,
-	postOptionsAndCriteria,
-} from '../../../../redux/actionsAndSlicers/OptionsAndCriteriaActions';
+import OptionsAndCriteriaSlice, {
+	OptionAndCriteria,
+	OptionsAndCriteriaKeys,
+} from '../../../../redux/actionsAndSlicers/OptionsAndCriteriaSlice';
 import {RootState} from '../../../../redux/rootReducer';
 import AppSlice from '../../../../redux/actionsAndSlicers/AppSlice';
 import {AlertType} from '../../../../constants/Alerts';
-import {ParamTypes} from '../../../../App';
+import {
+	predefinedDecisionOptions,
+	predefinedSelectionCriteria,
+} from '../../../../constants/PredifinedOptionsAndCriteria';
 
 const useStyles = makeStyles({
 	divMain: {
@@ -64,7 +63,6 @@ type Props = {
 };
 
 const EditableList: React.FC<Props> = (props: Props) => {
-	const {decisionId} = useParams<ParamTypes>();
 	const {hidden, notEnoughItemsAlert, itemsKey} = props;
 
 	const [didMount, setDidMount] = useState(false);
@@ -86,7 +84,7 @@ const EditableList: React.FC<Props> = (props: Props) => {
 
 	useEffect(() => {
 		if (!hidden) {
-			getOptionsAndCriteria(dispatch, decisionId, itemsKey, false);
+			if (items.length === 0) createStartItems();
 			setDidMount(true);
 		} else {
 			setLocalItems([]);
@@ -109,7 +107,15 @@ const EditableList: React.FC<Props> = (props: Props) => {
 
 	const onCreateItem = () => {
 		if (newEntry === '') return;
-		postOptionsAndCriteria(dispatch, decisionId, itemsKey, newEntry);
+
+		const newItem: OptionAndCriteria = {
+			id: Math.max(...items.map(object => object.id), 0) + 1,
+			name: newEntry,
+			score: 0,
+		};
+		if (itemsKey === OptionsAndCriteriaKeys.decisionOptions)
+			dispatch(OptionsAndCriteriaSlice.actions.addDecisionOption(newItem));
+		else dispatch(OptionsAndCriteriaSlice.actions.addSelectionCriteria(newItem));
 	};
 
 	const onChangeItem = (event: React.BaseSyntheticEvent, itemId: number) => {
@@ -117,14 +123,31 @@ const EditableList: React.FC<Props> = (props: Props) => {
 	};
 
 	const onLeaveItem = (itemLocal: OptionAndCriteria) => {
-		if (itemLocal.name !== '') editOptionsAndCriteria(dispatch, decisionId, itemsKey, itemLocal);
-		else deleteOptionsAndCriteria(dispatch, decisionId, itemsKey, itemLocal.id);
+		if (itemLocal.name !== '') {
+			if (itemsKey === OptionsAndCriteriaKeys.decisionOptions)
+				dispatch(OptionsAndCriteriaSlice.actions.updateDecisionOption(itemLocal));
+			else dispatch(OptionsAndCriteriaSlice.actions.updateSelectionCriteria(itemLocal));
+		} else if (itemsKey === OptionsAndCriteriaKeys.decisionOptions)
+				dispatch(OptionsAndCriteriaSlice.actions.deleteDecisionOption(itemLocal.id));
+			else dispatch(OptionsAndCriteriaSlice.actions.deleteSelectionCriteria(itemLocal.id));
+	};
+
+	const onDeleteItem = (itemLocal: OptionAndCriteria) => {
+		if (itemsKey === OptionsAndCriteriaKeys.decisionOptions)
+			dispatch(OptionsAndCriteriaSlice.actions.deleteDecisionOption(itemLocal.id));
+		else dispatch(OptionsAndCriteriaSlice.actions.deleteSelectionCriteria(itemLocal.id));
 	};
 
 	const endOfAnimation = (index: number) => {
 		if (index === localItems.length) {
 			setStopAnimation(true);
 		}
+	};
+
+	const createStartItems = () => {
+		if (itemsKey === OptionsAndCriteriaKeys.decisionOptions)
+			dispatch(OptionsAndCriteriaSlice.actions.setDecisionOptions(predefinedDecisionOptions));
+		else dispatch(OptionsAndCriteriaSlice.actions.setSelectionCriteria(predefinedSelectionCriteria));
 	};
 
 	const clearNewEntryWhenCreated = () => {
@@ -207,7 +230,7 @@ const EditableList: React.FC<Props> = (props: Props) => {
 									<IconButton
 										data-testid={`deleteButton${index}`}
 										aria-label='Delete'
-										onClick={() => deleteOptionsAndCriteria(dispatch, decisionId, itemsKey, item.id)}
+										onClick={() => onDeleteItem(item)}
 										className={classes.deleteButton}
 									>
 										<DeleteIcon />
