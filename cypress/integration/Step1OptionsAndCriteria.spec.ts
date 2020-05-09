@@ -38,20 +38,6 @@ context('Actions', () => {
 		it('shows decision options title', () => {
 			cy.contains('Decision Options');
 		});
-
-		describe('Server Error', () => {
-			it("doesn't  create new decision option on server error", () => {
-				ErrorOnAddItem(listName, 'New Item');
-			});
-
-			it('restores decision option value after edit on server error', () => {
-				ErrorOnEditItem(listName, 'New Item', firstDecisionOption);
-			});
-
-			it("doesn't  delete decision option on server error", () => {
-				ErrorOnDeleteItem(listName, firstDecisionOption);
-			});
-		});
 	});
 
 	describe('Selection Criteria', () => {
@@ -83,20 +69,6 @@ context('Actions', () => {
 
 		it('shows selection criteria title', () => {
 			cy.contains('Selection Criteria');
-		});
-
-		describe('Server Error', () => {
-			it("doesn't  create new selection criteria on server error", () => {
-				ErrorOnAddItem(listName, 'New Item');
-			});
-
-			it('restores selection criteria value after edit on server error', () => {
-				ErrorOnEditItem(listName, 'New Item', firstSelectionCriteria);
-			});
-
-			it("doesn't  delete selection criteria on server error", () => {
-				ErrorOnDeleteItem(listName, firstSelectionCriteria);
-			});
 		});
 	});
 
@@ -207,14 +179,15 @@ context('Actions', () => {
 			})
 
 			.getTestElement('warningAlert')
-			.should('have.length', 0)			.getTestElement('NextStepButton')
+			.should('have.length', 0)
+			.getTestElement('NextStepButton')
 			.should('not.be.disabled')
 			.getTestElement('Step2Button')
 			.should('not.be.disabled')
 			.getTestElement('Step3Button')
 			.should('not.be.disabled')
 			.getTestElement('Step4Button')
-			.should('not.be.disabled')
+			.should('not.be.disabled');
 	};
 
 	const showInfoDialog = (infoName: string, title: string) => {
@@ -230,63 +203,5 @@ context('Actions', () => {
 
 			.getTestElement('infoText')
 			.should('have.length', 0);
-	};
-
-	const ErrorOnAddItem = (listName: string, itemText: string) => {
-		cy
-			.getTestElement(listName)
-			.within(() => {
-				cy
-					.server({force404: true})
-					.getTestElement('entryInput')
-					.type(itemText)
-					.getTestElement('addButton')
-					.click()
-
-					.getTestElement('entryInput')
-					.should('have.value', itemText)
-
-					.getTestElement('itemInput')
-					.contains(itemText)
-					.should('not.exist');
-			})
-			.getTestElement('errorAlert')
-			.should('have.length', 1);
-	};
-
-	const ErrorOnEditItem = (listName: string, newItemText: string, initialItemText: string) => {
-		cy
-			.getTestElement(listName)
-			.within(() => {
-				cy
-					.server({force404: true})
-					.getTestElement('itemInput')
-					.first()
-					.clear()
-					.type(newItemText)
-					.blur()
-
-					.getTestElement('itemInput')
-					.first()
-					.should('have.value', initialItemText);
-			})
-			.getTestElement('errorAlert')
-			.should('have.length', 1);
-	};
-
-	const ErrorOnDeleteItem = (listName: string, itemText: string) => {
-		cy
-			.getTestElement(listName)
-			.within(() => {
-				cy
-					.server({force404: true})
-					.getTestElement('deleteButton0')
-					.click()
-
-					.getTestElement('itemInput')
-					.should('have.value', itemText);
-			})
-			.getTestElement('errorAlert')
-			.should('have.length', 1);
 	};
 });
