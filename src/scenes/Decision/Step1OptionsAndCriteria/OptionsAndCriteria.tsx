@@ -8,7 +8,7 @@ import InfoDialog from '../../../components/InfoDialog';
 import EditableList from './components/EditableList';
 import theme from '../../../muiTheme';
 import {DecisionOptionInfo, SelectionCriteriaInfo} from '../../../constants/InfoDialogTexts';
-import {OptionsAndCriteriaKeys} from '../../../redux/actionsAndSlicers/OptionsAndCriteriaSlice';
+import {OptionsAndCriteriaKeys} from '../../../services/actionsAndSlicers/OptionsAndCriteriaSlice';
 import {NOT_ENOUGH_CRITERIA, NOT_ENOUGH_OPTIONS} from '../../../constants/Alerts';
 
 const useStyles = makeStyles({

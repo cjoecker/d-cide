@@ -1,7 +1,7 @@
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 // eslint-disable-next-line @typescript-eslint/camelcase
-import jwt_decode from "jwt-decode";
-import { LoginResponse } from "./SessionActions";
+import jwt_decode from 'jwt-decode';
+import {LoginResponse} from './SessionActions';
 
 type SessionState = {
 	signUpSuccessful: boolean;

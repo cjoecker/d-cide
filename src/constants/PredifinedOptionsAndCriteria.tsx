@@ -1,4 +1,4 @@
-import {OptionAndCriteria} from '../redux/actionsAndSlicers/OptionsAndCriteriaSlice';
+import {OptionAndCriteria} from '../services/actionsAndSlicers/OptionsAndCriteriaSlice';
 
 export const predefinedDecisionOptions: OptionAndCriteria[] = [
 	{

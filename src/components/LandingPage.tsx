@@ -1,9 +1,9 @@
-import React, { useEffect } from "react";
-import { shallowEqual, useDispatch, useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
-import { RootState } from "../redux/rootReducer";
-import { getDecisions } from "../redux/actionsAndSlicers/DecisionsActions";
-import { createUnregisteredUser } from "../redux/actionsAndSlicers/SessionActions";
+import React, {useEffect} from 'react';
+import {shallowEqual, useDispatch, useSelector} from 'react-redux';
+import {useHistory} from 'react-router-dom';
+import {RootState} from '../services/rootReducer';
+import {getDecisions} from '../services/actionsAndSlicers/DecisionsActions';
+import {createUnregisteredUser} from '../services/actionsAndSlicers/SessionActions';
 
 const LandingPage: React.FC = () => {
 	const {token} = useSelector((state: RootState) => state.Session, shallowEqual);

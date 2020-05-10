@@ -1,10 +1,10 @@
 ///<reference types="webpack-env" />
-import React from "react";
-import ReactDOM from "react-dom";
-import { Provider } from "react-redux";
-import "./index.css";
-import { BrowserRouter as Router } from "react-router-dom";
-import store from "./redux/store";
+import React from 'react';
+import ReactDOM from 'react-dom';
+import {Provider} from 'react-redux';
+import './index.css';
+import {BrowserRouter as Router} from 'react-router-dom';
+import store from './services/store';
 
 const App = require('./App').default;
 

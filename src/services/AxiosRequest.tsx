@@ -1,8 +1,8 @@
-import { AxiosError, AxiosPromise, AxiosResponse } from "axios";
-import { ActionCreatorWithPayload } from "@reduxjs/toolkit";
-import { AppDispatch, AppThunk } from "./store";
-import AppSlice from "./actionsAndSlicers/AppSlice";
-import { showHTTPAlert } from "./actionsAndSlicers/AppActions";
+import {AxiosError, AxiosPromise, AxiosResponse} from 'axios';
+import {ActionCreatorWithPayload} from '@reduxjs/toolkit';
+import {AppDispatch, AppThunk} from './store';
+import AppSlice from './actionsAndSlicers/AppSlice';
+import {showHTTPAlert} from './actionsAndSlicers/AppActions';
 
 export interface SuccessExtraActionType {
 	(dispatch: AppDispatch, answer: AxiosResponse): void;

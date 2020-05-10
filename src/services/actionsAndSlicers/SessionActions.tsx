@@ -1,13 +1,13 @@
-import axios, { AxiosResponse } from "axios";
+import axios, {AxiosResponse} from 'axios';
 // eslint-disable-next-line @typescript-eslint/camelcase
-import jwt_decode from "jwt-decode";
-import store, { AppDispatch } from "../store";
-import { AxiosRequest, SuccessExtraActionType } from "../AxiosRequest";
-import SessionSlice, { User } from "./SessionSlice";
-import DecisionsSlice from "./DecisionsSlice";
-import OptionsAndCriteriaSlice from "./OptionsAndCriteriaSlice";
-import RatedOptionsSlice from "./RatedOptionsSlice";
-import WeightedCriteriaSlice from "./WeightCriteriaSlice";
+import jwt_decode from 'jwt-decode';
+import store, {AppDispatch} from '../store';
+import {AxiosRequest, SuccessExtraActionType} from '../AxiosRequest';
+import SessionSlice, {User} from './SessionSlice';
+import DecisionsSlice from './DecisionsSlice';
+import OptionsAndCriteriaSlice from './OptionsAndCriteriaSlice';
+import RatedOptionsSlice from './RatedOptionsSlice';
+import WeightedCriteriaSlice from './WeightCriteriaSlice';
 
 export type LoginResponse = {
 	success: boolean;

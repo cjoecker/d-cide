@@ -10,12 +10,12 @@ import Toolbar from '@material-ui/core/Toolbar';
 import {HashRouter, Route, Switch} from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
-import {RootState} from './redux/rootReducer';
+import {RootState} from './services/rootReducer';
 import Decision from './scenes/Decision/Decision';
 import AlertsBanner from './components/AlertsBanner';
 import theme from './muiTheme';
 import imgDcideLogo from './images/d-cide_Logo.svg';
-import {verifyToken} from './redux/actionsAndSlicers/SessionActions';
+import {verifyToken} from './services/actionsAndSlicers/SessionActions';
 import NotFound from './scenes/NotFound/NotFound';
 
 //TODO imprint and privacy links

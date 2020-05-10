@@ -10,9 +10,9 @@ import {shallowEqual, useDispatch, useSelector} from 'react-redux';
 import Fade from '@material-ui/core/Fade';
 import * as LongStrings from '../../../constants/InfoDialogTexts';
 import InfoDialog from '../../../components/InfoDialog';
-import {RootState} from '../../../redux/rootReducer';
+import {RootState} from '../../../services/rootReducer';
 import theme from '../../../muiTheme';
-import RatedOptionsSlice, {RatedOption} from '../../../redux/actionsAndSlicers/RatedOptionsSlice';
+import RatedOptionsSlice, {RatedOption} from '../../../services/actionsAndSlicers/RatedOptionsSlice';
 
 const useStyles = makeStyles({
 	divMain: {
