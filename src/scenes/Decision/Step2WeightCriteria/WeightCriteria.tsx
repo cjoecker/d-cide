@@ -8,13 +8,11 @@ import IconButton from '@material-ui/core/IconButton';
 import {shallowEqual, useDispatch, useSelector} from 'react-redux';
 import Fade from '@material-ui/core/Fade';
 import {makeStyles} from '@material-ui/core/styles';
-import {useParams} from 'react-router-dom';
 import theme from '../../../muiTheme';
 import * as LongStrings from '../../../constants/InfoDialogTexts';
 import InfoDialog from '../../../components/InfoDialog';
 import {RootState} from '../../../redux/rootReducer';
 import WeightedCriteriaSlice, {WeightedCriteria} from '../../../redux/actionsAndSlicers/WeightCriteriaSlice';
-import {ParamTypes} from '../../../App';
 
 const useStyles = makeStyles({
 	divMain: {
@@ -80,7 +78,6 @@ type Props = {
 };
 
 const WeightCriteria: React.FC<Props> = (props: Props) => {
-	const {decisionId} = useParams<ParamTypes>();
 	const {hidden} = props;
 
 	const [showInfo, setShowInfo] = useState(false);
@@ -120,6 +117,26 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
 		if (weightedCriteria.length > 0) setLocalWeightedCriteria(weightedCriteria);
 	}, [weightedCriteria]);
 
+	const onChange = (event: React.BaseSyntheticEvent, value: number, itemLocal: WeightedCriteria) => {
+		setLocalWeightedCriteria(
+			localWeightedCriteria.map(criteria => {
+				if (criteria.id === itemLocal.id) {
+					return {...criteria, weight: value};
+				}
+				return criteria;
+			})
+		);
+	};
+
+	const onChangeCommitted = (value: number, itemLocal: WeightedCriteria) => {
+		dispatch(
+			WeightedCriteriaSlice.actions.updateWeightedCriteria({
+				...itemLocal,
+				weight: value,
+			})
+		);
+	};
+
 	const createWeightedCriteria = () => {
 		let newWeightedCriteria: WeightedCriteria[] = weightedCriteria;
 
@@ -152,26 +169,6 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
 		}
 
 		dispatch(WeightedCriteriaSlice.actions.setWeightedCriteria(newWeightedCriteria));
-	};
-
-	const onChange = (event: React.BaseSyntheticEvent, value: number, itemLocal: WeightedCriteria) => {
-		setLocalWeightedCriteria(
-			localWeightedCriteria.map(criteria => {
-				if (criteria.id === itemLocal.id) {
-					return {...criteria, weight: value};
-				}
-				return criteria;
-			})
-		);
-	};
-
-	const onChangeCommitted = (value: number, itemLocal: WeightedCriteria) => {
-		dispatch(
-			WeightedCriteriaSlice.actions.updateWeightedCriteria({
-				...itemLocal,
-				weight: value,
-			})
-		);
 	};
 
 	const getSelectionCriteriaName = (selectionCriteriaId: number) => {

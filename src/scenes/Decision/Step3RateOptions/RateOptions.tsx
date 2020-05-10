@@ -8,16 +8,11 @@ import IconButton from '@material-ui/core/IconButton';
 import InfoIcon from '@material-ui/icons/Info';
 import {shallowEqual, useDispatch, useSelector} from 'react-redux';
 import Fade from '@material-ui/core/Fade';
-import {useParams} from 'react-router-dom';
 import * as LongStrings from '../../../constants/InfoDialogTexts';
 import InfoDialog from '../../../components/InfoDialog';
 import {RootState} from '../../../redux/rootReducer';
 import theme from '../../../muiTheme';
-import {RatedOption} from '../../../redux/actionsAndSlicers/RatedOptionsSlice';
-import {getRatedOptions, updateRatedOptions} from '../../../redux/actionsAndSlicers/RatedOptionsActions';
-import {getOptionsAndCriteria} from '../../../redux/actionsAndSlicers/OptionsAndCriteriaActions';
-import {OptionsAndCriteriaKeys} from '../../../redux/actionsAndSlicers/OptionsAndCriteriaSlice';
-import {ParamTypes} from '../../../App';
+import RatedOptionsSlice, {RatedOption} from '../../../redux/actionsAndSlicers/RatedOptionsSlice';
 
 const useStyles = makeStyles({
 	divMain: {
@@ -99,13 +94,10 @@ type Props = {
 };
 
 const RateOptions: React.FC<Props> = (props: Props) => {
-	const {decisionId} = useParams<ParamTypes>();
 	const {hidden} = props;
 
 	const [showInfo, setShowInfo] = useState(false);
 	const [startAnimation, setStartAnimation] = useState(false);
-
-	const [LocalRatedOptions, setLocalRatedOptions] = useState<RatedOption[]>([]);
 
 	const {selectionCriteria, decisionOptions} = useSelector((state: RootState) => state.OptionsAndCriteria, shallowEqual);
 
@@ -134,50 +126,58 @@ const RateOptions: React.FC<Props> = (props: Props) => {
 
 	useEffect(() => {
 		if (!hidden) {
-			getOptionsAndCriteria(dispatch, decisionId, OptionsAndCriteriaKeys.selectionCriteria, false);
-			getOptionsAndCriteria(dispatch, decisionId, OptionsAndCriteriaKeys.decisionOptions, false);
-			getRatedOptions(dispatch, decisionId);
+			createRatedOptions();
+			setStartAnimation(true);
 		} else {
-			setLocalRatedOptions([]);
 			setStartAnimation(false);
 		}
 	}, [hidden]);
 
-	useEffect(() => {
-		if (ratedOptions.length !== LocalRatedOptions.length) setStartAnimation(true);
-		if (ratedOptions.length > 0) setLocalRatedOptions(ratedOptions);
-	}, [ratedOptions]);
-
 	const onChange = (event: React.BaseSyntheticEvent, criteriaId: number, optionId: number, score: number) => {
-		setLocalRatedOptions(
-			LocalRatedOptions.map(option => {
-				if (option.selectionCriteriaId === criteriaId && option.decisionOptionId === optionId) {
-					return {...option, score};
-				}
-				return option;
-			})
-		);
-	};
-
-	const onChangeCommitted = (value: number, criteriaId: number, optionId: number) => {
-		const FoundRatedOption = LocalRatedOptions.find(
-			obj => obj.selectionCriteriaId === criteriaId && obj.decisionOptionId === optionId
-		);
-
-		updateRatedOptions(dispatch, decisionId, {
-			...FoundRatedOption,
-			score: value,
+		ratedOptions.forEach(option => {
+			if (option.selectionCriteriaId === criteriaId && option.decisionOptionId === optionId)
+				dispatch(RatedOptionsSlice.actions.updateRatedOptions({...option, score}));
 		});
 	};
 
+	const createRatedOptions = () => {
+		let newRatedOption: RatedOption[] = ratedOptions;
+
+		let id = Math.max(...ratedOptions.map(object => object.id), 0) + 1;
+
+		decisionOptions.forEach(option => {
+			selectionCriteria.forEach(criteria => {
+				const foundRatedOption = ratedOptions.find(
+					obj => obj.selectionCriteriaId === criteria.id && obj.decisionOptionId === option.id
+				);
+
+				if (foundRatedOption == null) {
+					newRatedOption = [
+						...newRatedOption,
+						{
+							id,
+							score: 50,
+							decisionOptionId: option.id,
+							selectionCriteriaId: criteria.id,
+						},
+					];
+
+					id += 1;
+				}
+			});
+		});
+
+		dispatch(RatedOptionsSlice.actions.setRatedOptions(newRatedOption));
+	};
+
 	const getScore = (criteriaId: number, optionId: number): number => {
-		const FoundRatedOption = LocalRatedOptions.find(
+		const foundRatedOption = ratedOptions.find(
 			obj => obj.selectionCriteriaId === criteriaId && obj.decisionOptionId === optionId
 		);
 
-		return FoundRatedOption == null ? 50 : FoundRatedOption.score;
+		return foundRatedOption == null ? 50 : foundRatedOption.score;
 	};
-
+	//TODO don't allow to select text on scroll
 	return (
 		<div className={classes.divMain}>
 			<Grid container justify='center' alignContent='center'>
@@ -263,7 +263,6 @@ const RateOptions: React.FC<Props> = (props: Props) => {
 																	step={1}
 																	marks={sliderMarks}
 																	onChange={(event, value) => onChange(event, criteria.id, option.id, value as number)}
-																	onChangeCommitted={(event, value) => onChangeCommitted(value as number, criteria.id, option.id)}
 																/>
 															</Grid>
 														</Grid>
