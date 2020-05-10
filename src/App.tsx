@@ -87,7 +87,7 @@ const useStyles = makeStyles({
 		cursor: 'pointer',
 	},
 });
-
+//TODO remove # from router path
 const App: React.FC = () => {
 	const {isLoading} = useSelector((state: RootState) => state.App, shallowEqual);
 	const classes = useStyles();

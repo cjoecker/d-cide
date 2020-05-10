@@ -81,7 +81,8 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
 	const {hidden} = props;
 
 	const [showInfo, setShowInfo] = useState(false);
-	const [localWeightedCriteria, setLocalWeightedCriteria] = useState<WeightedCriteria[]>([]);
+	const [startAnimation, setStartAnimation] = useState(false);
+
 	const selectionCriteria = useSelector((state: RootState) => state.OptionsAndCriteria.selectionCriteria, shallowEqual);
 	const weightedCriteria = useSelector((state: RootState) => state.WeightedCriteria, shallowEqual);
 
@@ -109,32 +110,17 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
 	useEffect(() => {
 		if (!hidden) {
 			createWeightedCriteria();
-			setLocalWeightedCriteria(weightedCriteria);
-		} else setLocalWeightedCriteria([]);
+			setStartAnimation(true);
+		} else {
+			setStartAnimation(false);
+		}
 	}, [hidden]);
 
-	useEffect(() => {
-		if (weightedCriteria.length > 0) setLocalWeightedCriteria(weightedCriteria);
-	}, [weightedCriteria]);
-
 	const onChange = (event: React.BaseSyntheticEvent, value: number, itemLocal: WeightedCriteria) => {
-		setLocalWeightedCriteria(
-			localWeightedCriteria.map(criteria => {
-				if (criteria.id === itemLocal.id) {
-					return {...criteria, weight: value};
-				}
-				return criteria;
-			})
-		);
-	};
-
-	const onChangeCommitted = (value: number, itemLocal: WeightedCriteria) => {
-		dispatch(
-			WeightedCriteriaSlice.actions.updateWeightedCriteria({
-				...itemLocal,
-				weight: value,
-			})
-		);
+		weightedCriteria.forEach(criteria => {
+			if (criteria.id === itemLocal.id)
+				dispatch(WeightedCriteriaSlice.actions.updateWeightedCriteria({...criteria, weight: value}));
+		});
 	};
 
 	const createWeightedCriteria = () => {
@@ -219,8 +205,8 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
 						</Typography>
 					</div>
 				</Grid>
-				{localWeightedCriteria.map((criteria, index) => (
-					<Fade in timeout={500} style={{transitionDelay: `${index * 100}ms`}} key={criteria.id}>
+				{weightedCriteria.map((criteria, index) => (
+					<Fade in={startAnimation} timeout={500} style={{transitionDelay: `${index * 100}ms`}} key={criteria.id}>
 						<Grid item xs={6} className={classes.gridItemCriteria} key={criteria.id}>
 							<Paper elevation={2} className={classes.paper}>
 								<Grid container spacing={2} alignItems='center'>
@@ -249,7 +235,6 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
 											step={1}
 											marks={sliderMarks}
 											onChange={(event, value) => onChange(event, value as number, criteria)}
-											onChangeCommitted={(event, value) => onChangeCommitted(value as number, criteria)}
 										/>
 									</Grid>
 									<Grid item xs={12} className={classes.gridItemSliderInfo}>
