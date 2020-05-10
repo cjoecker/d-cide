@@ -11,8 +11,8 @@ import {makeStyles} from '@material-ui/core/styles';
 import theme from '../../../muiTheme';
 import * as LongStrings from '../../../constants/InfoDialogTexts';
 import InfoDialog from '../../../components/InfoDialog';
-import {RootState} from '../../../services/rootReducer';
-import WeightedCriteriaSlice, {WeightedCriteria} from '../../../services/actionsAndSlicers/WeightCriteriaSlice';
+import {RootState} from '../../../services/redux/rootReducer';
+import WeightedCriteriaSlice, {WeightedCriteria} from '../../../services/redux/actionsAndSlicers/WeightCriteriaSlice';
 
 const useStyles = makeStyles({
 	divMain: {

@@ -3,7 +3,7 @@ import Grid from '@material-ui/core/Grid';
 import {makeStyles} from '@material-ui/core/styles';
 import * as LongStrings from '../../../constants/InfoDialogTexts';
 import theme from '../../../muiTheme';
-import {OptionsAndCriteriaKeys} from '../../../services/actionsAndSlicers/OptionsAndCriteriaSlice';
+import {OptionsAndCriteriaKeys} from '../../../services/redux/actionsAndSlicers/OptionsAndCriteriaSlice';
 import ResultsChart from './components/ResultsChart';
 
 const useStyles = makeStyles({

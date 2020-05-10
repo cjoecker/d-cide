@@ -1,6 +1,6 @@
 import {Dispatch} from 'redux';
 import {AxiosError} from 'axios';
-import {HTTP_ERROR} from '../../constants/Alerts';
+import {HTTP_ERROR} from '../../../constants/Alerts';
 import AppSlice from './AppSlice';
 
 // eslint-disable-next-line import/prefer-default-export

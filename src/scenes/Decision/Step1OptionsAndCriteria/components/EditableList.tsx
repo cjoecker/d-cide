@@ -14,9 +14,9 @@ import theme from '../../../../muiTheme';
 import OptionsAndCriteriaSlice, {
 	OptionAndCriteria,
 	OptionsAndCriteriaKeys,
-} from '../../../../services/actionsAndSlicers/OptionsAndCriteriaSlice';
-import {RootState} from '../../../../services/rootReducer';
-import AppSlice from '../../../../services/actionsAndSlicers/AppSlice';
+} from '../../../../services/redux/actionsAndSlicers/OptionsAndCriteriaSlice';
+import {RootState} from '../../../../services/redux/rootReducer';
+import AppSlice from '../../../../services/redux/actionsAndSlicers/AppSlice';
 import {AlertType} from '../../../../constants/Alerts';
 import {
 	predefinedDecisionOptions,
