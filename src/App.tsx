@@ -14,7 +14,7 @@ import imgDcideLogo from './images/d-cide_Logo.svg';
 const useStyles = makeStyles({
 	divMain: {
 		flexGrow: 1,
-		width: '99.9%',
+		width: '100%', //Avoid horizontal scroll in mobile
 		overflowX: 'hidden', //Avoid negative margin from mainGrid
 		display: 'flex',
 		flexDirection: 'column',
