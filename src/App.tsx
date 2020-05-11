@@ -2,7 +2,6 @@ import React from 'react';
 import './index.css';
 import AppBar from '@material-ui/core/AppBar';
 import {makeStyles, ThemeProvider} from '@material-ui/core/styles';
-import CardMedia from '@material-ui/core/CardMedia';
 import Link from '@material-ui/core/Link';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
@@ -32,15 +31,9 @@ const useStyles = makeStyles({
 		justifyItems: 'center',
 	},
 
-	divLogoDcide: {
-		height: '100%',
-		marginLeft: theme.spacing(-1),
-		backgroundColor: 'red',
-	},
-
 	imgDcideLogo: {
-		width: theme.spacing(17),
-		height: '100%',
+		maxWidth: theme.spacing(17),
+		marginLeft: theme.spacing(-1),
 	},
 
 	divRouter: {
@@ -67,16 +60,7 @@ const App: React.FC = () => {
 			<div className={classes.divMain}>
 				<AppBar position='static' color='primary' className={classes.appBar}>
 					<Toolbar>
-						<div className={classes.divLogoDcide} data-testid='d-cideLogo'>
-							<Link
-								href='/'
-								style={{
-									textDecoration: 'none',
-								}}
-							>
-								<CardMedia className={classes.imgDcideLogo} image={imgDcideLogo} title='d-cide imgDcideLogo' />
-							</Link>
-						</div>
+						<img className={classes.imgDcideLogo} src={imgDcideLogo} alt='d-cide imgDcideLogo' />
 					</Toolbar>
 				</AppBar>
 
