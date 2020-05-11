@@ -33,7 +33,7 @@ const useStyles = makeStyles({
 
 	buttonNext: {
 		position: 'fixed',
-		bottom: theme.spacing(1),
+		bottom: 'env(safe-area-inset-bottom)',
 		right: theme.spacing(1),
 		margin: theme.spacing(1),
 	},
