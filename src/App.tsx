@@ -51,7 +51,7 @@ const useStyles = makeStyles({
 		cursor: 'pointer',
 	},
 });
-//TODO remove # from router path
+
 const App: React.FC = () => {
 	const classes = useStyles();
 

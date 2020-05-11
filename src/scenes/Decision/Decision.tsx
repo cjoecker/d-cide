@@ -33,15 +33,15 @@ const useStyles = makeStyles({
 
 	buttonNext: {
 		position: 'fixed',
-		bottom: 0,
-		right: 0,
+		bottom: theme.spacing(1),
+		right: theme.spacing(1),
 		margin: theme.spacing(1),
 	},
 
 	buttonBack: {
 		position: 'fixed',
-		bottom: 0,
-		left: 0,
+		bottom: theme.spacing(1),
+		left: theme.spacing(1),
 		margin: theme.spacing(1),
 	},
 });
