@@ -42,7 +42,7 @@ const useStyles = makeStyles({
 
 	footer: {
 		marginTop: 'auto',
-		marginBottom: theme.spacing(0.5),
+		marginBottom: theme.spacing(1),
 	},
 	footerLegalText: {
 		marginTop: -theme.spacing(0.5),
