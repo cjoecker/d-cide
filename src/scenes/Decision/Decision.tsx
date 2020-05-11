@@ -34,14 +34,14 @@ const useStyles = makeStyles({
 	buttonNext: {
 		position: 'fixed',
 		bottom: 'env(safe-area-inset-bottom)',
-		right: theme.spacing(1),
+		right: 'env(safe-area-inset-right)',
 		margin: theme.spacing(1),
 	},
 
 	buttonBack: {
 		position: 'fixed',
 		bottom: 'env(safe-area-inset-bottom)',
-		left: theme.spacing(1),
+		left: 'env(safe-area-inset-left)',
 		margin: theme.spacing(1),
 	},
 });
