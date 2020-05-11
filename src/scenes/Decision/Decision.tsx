@@ -119,8 +119,8 @@ const Decision: React.FC = () => {
 
 	const changeStep = (stepNumber: number) => {
 		setStepCompleted(activeStepNum);
-
 		setActiveStepNum(stepNumber);
+		window.scrollTo(0, 0);
 	};
 
 	return (
