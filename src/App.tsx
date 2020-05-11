@@ -46,17 +46,6 @@ const useStyles = makeStyles({
 		height: '100%',
 	},
 
-	divLogoMaibornWolff: {
-		position: 'absolute',
-		right: theme.spacing(1),
-		height: '60%',
-	},
-
-	imgMaibornWolffLogo: {
-		width: theme.spacing(7),
-		height: '100%',
-	},
-
 	divRouter: {
 		marginTop: theme.spacing(6),
 	},
