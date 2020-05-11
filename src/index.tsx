@@ -3,7 +3,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {Provider} from 'react-redux';
 import './index.css';
-import {BrowserRouter as Router} from 'react-router-dom';
 import store from './services/redux/store';
 
 const App = require('./App').default;
@@ -11,9 +10,7 @@ const App = require('./App').default;
 const render = () => {
 	ReactDOM.render(
 		<Provider store={store}>
-			<Router>
-				<App />
-			</Router>
+			<App />
 		</Provider>,
 		document.getElementById('root')
 	);

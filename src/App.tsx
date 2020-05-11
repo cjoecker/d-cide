@@ -5,16 +5,12 @@ import {makeStyles, ThemeProvider} from '@material-ui/core/styles';
 import CardMedia from '@material-ui/core/CardMedia';
 import Link from '@material-ui/core/Link';
 import Toolbar from '@material-ui/core/Toolbar';
-import {HashRouter, Route, Switch} from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Decision from './scenes/Decision/Decision';
 import AlertsBanner from './components/AlertsBanner';
 import theme from './muiTheme';
 import imgDcideLogo from './images/d-cide_Logo.svg';
-import NotFound from './scenes/NotFound/NotFound';
-
-//TODO imprint and privacy links
 
 const useStyles = makeStyles({
 	divMain: {
@@ -84,12 +80,7 @@ const App: React.FC = () => {
 				</AppBar>
 
 				<div className={classes.divRouter}>
-					<HashRouter basename={process.env.PUBLIC_URL}>
-						<Switch>
-							<Route exact path='/' component={Decision} />
-							<Route component={NotFound} />
-						</Switch>
-					</HashRouter>
+					<Decision />
 				</div>
 				<Grid className={classes.footer} container justify='center' alignContent='center'>
 					<Typography component='span' variant='caption' align='center'>
