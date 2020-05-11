@@ -89,35 +89,6 @@ context('Actions', () => {
 			.contains(`${criteriaRight} is way more important than ${criteriaLeft}`);
 	});
 
-	it('moves slider to original position on server down', () => {
-		let criteriaLeft = '';
-		let criteriaRight = '';
-
-		cy
-			.get(`[data-testid="textSlider0CriteriaLeft"]`)
-			.invoke('text')
-			.then(text => {
-				criteriaLeft = text;
-			})
-
-			.get(`[data-testid="textSlider0CriteriaRight"]`)
-			.invoke('text')
-			.then(text => {
-				criteriaRight = text;
-			})
-
-			.server({force404: true})
-			.getTestElement(`slider0`)
-			.trigger('mousedown', 'left')
-			.getTestElement(`infoTextSlider0`)
-			.trigger('mouseup', {force: true})
-
-			.contains(`${criteriaLeft} is as important as ${criteriaRight}`)
-
-			.getTestElement('errorAlert')
-			.should('have.length', 1);
-	});
-
 	it('shows sliders', () => {
 		cy.getTestElementStartingWith(`slider`).should('have.length', 6);
 	});
