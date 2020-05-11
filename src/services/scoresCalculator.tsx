@@ -12,7 +12,13 @@ export const calculateOptionsScores = (
 ) => {
 	const weightSum = weightedCriteria.reduce((a, b) => +a + +Math.abs(b.weight), 0);
 
-	calculateCriteriaScores(dispatch, decisionOptions, selectionCriteria, weightedCriteria, weightSum);
+	const newSelectionCriteria = calculateCriteriaScores(
+		dispatch,
+		decisionOptions,
+		selectionCriteria,
+		weightedCriteria,
+		weightSum
+	);
 
 	decisionOptions.forEach(option => {
 		let score = 0;
@@ -20,7 +26,9 @@ export const calculateOptionsScores = (
 		ratedOptions
 			.filter(ratedOption => ratedOption.decisionOptionId === option.id)
 			.forEach(ratedOption => {
-				const selectionCriteriaLocal = selectionCriteria.find(criteria => criteria.id === ratedOption.selectionCriteriaId);
+				const selectionCriteriaLocal = newSelectionCriteria.find(
+					criteria => criteria.id === ratedOption.selectionCriteriaId
+				);
 				if (selectionCriteriaLocal != null) score += ratedOption.score * selectionCriteriaLocal.score;
 			});
 
@@ -36,7 +44,9 @@ export const calculateCriteriaScores = (
 	selectionCriteria: OptionAndCriteria[],
 	weightedCriteria: WeightedCriteria[],
 	weightSum: number
-) => {
+): OptionAndCriteria[] => {
+	const newSelectionCriteria: OptionAndCriteria[] = [];
+
 	selectionCriteria.forEach(criteria => {
 		let score = 0;
 		const summedCriteria = sumWeightedCriteriaOfSelectionCriteria(weightedCriteria, criteria.id);
@@ -44,7 +54,10 @@ export const calculateCriteriaScores = (
 		if (summedCriteria !== 0) score = +Math.min((summedCriteria / weightSum) * 10, 10).toFixed(1);
 
 		dispatch(OptionsAndCriteriaSlice.actions.updateSelectionCriteria({...criteria, score}));
+
+		newSelectionCriteria.push({...criteria, score});
 	});
+	return newSelectionCriteria;
 };
 
 const sumWeightedCriteriaOfSelectionCriteria = (
