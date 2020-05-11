@@ -71,7 +71,7 @@ const ResultsChart: React.FC<Props> = (props: Props) => {
 
 	useEffect(() => {
 		if (items.length !== localItems.length && !hidden) {
-			setLocalItems(wrapLongWords(items));
+			setLocalItems(wrapLongWords(getSortedItems(items)));
 			setStartAnimation(true);
 		}
 	}, [items]);
@@ -89,6 +89,12 @@ const ResultsChart: React.FC<Props> = (props: Props) => {
 				return {...item, name: newName};
 			}
 			return item;
+		});
+	};
+
+	const getSortedItems = (itemsLocal: OptionAndCriteria[]): OptionAndCriteria[] => {
+		return [...itemsLocal].sort((a, b) => {
+			return b.score - a.score;
 		});
 	};
 

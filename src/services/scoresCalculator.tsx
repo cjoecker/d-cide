@@ -1,22 +1,32 @@
-import {shallowEqual, useDispatch, useSelector} from 'react-redux';
-import OptionsAndCriteriaSlice from './redux/actionsAndSlicers/OptionsAndCriteriaSlice';
-import {RootState} from './redux/rootReducer';
+import OptionsAndCriteriaSlice, {OptionAndCriteria} from './redux/actionsAndSlicers/OptionsAndCriteriaSlice';
 import {WeightedCriteria} from './redux/actionsAndSlicers/WeightCriteriaSlice';
+import {AppDispatch} from './redux/store';
+import {RatedOption} from './redux/actionsAndSlicers/RatedOptionsSlice';
 
-export const calculateOptionsScores = () => {
-	calculateCriteriaScores();
+export const calculateOptionsScores = (
+	dispatch: AppDispatch,
+	decisionOptions: OptionAndCriteria[],
+	selectionCriteria: OptionAndCriteria[],
+	weightedCriteria: WeightedCriteria[],
+	ratedOptions: RatedOption[]
+) => {
+	calculateCriteriaScores(dispatch, decisionOptions, selectionCriteria, weightedCriteria);
 };
 
-export const calculateCriteriaScores = () => {
-	const dispatch = useDispatch();
-
-	const selectionCriteria = useSelector((state: RootState) => state.OptionsAndCriteria.selectionCriteria, shallowEqual);
-	const weightedCriteria = useSelector((state: RootState) => state.WeightedCriteria, shallowEqual);
-
-	const weightSum = weightedCriteria.reduce((a, b) => +a + +b.weight, 0);
+export const calculateCriteriaScores = (
+	dispatch: AppDispatch,
+	decisionOptions: OptionAndCriteria[],
+	selectionCriteria: OptionAndCriteria[],
+	weightedCriteria: WeightedCriteria[]
+) => {
+	const weightSum = weightedCriteria.reduce((a, b) => +a + +Math.abs(b.weight), 0);
 
 	selectionCriteria.forEach(criteria => {
-		const weight = Math.min((sumWeightedCriteriaOfSelectionCriteria(weightedCriteria, criteria.id) / weightSum) * 10, 10);
+		let weight = 0;
+		const summedCriteria = sumWeightedCriteriaOfSelectionCriteria(weightedCriteria, criteria.id);
+
+		if (summedCriteria !== 0) weight = +Math.min((summedCriteria / weightSum) * 10, 10).toFixed(1);
+
 		dispatch(OptionsAndCriteriaSlice.actions.updateSelectionCriteria({...criteria, score: weight}));
 	});
 };
