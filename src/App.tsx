@@ -23,10 +23,9 @@ const useStyles = makeStyles({
 
 	appBar: {
 		position: 'fixed',
-		Top: 0,
+		Top: 'env(safe-area-inset-top)',
 		marginBottom: theme.spacing(2),
 		height: theme.spacing(6),
-		width: '100%',
 		justifyContent: 'center',
 		justifyItems: 'center',
 		paddingLeft: 'env(safe-area-inset-left)',
