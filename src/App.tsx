@@ -29,6 +29,8 @@ const useStyles = makeStyles({
 		width: '100%',
 		justifyContent: 'center',
 		justifyItems: 'center',
+		paddingLeft: 'env(safe-area-inset-left)',
+		paddingRight: 'env(safe-area-inset-right)',
 	},
 
 	imgDcideLogo: {
