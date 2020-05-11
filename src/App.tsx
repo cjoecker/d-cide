@@ -35,6 +35,7 @@ const useStyles = makeStyles({
 	divLogoDcide: {
 		height: '100%',
 		marginLeft: theme.spacing(-1),
+		backgroundColor: 'red',
 	},
 
 	imgDcideLogo: {
