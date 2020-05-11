@@ -2,12 +2,10 @@ import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {AlertType} from '../../../constants/Alerts';
 
 type AppState = {
-	isLoading: number;
 	alerts: AlertType[];
 };
 
 const initialState: AppState = {
-	isLoading: 0,
 	alerts: [],
 };
 
@@ -15,12 +13,6 @@ const AppSlice = createSlice({
 	name: 'App',
 	initialState,
 	reducers: {
-		startLoading(state) {
-			state.isLoading += 1;
-		},
-		endLoading(state) {
-			state.isLoading -= 1;
-		},
 		addAlert(state, action: PayloadAction<AlertType>) {
 			state.alerts = state.alerts.some(alert => JSON.stringify(alert) === JSON.stringify(action.payload))
 				? state.alerts

@@ -1,14 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import {Bar, BarChart, CartesianGrid, Cell, Rectangle, ResponsiveContainer, XAxis, YAxis} from 'recharts';
-import {shallowEqual, useDispatch, useSelector} from 'react-redux';
-import {useParams} from 'react-router-dom';
+import {shallowEqual, useSelector} from 'react-redux';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import InfoIcon from '@material-ui/icons/Info';
 import Fade from '@material-ui/core/Fade';
-import {getOptionsAndCriteria} from '../../../../services/redux/actionsAndSlicers/OptionsAndCriteriaActions';
 import theme from '../../../../muiTheme';
 import {RootState} from '../../../../services/redux/rootReducer';
 import {
@@ -16,7 +14,6 @@ import {
 	OptionsAndCriteriaKeys,
 } from '../../../../services/redux/actionsAndSlicers/OptionsAndCriteriaSlice';
 import InfoDialog from '../../../../components/InfoDialog';
-import {ParamTypes} from '../../../../App';
 
 const useStyles = makeStyles({
 	divMain: {
@@ -56,25 +53,16 @@ const ResultsChart: React.FC<Props> = (props: Props) => {
 
 	const items = useSelector((state: RootState) => state.OptionsAndCriteria[itemsKey], shallowEqual);
 
-	const {decisionId} = useParams<ParamTypes>();
-
 	const classes = useStyles();
-	const dispatch = useDispatch();
 
 	useEffect(() => {
-		if (!hidden) getOptionsAndCriteria(dispatch, decisionId, itemsKey, true);
-		else {
-			setLocalItems([]);
+		if (!hidden) {
+			setLocalItems(wrapLongWords(getSortedItems(items)));
+			setStartAnimation(true);
+		} else {
 			setStartAnimation(false);
 		}
 	}, [hidden]);
-
-	useEffect(() => {
-		if (items.length !== localItems.length && !hidden) {
-			setLocalItems(wrapLongWords(getSortedItems(items)));
-			setStartAnimation(true);
-		}
-	}, [items]);
 
 	const wrapLongWords = (originalItems: OptionAndCriteria[]) => {
 		const maxCharsPerLine = 13;

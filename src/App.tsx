@@ -3,26 +3,18 @@ import './index.css';
 import AppBar from '@material-ui/core/AppBar';
 import {makeStyles, ThemeProvider} from '@material-ui/core/styles';
 import CardMedia from '@material-ui/core/CardMedia';
-import LinearProgress from '@material-ui/core/LinearProgress';
-import {shallowEqual, useSelector} from 'react-redux';
 import Link from '@material-ui/core/Link';
 import Toolbar from '@material-ui/core/Toolbar';
 import {HashRouter, Route, Switch} from 'react-router-dom';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
-import {RootState} from './services/redux/rootReducer';
 import Decision from './scenes/Decision/Decision';
 import AlertsBanner from './components/AlertsBanner';
 import theme from './muiTheme';
 import imgDcideLogo from './images/d-cide_Logo.svg';
-import {verifyToken} from './services/redux/actionsAndSlicers/SessionActions';
 import NotFound from './scenes/NotFound/NotFound';
 
 //TODO imprint and privacy links
-
-const {token} = localStorage;
-
-verifyToken(token);
 
 const useStyles = makeStyles({
 	divMain: {
@@ -42,13 +34,6 @@ const useStyles = makeStyles({
 		width: '100%',
 		justifyContent: 'center',
 		justifyItems: 'center',
-	},
-
-	linearProgress: {
-		position: 'fixed',
-		marginTop: theme.spacing(6),
-		Top: 0,
-		width: '100%',
 	},
 
 	divLogoDcide: {
@@ -89,7 +74,6 @@ const useStyles = makeStyles({
 });
 //TODO remove # from router path
 const App: React.FC = () => {
-	const {isLoading} = useSelector((state: RootState) => state.App, shallowEqual);
 	const classes = useStyles();
 
 	return (
@@ -110,7 +94,6 @@ const App: React.FC = () => {
 					</Toolbar>
 				</AppBar>
 
-				<div className={classes.linearProgress}>{isLoading > 0 && <LinearProgress color='secondary' />}</div>
 				<div className={classes.divRouter}>
 					<HashRouter basename={process.env.PUBLIC_URL}>
 						<Switch>
