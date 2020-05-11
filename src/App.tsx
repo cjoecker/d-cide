@@ -42,7 +42,7 @@ const useStyles = makeStyles({
 
 	footer: {
 		marginTop: 'auto',
-		marginBottom: theme.spacing(1.2),
+		marginBottom: theme.spacing(1.5),
 	},
 	footerLegalText: {
 		marginTop: -theme.spacing(0.5),
@@ -94,7 +94,3 @@ const App: React.FC = () => {
 };
 
 export default App;
-
-export type ParamTypes = {
-	decisionId: string;
-};
