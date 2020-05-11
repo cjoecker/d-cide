@@ -14,7 +14,7 @@ import imgDcideLogo from './images/d-cide_Logo.svg';
 const useStyles = makeStyles({
 	divMain: {
 		flexGrow: 1,
-		width: '100%',
+		width: '95%',
 		overflowX: 'hidden', //Avoid negative margin from mainGrid
 		display: 'flex',
 		flexDirection: 'column',
@@ -42,7 +42,7 @@ const useStyles = makeStyles({
 
 	footer: {
 		marginTop: 'auto',
-		marginBottom: theme.spacing(1),
+		marginBottom: theme.spacing(1.2),
 	},
 	footerLegalText: {
 		marginTop: -theme.spacing(0.5),
