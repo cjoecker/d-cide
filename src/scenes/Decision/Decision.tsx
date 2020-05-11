@@ -36,15 +36,13 @@ const useStyles = makeStyles({
 		bottom: theme.spacing(1),
 		right: theme.spacing(1),
 		margin: theme.spacing(1),
-		paddingBottom: 'env(safe-area-inset-bottom)',
 	},
 
 	buttonBack: {
 		position: 'fixed',
-		bottom: theme.spacing(1),
+		bottom: 'env(safe-area-inset-bottom)',
 		left: theme.spacing(1),
 		margin: theme.spacing(1),
-		paddingBottom: 'env(safe-area-inset-bottom)',
 	},
 });
 
