@@ -3,7 +3,13 @@ import React from 'react';
 //Info Texts
 export const DecisionOptionInfo = (
 	<div>
-		<h2>Decision Options</h2>
+		<h2
+			style={{
+				textAlign: 'left',
+			}}
+		>
+			Decision Options
+		</h2>
 		<p>
 			Write every decision option you need to decide for.
 			<br />
@@ -31,7 +37,13 @@ export const DecisionOptionInfo = (
 
 export const SelectionCriteriaInfo = (
 	<div>
-		<h2>Selection Criteria</h2>
+		<h2
+			style={{
+				textAlign: 'left',
+			}}
+		>
+			Selection Criteria
+		</h2>
 		<p>Write every important selection criteria that play a role in your decision.</p>
 		<p>
 			If you need to decide which house to buy, you may write something like this:
@@ -51,7 +63,13 @@ export const SelectionCriteriaInfo = (
 
 export const WeightCriteriaInfo = (
 	<div>
-		<h2>Weight Criteria</h2>
+		<h2
+			style={{
+				textAlign: 'left',
+			}}
+		>
+			Weight Criteria
+		</h2>
 		<p>
 			Decisions require always trade-offs. If not, no decision will be necessary.
 			<br />
@@ -71,7 +89,13 @@ export const WeightCriteriaInfo = (
 
 export const OptionsRatingInfo = (
 	<div>
-		<h2>Rate Options</h2>
+		<h2
+			style={{
+				textAlign: 'left',
+			}}
+		>
+			Rate Options
+		</h2>
 		<p>
 			Rate every decision option for every selection criteria.
 			<br />
@@ -82,7 +106,13 @@ export const OptionsRatingInfo = (
 
 export const OptionsResultInfo = (
 	<div>
-		<h2>Decision Options Ranking</h2>
+		<h2
+			style={{
+				textAlign: 'left',
+			}}
+		>
+			Decision Options Ranking
+		</h2>
 		<p>
 			The chart shows you the best option based on your previous input.
 			<br />
@@ -97,7 +127,13 @@ export const OptionsResultInfo = (
 
 export const CriteriaResultInfo = (
 	<div>
-		<h2>Selection Criteria Ranking</h2>
+		<h2
+			style={{
+				textAlign: 'left',
+			}}
+		>
+			Selection Criteria Ranking
+		</h2>
 		<p>The chart shows you on a scale from 0 to 10, which criteria is the most important for your decision.</p>
 	</div>
 );

@@ -26,7 +26,7 @@ type Props = {
 	show: boolean;
 	onClose: () => void;
 };
-
+//TODO close button background
 const InfoDialog: React.FC<Props> = (props: Props) => {
 	const {text, show, onClose} = props;
 
