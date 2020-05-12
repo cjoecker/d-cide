@@ -15,6 +15,7 @@ const useStyles = makeStyles({
 		position: 'absolute',
 		right: theme.spacing(1),
 		top: theme.spacing(1),
+		backgroundColor: 'white',
 	},
 	text: {
 		textAlign: 'justify',
