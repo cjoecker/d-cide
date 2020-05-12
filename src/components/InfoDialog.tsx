@@ -17,7 +17,6 @@ const useStyles = makeStyles({
 		top: theme.spacing(1),
 	},
 	text: {
-		paddingTop: theme.spacing(30),
 		textAlign: 'justify',
 	},
 });
@@ -41,7 +40,7 @@ const InfoDialog: React.FC<Props> = (props: Props) => {
 		<div>
 			<Dialog onClose={handleClose} aria-labelledby='customized-dialog-title' open={show}>
 				<DialogContent className={classes.dialogContent}>
-					<Typography component='span' data-testid='infoText' variant='body2' className={classes.text}>
+					<Typography data-testid='infoText' variant='body1' className={classes.text}>
 						{text}
 					</Typography>
 					<IconButton aria-label='Close' data-testid='infoCloseButton' className={classes.closeButton} onClick={handleClose}>
