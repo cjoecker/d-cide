@@ -22,7 +22,7 @@ const useStyles = makeStyles({
 		paddingRight: theme.spacing(0.8),
 	},
 	title: {
-		padding: theme.spacing(2, 1, 0, 1),
+		padding: theme.spacing(2, 3, 0, 3),
 	},
 	chartContainer: {
 		marginLeft: theme.spacing(2),
