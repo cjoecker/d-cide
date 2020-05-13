@@ -37,6 +37,7 @@
 		"not op_mini all"
 	],
 	"devDependencies": {
+		"@types/jest": "^25.2.1",
 		"@types/jwt-decode": "^2.2.1",
 		"@types/react": "^16.9.34",
 		"@types/react-dom": "^16.9.7",
@@ -44,6 +45,7 @@
 		"@types/react-router-dom": "^5.1.5",
 		"@types/react-swipeable-views": "^0.13.0",
 		"@types/recharts": "^1.8.10",
+		"@types/redux-mock-store": "^1.0.2",
 		"@types/webpack-env": "^1.15.2",
 		"@typescript-eslint/eslint-plugin": "^2.31.0",
 		"@typescript-eslint/parser": "^2.31.0",
@@ -61,6 +63,7 @@
 		"gh-pages": "^2.2.0",
 		"husky": "^4.2.5",
 		"lint-staged": "^10.2.2",
+		"redux-mock-store": "^1.5.4",
 		"typescript": "^3.8.3"
 	},
 	"resolutions": {

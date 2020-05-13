@@ -153,7 +153,6 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
 				}
 			}
 		}
-
 		dispatch(WeightedCriteriaSlice.actions.setWeightedCriteria(newWeightedCriteria));
 	};
 

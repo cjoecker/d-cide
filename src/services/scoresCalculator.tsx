@@ -1,24 +1,16 @@
-import OptionsAndCriteriaSlice, {OptionAndCriteria} from './redux/actionsAndSlicers/OptionsAndCriteriaSlice';
+import {OptionAndCriteria} from './redux/actionsAndSlicers/OptionsAndCriteriaSlice';
 import {WeightedCriteria} from './redux/actionsAndSlicers/WeightCriteriaSlice';
-import {AppDispatch} from './redux/store';
 import {RatedOption} from './redux/actionsAndSlicers/RatedOptionsSlice';
 
-export const calculateOptionsScores = (
-	dispatch: AppDispatch,
+export const getScoredDecisionOptions = (
 	decisionOptions: OptionAndCriteria[],
 	selectionCriteria: OptionAndCriteria[],
 	weightedCriteria: WeightedCriteria[],
 	ratedOptions: RatedOption[]
-) => {
-	const weightSum = weightedCriteria.reduce((a, b) => +a + +Math.abs(b.weight), 0);
+): OptionAndCriteria[] => {
+	const newDecisionOptions: OptionAndCriteria[] = [];
 
-	const newSelectionCriteria = calculateCriteriaScores(
-		dispatch,
-		decisionOptions,
-		selectionCriteria,
-		weightedCriteria,
-		weightSum
-	);
+	const weightSum = weightedCriteria.reduce((a, b) => +a + +Math.abs(b.weight), 0);
 
 	decisionOptions.forEach(option => {
 		let score = 0;
@@ -26,34 +18,32 @@ export const calculateOptionsScores = (
 		ratedOptions
 			.filter(ratedOption => ratedOption.decisionOptionId === option.id)
 			.forEach(ratedOption => {
-				const selectionCriteriaLocal = newSelectionCriteria.find(
-					criteria => criteria.id === ratedOption.selectionCriteriaId
-				);
+				const selectionCriteriaLocal = selectionCriteria.find(criteria => criteria.id === ratedOption.selectionCriteriaId);
 				if (selectionCriteriaLocal != null) score += ratedOption.score * selectionCriteriaLocal.score;
 			});
 
 		score = weightSum === 0 ? 0 : +Math.min(score / 100, 10).toFixed(1);
 
-		dispatch(OptionsAndCriteriaSlice.actions.updateDecisionOption({...option, score}));
+		newDecisionOptions.push({...option, score});
 	});
+
+	return newDecisionOptions;
 };
 
-export const calculateCriteriaScores = (
-	dispatch: AppDispatch,
+export const getScoredSelectionCriteria = (
 	decisionOptions: OptionAndCriteria[],
 	selectionCriteria: OptionAndCriteria[],
-	weightedCriteria: WeightedCriteria[],
-	weightSum: number
+	weightedCriteria: WeightedCriteria[]
 ): OptionAndCriteria[] => {
 	const newSelectionCriteria: OptionAndCriteria[] = [];
+
+	const weightSum = weightedCriteria.reduce((a, b) => +a + +Math.abs(b.weight), 0);
 
 	selectionCriteria.forEach(criteria => {
 		let score = 0;
 		const summedCriteria = sumWeightedCriteriaOfSelectionCriteria(weightedCriteria, criteria.id);
 
 		if (summedCriteria !== 0) score = +Math.min((summedCriteria / weightSum) * 10, 10).toFixed(1);
-
-		dispatch(OptionsAndCriteriaSlice.actions.updateSelectionCriteria({...criteria, score}));
 
 		newSelectionCriteria.push({...criteria, score});
 	});

@@ -166,7 +166,6 @@ const RateOptions: React.FC<Props> = (props: Props) => {
 				}
 			});
 		});
-
 		dispatch(RatedOptionsSlice.actions.setRatedOptions(newRatedOption));
 	};
 

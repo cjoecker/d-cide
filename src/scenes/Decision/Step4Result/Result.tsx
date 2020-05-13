@@ -4,9 +4,11 @@ import {makeStyles} from '@material-ui/core/styles';
 import {shallowEqual, useDispatch, useSelector} from 'react-redux';
 import * as LongStrings from '../../../constants/InfoDialogTexts';
 import theme from '../../../muiTheme';
-import {OptionsAndCriteriaKeys} from '../../../services/redux/actionsAndSlicers/OptionsAndCriteriaSlice';
+import OptionsAndCriteriaSlice, {
+	OptionsAndCriteriaKeys,
+} from '../../../services/redux/actionsAndSlicers/OptionsAndCriteriaSlice';
 import ResultsChart from './components/ResultsChart';
-import {calculateOptionsScores} from '../../../services/scoresCalculator';
+import {getScoredDecisionOptions, getScoredSelectionCriteria} from '../../../services/scoresCalculator';
 import {RootState} from '../../../services/redux/rootReducer';
 
 const useStyles = makeStyles({
@@ -38,11 +40,25 @@ const Results: React.FC<Props> = (props: Props) => {
 	const classes = useStyles();
 
 	useEffect(() => {
-		if (!hidden) {
-			calculateOptionsScores(dispatch, decisionOptions, selectionCriteria, weightedCriteria, ratedOptions);
-			setHiddenAfterCalcScores(false);
-		} else setHiddenAfterCalcScores(true);
+		if (!hidden)
+			dispatch(
+				OptionsAndCriteriaSlice.actions.setSelectionCriteria(
+					getScoredSelectionCriteria(decisionOptions, selectionCriteria, weightedCriteria)
+				)
+			);
+		else setHiddenAfterCalcScores(true);
 	}, [hidden]);
+
+	useEffect(() => {
+		if (!hidden) {
+			dispatch(
+				OptionsAndCriteriaSlice.actions.setDecisionOptions(
+					getScoredDecisionOptions(decisionOptions, selectionCriteria, weightedCriteria, ratedOptions)
+				)
+			);
+			setHiddenAfterCalcScores(false);
+		}
+	}, [selectionCriteria]);
 
 	return (
 		<div className={classes.divMain}>
