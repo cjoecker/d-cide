@@ -101,7 +101,7 @@ const Decision: React.FC = () => {
 
 		alerts.forEach(alert =>
 			ReactGA.event({
-				category: 'Alert',
+				category: 'Alerts',
 				action: alert.type,
 			})
 		);
@@ -131,7 +131,7 @@ const Decision: React.FC = () => {
 		window.scrollTo(0, 0);
 
 		ReactGA.event({
-			category: 'Change Step Element',
+			category: 'Change step',
 			action: element,
 			value: stepNumber,
 		});

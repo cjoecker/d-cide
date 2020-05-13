@@ -10,6 +10,7 @@ import Paper from '@material-ui/core/Paper';
 import {shallowEqual, useDispatch, useSelector} from 'react-redux';
 import Fade from '@material-ui/core/Fade';
 import {TextField} from '@material-ui/core';
+import ReactGA from 'react-ga';
 import theme from '../../../../muiTheme';
 import OptionsAndCriteriaSlice, {
 	OptionAndCriteria,
@@ -114,9 +115,19 @@ const EditableList: React.FC<Props> = (props: Props) => {
 			name: newEntry,
 			score: 0,
 		};
-		if (itemsKey === OptionsAndCriteriaKeys.decisionOptions)
+		if (itemsKey === OptionsAndCriteriaKeys.decisionOptions) {
 			dispatch(OptionsAndCriteriaSlice.actions.addDecisionOption(newItem));
-		else dispatch(OptionsAndCriteriaSlice.actions.addSelectionCriteria(newItem));
+			ReactGA.event({
+				category: 'Manage Items',
+				action: 'Create decision option',
+			});
+		} else {
+			dispatch(OptionsAndCriteriaSlice.actions.addSelectionCriteria(newItem));
+			ReactGA.event({
+				category: 'Manage Items',
+				action: 'Create selection criteria',
+			});
+		}
 	};
 
 	const onChangeItem = (event: React.BaseSyntheticEvent, itemId: number) => {
@@ -125,18 +136,48 @@ const EditableList: React.FC<Props> = (props: Props) => {
 
 	const onLeaveItem = (itemLocal: OptionAndCriteria) => {
 		if (itemLocal.name !== '') {
-			if (itemsKey === OptionsAndCriteriaKeys.decisionOptions)
+			if (itemsKey === OptionsAndCriteriaKeys.decisionOptions) {
 				dispatch(OptionsAndCriteriaSlice.actions.updateDecisionOption(itemLocal));
-			else dispatch(OptionsAndCriteriaSlice.actions.updateSelectionCriteria(itemLocal));
-		} else if (itemsKey === OptionsAndCriteriaKeys.decisionOptions)
+				ReactGA.event({
+					category: 'Manage Items',
+					action: 'Edit decision option',
+				});
+			} else {
+				dispatch(OptionsAndCriteriaSlice.actions.updateSelectionCriteria(itemLocal));
+				ReactGA.event({
+					category: 'Manage Items',
+					action: 'Edit selection criteria',
+				});
+			}
+		} else if (itemsKey === OptionsAndCriteriaKeys.decisionOptions) {
+			ReactGA.event({
+				category: 'Manage Items',
+				action: 'Delete empty decision option after edit',
+			});
 			dispatch(OptionsAndCriteriaSlice.actions.deleteDecisionOption(itemLocal.id));
-		else dispatch(OptionsAndCriteriaSlice.actions.deleteSelectionCriteria(itemLocal.id));
+		} else {
+			ReactGA.event({
+				category: 'Manage Items',
+				action: 'Delete empty selection criteria after edit',
+			});
+			dispatch(OptionsAndCriteriaSlice.actions.deleteSelectionCriteria(itemLocal.id));
+		}
 	};
 
 	const onDeleteItem = (itemLocal: OptionAndCriteria) => {
-		if (itemsKey === OptionsAndCriteriaKeys.decisionOptions)
+		if (itemsKey === OptionsAndCriteriaKeys.decisionOptions) {
 			dispatch(OptionsAndCriteriaSlice.actions.deleteDecisionOption(itemLocal.id));
-		else dispatch(OptionsAndCriteriaSlice.actions.deleteSelectionCriteria(itemLocal.id));
+			ReactGA.event({
+				category: 'Manage Items',
+				action: 'Delete decision option',
+			});
+		} else {
+			dispatch(OptionsAndCriteriaSlice.actions.deleteSelectionCriteria(itemLocal.id));
+			ReactGA.event({
+				category: 'Manage Items',
+				action: 'Delete selection criteria',
+			});
+		}
 	};
 
 	const endOfAnimation = (index: number) => {
