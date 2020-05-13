@@ -9,6 +9,7 @@ import {makeStyles} from '@material-ui/core/styles';
 import SwipeableViews from 'react-swipeable-views';
 import {StepLabel} from '@material-ui/core';
 import {shallowEqual, useSelector} from 'react-redux';
+import ReactGA from 'react-ga';
 import theme from '../../muiTheme';
 import OptionsAndCriteria from './Step1OptionsAndCriteria/OptionsAndCriteria';
 import WeightCriteria from './Step2WeightCriteria/WeightCriteria';
@@ -145,7 +146,10 @@ const Decision: React.FC = () => {
 				disabled
 				axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
 				index={activeStepNum - 1}
-				onTransitionEnd={() => setLoadedStepNum(activeStepNum)}
+				onTransitionEnd={() => {
+					setLoadedStepNum(activeStepNum);
+					ReactGA.modalview(`step${activeStepNum}`);
+				}}
 			>
 				<OptionsAndCriteria hidden={loadedStepNum !== 1} />
 				<WeightCriteria hidden={loadedStepNum !== 2} />

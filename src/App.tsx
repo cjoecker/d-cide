@@ -6,6 +6,7 @@ import Link from '@material-ui/core/Link';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
+import ReactGA from 'react-ga';
 import Decision from './scenes/Decision/Decision';
 import AlertsBanner from './components/AlertsBanner';
 import theme from './muiTheme';
@@ -56,6 +57,9 @@ const useStyles = makeStyles({
 
 const App: React.FC = () => {
 	const classes = useStyles();
+
+	ReactGA.initialize('***REMOVED***');
+	ReactGA.pageview(window.location.pathname + window.location.search);
 
 	return (
 		<ThemeProvider theme={theme}>
