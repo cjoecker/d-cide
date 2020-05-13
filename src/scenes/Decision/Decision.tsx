@@ -144,7 +144,7 @@ const Decision: React.FC = () => {
 					return (
 						<Step key={step.number}>
 							<StepButton
-								data-testid={`Step${step.number}Button`}
+								data-testid={`Step ${step.number} button`}
 								onClick={() => changeStep(step.number, 'stepButton')}
 								completed={step.completed}
 								disabled={step.disabled}
@@ -161,7 +161,7 @@ const Decision: React.FC = () => {
 				index={activeStepNum - 1}
 				onTransitionEnd={() => {
 					setLoadedStepNum(activeStepNum);
-					ReactGA.modalview(`step${activeStepNum}`);
+					ReactGA.modalview(`Step ${activeStepNum}`);
 				}}
 			>
 				<OptionsAndCriteria hidden={loadedStepNum !== 1} />
@@ -176,7 +176,7 @@ const Decision: React.FC = () => {
 					aria-label='Previous Step'
 					size='medium'
 					className={classes.buttonBack}
-					onClick={() => changeStep(activeStepNum - 1, 'prevButton')}
+					onClick={() => changeStep(activeStepNum - 1, 'previous button')}
 				>
 					<ArrowBackIcon />
 				</Fab>
@@ -188,7 +188,7 @@ const Decision: React.FC = () => {
 					aria-label='Next Step'
 					size='medium'
 					className={classes.buttonNext}
-					onClick={() => changeStep(activeStepNum + 1, 'nextButton')}
+					onClick={() => changeStep(activeStepNum + 1, 'next button')}
 					disabled={disableStepButtons}
 				>
 					<ArrowForwardIcon />
