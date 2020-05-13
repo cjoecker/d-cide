@@ -1,10 +1,11 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import Dialog from '@material-ui/core/Dialog';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import Typography from '@material-ui/core/Typography';
 import DialogContent from '@material-ui/core/DialogContent/DialogContent';
+import ReactGA from 'react-ga';
 import theme from '../muiTheme';
 
 const useStyles = makeStyles({
@@ -33,6 +34,29 @@ const InfoDialog: React.FC<Props> = (props: Props) => {
 
 	const classes = useStyles();
 
+	const [isMounted, setIsMounted] = useState(false);
+
+	useEffect(() => {
+		setIsMounted(true);
+	}, []);
+
+	useEffect(() => {
+		if (isMounted) {
+			const dialogTitle = text.props.children.find((obj: {type: string}) => obj.type === 'h2').props.children;
+
+			if (show)
+				ReactGA.event({
+					category: 'Info dialog',
+					action: `Open dialog ${dialogTitle}`,
+				});
+			else
+				ReactGA.event({
+					category: 'Info dialog',
+					action: `Close dialog ${dialogTitle}`,
+				});
+		}
+	}, [show]);
+
 	const handleClose = () => {
 		onClose();
 	};
@@ -41,7 +65,7 @@ const InfoDialog: React.FC<Props> = (props: Props) => {
 		<div>
 			<Dialog onClose={handleClose} aria-labelledby='customized-dialog-title' open={show}>
 				<DialogContent className={classes.dialogContent}>
-					<Typography data-testid='infoText' variant='body1' className={classes.text}>
+					<Typography component="span" data-testid='infoText' variant='body1' className={classes.text}>
 						{text}
 					</Typography>
 					<IconButton aria-label='Close' data-testid='infoCloseButton' className={classes.closeButton} onClick={handleClose}>
