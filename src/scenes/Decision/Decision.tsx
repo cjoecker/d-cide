@@ -98,6 +98,13 @@ const Decision: React.FC = () => {
 
 	useEffect(() => {
 		disableButtons(alerts.includes(NOT_ENOUGH_OPTIONS) || alerts.includes(NOT_ENOUGH_CRITERIA));
+
+		alerts.forEach(alert =>
+			ReactGA.event({
+				category: 'Alert',
+				action: alert.type,
+			})
+		);
 	}, [alerts]);
 
 	const disableButtons = (disabled: boolean) => {
@@ -118,10 +125,16 @@ const Decision: React.FC = () => {
 		setSteps(newSteps);
 	};
 
-	const changeStep = (stepNumber: number) => {
+	const changeStep = (stepNumber: number, element: string) => {
 		setStepCompleted(activeStepNum);
 		setActiveStepNum(stepNumber);
 		window.scrollTo(0, 0);
+
+		ReactGA.event({
+			category: 'Change Step Element',
+			action: element,
+			value: stepNumber,
+		});
 	};
 
 	return (
@@ -132,7 +145,7 @@ const Decision: React.FC = () => {
 						<Step key={step.number}>
 							<StepButton
 								data-testid={`Step${step.number}Button`}
-								onClick={() => changeStep(step.number)}
+								onClick={() => changeStep(step.number, 'stepButton')}
 								completed={step.completed}
 								disabled={step.disabled}
 							>
@@ -163,7 +176,7 @@ const Decision: React.FC = () => {
 					aria-label='Previous Step'
 					size='medium'
 					className={classes.buttonBack}
-					onClick={() => changeStep(activeStepNum - 1)}
+					onClick={() => changeStep(activeStepNum - 1, 'prevButton')}
 				>
 					<ArrowBackIcon />
 				</Fab>
@@ -175,7 +188,7 @@ const Decision: React.FC = () => {
 					aria-label='Next Step'
 					size='medium'
 					className={classes.buttonNext}
-					onClick={() => changeStep(activeStepNum + 1)}
+					onClick={() => changeStep(activeStepNum + 1, 'nextButton')}
 					disabled={disableStepButtons}
 				>
 					<ArrowForwardIcon />
