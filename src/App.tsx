@@ -60,7 +60,8 @@ const App: React.FC = () => {
 
 	ReactGA.initialize('***REMOVED***');
 	ReactGA.pageview(window.location.pathname + window.location.search);
-
+	//TODO add Google Analytics to links
+	// Add links to cj name
 	return (
 		<ThemeProvider theme={theme}>
 			<div className={classes.divMain}>
