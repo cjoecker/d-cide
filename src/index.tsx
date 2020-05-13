@@ -8,6 +8,8 @@ import store from './services/redux/store';
 const App = require('./App').default;
 
 const render = () => {
+	console.log(`${process.env.REACT_APP_NAME} ${process.env.REACT_APP_VERSION}`);
+
 	ReactDOM.render(
 		<Provider store={store}>
 			<App />
