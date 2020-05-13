@@ -82,7 +82,7 @@ const EditableList: React.FC<Props> = (props: Props) => {
 			dispatch(AppSlice.actions.deleteAlert(notEnoughItemsAlert));
 		};
 	}, []);
-	//TODO don't have local items
+
 	useEffect(() => {
 		if (!hidden) {
 			if (items.length === 0) createStartItems();
@@ -100,7 +100,23 @@ const EditableList: React.FC<Props> = (props: Props) => {
 			clearNewEntryWhenCreated();
 			manageNotEnoughItemsAlerts();
 		}
-		if (!hidden && didMount) setLocalItems(items);
+
+		if (!hidden && didMount) {
+			setLocalItems(items);
+			if (itemsKey === OptionsAndCriteriaKeys.decisionOptions) {
+				ReactGA.event({
+					category: 'Selection criteria',
+					action: 'Items number',
+					value: items.length,
+				});
+			} else {
+				ReactGA.event({
+					category: 'Decision options',
+					action: 'Items number',
+					value: items.length,
+				});
+			}
+		}
 
 		if (items.length === 0 && didMount) {
 			manageNotEnoughItemsAlerts();
@@ -118,14 +134,14 @@ const EditableList: React.FC<Props> = (props: Props) => {
 		if (itemsKey === OptionsAndCriteriaKeys.decisionOptions) {
 			dispatch(OptionsAndCriteriaSlice.actions.addDecisionOption(newItem));
 			ReactGA.event({
-				category: 'Manage Items',
-				action: 'Create decision option',
+				category: 'Decision options',
+				action: 'Create',
 			});
 		} else {
 			dispatch(OptionsAndCriteriaSlice.actions.addSelectionCriteria(newItem));
 			ReactGA.event({
-				category: 'Manage Items',
-				action: 'Create selection criteria',
+				category: 'Decision options',
+				action: 'Create',
 			});
 		}
 	};
@@ -139,26 +155,26 @@ const EditableList: React.FC<Props> = (props: Props) => {
 			if (itemsKey === OptionsAndCriteriaKeys.decisionOptions) {
 				dispatch(OptionsAndCriteriaSlice.actions.updateDecisionOption(itemLocal));
 				ReactGA.event({
-					category: 'Manage Items',
-					action: 'Edit decision option',
+					category: 'Decision options',
+					action: 'Edit',
 				});
 			} else {
 				dispatch(OptionsAndCriteriaSlice.actions.updateSelectionCriteria(itemLocal));
 				ReactGA.event({
-					category: 'Manage Items',
-					action: 'Edit selection criteria',
+					category: 'Selection criteria',
+					action: 'Edit',
 				});
 			}
 		} else if (itemsKey === OptionsAndCriteriaKeys.decisionOptions) {
 			ReactGA.event({
-				category: 'Manage Items',
-				action: 'Delete empty decision option after edit',
+				category: 'Decision options',
+				action: 'Delete empty after edit',
 			});
 			dispatch(OptionsAndCriteriaSlice.actions.deleteDecisionOption(itemLocal.id));
 		} else {
 			ReactGA.event({
-				category: 'Manage Items',
-				action: 'Delete empty selection criteria after edit',
+				category: 'Selection criteria',
+				action: 'Delete empty after edit',
 			});
 			dispatch(OptionsAndCriteriaSlice.actions.deleteSelectionCriteria(itemLocal.id));
 		}
@@ -168,14 +184,14 @@ const EditableList: React.FC<Props> = (props: Props) => {
 		if (itemsKey === OptionsAndCriteriaKeys.decisionOptions) {
 			dispatch(OptionsAndCriteriaSlice.actions.deleteDecisionOption(itemLocal.id));
 			ReactGA.event({
-				category: 'Manage Items',
-				action: 'Delete decision option',
+				category: 'Decision options',
+				action: 'Delete',
 			});
 		} else {
 			dispatch(OptionsAndCriteriaSlice.actions.deleteSelectionCriteria(itemLocal.id));
 			ReactGA.event({
-				category: 'Manage Items',
-				action: 'Delete selection criteria',
+				category: 'Selection criteria',
+				action: 'Delete',
 			});
 		}
 	};
