@@ -20,14 +20,6 @@ export const AlertInitialState: AlertType = {
 	text: '',
 };
 
-//ERRORS
-export const HTTP_ERROR: AlertType = {
-	type: AlertTypes.error,
-	allowClose: true,
-	autoHide: false,
-	text: '',
-};
-
 //WARNINGS
 export const NOT_ENOUGH_OPTIONS: AlertType = {
 	type: AlertTypes.warning,
