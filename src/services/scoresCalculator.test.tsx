@@ -3,8 +3,7 @@ import React from 'react';
 import {getScoredDecisionOptions, getScoredSelectionCriteria} from './scoresCalculator';
 import {WeightedCriteria} from './redux/actionsAndSlicers/WeightCriteriaSlice';
 import {RatedOption} from './redux/actionsAndSlicers/RatedOptionsSlice';
-import {predefinedSelectionCriteria} from '../constants/PredifinedOptionsAndCriteria';
-import store from './redux/store';
+import {predefinedDecisionOptions, predefinedSelectionCriteria} from '../constants/PredifinedOptionsAndCriteria';
 
 it('calculates options and criteria scores', () => {
 	const weightedCriteria: WeightedCriteria[] = [
@@ -32,12 +31,28 @@ it('calculates options and criteria scores', () => {
 	];
 
 	const scoredSelectionCriteria = getScoredSelectionCriteria(
-		predefinedSelectionCriteria,
+		predefinedDecisionOptions,
 		predefinedSelectionCriteria,
 		weightedCriteria
 	);
 
-	getScoredDecisionOptions(predefinedSelectionCriteria, predefinedSelectionCriteria, weightedCriteria, ratedOptions);
+	const scoredDecisionOptions = getScoredDecisionOptions(
+		predefinedDecisionOptions,
+		scoredSelectionCriteria,
+		weightedCriteria,
+		ratedOptions
+	);
 
-	console.log(store.getState().OptionsAndCriteria.decisionOptions);
+	expect(scoredSelectionCriteria).toEqual([
+		{id: 1, name: 'Size', score: 6.7},
+		{id: 2, name: 'Garden', score: 0},
+		{id: 3, name: 'Kitchen', score: 2.2},
+		{id: 4, name: 'Neighborhood', score: 1.1},
+	]);
+
+	expect(scoredDecisionOptions).toEqual([
+		{id: 1, name: 'House 1', score: 7.8},
+		{id: 2, name: 'House 2', score: 5},
+		{id: 3, name: 'House 3', score: 2.2},
+	]);
 });
