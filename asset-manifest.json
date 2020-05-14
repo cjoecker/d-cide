@@ -1,23 +1,23 @@
 {
   "files": {
-    "main.css": "/d-cide/static/css/main.09a4d6f4.chunk.css",
-    "main.js": "/d-cide/static/js/main.6ff222d8.chunk.js",
-    "main.js.map": "/d-cide/static/js/main.6ff222d8.chunk.js.map",
-    "runtime-main.js": "/d-cide/static/js/runtime-main.31f3953a.js",
-    "runtime-main.js.map": "/d-cide/static/js/runtime-main.31f3953a.js.map",
-    "static/js/2.7ee26946.chunk.js": "/d-cide/static/js/2.7ee26946.chunk.js",
-    "static/js/2.7ee26946.chunk.js.map": "/d-cide/static/js/2.7ee26946.chunk.js.map",
-    "index.html": "/d-cide/index.html",
-    "precache-manifest.6503d6bec84ad1ccab051198fbf82004.js": "/d-cide/precache-manifest.6503d6bec84ad1ccab051198fbf82004.js",
-    "service-worker.js": "/d-cide/service-worker.js",
-    "static/css/main.09a4d6f4.chunk.css.map": "/d-cide/static/css/main.09a4d6f4.chunk.css.map",
-    "static/js/2.7ee26946.chunk.js.LICENSE.txt": "/d-cide/static/js/2.7ee26946.chunk.js.LICENSE.txt",
-    "static/media/d-cide_Logo.svg": "/d-cide/static/media/d-cide_Logo.9d73cbb7.svg"
+    "main.css": "/d-cide.me/static/css/main.09a4d6f4.chunk.css",
+    "main.js": "/d-cide.me/static/js/main.760f83cc.chunk.js",
+    "main.js.map": "/d-cide.me/static/js/main.760f83cc.chunk.js.map",
+    "runtime-main.js": "/d-cide.me/static/js/runtime-main.ffb51473.js",
+    "runtime-main.js.map": "/d-cide.me/static/js/runtime-main.ffb51473.js.map",
+    "static/js/2.7ee26946.chunk.js": "/d-cide.me/static/js/2.7ee26946.chunk.js",
+    "static/js/2.7ee26946.chunk.js.map": "/d-cide.me/static/js/2.7ee26946.chunk.js.map",
+    "index.html": "/d-cide.me/index.html",
+    "precache-manifest.da15000afc7719e5454ed1a89bac0675.js": "/d-cide.me/precache-manifest.da15000afc7719e5454ed1a89bac0675.js",
+    "service-worker.js": "/d-cide.me/service-worker.js",
+    "static/css/main.09a4d6f4.chunk.css.map": "/d-cide.me/static/css/main.09a4d6f4.chunk.css.map",
+    "static/js/2.7ee26946.chunk.js.LICENSE.txt": "/d-cide.me/static/js/2.7ee26946.chunk.js.LICENSE.txt",
+    "static/media/d-cide_Logo.svg": "/d-cide.me/static/media/d-cide_Logo.9d73cbb7.svg"
   },
   "entrypoints": [
-    "static/js/runtime-main.31f3953a.js",
+    "static/js/runtime-main.ffb51473.js",
     "static/js/2.7ee26946.chunk.js",
     "static/css/main.09a4d6f4.chunk.css",
-    "static/js/main.6ff222d8.chunk.js"
+    "static/js/main.760f83cc.chunk.js"
   ]
 }
