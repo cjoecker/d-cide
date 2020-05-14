@@ -102,7 +102,7 @@ const Decision: React.FC = () => {
 		alerts.forEach(alert =>
 			ReactGA.event({
 				category: 'Alerts',
-				action: alert.type,
+				action: alert.text,
 			})
 		);
 	}, [alerts]);
