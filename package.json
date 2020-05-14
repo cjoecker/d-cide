@@ -1,7 +1,7 @@
 {
 	"homepage": "http://cjoecker.github.io/d-cide",
 	"name": "d-cide",
-	"version": "1.5.0",
+	"version": "1.6.0",
 	"private": true,
 	"dependencies": {
 		"@material-ui/core": "^4.9.13",
@@ -26,7 +26,7 @@
 		"cy:open": "cypress open",
 		"preinstall": "npx npm-force-resolutions",
 		"predeploy": "npm run build",
-		"deploy": "git push && npm version minor && git push && gh-pages -d build"
+		"deploy": "git push && npm version minor -f && git push && gh-pages -d build"
 	},
 	"eslintConfig": {
 		"extends": "react-app"
