@@ -2,7 +2,6 @@ import React from 'react';
 import './index.css';
 import AppBar from '@material-ui/core/AppBar';
 import {makeStyles, ThemeProvider} from '@material-ui/core/styles';
-import Link from '@material-ui/core/Link';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
@@ -82,15 +81,6 @@ const App: React.FC = () => {
 								💖
 							</span>
 							&nbsp; by Christian Jöcker
-						</Grid>
-						<Grid style={{marginTop: theme.spacing(-0.5)}} item xs={12}>
-							<Link href='/' className={classes.link} underline='always'>
-								Privacy
-							</Link>
-							&nbsp;&nbsp;&nbsp;
-							<Link href='/' className={classes.link} underline='always'>
-								Imprint
-							</Link>
 						</Grid>
 					</Typography>
 				</Grid>
