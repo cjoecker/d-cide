@@ -4,3 +4,7 @@ body {
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 }
+@font-face {
+	font-family: 'Quicksand';
+	src: local('Quicksand'), url(./fonts/Quicksand.ttf) format('truetype');
+}

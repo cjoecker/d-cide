@@ -28,7 +28,7 @@ type Props = {
 	show: boolean;
 	onClose: () => void;
 };
-//TODO close button background
+
 const InfoDialog: React.FC<Props> = (props: Props) => {
 	const {text, show, onClose} = props;
 
@@ -65,7 +65,7 @@ const InfoDialog: React.FC<Props> = (props: Props) => {
 		<div>
 			<Dialog onClose={handleClose} aria-labelledby='customized-dialog-title' open={show}>
 				<DialogContent className={classes.dialogContent}>
-					<Typography component="span" data-testid='infoText' variant='body1' className={classes.text}>
+					<Typography component='span' data-testid='infoText' variant='body1' className={classes.text}>
 						{text}
 					</Typography>
 					<IconButton aria-label='Close' data-testid='infoCloseButton' className={classes.closeButton} onClick={handleClose}>
