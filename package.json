@@ -1,7 +1,7 @@
 {
 	"homepage": "d-cide.me",
 	"name": "d-cide",
-	"version": "1.10.0",
+	"version": "1.11.0",
 	"private": true,
 	"dependencies": {
 		"@material-ui/core": "^4.9.13",
