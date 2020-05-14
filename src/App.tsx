@@ -10,6 +10,7 @@ import Decision from './scenes/Decision/Decision';
 import AlertsBanner from './components/AlertsBanner';
 import theme from './muiTheme';
 import imgDcideLogo from './images/d-cide_Logo.svg';
+import CookiesBanner from './components/CookiesBanner';
 
 const useStyles = makeStyles({
 	divMain: {
@@ -85,6 +86,7 @@ const App: React.FC = () => {
 					</Typography>
 				</Grid>
 				<AlertsBanner />
+				<CookiesBanner />
 			</div>
 		</ThemeProvider>
 	);

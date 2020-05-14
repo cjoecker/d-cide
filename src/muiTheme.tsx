@@ -4,11 +4,11 @@ const theme = createMuiTheme({
 	typography: {
 		fontFamily: ['Quicksand', 'sans-serif'].join(','),
 		caption: {
-			fontWeight: 500,
+			fontWeight: 400,
 			fontSize: 14,
 			color: '#000000',
 		},
-		fontWeightRegular: 500,
+		fontWeightRegular: 400,
 		fontWeightBold: 600,
 		h1: {
 			fontWeight: 600,

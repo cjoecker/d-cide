@@ -123,6 +123,9 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
 		});
 	};
 
+	//TODO improve scrolling from slider after it is implemented in Material-UI
+	//https://github.com/mui-org/material-ui/issues/20990
+
 	const createWeightedCriteria = () => {
 		let newWeightedCriteria: WeightedCriteria[] = weightedCriteria;
 
