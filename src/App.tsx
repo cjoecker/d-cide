@@ -6,6 +6,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import ReactGA from 'react-ga';
+import {Link} from '@material-ui/core';
 import Decision from './scenes/Decision/Decision';
 import AlertsBanner from './components/AlertsBanner';
 import theme from './muiTheme';
@@ -81,7 +82,16 @@ const App: React.FC = () => {
 							<span role='img' aria-label='love'>
 								💖
 							</span>
-							&nbsp; by Christian Jöcker
+							&nbsp; by
+{' '}
+							<Link href='https://www.cjoecker.de/' underline='always'>
+								Christian Jöcker
+							</Link>
+						</Grid>
+						<Grid item xs={12}>
+							<Link href='https://www.cjoecker.de/' underline='always'>
+								Privacy Policy
+							</Link>
 						</Grid>
 					</Typography>
 				</Grid>
