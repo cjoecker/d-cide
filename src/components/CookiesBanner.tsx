@@ -6,14 +6,16 @@ import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Slide from '@material-ui/core/Slide';
-import Modal from '@material-ui/core/Modal';
 import {isMobile} from 'react-device-detect';
-import theme from '../muiTheme';
+import {Dialog} from '@material-ui/core';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
 import {PrivacyText} from '../constants/PrivacyTexts';
+import theme from '../muiTheme';
 
 const useStyles = makeStyles({
 	gridMobile: {
-		height: '100%',
 		outline: 'none',
 	},
 
@@ -55,14 +57,9 @@ const CookiesBanner: React.FC = () => {
 		localStorage.setItem('cookieConsentAccepted', 'true');
 	};
 
-	const Banner = (
+	const desktopBanner = (
 		<Slide direction='up' in={open} mountOnEnter unmountOnExit>
-			<Grid
-				className={isMobile ? classes.gridMobile : classes.gridDesktop}
-				container
-				justify='center'
-				alignContent='center'
-			>
+			<Grid className={classes.gridDesktop} container justify='center' alignContent='center'>
 				<Paper className={classes.paper} elevation={7}>
 					<Grid item className={classes.typographyGridItem} xs={12}>
 						<Typography component='span' data-testid='cookiesBanner' align='justify'>
@@ -79,14 +76,23 @@ const CookiesBanner: React.FC = () => {
 		</Slide>
 	);
 
+	const mobileDialog = (
+		<Dialog open={open} onClose={handleClose}>
+			<DialogContent>
+				<DialogContentText id='alert-dialog-description'>{PrivacyText}</DialogContentText>
+			</DialogContent>
+			<DialogActions>
+				<Button className={classes.button} onClick={handleClose} variant='contained' color='primary'>
+					Understood
+				</Button>
+			</DialogActions>
+		</Dialog>
+	);
+
 	if (isMobile) {
-		return (
-			<Modal open={open} onClose={handleClose}>
-				{Banner}
-			</Modal>
-		);
+		return mobileDialog;
 	}
-	return Banner;
+	return desktopBanner;
 };
 
 export default CookiesBanner;
