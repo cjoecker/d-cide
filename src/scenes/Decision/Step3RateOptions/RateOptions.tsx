@@ -73,6 +73,10 @@ const useStyles = makeStyles({
 		marginRight: theme.spacing(1),
 	},
 
+	unselectableText: {
+		userSelect: 'none',
+	},
+
 	sliderMarks: {
 		height: 8,
 		width: 1,
@@ -233,6 +237,7 @@ const RateOptions: React.FC<Props> = (props: Props) => {
 																	style={{
 																		fontSize: 11,
 																	}}
+																	className={classes.unselectableText}
 																>
 																	Bad
 																</Typography>
@@ -243,6 +248,7 @@ const RateOptions: React.FC<Props> = (props: Props) => {
 																	style={{
 																		fontSize: 11,
 																	}}
+																	className={classes.unselectableText}
 																>
 																	Good
 																</Typography>
