@@ -87,9 +87,19 @@ const App: React.FC = () => {
 							</span>
 							&nbsp; by
 {' '}
-							<ReactGA.OutboundLink eventLabel='Open cjoecker.de' to='https://www.cjoecker.de/' target='_blank'>
+							<Link
+								href='https://www.cjoecker.de/'
+								onClick={() =>
+									ReactGA.event({
+										category: 'Redirect',
+										action: 'cjoecker.de',
+									})
+								}
+								underline='always'
+								target='_blank'
+							>
 								Christian Jöcker
-							</ReactGA.OutboundLink>
+							</Link>
 						</Grid>
 						<Grid item xs={12}>
 							{/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
