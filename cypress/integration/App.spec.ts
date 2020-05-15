@@ -36,4 +36,26 @@ context('Actions', () => {
 			.getTestElement('cookiesConsent')
 			.should('have.length', 0);
 	});
+
+	it('redirects to cjoecker', () => {
+		window.localStorage.setItem('cookieConsentAccepted', 'true');
+		cy.visit('/').getTestElement('cjoeckerLink').should('have.attr', 'href', 'https://www.cjoecker.de/');
+	});
+
+	it('shows privacy policy', () => {
+		window.localStorage.setItem('cookieConsentAccepted', 'true');
+		cy
+			.visit('/')
+			.getTestElement('privacyPolicyLink')
+			.click()
+
+			.getTestElement('infoText')
+			.contains('Privacy Policy')
+
+			.getTestElement('infoCloseButton')
+			.click()
+
+			.getTestElement('infoText')
+			.should('have.length', 0);
+	});
 });

@@ -88,6 +88,7 @@ const App: React.FC = () => {
 							&nbsp; by
 {' '}
 							<Link
+								data-testid='cjoeckerLink'
 								href='https://www.cjoecker.de/'
 								onClick={() =>
 									ReactGA.event({
@@ -103,7 +104,12 @@ const App: React.FC = () => {
 						</Grid>
 						<Grid item xs={12}>
 							{/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-							<Link style={{cursor: 'pointer'}} onClick={() => setShowPrivacyPolicy(true)} underline='always'>
+							<Link
+								data-testid='privacyPolicyLink'
+								style={{cursor: 'pointer'}}
+								onClick={() => setShowPrivacyPolicy(true)}
+								underline='always'
+							>
 								Privacy Policy
 							</Link>
 						</Grid>
