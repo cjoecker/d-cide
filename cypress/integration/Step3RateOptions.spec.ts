@@ -3,7 +3,9 @@
 
 context('Actions', () => {
 	beforeEach(() => {
-		cy.visit('/').getTestElement(`Step3Button`).click();
+		cy.visit('/');
+		window.localStorage.setItem('cookieConsentAccepted', 'true');
+		cy.getTestElement(`Step3Button`).click();
 	});
 
 	//TODO Test API call on slider change after cypress issue is solved
@@ -32,5 +34,4 @@ context('Actions', () => {
 	it('shows sliders', () => {
 		cy.getTestElementStartingWith(`slider`).should('have.length', 12);
 	});
-
 });

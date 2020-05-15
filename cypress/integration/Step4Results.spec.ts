@@ -3,7 +3,9 @@
 
 context('Actions', () => {
 	beforeEach(() => {
-		cy.visit('/').getTestElement(`Step4Button`).click();
+		cy.visit('/');
+		window.localStorage.setItem('cookieConsentAccepted', 'true');
+		cy.getTestElement(`Step4Button`).click();
 	});
 
 	describe('Decision Options', () => {
@@ -16,7 +18,7 @@ context('Actions', () => {
 		});
 
 		it('shows diagram correctly', () => {
-			showsDiagramCorrectly('decisionOptions', ["House 1","House 2","House 3"])
+			showsDiagramCorrectly('decisionOptions', ['House 1', 'House 2', 'House 3']);
 		});
 
 		it('wraps long labels', () => {
@@ -34,7 +36,7 @@ context('Actions', () => {
 		});
 
 		it('shows diagram correctly', () => {
-			showsDiagramCorrectly('selectionCriteria', ["Kitchen","Size","Neighborhood","Garden"])
+			showsDiagramCorrectly('selectionCriteria', ['Kitchen', 'Size', 'Neighborhood', 'Garden']);
 		});
 
 		it('wraps long labels', () => {
@@ -82,7 +84,7 @@ context('Actions', () => {
 			.and('contain', '7.5')
 			.and('contain', '10');
 
-		items.map(item => {
+		items.forEach(item => {
 			cy.getTestElement(`${sectionName}Diagram`).children().should('contain', item);
 		});
 

@@ -144,8 +144,8 @@ const Decision: React.FC = () => {
 					return (
 						<Step key={step.number}>
 							<StepButton
-								data-testid={`Step ${step.number} button`}
-								onClick={() => changeStep(step.number, 'stepButton')}
+								data-testid={`Step${step.number}Button`}
+								onClick={() => changeStep(step.number, 'step button')}
 								completed={step.completed}
 								disabled={step.disabled}
 							>

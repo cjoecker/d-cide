@@ -4,6 +4,7 @@
 context('Actions', () => {
 	beforeEach(() => {
 		cy.visit('/');
+		window.localStorage.setItem('cookieConsentAccepted', 'true');
 	});
 
 	it('changes step with arrow buttons', () => {
@@ -22,13 +23,13 @@ context('Actions', () => {
 			.get('.MuiStepIcon-completed')
 			.should('have.length', 2)
 
-
 			.getTestElement('NextStepButton')
 			.click()
 			.root()
 			.should('contain', 'Decision Options Ranking')
 			.and('contain', 'Selection Criteria Ranking')
-			.getTestElement('NextStepButton').should("have.length", 0)
+			.getTestElement('NextStepButton')
+			.should('have.length', 0)
 			.get('.MuiStepIcon-completed')
 			.should('have.length', 3)
 
@@ -49,6 +50,7 @@ context('Actions', () => {
 			.root()
 			.should('contain', 'Decision Options')
 			.and('contain', 'Selection Criteria')
-			.getTestElement('PrevStepButton').should("have.length", 0)
+			.getTestElement('PrevStepButton')
+			.should('have.length', 0);
 	});
 });

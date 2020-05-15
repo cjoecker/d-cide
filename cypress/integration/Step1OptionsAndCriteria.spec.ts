@@ -4,6 +4,7 @@
 context('Actions', () => {
 	beforeEach(() => {
 		cy.visit('/');
+		window.localStorage.setItem('cookieConsentAccepted', 'true');
 	});
 
 	const firstDecisionOption = 'House 1';
