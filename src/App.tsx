@@ -11,7 +11,8 @@ import Decision from './scenes/Decision/Decision';
 import AlertsBanner from './components/AlertsBanner';
 import theme from './muiTheme';
 import imgDcideLogo from './images/d-cide_Logo.svg';
-import CookiesBanner from './components/CookiesBanner';
+import InfoDialog from './components/InfoDialog';
+import {PrivacyPolicy} from './constants/PrivacyTexts';
 
 const useStyles = makeStyles({
 	divMain: {
@@ -99,7 +100,7 @@ const App: React.FC = () => {
 					</Typography>
 				</Grid>
 				<AlertsBanner />
-				<CookiesBanner />
+				<InfoDialog text={PrivacyPolicy} show={showPrivacyPolicy} onClose={() => setShowPrivacyPolicy(false)} />
 			</div>
 		</ThemeProvider>
 	);
