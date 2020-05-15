@@ -59,7 +59,7 @@ const CookiesBanner: React.FC = () => {
 
 	const desktopBanner = (
 		<Slide direction='up' in={open} mountOnEnter unmountOnExit>
-			<Grid className={classes.gridDesktop} container justify='center' alignContent='center'>
+			<Grid data-testid='cookiesConsent' className={classes.gridDesktop} container justify='center' alignContent='center'>
 				<Paper className={classes.paper} elevation={7}>
 					<Grid item className={classes.typographyGridItem} xs={12}>
 						<Typography component='span' data-testid='cookiesBanner' align='justify'>
@@ -67,7 +67,13 @@ const CookiesBanner: React.FC = () => {
 						</Typography>
 					</Grid>
 					<Grid container xs={12} justify='flex-end'>
-						<Button onClick={() => handleClose()} className={classes.button} variant='contained' color='primary'>
+						<Button
+							data-testid='cookieConsentCloseButton'
+							onClick={() => handleClose()}
+							className={classes.button}
+							variant='contained'
+							color='primary'
+						>
 							Understood
 						</Button>
 					</Grid>
@@ -77,12 +83,18 @@ const CookiesBanner: React.FC = () => {
 	);
 
 	const mobileDialog = (
-		<Dialog open={open} onClose={handleClose}>
+		<Dialog data-testid='cookiesConsent' open={open} onClose={handleClose}>
 			<DialogContent>
 				<DialogContentText id='alert-dialog-description'>{PrivacyText}</DialogContentText>
 			</DialogContent>
 			<DialogActions>
-				<Button className={classes.button} onClick={handleClose} variant='contained' color='primary'>
+				<Button
+					data-testid='cookieConsentCloseButton'
+					className={classes.button}
+					onClick={handleClose}
+					variant='contained'
+					color='primary'
+				>
 					Understood
 				</Button>
 			</DialogActions>
