@@ -13,7 +13,6 @@ import {PrivacyText} from '../constants/PrivacyTexts';
 
 const useStyles = makeStyles({
 	gridMobile: {
-		position: 'fixed',
 		height: '100%',
 		outline: 'none',
 	},
