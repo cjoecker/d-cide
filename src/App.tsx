@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './index.css';
 import AppBar from '@material-ui/core/AppBar';
 import {makeStyles, ThemeProvider} from '@material-ui/core/styles';
@@ -12,6 +12,8 @@ import AlertsBanner from './components/AlertsBanner';
 import theme from './muiTheme';
 import imgDcideLogo from './images/d-cide_Logo.svg';
 import CookiesBanner from './components/CookiesBanner';
+import InfoDialog from './components/InfoDialog';
+import {PrivacyPolicy} from './constants/PrivacyTexts';
 
 const useStyles = makeStyles({
 	divMain: {
@@ -59,6 +61,8 @@ const useStyles = makeStyles({
 const App: React.FC = () => {
 	const classes = useStyles();
 
+	const [showPrivacyPolicy, setShowPrivacyPolicy] = useState(false);
+
 	ReactGA.initialize('***REMOVED***');
 	ReactGA.pageview(window.location.pathname + window.location.search);
 	//TODO add Google Analytics to links
@@ -89,7 +93,8 @@ const App: React.FC = () => {
 							</Link>
 						</Grid>
 						<Grid item xs={12}>
-							<Link href='https://www.cjoecker.de/' underline='always'>
+							{/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+							<Link style={{cursor: 'pointer'}} onClick={() => setShowPrivacyPolicy(true)} underline='always'>
 								Privacy Policy
 							</Link>
 						</Grid>
@@ -97,6 +102,7 @@ const App: React.FC = () => {
 				</Grid>
 				<AlertsBanner />
 				<CookiesBanner />
+				<InfoDialog text={PrivacyPolicy} show={showPrivacyPolicy} onClose={() => setShowPrivacyPolicy(false)} />
 			</div>
 		</ThemeProvider>
 	);

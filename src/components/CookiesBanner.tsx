@@ -9,7 +9,7 @@ import Slide from '@material-ui/core/Slide';
 import Modal from '@material-ui/core/Modal';
 import {isMobile} from 'react-device-detect';
 import theme from '../muiTheme';
-import PrivacyTexts from '../constants/PrivacyTexts';
+import {PrivacyText} from '../constants/PrivacyTexts';
 
 const useStyles = makeStyles({
 	gridMobile: {
@@ -67,7 +67,7 @@ const CookiesBanner: React.FC = () => {
 				<Paper className={classes.paper} elevation={7}>
 					<Grid item className={classes.typographyGridItem} xs={12}>
 						<Typography component='span' data-testid='cookiesBanner' align='justify'>
-							{PrivacyTexts}
+							{PrivacyText}
 						</Typography>
 					</Grid>
 					<Grid container xs={12} justify='flex-end'>
