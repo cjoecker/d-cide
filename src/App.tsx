@@ -65,8 +65,7 @@ const App: React.FC = () => {
 
 	ReactGA.initialize('***REMOVED***');
 	ReactGA.pageview(window.location.pathname + window.location.search);
-	//TODO add Google Analytics to links
-	// Add links to cj name
+
 	return (
 		<ThemeProvider theme={theme}>
 			<div className={classes.divMain}>
@@ -88,9 +87,9 @@ const App: React.FC = () => {
 							</span>
 							&nbsp; by
 {' '}
-							<Link href='https://www.cjoecker.de/' underline='always'>
+							<ReactGA.OutboundLink eventLabel='Open cjoecker.de' to='https://www.cjoecker.de/' target='_blank'>
 								Christian Jöcker
-							</Link>
+							</ReactGA.OutboundLink>
 						</Grid>
 						<Grid item xs={12}>
 							{/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
