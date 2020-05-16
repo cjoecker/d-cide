@@ -119,7 +119,7 @@ const App: React.FC = () => {
 				</Grid>
 				<AlertsBanner />
 				<CookiesBanner />
-				<InfoDialog text={PrivacyPolicy} show={showPrivacyPolicy} onClose={() => setShowPrivacyPolicy(false)} />
+				<InfoDialog fullWidth text={PrivacyPolicy} show={showPrivacyPolicy} onClose={() => setShowPrivacyPolicy(false)} />
 			</div>
 		</ThemeProvider>
 	);
