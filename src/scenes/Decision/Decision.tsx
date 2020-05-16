@@ -97,12 +97,16 @@ const Decision: React.FC = () => {
 	}, []);
 
 	useEffect(() => {
+		ReactGA.modalview(`Step ${loadedStepNum}`);
+	}, [loadedStepNum]);
+
+	useEffect(() => {
 		disableButtons(alerts.includes(NOT_ENOUGH_OPTIONS) || alerts.includes(NOT_ENOUGH_CRITERIA));
 
 		alerts.forEach(alert =>
 			ReactGA.event({
 				category: 'Alerts',
-				action: alert.text,
+				action: `Show alert ${alert.text}`,
 			})
 		);
 	}, [alerts]);
@@ -132,8 +136,7 @@ const Decision: React.FC = () => {
 
 		ReactGA.event({
 			category: 'Change step',
-			action: element,
-			value: stepNumber,
+			action: `Change to step ${stepNumber} with ${element}`,
 		});
 	};
 
@@ -161,7 +164,6 @@ const Decision: React.FC = () => {
 				index={activeStepNum - 1}
 				onTransitionEnd={() => {
 					setLoadedStepNum(activeStepNum);
-					ReactGA.modalview(`Step ${activeStepNum}`);
 				}}
 			>
 				<OptionsAndCriteria hidden={loadedStepNum !== 1} />

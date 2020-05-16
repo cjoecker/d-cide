@@ -49,7 +49,7 @@ const CookiesBanner: React.FC = () => {
 	const handleClose = () => {
 		ReactGA.event({
 			category: 'Cookies dialog',
-			action: `Close`,
+			action: `Close cookie dialog`,
 		});
 
 		setOpen(false);

@@ -5,7 +5,7 @@ import {makeStyles, ThemeProvider} from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
-import ReactGA from 'react-ga';
+import ReactGA, {ga} from 'react-ga';
 import {Link} from '@material-ui/core';
 import Decision from './scenes/Decision/Decision';
 import AlertsBanner from './components/AlertsBanner';
@@ -64,7 +64,9 @@ const App: React.FC = () => {
 	const [showPrivacyPolicy, setShowPrivacyPolicy] = useState(false);
 
 	ReactGA.initialize('***REMOVED***');
+
 	ReactGA.pageview(window.location.pathname + window.location.search);
+	ga('set', 'appVersion', process.env.REACT_APP_VERSION);
 
 	return (
 		<ThemeProvider theme={theme}>
@@ -93,7 +95,7 @@ const App: React.FC = () => {
 								onClick={() =>
 									ReactGA.event({
 										category: 'Redirect',
-										action: 'cjoecker.de',
+										action: 'Redirect to cjoecker.de',
 									})
 								}
 								underline='always'

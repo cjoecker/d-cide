@@ -70,6 +70,7 @@ const EditableList: React.FC<Props> = (props: Props) => {
 	const [newEntry, setNewEntry] = useState('');
 	const [localItems, setLocalItems] = useState<OptionAndCriteria[]>([]);
 	const [stopAnimation, setStopAnimation] = useState(false);
+	const [itemsKeyForAnalytics, setItemsKeyForAnalytics] = useState('');
 	const items = useSelector((state: RootState) => state.OptionsAndCriteria[itemsKey], shallowEqual);
 
 	const animationDelay = 100;
@@ -78,6 +79,9 @@ const EditableList: React.FC<Props> = (props: Props) => {
 	const dispatch = useDispatch();
 
 	useEffect(() => {
+		if (itemsKey === OptionsAndCriteriaKeys.decisionOptions) setItemsKeyForAnalytics('Decision options');
+		else setItemsKeyForAnalytics('Selection criteria');
+
 		return () => {
 			dispatch(AppSlice.actions.deleteAlert(notEnoughItemsAlert));
 		};
@@ -92,6 +96,12 @@ const EditableList: React.FC<Props> = (props: Props) => {
 			setLocalItems([]);
 			setStopAnimation(false);
 			dispatch(AppSlice.actions.deleteAlert(notEnoughItemsAlert));
+
+			ReactGA.event({
+				category: itemsKeyForAnalytics,
+				action: 'Items number',
+				value: items.length,
+			});
 		}
 	}, [hidden]);
 
@@ -99,20 +109,6 @@ const EditableList: React.FC<Props> = (props: Props) => {
 		if (items.length !== localItems.length && !hidden && didMount) {
 			clearNewEntryWhenCreated();
 			manageNotEnoughItemsAlerts();
-
-			if (itemsKey === OptionsAndCriteriaKeys.decisionOptions) {
-				ReactGA.event({
-					category: 'Selection criteria',
-					action: 'Items number',
-					value: items.length,
-				});
-			} else {
-				ReactGA.event({
-					category: 'Decision options',
-					action: 'Items number',
-					value: items.length,
-				});
-			}
 		}
 
 		if (!hidden && didMount) {
@@ -132,18 +128,16 @@ const EditableList: React.FC<Props> = (props: Props) => {
 			name: newEntry,
 			score: 0,
 		};
+
+		ReactGA.event({
+			category: itemsKeyForAnalytics,
+			action: `Create ${itemsKeyForAnalytics}`,
+		});
+
 		if (itemsKey === OptionsAndCriteriaKeys.decisionOptions) {
 			dispatch(OptionsAndCriteriaSlice.actions.addDecisionOption(newItem));
-			ReactGA.event({
-				category: 'Decision options',
-				action: 'Create',
-			});
 		} else {
 			dispatch(OptionsAndCriteriaSlice.actions.addSelectionCriteria(newItem));
-			ReactGA.event({
-				category: 'Selection criteria',
-				action: 'Create',
-			});
 		}
 	};
 
@@ -153,48 +147,34 @@ const EditableList: React.FC<Props> = (props: Props) => {
 
 	const onLeaveItem = (itemLocal: OptionAndCriteria) => {
 		if (itemLocal.name !== '') {
-			if (itemsKey === OptionsAndCriteriaKeys.decisionOptions) {
+			ReactGA.event({
+				category: itemsKeyForAnalytics,
+				action: `Edit ${itemsKeyForAnalytics}`,
+			});
+
+			if (itemsKey === OptionsAndCriteriaKeys.decisionOptions)
 				dispatch(OptionsAndCriteriaSlice.actions.updateDecisionOption(itemLocal));
-				ReactGA.event({
-					category: 'Decision options',
-					action: 'Edit',
-				});
-			} else {
-				dispatch(OptionsAndCriteriaSlice.actions.updateSelectionCriteria(itemLocal));
-				ReactGA.event({
-					category: 'Selection criteria',
-					action: 'Edit',
-				});
-			}
-		} else if (itemsKey === OptionsAndCriteriaKeys.decisionOptions) {
-			dispatch(OptionsAndCriteriaSlice.actions.deleteDecisionOption(itemLocal.id));
-			ReactGA.event({
-				category: 'Decision options',
-				action: 'Delete empty after edit',
-			});
+			else dispatch(OptionsAndCriteriaSlice.actions.updateSelectionCriteria(itemLocal));
 		} else {
-			dispatch(OptionsAndCriteriaSlice.actions.deleteSelectionCriteria(itemLocal.id));
 			ReactGA.event({
-				category: 'Selection criteria',
-				action: 'Delete empty after edit',
+				category: itemsKeyForAnalytics,
+				action: `Delete ${itemsKeyForAnalytics} after empty`,
 			});
+			if (itemsKey === OptionsAndCriteriaKeys.decisionOptions)
+				dispatch(OptionsAndCriteriaSlice.actions.deleteDecisionOption(itemLocal.id));
+			else dispatch(OptionsAndCriteriaSlice.actions.deleteSelectionCriteria(itemLocal.id));
 		}
 	};
 
 	const onDeleteItem = (itemLocal: OptionAndCriteria) => {
-		if (itemsKey === OptionsAndCriteriaKeys.decisionOptions) {
+		ReactGA.event({
+			category: itemsKeyForAnalytics,
+			action: `Delete ${itemsKeyForAnalytics}`,
+		});
+
+		if (itemsKey === OptionsAndCriteriaKeys.decisionOptions)
 			dispatch(OptionsAndCriteriaSlice.actions.deleteDecisionOption(itemLocal.id));
-			ReactGA.event({
-				category: 'Decision options',
-				action: 'Delete',
-			});
-		} else {
-			dispatch(OptionsAndCriteriaSlice.actions.deleteSelectionCriteria(itemLocal.id));
-			ReactGA.event({
-				category: 'Selection criteria',
-				action: 'Delete',
-			});
-		}
+		else dispatch(OptionsAndCriteriaSlice.actions.deleteSelectionCriteria(itemLocal.id));
 	};
 
 	const endOfAnimation = (index: number) => {

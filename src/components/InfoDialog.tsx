@@ -47,12 +47,12 @@ const InfoDialog: React.FC<Props> = (props: Props) => {
 			if (show)
 				ReactGA.event({
 					category: 'Info dialog',
-					action: `Open dialog ${dialogTitle}`,
+					action: `Open ${dialogTitle} dialog`,
 				});
 			else
 				ReactGA.event({
 					category: 'Info dialog',
-					action: `Close dialog ${dialogTitle}`,
+					action: `Close ${dialogTitle} dialog`,
 				});
 		}
 	}, [show]);
