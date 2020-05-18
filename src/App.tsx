@@ -73,7 +73,7 @@ const App: React.FC = () => {
 			<div className={classes.divMain}>
 				<AppBar position='static' color='primary' className={classes.appBar}>
 					<Toolbar>
-						<img className={classes.imgDcideLogo} src={imgDcideLogo} alt='d-cide imgDcideLogo' />
+						<img className={classes.imgDcideLogo} src={imgDcideLogo} alt='d-cide logo' />
 					</Toolbar>
 				</AppBar>
 
