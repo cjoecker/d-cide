@@ -1,7 +1,7 @@
 {
 	"homepage": "https://d-cide.me",
 	"name": "d-cide",
-	"version": "1.26.0",
+	"version": "1.27.0",
 	"private": true,
 	"dependencies": {
 		"@material-ui/core": "^4.9.13",
@@ -23,7 +23,7 @@
 	"scripts": {
 		"start": "react-scripts start",
 		"build": "react-scripts build",
-		"test": "npm run cy:run & react-scripts test a",
+		"test": "npm run cy:run & react-scripts test --watchAll=false --forceExit",
 		"cy:run": "cypress run",
 		"cy:open": "cypress open",
 		"preinstall": "npx npm-force-resolutions",
