@@ -75,13 +75,11 @@ const App: React.FC = () => {
 			category: 'App Mode',
 			action: 'Progressive Web App',
 		});
-		console.log('standalone');
 	} else {
 		ReactGA.event({
 			category: 'App Mode',
 			action: 'Web App',
 		});
-		console.log('not standalone');
 	}
 
 	return (
