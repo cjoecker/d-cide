@@ -37,7 +37,7 @@ context('Actions', () => {
 			.should('have.length', 0);
 	});
 
-	it('redirects to cjoecker', () => {
+	it.only('redirects to cjoecker', () => {
 		window.localStorage.setItem('cookieConsentAccepted', 'true');
 		cy.visit('/').getTestElement('cjoeckerLink').should('have.attr', 'href', 'https://www.cjoecker.de/');
 	});

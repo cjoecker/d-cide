@@ -68,6 +68,18 @@ const App: React.FC = () => {
 	ReactGA.pageview(window.location.pathname + window.location.search);
 	ga('set', 'appVersion', process.env.REACT_APP_VERSION);
 
+	if (window.matchMedia('(display-mode: standalone)').matches) {
+		ReactGA.event({
+			category: 'App Mode',
+			action: 'Progressive Web App',
+		});
+	} else {
+		ReactGA.event({
+			category: 'App Mode',
+			action: 'Web App',
+		});
+	}
+
 	return (
 		<ThemeProvider theme={theme}>
 			<div className={classes.divMain}>
