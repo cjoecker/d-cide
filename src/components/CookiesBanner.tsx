@@ -15,19 +15,17 @@ import {PrivacyText} from '../constants/PrivacyTexts';
 import theme from '../muiTheme';
 
 const useStyles = makeStyles({
-	gridMobile: {
+	grid: {
 		outline: 'none',
 	},
 
-	gridDesktop: {
+	divDesktop: {
 		position: 'fixed',
 		bottom: 'env(safe-area-inset-bottom)',
-		outline: 'none',
-		marginBottom: theme.spacing(3.5),
+		margin: theme.spacing(0, 10, 3.5, 10),
 	},
-
 	paper: {
-		maxWidth: '70%',
+		maxWidth: '85%',
 	},
 	typographyGridItem: {
 		margin: theme.spacing(0, 3, 0, 3),
@@ -58,28 +56,30 @@ const CookiesBanner: React.FC = () => {
 	};
 
 	const desktopBanner = (
-		<Slide direction='up' in={open} mountOnEnter unmountOnExit>
-			<Grid data-testid='cookiesConsent' className={classes.gridDesktop} container justify='center' alignContent='center'>
-				<Paper className={classes.paper} elevation={7}>
-					<Grid item className={classes.typographyGridItem} xs={12}>
-						<Typography component='span' data-testid='cookiesBanner' align='justify'>
-							{PrivacyText}
-						</Typography>
-					</Grid>
-					<Grid container xs={12} justify='flex-end'>
-						<Button
-							data-testid='cookieConsentCloseButton'
-							onClick={() => handleClose()}
-							className={classes.button}
-							variant='contained'
-							color='primary'
-						>
-							Understood
-						</Button>
-					</Grid>
-				</Paper>
-			</Grid>
-		</Slide>
+		<div className={classes.divDesktop}>
+			<Slide direction='up' in={open} mountOnEnter unmountOnExit>
+				<Grid data-testid='cookiesConsent' className={classes.grid} container justify='center' alignContent='center'>
+					<Paper className={classes.paper} elevation={7}>
+						<Grid item className={classes.typographyGridItem} xs={12}>
+							<Typography component='span' data-testid='cookiesBanner' align='justify'>
+								{PrivacyText}
+							</Typography>
+						</Grid>
+						<Grid container xs={12} justify='flex-end'>
+							<Button
+								data-testid='cookieConsentCloseButton'
+								onClick={() => handleClose()}
+								className={classes.button}
+								variant='contained'
+								color='primary'
+							>
+								Understood
+							</Button>
+						</Grid>
+					</Paper>
+				</Grid>
+			</Slide>
+		</div>
 	);
 
 	const mobileDialog = (
