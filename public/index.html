@@ -1,18 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 	<head>
-		<meta charset="utf-8" />
 		<link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico" />
+		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 		<meta name="theme-color" content="#000000" />
 		<link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+
+		<title>d-cide - Rational Decision Making App</title>
 		<meta
 			name="description"
 			content="Rational decision making app.This web app will help you make better decisions based on the prospect theory and usability heuristics."
 		/>
 		<meta name="robots" content="index, follow" />
 		<meta name="author" content="Chistian Jöcker" />
-		<title>d-cide - Rational Decision Making App</title>
+		<link rel="apple-touch-icon" href="images/icons/icon-192x192.png" />
 		<script type="application/ld+json">
 			{
 				"@context": "http://schema.org/",
@@ -22,7 +24,7 @@
 				"creator": "Christian Jöcker",
 				"url": "https://d-cide.me/",
 				"keywords": "decision,making,rational,psychology,choose,decide,right,make decision,app,webapp,pwa",
-				"applicationCategory": "productivity, utilities, business",
+				"applicationCategory": "productivity,utilities,business",
 				"image": "https://github.com/cjoecker/d-cide_withBackend",
 				"screenshot": "https://github.com/cjoecker/d-cide_withBackend",
 				"offers": {
@@ -38,6 +40,29 @@
 			You need to enable JavaScript to run this app.
 		</noscript>
 		<div id="root"></div>
+
+		<script>
+			if ('serviceWorker' in navigator) {
+				window.addEventListener('load', function () {
+					navigator.serviceWorker
+						.register('worker.js')
+						.then(
+							function (registration) {
+								console.log('Worker registration successful', registration.scope);
+							},
+							function (err) {
+								console.log('Worker registration failed', err);
+							}
+						)
+						.catch(function (err) {
+							console.log(err);
+						});
+				});
+			} else {
+				console.log('Service Worker is not supported by browser.');
+			}
+		</script>
+
 		<!--
   This HTML file is a template.
   If you open it directly in the browser, you will see an empty page.

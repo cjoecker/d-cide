@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 import {Provider} from 'react-redux';
 import './index.css';
 import store from './services/redux/store';
+import * as serviceWorker from './serviceWorker';
 
 const App = require('./App').default;
 
@@ -23,3 +24,5 @@ render();
 if (process.env.NODE_ENV === 'development' && module.hot) {
 	module.hot.accept('./App', render);
 }
+
+serviceWorker.register();
