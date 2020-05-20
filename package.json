@@ -23,10 +23,11 @@
 	"scripts": {
 		"start": "react-scripts start",
 		"build": "react-scripts build",
+		"test": "npm run cy:run & react-scripts test a",
 		"cy:run": "cypress run",
 		"cy:open": "cypress open",
 		"preinstall": "npx npm-force-resolutions",
-		"predeploy": "npm run build",
+		"predeploy": "npm run test && npm run build",
 		"deploy": "npm version minor -f && git push && gh-pages -d build"
 	},
 	"eslintConfig": {
@@ -67,6 +68,12 @@
 		"lint-staged": "^10.2.2",
 		"redux-mock-store": "^1.5.4",
 		"typescript": "^3.8.3"
+	},
+	"jest": {
+		"coveragePathIgnorePatterns": [
+			"<rootDir>/build/",
+			"<rootDir>/node_modules/"
+		]
 	},
 	"resolutions": {
 		"yargs-parser": "^18.1.3"
