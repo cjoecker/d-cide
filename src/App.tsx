@@ -68,16 +68,20 @@ const App: React.FC = () => {
 	ReactGA.pageview(window.location.pathname + window.location.search);
 	ga('set', 'appVersion', process.env.REACT_APP_VERSION);
 
+	console.log('hola');
+
 	if (window.matchMedia('(display-mode: standalone)').matches) {
 		ReactGA.event({
 			category: 'App Mode',
 			action: 'Progressive Web App',
 		});
+		console.log('standalone');
 	} else {
 		ReactGA.event({
 			category: 'App Mode',
 			action: 'Web App',
 		});
+		console.log('not standalone');
 	}
 
 	return (
