@@ -17,6 +17,7 @@
 		"react-swipeable-views": "^0.13.9",
 		"recharts": "^2.0.0-beta.1",
 		"redux": "^4.0.5",
+		"redux-offline": "^2.0.0",
 		"redux-thunk": "^2.3.0",
 		"yargs-parser": "^18.1.3"
 	},

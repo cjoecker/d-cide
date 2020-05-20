@@ -4,8 +4,18 @@ import rootReducer, {RootState} from './rootReducer';
 
 const newRootReducer = require('./rootReducer').default;
 
+const persistedState = localStorage.getItem('reduxState')
+	? JSON.parse(localStorage.getItem('reduxState') as string)
+	: {};
+
 const store = configureStore({
 	reducer: rootReducer,
+	devTools: process.env.NODE_ENV !== 'production',
+	preloadedState: persistedState,
+});
+
+store.subscribe(() => {
+	localStorage.setItem('reduxState', JSON.stringify(store.getState()));
 });
 
 if (process.env.NODE_ENV === 'development' && module.hot) {
