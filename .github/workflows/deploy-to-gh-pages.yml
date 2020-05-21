@@ -1,4 +1,4 @@
-name: deploy
+name: CI
 
 on:
   push:
@@ -21,7 +21,7 @@ jobs:
           npm run-script build
         env:
           REACT_APP_googleAnalyticsKey: ${{ secrets.REACT_APP_googleAnalyticsKey }}
-          REACT_APP_localStortageKey: ${{ secrets.REACT_APP_localStortageKey }}
+          REACT_APP_localStorageKey: ${{ secrets.REACT_APP_localStorageKey }}
 
       - name: Deploy
         uses: JamesIves/github-pages-deploy-action@releases/v3

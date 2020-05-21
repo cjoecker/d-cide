@@ -6,7 +6,7 @@ import rootReducer, {RootState} from './rootReducer';
 const newRootReducer = require('./rootReducer').default;
 
 const encryptionKey =
-	process.env.REACT_APP_localStortageKey != null ? process.env.REACT_APP_localStortageKey : 'localKey';
+	process.env.REACT_APP_localStorageKey != null ? process.env.REACT_APP_localStorageKey : 'localKey';
 
 const encrypt = (input: string): string => {
 	return CryptoJS.AES.encrypt(input, encryptionKey).toString();
