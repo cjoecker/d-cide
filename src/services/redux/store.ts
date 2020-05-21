@@ -1,12 +1,9 @@
 import {Action, configureStore} from '@reduxjs/toolkit';
 import {ThunkAction} from 'redux-thunk';
 import rootReducer, {RootState} from './rootReducer';
+import persistedState, {encrypt} from './storeEncription';
 
 const newRootReducer = require('./rootReducer').default;
-
-const persistedState = localStorage.getItem('reduxState')
-	? JSON.parse(localStorage.getItem('reduxState') as string)
-	: {};
 
 const store = configureStore({
 	reducer: rootReducer,
@@ -15,7 +12,7 @@ const store = configureStore({
 });
 
 store.subscribe(() => {
-	localStorage.setItem('reduxState', JSON.stringify(store.getState()));
+	localStorage.setItem('reduxState', encrypt(store.getState()));
 });
 
 if (process.env.NODE_ENV === 'development' && module.hot) {
