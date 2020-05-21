@@ -1,11 +1,23 @@
 import {Action, configureStore} from '@reduxjs/toolkit';
 import {ThunkAction} from 'redux-thunk';
+import CryptoJS from 'crypto-js';
 import rootReducer, {RootState} from './rootReducer';
 
 const newRootReducer = require('./rootReducer').default;
 
+const encryptionKey =
+	process.env.REACT_APP_localStortageKey != null ? process.env.REACT_APP_localStortageKey : 'localKey';
+
+const encrypt = (input: string): string => {
+	return CryptoJS.AES.encrypt(input, encryptionKey).toString();
+};
+
+const decrypt = (input: string): string => {
+	return CryptoJS.AES.decrypt(input, encryptionKey).toString(CryptoJS.enc.Utf8);
+};
+
 const persistedState = localStorage.getItem('reduxState')
-	? JSON.parse(localStorage.getItem('reduxState') as string)
+	? JSON.parse(decrypt(localStorage.getItem('reduxState') as string))
 	: {};
 
 const store = configureStore({
@@ -15,7 +27,7 @@ const store = configureStore({
 });
 
 store.subscribe(() => {
-	localStorage.setItem('reduxState', JSON.stringify(store.getState()));
+	localStorage.setItem('reduxState', encrypt(JSON.stringify(store.getState())));
 });
 
 if (process.env.NODE_ENV === 'development' && module.hot) {
