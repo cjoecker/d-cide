@@ -63,7 +63,7 @@ const App: React.FC = () => {
 
 	const [showPrivacyPolicy, setShowPrivacyPolicy] = useState(false);
 
-	ReactGA.initialize('***REMOVED***');
+	ReactGA.initialize(process.env.REACT_APP_googleAnalyticsKey as string);
 
 	ReactGA.pageview(window.location.pathname + window.location.search);
 	ga('set', 'appVersion', process.env.REACT_APP_VERSION);
