@@ -82,8 +82,7 @@
 	},
 	"husky": {
 		"hooks": {
-			"pre-commit": "lint-staged",
-			"pre-push": "if git-branch-is master; then cypress run && react-scripts test --watchAll=false --forceExit && npm version minor -f; fi"
+			"pre-commit": "lint-staged"
 		}
 	},
 	"lint-staged": {
