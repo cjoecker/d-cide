@@ -78,11 +78,13 @@
 		]
 	},
 	"resolutions": {
-		"yargs-parser": "^18.1.3"
+		"yargs-parser": "^18.1.3",
+		"http-proxy": "^1.18.1"
 	},
 	"husky": {
 		"hooks": {
-			"pre-commit": "lint-staged"
+			"pre-commit": "lint-staged",
+			"pre-push": "if git-branch-is master; then cypress run && react-scripts test --watchAll=false --forceExit && npm version minor -f; fi"
 		}
 	},
 	"lint-staged": {
