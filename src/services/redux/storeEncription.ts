@@ -4,7 +4,9 @@ import {RootState} from './rootReducer';
 export const storeStorageKey = 'appState';
 
 const encryptionKey =
-	process.env.REACT_APP_localStorageKey != null ? process.env.REACT_APP_localStorageKey : 'localKey';
+	process.env.REACT_APP_localStorageKey != null ? process.env.REACT_APP_localStorageKey : 'localEnvironmentKey';
+
+if (process.env.REACT_APP_localStorageKey == null) console.log('nok');
 
 export const encrypt = (input: RootState): string => {
 	return CryptoJS.AES.encrypt(JSON.stringify(input), encryptionKey).toString();
