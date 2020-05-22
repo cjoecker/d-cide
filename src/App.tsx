@@ -63,6 +63,7 @@ const App: React.FC = () => {
 
 	const [showPrivacyPolicy, setShowPrivacyPolicy] = useState(false);
 
+	//test
 	ReactGA.initialize(process.env.REACT_APP_googleAnalyticsKey as string);
 
 	ReactGA.pageview(window.location.pathname + window.location.search);
