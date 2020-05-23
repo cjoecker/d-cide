@@ -37,7 +37,7 @@ context('Actions', () => {
 			.should('have.length', 0);
 	});
 
-	it.only('redirects to cjoecker', () => {
+	it('redirects to cjoecker', () => {
 		window.localStorage.setItem('cookieConsentAccepted', 'true');
 		cy.visit('/').getTestElement('cjoeckerLink').should('have.attr', 'href', 'https://www.cjoecker.de/');
 	});
@@ -57,5 +57,32 @@ context('Actions', () => {
 
 			.getTestElement('infoText')
 			.should('have.length', 0);
+	});
+
+	it('persist changes', () => {
+		const changedItemText = 'New item text';
+
+		cy
+			.visit('/')
+
+			.getTestElement('decisionOptionsList')
+			.within(() => {
+				cy
+					.getTestElement('itemInput')
+					.first()
+					.clear()
+					.type(changedItemText)
+					.blur()
+
+					.getTestElement('itemInput')
+					.first()
+					.should('have.value', changedItemText);
+			})
+
+			.visit('/')
+			.getTestElement('decisionOptionsList')
+			.within(() => {
+				cy.getTestElement('itemInput').first().should('have.value', changedItemText);
+			});
 	});
 });
