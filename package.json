@@ -28,7 +28,9 @@
 		"test": "npm run cy:run & react-scripts test --watchAll=false --forceExit",
 		"cy:run": "cypress run",
 		"cy:open": "cypress open",
-		"preinstall": "npx npm-force-resolutions"
+		"preinstall": "npx npm-force-resolutions",
+		"predeploy": "git checkout master && git pull origin master && git merge develop",
+		"deploy": "npm version minor -f && cypress run && react-scripts test --watchAll=false --forceExit && git push origin master"
 	},
 	"eslintConfig": {
 		"extends": "react-app"
@@ -83,8 +85,7 @@
 	},
 	"husky": {
 		"hooks": {
-			"pre-commit": "lint-staged",
-			"pre-push": "if git-branch-is master; then cypress run && react-scripts test --watchAll=false --forceExit && npm version minor -f; fi"
+			"pre-commit": "lint-staged"
 		}
 	},
 	"lint-staged": {
