@@ -9,24 +9,48 @@ const theme = createMuiTheme({
 			color: '#000000',
 		},
 		fontWeightRegular: 400,
-		fontWeightBold: 600,
+		fontWeightBold: 500,
 		h1: {
-			fontWeight: 600,
+			fontWeight: 500,
 		},
 		h2: {
-			fontWeight: 600,
+			fontWeight: 500,
 		},
 		h3: {
-			fontWeight: 600,
+			fontWeight: 500,
 		},
 		h4: {
-			fontWeight: 600,
+			fontWeight: 500,
 		},
 		h5: {
-			fontWeight: 600,
+			fontWeight: 500,
 		},
 		h6: {
-			fontWeight: 600,
+			fontWeight: 500,
+		},
+	},
+	overrides: {
+		MuiTypography: {
+			root: {
+				'& h1': {
+					fontWeight: 500,
+				},
+				'& h2': {
+					fontWeight: 500,
+				},
+				'& h3': {
+					fontWeight: 500,
+				},
+				'& h4': {
+					fontWeight: 500,
+				},
+				'& h5': {
+					fontWeight: 500,
+				},
+				'& h6': {
+					fontWeight: 500,
+				},
+			},
 		},
 	},
 
