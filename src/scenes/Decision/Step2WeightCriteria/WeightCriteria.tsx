@@ -13,6 +13,7 @@ import * as LongStrings from '../../../constants/InfoDialogTexts';
 import InfoDialog from '../../../components/InfoDialog';
 import {RootState} from '../../../services/redux/rootReducer';
 import WeightedCriteriaSlice, {WeightedCriteria} from '../../../services/redux/actionsAndSlicers/WeightCriteriaSlice';
+import ButtonsTooltip from '../../../components/ButtonsTooltip';
 
 const useStyles = makeStyles({
 	divMain: {
@@ -203,15 +204,17 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
 					<div className={classes.title}>
 						<Typography component='span' variant='h1' gutterBottom>
 							Weight Criteria
-							<IconButton
-								data-testid='WeightCriteriaInfoButton'
-								aria-label='Help'
-								className={classes.infoButton}
-								onClick={() => setShowInfo(true)}
-								tabIndex={hidden ? -1 : 0}
-							>
-								<InfoIcon color='secondary' />
-							</IconButton>
+							<ButtonsTooltip>
+								<IconButton
+									data-testid='WeightCriteriaInfoButton'
+									aria-label='Show help'
+									className={classes.infoButton}
+									onClick={() => setShowInfo(true)}
+									tabIndex={hidden ? -1 : 0}
+								>
+									<InfoIcon color='secondary' />
+								</IconButton>
+							</ButtonsTooltip>
 						</Typography>
 					</div>
 				</Grid>
@@ -242,6 +245,7 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
 									</Grid>
 									<Grid item xs={12} zeroMinWidth className={classes.gridItemSlider}>
 										<Slider
+											aria-label="Weight selection criteria"
 											data-testid={`slider${index}`}
 											classes={{
 												track: classes.sliderTrack,
