@@ -4,13 +4,13 @@ import {Link} from '@material-ui/core';
 
 export const PrivacyText = (
 	<div>
-		<h2
+		<h1
 			style={{
 				textAlign: 'left',
 			}}
 		>
 			Cookie Consent
-		</h2>
+		</h1>
 		<p>
 			<b>We don't save your data!</b> It stays encrypted inside of your device and belongs only to you. We only use cookies
 			to analyze our traffic and user experience. To be sure of what we do, you can check the full code of this app in the{' '}

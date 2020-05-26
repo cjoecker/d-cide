@@ -12,21 +12,31 @@ const theme = createMuiTheme({
 		fontWeightBold: 500,
 		h1: {
 			fontWeight: 500,
+			fontSize: 28,
 		},
 		h2: {
 			fontWeight: 500,
+			fontSize: 26,
 		},
 		h3: {
 			fontWeight: 500,
+			fontSize: 22,
 		},
 		h4: {
 			fontWeight: 500,
+			fontSize: 20,
 		},
 		h5: {
 			fontWeight: 500,
+			fontSize: 20,
 		},
 		h6: {
 			fontWeight: 500,
+			fontSize: 18,
+		},
+		body1: {
+			fontWeight: 400,
+			fontSize: 16,
 		},
 	},
 	overrides: {
@@ -34,21 +44,31 @@ const theme = createMuiTheme({
 			root: {
 				'& h1': {
 					fontWeight: 500,
+					fontSize: 28,
 				},
 				'& h2': {
 					fontWeight: 500,
+					fontSize: 26,
 				},
 				'& h3': {
 					fontWeight: 500,
+					fontSize: 22,
 				},
 				'& h4': {
 					fontWeight: 500,
+					fontSize: 20,
 				},
 				'& h5': {
 					fontWeight: 500,
+					fontSize: 20,
 				},
 				'& h6': {
 					fontWeight: 500,
+					fontSize: 18,
+				},
+				'& body': {
+					fontWeight: 400,
+					fontSize: 16,
 				},
 			},
 		},
