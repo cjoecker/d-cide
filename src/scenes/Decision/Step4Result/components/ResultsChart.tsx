@@ -14,6 +14,7 @@ import {
 	OptionsAndCriteriaKeys,
 } from '../../../../services/redux/actionsAndSlicers/OptionsAndCriteriaSlice';
 import InfoDialog from '../../../../components/InfoDialog';
+import ButtonsTooltip from '../../../../components/ButtonsTooltip';
 
 const useStyles = makeStyles({
 	divMain: {
@@ -92,15 +93,17 @@ const ResultsChart: React.FC<Props> = (props: Props) => {
 				<Paper elevation={2} key='Option'>
 					<Typography variant='h2' gutterBottom className={classes.title}>
 						{title}
-						<IconButton
-							data-testid={`${itemsKey}ResultsInfoButton`}
-							aria-label='Help'
-							className={classes.infoButton}
-							onClick={() => setShowInfo(true)}
-							tabIndex={hidden ? -1 : 0}
-						>
-							<InfoIcon color='secondary' />
-						</IconButton>
+						<ButtonsTooltip>
+							<IconButton
+								data-testid={`${itemsKey}ResultsInfoButton`}
+								aria-label='Show help'
+								className={classes.infoButton}
+								onClick={() => setShowInfo(true)}
+								tabIndex={hidden ? -1 : 0}
+							>
+								<InfoIcon color='secondary' />
+							</IconButton>
+						</ButtonsTooltip>
 					</Typography>
 					<Typography component='span' variant='body1'>
 						<ResponsiveContainer
