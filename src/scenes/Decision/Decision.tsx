@@ -17,6 +17,7 @@ import RateOptions from './Step3RateOptions/RateOptions';
 import Results from './Step4Result/Result';
 import {RootState} from '../../services/redux/rootReducer';
 import {NOT_ENOUGH_CRITERIA, NOT_ENOUGH_OPTIONS} from '../../constants/Alerts';
+import ButtonsTooltip from '../../components/ButtonsTooltip';
 
 const useStyles = makeStyles({
 	divMain: {
@@ -147,16 +148,18 @@ const Decision: React.FC = () => {
 				{steps.map(step => {
 					return (
 						<Step key={step.number}>
-							<StepButton
-								focusRipple
-								data-testid={`Step${step.number}Button`}
-								onClick={() => changeStep(step.number, 'step button')}
-								completed={step.completed}
-								disabled={step.disabled}
-								aria-label={`Go to step ${step.number}`}
-							>
-								<StepLabel StepIconProps={{classes: {root: classes.stepperLabel}}}>{step.name}</StepLabel>
-							</StepButton>
+							<ButtonsTooltip>
+								<StepButton
+									focusRipple
+									data-testid={`Step${step.number}Button`}
+									onClick={() => changeStep(step.number, 'step button')}
+									completed={step.completed}
+									disabled={step.disabled}
+									aria-label={`Go to step ${step.number}`}
+								>
+									<StepLabel StepIconProps={{classes: {root: classes.stepperLabel}}}>{step.name}</StepLabel>
+								</StepButton>
+							</ButtonsTooltip>
 						</Step>
 					);
 				})}
@@ -175,7 +178,7 @@ const Decision: React.FC = () => {
 				<Results hidden={loadedStepNum !== 4} />
 			</SwipeableViews>
 			{activeStepNum !== 1 ? (
-				<Tooltip title="Previous step" enterDelay={300}>
+				<Tooltip title='Previous step' enterDelay={300} arrow>
 					<Fab
 						data-testid='PrevStepButton'
 						color='secondary'
@@ -189,7 +192,7 @@ const Decision: React.FC = () => {
 				</Tooltip>
 			) : null}
 			{activeStepNum !== steps.length ? (
-				<Tooltip title="Next step" enterDelay={300}>
+				<Tooltip title='Next step' enterDelay={300} arrow>
 					<Fab
 						data-testid='NextStepButton'
 						color='primary'

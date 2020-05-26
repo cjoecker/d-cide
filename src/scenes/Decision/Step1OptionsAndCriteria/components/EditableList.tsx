@@ -23,6 +23,7 @@ import {
 	predefinedDecisionOptions,
 	predefinedSelectionCriteria,
 } from '../../../../constants/PredifinedOptionsAndCriteria';
+import ButtonsTooltip from '../../../../components/ButtonsTooltip';
 
 const useStyles = makeStyles({
 	divMain: {
@@ -203,9 +204,9 @@ const EditableList: React.FC<Props> = (props: Props) => {
 			<List>
 				<Paper className={classes.paperTitle} elevation={2} key='NewEntry'>
 					<ListItem>
-						<Tooltip title="Write new entry" enterDelay={300}>
+						<Tooltip title='Write new entry' enterDelay={300} arrow>
 							<TextField
-								aria-label="Write new entry"
+								aria-label='Write new entry'
 								inputProps={{
 									'data-testid': 'entryInput',
 									tabIndex: hidden ? -1 : 0,
@@ -225,7 +226,7 @@ const EditableList: React.FC<Props> = (props: Props) => {
 							/>
 						</Tooltip>
 						<ListItemSecondaryAction>
-							<Tooltip title="Add new entry" enterDelay={300}>
+							<Tooltip title='Add new entry' enterDelay={300} arrow>
 								<IconButton
 									data-testid='addButton'
 									aria-label='Add new entry'
@@ -252,9 +253,9 @@ const EditableList: React.FC<Props> = (props: Props) => {
 					>
 						<Paper className={classes.paperItems} elevation={2}>
 							<ListItem>
-								<Tooltip title="Edit entry" enterDelay={300}>
+								<Tooltip title='Edit entry' enterDelay={300}>
 									<TextField
-										aria-label="Edit entry"
+										aria-label='Edit entry'
 										inputProps={{
 											'data-testid': `itemInput`,
 										}}
@@ -275,7 +276,7 @@ const EditableList: React.FC<Props> = (props: Props) => {
 									/>
 								</Tooltip>
 								<ListItemSecondaryAction>
-									<Tooltip title="Delete entry" enterDelay={300}>
+									<Tooltip title='Delete entry' enterDelay={300}>
 										<IconButton
 											data-testid={`deleteButton${index}`}
 											aria-label='Delete entry'
