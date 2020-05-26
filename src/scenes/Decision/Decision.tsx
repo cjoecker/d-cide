@@ -7,7 +7,7 @@ import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import {makeStyles} from '@material-ui/core/styles';
 import SwipeableViews from 'react-swipeable-views';
-import {StepLabel} from '@material-ui/core';
+import {StepLabel, Tooltip} from '@material-ui/core';
 import {shallowEqual, useSelector} from 'react-redux';
 import ReactGA from 'react-ga';
 import theme from '../../muiTheme';
@@ -153,6 +153,7 @@ const Decision: React.FC = () => {
 								onClick={() => changeStep(step.number, 'step button')}
 								completed={step.completed}
 								disabled={step.disabled}
+								aria-label={`Go to step ${step.number}`}
 							>
 								<StepLabel StepIconProps={{classes: {root: classes.stepperLabel}}}>{step.name}</StepLabel>
 							</StepButton>
@@ -174,29 +175,33 @@ const Decision: React.FC = () => {
 				<Results hidden={loadedStepNum !== 4} />
 			</SwipeableViews>
 			{activeStepNum !== 1 ? (
-				<Fab
-					data-testid='PrevStepButton'
-					color='secondary'
-					aria-label='Previous Step'
-					size='medium'
-					className={classes.buttonBack}
-					onClick={() => changeStep(activeStepNum - 1, 'previous button')}
-				>
-					<ArrowBackIcon />
-				</Fab>
+				<Tooltip title="Previous step" enterDelay={300}>
+					<Fab
+						data-testid='PrevStepButton'
+						color='secondary'
+						aria-label='Previous step'
+						size='medium'
+						className={classes.buttonBack}
+						onClick={() => changeStep(activeStepNum - 1, 'previous button')}
+					>
+						<ArrowBackIcon />
+					</Fab>
+				</Tooltip>
 			) : null}
 			{activeStepNum !== steps.length ? (
-				<Fab
-					data-testid='NextStepButton'
-					color='primary'
-					aria-label='Next Step'
-					size='medium'
-					className={classes.buttonNext}
-					onClick={() => changeStep(activeStepNum + 1, 'next button')}
-					disabled={disableStepButtons}
-				>
-					<ArrowForwardIcon />
-				</Fab>
+				<Tooltip title="Next step" enterDelay={300}>
+					<Fab
+						data-testid='NextStepButton'
+						color='primary'
+						aria-label='Next step'
+						size='medium'
+						className={classes.buttonNext}
+						onClick={() => changeStep(activeStepNum + 1, 'next button')}
+						disabled={disableStepButtons}
+					>
+						<ArrowForwardIcon />
+					</Fab>
+				</Tooltip>
 			) : null}
 		</div>
 	);
