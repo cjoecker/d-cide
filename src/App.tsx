@@ -6,7 +6,7 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import ReactGA, {ga} from 'react-ga';
-import {Link} from '@material-ui/core';
+import {Button, Link} from '@material-ui/core';
 import Decision from './scenes/Decision/Decision';
 import AlertsBanner from './components/AlertsBanner';
 import theme from './muiTheme';
@@ -50,11 +50,11 @@ const useStyles = makeStyles({
 		marginBottom: theme.spacing(0.5),
 		paddingBottom: 'env(safe-area-inset-bottom)',
 	},
-	footerLegalText: {
-		marginTop: -theme.spacing(0.5),
-	},
-	link: {
-		cursor: 'pointer',
+	linkButton: {
+		textTransform: 'none',
+		textDecoration: 'underline',
+		marginTop: theme.spacing(-0.5),
+		fontWeight: 'normal',
 	},
 });
 
@@ -113,21 +113,20 @@ const App: React.FC = () => {
 								underline='always'
 								target='_blank'
 								tabIndex={localStorage.getItem('cookieConsentAccepted') == null ? -1 : 0}
+								aria-label={"Christian Jöcker's(opens personal website in a new window)"}
 							>
 								Christian Jöcker
 							</Link>
 						</Grid>
 						<Grid item xs={12}>
-							{/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-							<Link
+							<Button
+								className={classes.linkButton}
 								data-testid='privacyPolicyLink'
-								style={{cursor: 'pointer'}}
 								onClick={() => setShowPrivacyPolicy(true)}
-								underline='always'
-								tabIndex={0}
+								color='primary'
 							>
 								Privacy Policy
-							</Link>
+							</Button>
 						</Grid>
 					</Typography>
 				</Grid>
