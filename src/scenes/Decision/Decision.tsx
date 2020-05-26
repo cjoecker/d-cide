@@ -167,6 +167,7 @@ const Decision: React.FC = () => {
 				onTransitionEnd={() => {
 					setLoadedStepNum(activeStepNum);
 				}}
+				disableLazyLoading
 			>
 				<OptionsAndCriteria hidden={loadedStepNum !== 1} />
 				<WeightCriteria hidden={loadedStepNum !== 2} />
@@ -192,7 +193,7 @@ const Decision: React.FC = () => {
 					aria-label='Next Step'
 					size='medium'
 					className={classes.buttonNext}
-					onClick={() => changeStep(activeStepNum + 1, 'next button')}
+					onClick={event => changeStep(activeStepNum + 1, 'next button')}
 					disabled={disableStepButtons}
 				>
 					<ArrowForwardIcon />

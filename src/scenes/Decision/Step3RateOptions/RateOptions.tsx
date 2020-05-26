@@ -180,7 +180,7 @@ const RateOptions: React.FC<Props> = (props: Props) => {
 
 		return foundRatedOption == null ? 50 : foundRatedOption.score;
 	};
-	//TODO don't allow to select text on scroll
+
 	return (
 		<div className={classes.divMain}>
 			<Grid container justify='center' alignContent='center'>
@@ -192,6 +192,7 @@ const RateOptions: React.FC<Props> = (props: Props) => {
 							aria-label='Help'
 							className={classes.infoButton}
 							onClick={() => setShowInfo(true)}
+							tabIndex={hidden ? -1 : 0}
 						>
 							<InfoIcon color='secondary' />
 						</IconButton>

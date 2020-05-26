@@ -227,6 +227,7 @@ const EditableList: React.FC<Props> = (props: Props) => {
 								aria-label='Add'
 								className={classes.deleteButton}
 								onClick={() => onCreateItem()}
+								tabIndex={hidden ? -1 : 0}
 							>
 								<AddIcon />
 							</IconButton>

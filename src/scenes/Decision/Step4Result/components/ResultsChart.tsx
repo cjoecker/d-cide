@@ -97,6 +97,7 @@ const ResultsChart: React.FC<Props> = (props: Props) => {
 							aria-label='Help'
 							className={classes.infoButton}
 							onClick={() => setShowInfo(true)}
+							tabIndex={hidden ? -1 : 0}
 						>
 							<InfoIcon color='secondary' />
 						</IconButton>
