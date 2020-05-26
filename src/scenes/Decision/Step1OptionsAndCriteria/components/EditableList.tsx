@@ -204,7 +204,7 @@ const EditableList: React.FC<Props> = (props: Props) => {
 			<List>
 				<Paper className={classes.paperTitle} elevation={2} key='NewEntry'>
 					<ListItem>
-						<Tooltip title='Write new entry' enterDelay={300} arrow>
+						<ButtonsTooltip>
 							<TextField
 								aria-label='Write new entry'
 								inputProps={{
@@ -224,9 +224,9 @@ const EditableList: React.FC<Props> = (props: Props) => {
 								onChange={event => setNewEntry(event.target.value)}
 								multiline
 							/>
-						</Tooltip>
+						</ButtonsTooltip>
 						<ListItemSecondaryAction>
-							<Tooltip title='Add new entry' enterDelay={300} arrow>
+							<ButtonsTooltip>
 								<IconButton
 									data-testid='addButton'
 									aria-label='Add new entry'
@@ -236,7 +236,7 @@ const EditableList: React.FC<Props> = (props: Props) => {
 								>
 									<AddIcon />
 								</IconButton>
-							</Tooltip>
+							</ButtonsTooltip>
 						</ListItemSecondaryAction>
 					</ListItem>
 				</Paper>
@@ -253,7 +253,7 @@ const EditableList: React.FC<Props> = (props: Props) => {
 					>
 						<Paper className={classes.paperItems} elevation={2}>
 							<ListItem>
-								<Tooltip title='Edit entry' enterDelay={300}>
+								<ButtonsTooltip>
 									<TextField
 										aria-label='Edit entry'
 										inputProps={{
@@ -274,9 +274,9 @@ const EditableList: React.FC<Props> = (props: Props) => {
 											}
 										}}
 									/>
-								</Tooltip>
+								</ButtonsTooltip>
 								<ListItemSecondaryAction>
-									<Tooltip title='Delete entry' enterDelay={300}>
+									<ButtonsTooltip>
 										<IconButton
 											data-testid={`deleteButton${index}`}
 											aria-label='Delete entry'
@@ -285,7 +285,7 @@ const EditableList: React.FC<Props> = (props: Props) => {
 										>
 											<DeleteIcon />
 										</IconButton>
-									</Tooltip>
+									</ButtonsTooltip>
 								</ListItemSecondaryAction>
 							</ListItem>
 						</Paper>

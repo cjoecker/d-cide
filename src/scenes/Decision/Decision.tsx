@@ -178,7 +178,7 @@ const Decision: React.FC = () => {
 				<Results hidden={loadedStepNum !== 4} />
 			</SwipeableViews>
 			{activeStepNum !== 1 ? (
-				<Tooltip title='Previous step' enterDelay={300} arrow>
+				<ButtonsTooltip>
 					<Fab
 						data-testid='PrevStepButton'
 						color='secondary'
@@ -189,10 +189,10 @@ const Decision: React.FC = () => {
 					>
 						<ArrowBackIcon />
 					</Fab>
-				</Tooltip>
+				</ButtonsTooltip>
 			) : null}
 			{activeStepNum !== steps.length ? (
-				<Tooltip title='Next step' enterDelay={300} arrow>
+				<ButtonsTooltip>
 					<Fab
 						data-testid='NextStepButton'
 						color='primary'
@@ -204,7 +204,7 @@ const Decision: React.FC = () => {
 					>
 						<ArrowForwardIcon />
 					</Fab>
-				</Tooltip>
+				</ButtonsTooltip>
 			) : null}
 		</div>
 	);

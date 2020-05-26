@@ -11,7 +11,7 @@ const ButtonsTooltip = (props: ButtonsTooltipProps) => {
 
 	return (
 		// eslint-disable-next-line react/jsx-props-no-spreading
-		<Tooltip title={children.props['aria-label']} enterDelay={500} arrow {...props}>
+		<Tooltip title={children.props['aria-label']} placement='bottom' enterDelay={500} {...props}>
 			{children}
 		</Tooltip>
 	);

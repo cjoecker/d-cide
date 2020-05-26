@@ -10,6 +10,7 @@ import theme from '../../../muiTheme';
 import {DecisionOptionInfo, SelectionCriteriaInfo} from '../../../constants/InfoDialogTexts';
 import {OptionsAndCriteriaKeys} from '../../../services/redux/actionsAndSlicers/OptionsAndCriteriaSlice';
 import {NOT_ENOUGH_CRITERIA, NOT_ENOUGH_OPTIONS} from '../../../constants/Alerts';
+import ButtonsTooltip from '../../../components/ButtonsTooltip';
 
 const useStyles = makeStyles({
 	divMain: {
@@ -52,15 +53,17 @@ const OptionsAndCriteria: React.FC<Props> = (props: Props) => {
 				<Grid item xs={6} className={classes.gridItem}>
 					<Typography component='span' variant='h1'>
 						Decision Options
-						<IconButton
-							aria-label='Help'
-							data-testid={`${OptionsAndCriteriaKeys.decisionOptions}InfoButton`}
-							className={classes.infoButton}
-							onClick={() => setShowOptionsInfo(true)}
-							tabIndex={hidden ? -1 : 0}
-						>
-							<InfoIcon color='secondary' />
-						</IconButton>
+						<ButtonsTooltip>
+							<IconButton
+								aria-label='Show help'
+								data-testid={`${OptionsAndCriteriaKeys.decisionOptions}InfoButton`}
+								className={classes.infoButton}
+								onClick={() => setShowOptionsInfo(true)}
+								tabIndex={hidden ? -1 : 0}
+							>
+								<InfoIcon color='secondary' />
+							</IconButton>
+						</ButtonsTooltip>
 					</Typography>
 					<EditableList
 						itemsKey={OptionsAndCriteriaKeys.decisionOptions}
@@ -71,15 +74,17 @@ const OptionsAndCriteria: React.FC<Props> = (props: Props) => {
 				<Grid item xs={6} className={classes.gridItem}>
 					<Typography component='span' variant='h1'>
 						Selection Criteria
-						<IconButton
-							aria-label='Help'
-							data-testid={`${OptionsAndCriteriaKeys.selectionCriteria}InfoButton`}
-							className={classes.infoButton}
-							onClick={() => setShowCriteriaInfo(true)}
-							tabIndex={hidden ? -1 : 0}
-						>
-							<InfoIcon color='secondary' />
-						</IconButton>
+						<ButtonsTooltip>
+							<IconButton
+								aria-label='Show help'
+								data-testid={`${OptionsAndCriteriaKeys.selectionCriteria}InfoButton`}
+								className={classes.infoButton}
+								onClick={() => setShowCriteriaInfo(true)}
+								tabIndex={hidden ? -1 : 0}
+							>
+								<InfoIcon color='secondary' />
+							</IconButton>
+						</ButtonsTooltip>
 					</Typography>
 					<EditableList
 						itemsKey={OptionsAndCriteriaKeys.selectionCriteria}
