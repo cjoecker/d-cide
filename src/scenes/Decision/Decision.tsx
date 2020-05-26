@@ -129,10 +129,11 @@ const Decision: React.FC = () => {
 		setSteps(newSteps);
 	};
 
-	const changeStep = (stepNumber: number, element: string) => {
+	const changeStep = (stepNumber: number, element: string, event: React.BaseSyntheticEvent) => {
 		setStepCompleted(activeStepNum);
 		setActiveStepNum(stepNumber);
 		window.scrollTo(0, 0);
+		event.target.blur();
 
 		ReactGA.event({
 			category: 'Change step',
@@ -148,11 +149,11 @@ const Decision: React.FC = () => {
 					return (
 						<Step key={step.number}>
 							<StepButton
+								focusRipple
 								data-testid={`Step${step.number}Button`}
-								onClick={() => changeStep(step.number, 'step button')}
+								onClick={event => changeStep(step.number, 'step button', event)}
 								completed={step.completed}
 								disabled={step.disabled}
-								tabIndex={-1}
 							>
 								<StepLabel StepIconProps={{classes: {root: classes.stepperLabel}}}>{step.name}</StepLabel>
 							</StepButton>
@@ -167,7 +168,6 @@ const Decision: React.FC = () => {
 				onTransitionEnd={() => {
 					setLoadedStepNum(activeStepNum);
 				}}
-				disableLazyLoading
 			>
 				<OptionsAndCriteria hidden={loadedStepNum !== 1} />
 				<WeightCriteria hidden={loadedStepNum !== 2} />
@@ -181,7 +181,7 @@ const Decision: React.FC = () => {
 					aria-label='Previous Step'
 					size='medium'
 					className={classes.buttonBack}
-					onClick={() => changeStep(activeStepNum - 1, 'previous button')}
+					onClick={event => changeStep(activeStepNum - 1, 'previous button', event)}
 				>
 					<ArrowBackIcon />
 				</Fab>
@@ -193,7 +193,7 @@ const Decision: React.FC = () => {
 					aria-label='Next Step'
 					size='medium'
 					className={classes.buttonNext}
-					onClick={event => changeStep(activeStepNum + 1, 'next button')}
+					onClick={event => changeStep(activeStepNum + 1, 'next button', event)}
 					disabled={disableStepButtons}
 				>
 					<ArrowForwardIcon />
