@@ -7,6 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import DialogContent from '@material-ui/core/DialogContent/DialogContent';
 import ReactGA from 'react-ga';
 import theme from '../muiTheme';
+import ButtonsTooltip from './ButtonsTooltip';
 
 const useStyles = makeStyles({
 	dialog: {
@@ -85,9 +86,16 @@ const InfoDialog: React.FC<Props> = (props: Props) => {
 					<Typography component='span' data-testid='infoText' variant='body1' className={classes.text}>
 						{text}
 					</Typography>
-					<IconButton aria-label='Close' data-testid='infoCloseButton' className={classes.closeButton} onClick={handleClose}>
-						<CloseIcon />
-					</IconButton>
+					<ButtonsTooltip>
+						<IconButton
+							aria-label='Close'
+							data-testid='infoCloseButton'
+							className={classes.closeButton}
+							onClick={handleClose}
+						>
+							<CloseIcon />
+						</IconButton>
+					</ButtonsTooltip>
 				</DialogContent>
 			</Dialog>
 		</div>
