@@ -9,7 +9,7 @@ import AddIcon from '@material-ui/icons/AddRounded';
 import Paper from '@material-ui/core/Paper';
 import {shallowEqual, useDispatch, useSelector} from 'react-redux';
 import Fade from '@material-ui/core/Fade';
-import {TextField} from '@material-ui/core';
+import {TextField, Tooltip} from '@material-ui/core';
 import ReactGA from 'react-ga';
 import theme from '../../../../muiTheme';
 import OptionsAndCriteriaSlice, {
@@ -203,35 +203,39 @@ const EditableList: React.FC<Props> = (props: Props) => {
 			<List>
 				<Paper className={classes.paperTitle} elevation={2} key='NewEntry'>
 					<ListItem>
-						<TextField
-							inputProps={{
-								'data-testid': 'entryInput',
-								tabIndex: hidden ? -1 : 0,
-							}}
-							variant='standard'
-							className={classes.inputBase}
-							placeholder='New Entry'
-							value={newEntry}
-							onKeyPress={event => {
-								if (event.key === 'Enter') {
-									event.preventDefault();
-									onCreateItem();
-								}
-							}}
-							onChange={event => setNewEntry(event.target.value)}
-							multiline
-						/>
-
+						<Tooltip title="Write new entry" enterDelay={300}>
+							<TextField
+								aria-label="Write new entry"
+								inputProps={{
+									'data-testid': 'entryInput',
+									tabIndex: hidden ? -1 : 0,
+								}}
+								variant='standard'
+								className={classes.inputBase}
+								placeholder='New Entry'
+								value={newEntry}
+								onKeyPress={event => {
+									if (event.key === 'Enter') {
+										event.preventDefault();
+										onCreateItem();
+									}
+								}}
+								onChange={event => setNewEntry(event.target.value)}
+								multiline
+							/>
+						</Tooltip>
 						<ListItemSecondaryAction>
-							<IconButton
-								data-testid='addButton'
-								aria-label='Add'
-								className={classes.deleteButton}
-								onClick={() => onCreateItem()}
-								tabIndex={hidden ? -1 : 0}
-							>
-								<AddIcon />
-							</IconButton>
+							<Tooltip title="Add new entry" enterDelay={300}>
+								<IconButton
+									data-testid='addButton'
+									aria-label='Add new entry'
+									className={classes.deleteButton}
+									onClick={() => onCreateItem()}
+									tabIndex={hidden ? -1 : 0}
+								>
+									<AddIcon />
+								</IconButton>
+							</Tooltip>
 						</ListItemSecondaryAction>
 					</ListItem>
 				</Paper>
@@ -248,34 +252,39 @@ const EditableList: React.FC<Props> = (props: Props) => {
 					>
 						<Paper className={classes.paperItems} elevation={2}>
 							<ListItem>
-								<TextField
-									inputProps={{
-										'data-testid': `itemInput`,
-									}}
-									className={classes.inputBase}
-									variant='standard'
-									value={item.name}
-									onChange={event => onChangeItem(event, item.id)}
-									onBlur={() => onLeaveItem(item)}
-									multiline
-									onKeyDown={event => {
-										if (event.key === 'Enter') {
-											event.preventDefault();
-											if (document.activeElement instanceof HTMLElement) {
-												document.activeElement.blur();
+								<Tooltip title="Edit entry" enterDelay={300}>
+									<TextField
+										aria-label="Edit entry"
+										inputProps={{
+											'data-testid': `itemInput`,
+										}}
+										className={classes.inputBase}
+										variant='standard'
+										value={item.name}
+										onChange={event => onChangeItem(event, item.id)}
+										onBlur={() => onLeaveItem(item)}
+										multiline
+										onKeyDown={event => {
+											if (event.key === 'Enter') {
+												event.preventDefault();
+												if (document.activeElement instanceof HTMLElement) {
+													document.activeElement.blur();
+												}
 											}
-										}
-									}}
-								/>
+										}}
+									/>
+								</Tooltip>
 								<ListItemSecondaryAction>
-									<IconButton
-										data-testid={`deleteButton${index}`}
-										aria-label='Delete'
-										onClick={() => onDeleteItem(item)}
-										className={classes.deleteButton}
-									>
-										<DeleteIcon />
-									</IconButton>
+									<Tooltip title="Delete entry" enterDelay={300}>
+										<IconButton
+											data-testid={`deleteButton${index}`}
+											aria-label='Delete entry'
+											onClick={() => onDeleteItem(item)}
+											className={classes.deleteButton}
+										>
+											<DeleteIcon />
+										</IconButton>
+									</Tooltip>
 								</ListItemSecondaryAction>
 							</ListItem>
 						</Paper>
