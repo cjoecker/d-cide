@@ -51,11 +51,7 @@ export const SelectionCriteriaInfo = (
 				<li>Neighborhood</li>
 				<li>Size</li>
 				<li>Garden</li>
-				<li>
-					Kitchen
-					<br />
-					<br />
-				</li>
+				<li>Kitchen</li>
 			</ul>
 		</p>
 	</div>
