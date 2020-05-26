@@ -198,7 +198,7 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
 			<Grid container justify='center' alignContent='center'>
 				<Grid item xs={12}>
 					<div className={classes.title}>
-						<Typography component='span' variant='h5' gutterBottom>
+						<Typography component='span' variant='h1' gutterBottom>
 							Weight Criteria
 							<IconButton
 								data-testid='WeightCriteriaInfoButton'

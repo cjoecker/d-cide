@@ -24,7 +24,7 @@ export const PrivacyText = (
 
 export const PrivacyPolicy = (
 	<>
-		<h2>Privacy Policy</h2>
+		<h1>Privacy Policy</h1>
 		<p>Last updated: May 15, 2020</p>
 		<p>
 			This Privacy Policy describes Our policies and procedures on the collection, use, and disclosure of Your information
@@ -34,26 +34,22 @@ export const PrivacyPolicy = (
 			We don't save the data of your decisions. We use Your Personal data to improve the Service. By using the Service, You
 			agree to the collection and use of information in accordance with this Privacy Policy.&nbsp;
 		</p>
-		<h3>Interpretation and Definitions</h3>
-		<h4>Interpretation</h4>
+		<h2>Interpretation and Definitions</h2>
+		<h3>Interpretation</h3>
 		<p>The words of which the initial letter is capitalized have meanings defined under the following conditions.</p>
 		<p>
 			The following definitions shall have the same meaning regardless of whether they appear in singular or in plural.
 		</p>
-		<h4>Definitions</h4>
+		<h3>Definitions</h3>
 		<p>For the purposes of this Privacy Policy:</p>
 		<ul>
 			<li>
-				<p>
-					<strong>You</strong> means the individual accessing or using the Service, or the company, or other legal entity on
-					behalf of which such individual is accessing or using the Service, as applicable.
-				</p>
+				<strong>You</strong> means the individual accessing or using the Service, or the company, or other legal entity on
+				behalf of which such individual is accessing or using the Service, as applicable.
 			</li>
 			<li>
-				<p>
-					<strong>Company</strong> (referred to as either "the Company", "We", "Us" or "Our" in this Agreement) refers to
-					d-cide.
-				</p>
+				<strong>Company</strong> (referred to as either "the Company", "We", "Us" or "Our" in this Agreement) refers to
+				d-cide.
 			</li>
 			<li>
 				<strong>Affiliate</strong> means an entity that controls, is controlled by or is under common control with a party,
@@ -73,21 +69,17 @@ export const PrivacyPolicy = (
 				<strong>Country</strong> refers to: Bavaria, Germany
 			</li>
 			<li>
-				<p>
-					<strong>Service Provider</strong> means any natural or legal person who processes the data on behalf of the
-					Company. It refers to third-party companies or individuals employed by the Company to facilitate the Service, to
-					provide the Service on behalf of the Company, to perform services related to the Service or to assist the Company
-					in analyzing how the Service is used.
-				</p>
+				<strong>Service Provider</strong> means any natural or legal person who processes the data on behalf of the Company.
+				It refers to third-party companies or individuals employed by the Company to facilitate the Service, to provide the
+				Service on behalf of the Company, to perform services related to the Service or to assist the Company in analyzing
+				how the Service is used.
 			</li>
 			<li>
 				<strong>Third-party Social Media Service</strong> refers to any website or any social network website through which
 				a User can log in or create an account to use the Service.
 			</li>
 			<li>
-				<p>
-					<strong>Personal Data</strong> is any information that relates to an identified or identifiable individual.
-				</p>
+				<strong>Personal Data</strong> is any information that relates to an identified or identifiable individual.
 			</li>
 			<li>
 				<strong>Cookies</strong> are small files that are placed on Your computer, mobile device or any other device by a
@@ -102,9 +94,9 @@ export const PrivacyPolicy = (
 				from the Service infrastructure itself (for example, the duration of a page visit).
 			</li>
 		</ul>
-		<h3>Collecting and Using Your Personal Data</h3>
-		<h4>Types of Data Collected</h4>
-		<h4>Personal Data</h4>
+		<h2>Collecting and Using Your Personal Data</h2>
+		<h3>Types of Data Collected</h3>
+		<h3>Personal Data</h3>
 		<p>
 			While using Our Service, We may ask You to provide Us with certain personally identifiable information that can be
 			used to contact or identify You. Personally identifiable information may include, but is not limited to:
@@ -112,7 +104,7 @@ export const PrivacyPolicy = (
 		<ul>
 			<li>Usage Data</li>
 		</ul>
-		<h4>Usage Data</h4>
+		<h3>Usage Data</h3>
 		<p>Usage Data is collected automatically when using the Service.</p>
 		<p>
 			Usage Data may include information such as Your Device's Internet Protocol address (e.g. IP address), browser type,
@@ -129,7 +121,7 @@ export const PrivacyPolicy = (
 			We may also collect information that Your browser sends whenever You visit our Service or when You access the Service
 			by or through a mobile device.
 		</p>
-		<h4>Tracking Technologies and Cookies</h4>
+		<h3>Tracking Technologies and Cookies</h3>
 		<p>
 			We use Cookies and similar tracking technologies to track the activity on Our Service and store certain information.
 			Tracking technologies used are beacons, tags, and scripts to collect and track information and to improve and analyze
@@ -169,7 +161,7 @@ export const PrivacyPolicy = (
 				</p>
 			</li>
 		</ul>
-		<h3>Use of Your Personal Data</h3>
+		<h2>Use of Your Personal Data</h2>
 		<p>The Company may use Personal Data for the following purposes:</p>
 		<ul>
 			<li>
@@ -214,7 +206,7 @@ export const PrivacyPolicy = (
 				will be able to view descriptions of Your activity, communicate with You and view Your profile.
 			</li>
 		</ul>
-		<h3>Retention of Your Personal Data</h3>
+		<h2>Retention of Your Personal Data</h2>
 		<p>
 			The Company will retain Your Personal Data only for as long as is necessary for the purposes set out in this Privacy
 			Policy. We will retain and use Your Personal Data to the extent necessary to comply with our legal obligations (for
@@ -226,7 +218,7 @@ export const PrivacyPolicy = (
 			shorter period of time, except when this data is used to strengthen the security or to improve the functionality of
 			Our Service, or We are legally obligated to retain this data for longer time periods.
 		</p>
-		<h3>Transfer of Your Personal Data</h3>
+		<h2>Transfer of Your Personal Data</h2>
 		<p>
 			Your information, including Personal Data, is processed at the Company's operating offices and in any other places
 			where the parties involved in the processing are located. It means that this information may be transferred to
@@ -242,18 +234,18 @@ export const PrivacyPolicy = (
 			with this Privacy Policy and no transfer of Your Personal Data will take place to an organization or a country unless
 			there are adequate controls in place including the security of Your data and other personal information.
 		</p>
-		<h3>Disclosure of Your Personal Data</h3>
-		<h4>Business Transactions</h4>
+		<h2>Disclosure of Your Personal Data</h2>
+		<h3>Business Transactions</h3>
 		<p>
 			If the Company is involved in a merger, acquisition or asset sale, Your Personal Data may be transferred. We will
 			provide notice before Your Personal Data is transferred and becomes subject to a different Privacy Policy.
 		</p>
-		<h4>Law enforcement</h4>
+		<h3>Law enforcement</h3>
 		<p>
 			Under certain circumstances, the Company may be required to disclose Your Personal Data if required to do so by law
 			or in response to valid requests by public authorities (e.g. a court or a government agency).
 		</p>
-		<h4>Other legal requirements</h4>
+		<h3>Other legal requirements</h3>
 		<p>The Company may disclose Your Personal Data in the good faith belief that such action is necessary to:</p>
 		<ul>
 			<li>Comply with a legal obligation</li>
@@ -262,7 +254,7 @@ export const PrivacyPolicy = (
 			<li>Protect the personal safety of Users of the Service or the public</li>
 			<li>Protect against legal liability</li>
 		</ul>
-		<h3>Security of Your Personal Data</h3>
+		<h2>Security of Your Personal Data</h2>
 		<p>
 			The security of Your Personal Data is important to Us, but remember that no method of transmission over the Internet,
 			or method of electronic storage is 100% secure. While We strive to use commercially acceptable means to protect Your

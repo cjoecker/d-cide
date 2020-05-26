@@ -16,23 +16,23 @@ const theme = createMuiTheme({
 		},
 		h2: {
 			fontWeight: 500,
-			fontSize: 26,
+			fontSize: 23,
 		},
 		h3: {
 			fontWeight: 500,
-			fontSize: 22,
+			fontSize: 20,
 		},
 		h4: {
 			fontWeight: 500,
-			fontSize: 20,
+			fontSize: 18,
 		},
 		h5: {
 			fontWeight: 500,
-			fontSize: 20,
+			fontSize: 18,
 		},
 		h6: {
 			fontWeight: 500,
-			fontSize: 18,
+			fontSize: 16,
 		},
 		body1: {
 			fontWeight: 400,
@@ -48,23 +48,27 @@ const theme = createMuiTheme({
 				},
 				'& h2': {
 					fontWeight: 500,
-					fontSize: 26,
+					fontSize: 23,
+					marginTop: 50,
 				},
 				'& h3': {
 					fontWeight: 500,
-					fontSize: 22,
+					fontSize: 20,
+					marginBottom: -4,
+					marginTop: 30,
 				},
 				'& h4': {
 					fontWeight: 500,
-					fontSize: 20,
+					fontSize: 18,
+					marginTop: 20,
 				},
 				'& h5': {
 					fontWeight: 500,
-					fontSize: 20,
+					fontSize: 18,
 				},
 				'& h6': {
 					fontWeight: 500,
-					fontSize: 18,
+					fontSize: 16,
 				},
 				'& body': {
 					fontWeight: 400,

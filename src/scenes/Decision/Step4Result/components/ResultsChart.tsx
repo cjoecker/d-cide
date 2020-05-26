@@ -90,7 +90,7 @@ const ResultsChart: React.FC<Props> = (props: Props) => {
 		<div className={classes.divMain} data-testid={`${itemsKey}Diagram`}>
 			<Fade in={startAnimation} timeout={500}>
 				<Paper elevation={2} key='Option'>
-					<Typography variant='h5' gutterBottom className={classes.title}>
+					<Typography variant='h2' gutterBottom className={classes.title}>
 						{title}
 						<IconButton
 							data-testid={`${itemsKey}ResultsInfoButton`}

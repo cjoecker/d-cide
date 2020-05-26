@@ -185,7 +185,7 @@ const RateOptions: React.FC<Props> = (props: Props) => {
 		<div className={classes.divMain}>
 			<Grid container justify='center' alignContent='center'>
 				<Grid item xs={12}>
-					<Typography component='span' variant='h5' gutterBottom>
+					<Typography component='span' variant='h1' gutterBottom>
 						Rate Options
 						<IconButton
 							data-testid='RateOptionsInfoButton'
@@ -212,7 +212,7 @@ const RateOptions: React.FC<Props> = (props: Props) => {
 									<div>
 										<Grid container>
 											<Grid item xs={12} className={classes.titleGridItem}>
-												<Typography component='span' variant='h6'>
+												<Typography component='span' variant='h2'>
 													{criteria.name}
 												</Typography>
 											</Grid>

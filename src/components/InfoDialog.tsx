@@ -48,7 +48,7 @@ const InfoDialog: React.FC<Props> = (props: Props) => {
 
 	useEffect(() => {
 		if (isMounted) {
-			const dialogTitle = text.props.children.find((obj: {type: string}) => obj.type === 'h2').props.children;
+			const dialogTitle = text.props.children.find((obj: {type: string}) => obj.type === 'h1').props.children;
 
 			if (show) {
 				if (fullWidth != null) {

@@ -3,13 +3,13 @@ import React from 'react';
 //Info Texts
 export const DecisionOptionInfo = (
 	<div>
-		<h2
+		<h1
 			style={{
 				textAlign: 'left',
 			}}
 		>
 			Decision Options
-		</h2>
+		</h1>
 		<p>
 			Write every decision option you need to decide for.
 			<br />
@@ -28,8 +28,8 @@ export const DecisionOptionInfo = (
 			In case you have a binary decision (yes/no), you should write two decision options. <br />
 			For example:
 			<ul>
-				<li>To divorce</li>
-				<li>Not to divorce.</li>
+				<li>To buy a new car</li>
+				<li>Not to buy a new car</li>
 			</ul>
 		</p>
 	</div>
@@ -37,13 +37,13 @@ export const DecisionOptionInfo = (
 
 export const SelectionCriteriaInfo = (
 	<div>
-		<h2
+		<h1
 			style={{
 				textAlign: 'left',
 			}}
 		>
 			Selection Criteria
-		</h2>
+		</h1>
 		<p>Write every important selection criteria that play a role in your decision.</p>
 		<p>
 			If you need to decide which house to buy, you may write something like this:
@@ -63,13 +63,13 @@ export const SelectionCriteriaInfo = (
 
 export const WeightCriteriaInfo = (
 	<div>
-		<h2
+		<h1
 			style={{
 				textAlign: 'left',
 			}}
 		>
 			Weight Criteria
-		</h2>
+		</h1>
 		<p>
 			Decisions require always trade-offs. If not, no decision will be necessary.
 			<br />
@@ -89,13 +89,13 @@ export const WeightCriteriaInfo = (
 
 export const OptionsRatingInfo = (
 	<div>
-		<h2
+		<h1
 			style={{
 				textAlign: 'left',
 			}}
 		>
 			Rate Options
-		</h2>
+		</h1>
 		<p>
 			Rate every decision option for every selection criteria.
 			<br />
@@ -106,13 +106,13 @@ export const OptionsRatingInfo = (
 
 export const OptionsResultInfo = (
 	<div>
-		<h2
+		<h1
 			style={{
 				textAlign: 'left',
 			}}
 		>
 			Decision Options Ranking
-		</h2>
+		</h1>
 		<p>
 			The chart shows you the best option based on your previous input.
 			<br />
@@ -127,13 +127,13 @@ export const OptionsResultInfo = (
 
 export const CriteriaResultInfo = (
 	<div>
-		<h2
+		<h1
 			style={{
 				textAlign: 'left',
 			}}
 		>
 			Selection Criteria Ranking
-		</h2>
+		</h1>
 		<p>The chart shows you on a scale from 0 to 10, which criteria is the most important for your decision.</p>
 	</div>
 );
