@@ -206,6 +206,7 @@ const EditableList: React.FC<Props> = (props: Props) => {
 						<TextField
 							inputProps={{
 								'data-testid': 'entryInput',
+								tabIndex: hidden ? -1 : 0,
 							}}
 							variant='standard'
 							className={classes.inputBase}

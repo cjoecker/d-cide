@@ -57,6 +57,7 @@ const OptionsAndCriteria: React.FC<Props> = (props: Props) => {
 							data-testid={`${OptionsAndCriteriaKeys.decisionOptions}InfoButton`}
 							className={classes.infoButton}
 							onClick={() => setShowOptionsInfo(true)}
+							tabIndex={hidden ? -1 : 0}
 						>
 							<InfoIcon color='secondary' />
 						</IconButton>
@@ -75,6 +76,7 @@ const OptionsAndCriteria: React.FC<Props> = (props: Props) => {
 							data-testid={`${OptionsAndCriteriaKeys.selectionCriteria}InfoButton`}
 							className={classes.infoButton}
 							onClick={() => setShowCriteriaInfo(true)}
+							tabIndex={hidden ? -1 : 0}
 						>
 							<InfoIcon color='secondary' />
 						</IconButton>
