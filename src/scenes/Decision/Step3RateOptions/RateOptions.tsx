@@ -13,6 +13,7 @@ import InfoDialog from '../../../components/InfoDialog';
 import {RootState} from '../../../services/redux/rootReducer';
 import theme from '../../../muiTheme';
 import RatedOptionsSlice, {RatedOption} from '../../../services/redux/actionsAndSlicers/RatedOptionsSlice';
+import ButtonsTooltip from '../../../components/ButtonsTooltip';
 
 const useStyles = makeStyles({
 	divMain: {
@@ -187,15 +188,17 @@ const RateOptions: React.FC<Props> = (props: Props) => {
 				<Grid item xs={12}>
 					<Typography component='span' variant='h1' gutterBottom>
 						Rate Options
-						<IconButton
-							data-testid='RateOptionsInfoButton'
-							aria-label='Help'
-							className={classes.infoButton}
-							onClick={() => setShowInfo(true)}
-							tabIndex={hidden ? -1 : 0}
-						>
-							<InfoIcon color='secondary' />
-						</IconButton>
+						<ButtonsTooltip>
+							<IconButton
+								data-testid='RateOptionsInfoButton'
+								aria-label='Show help'
+								className={classes.infoButton}
+								onClick={() => setShowInfo(true)}
+								tabIndex={hidden ? -1 : 0}
+							>
+								<InfoIcon color='secondary' />
+							</IconButton>
+						</ButtonsTooltip>
 					</Typography>
 				</Grid>
 				{!hidden &&
@@ -269,6 +272,7 @@ const RateOptions: React.FC<Props> = (props: Props) => {
 																	step={1}
 																	marks={sliderMarks}
 																	onChange={(event, value) => onChange(event, criteria.id, option.id, value as number)}
+																	aria-label="Rate decision option"
 																/>
 															</Grid>
 														</Grid>
