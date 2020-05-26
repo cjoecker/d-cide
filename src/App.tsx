@@ -112,6 +112,7 @@ const App: React.FC = () => {
 								}
 								underline='always'
 								target='_blank'
+								tabIndex={localStorage.getItem('cookieConsentAccepted') == null ? -1 : 0}
 							>
 								Christian Jöcker
 							</Link>
@@ -123,6 +124,7 @@ const App: React.FC = () => {
 								style={{cursor: 'pointer'}}
 								onClick={() => setShowPrivacyPolicy(true)}
 								underline='always'
+								tabIndex={0}
 							>
 								Privacy Policy
 							</Link>

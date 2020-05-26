@@ -139,7 +139,8 @@ const Decision: React.FC = () => {
 			action: `Change to step ${stepNumber} with ${element}`,
 		});
 	};
-
+	//TODO remove tabIndex={-1} when this ticket is solved:
+	//	https://github.com/mui-org/material-ui/issues/21208
 	return (
 		<div className={classes.divMain}>
 			<Stepper className={classes.stepper} alternativeLabel nonLinear activeStep={activeStepNum - 1}>
@@ -151,6 +152,7 @@ const Decision: React.FC = () => {
 								onClick={() => changeStep(step.number, 'step button')}
 								completed={step.completed}
 								disabled={step.disabled}
+								tabIndex={-1}
 							>
 								<StepLabel StepIconProps={{classes: {root: classes.stepperLabel}}}>{step.name}</StepLabel>
 							</StepButton>
