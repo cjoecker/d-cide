@@ -224,7 +224,7 @@ const EditableList: React.FC<Props> = (props: Props) => {
 							multiline
 						/>
 						<ListItemSecondaryAction>
-							<ButtonsTooltip title='Create'>
+							<ButtonsTooltip title='Add entry'>
 								<IconButton
 									data-testid='addButton'
 									aria-label={`Create new ${itemsType}`}
@@ -251,7 +251,7 @@ const EditableList: React.FC<Props> = (props: Props) => {
 					>
 						<Paper className={classes.paperItems} elevation={2}>
 							<ListItem>
-								<ButtonsTooltip title='Edit'>
+								<ButtonsTooltip title='Edit entry'>
 									<TextField
 										aria-label={`Edit ${itemsType}`}
 										inputProps={{
@@ -274,7 +274,7 @@ const EditableList: React.FC<Props> = (props: Props) => {
 									/>
 								</ButtonsTooltip>
 								<ListItemSecondaryAction>
-									<ButtonsTooltip title='Delete'>
+									<ButtonsTooltip title='Delete entry'>
 										<IconButton
 											data-testid={`deleteButton${index}`}
 											aria-label={`Delete ${itemsType}`}

@@ -147,14 +147,14 @@ const Decision: React.FC = () => {
 				{steps.map(step => {
 					return (
 						<Step key={step.number}>
-							<ButtonsTooltip title={`Step ${step.number}`}>
+							<ButtonsTooltip title={`Go to step ${step.number}`}>
 								<StepButton
 									focusRipple
 									data-testid={`Step${step.number}Button`}
 									onClick={() => changeStep(step.number, 'step button')}
 									completed={step.completed}
 									disabled={step.disabled}
-									aria-label={`Step ${step.number}`}
+									aria-label={`Go to step ${step.number}`}
 								>
 									<StepLabel StepIconProps={{classes: {root: classes.stepperLabel}}}>{step.name}</StepLabel>
 								</StepButton>
