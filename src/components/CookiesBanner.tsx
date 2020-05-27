@@ -21,7 +21,7 @@ const useStyles = makeStyles({
 
 	div: {
 		position: 'fixed',
-		margin: theme.spacing(0, 10, 3.5, 10),
+		margin: theme.spacing(0, 10, 5, 10),
 	},
 
 	paper: {

@@ -9,33 +9,33 @@ const theme = createMuiTheme({
 			color: '#000000',
 		},
 		fontWeightRegular: 400,
-		fontWeightBold: 500,
+		fontWeightBold: 600,
 		h1: {
-			fontWeight: 500,
+			fontWeight: 600,
 			fontSize: 28,
 		},
 		h2: {
-			fontWeight: 500,
+			fontWeight: 600,
 			fontSize: 23,
 		},
 		h3: {
-			fontWeight: 500,
+			fontWeight: 600,
 			fontSize: 20,
 		},
 		h4: {
-			fontWeight: 500,
+			fontWeight: 600,
 			fontSize: 18,
 		},
 		h5: {
-			fontWeight: 500,
+			fontWeight: 600,
 			fontSize: 18,
 		},
 		h6: {
-			fontWeight: 500,
+			fontWeight: 600,
 			fontSize: 16,
 		},
 		body1: {
-			fontWeight: 400,
+			fontWeight: 500,
 			fontSize: 16,
 		},
 	},
@@ -43,35 +43,35 @@ const theme = createMuiTheme({
 		MuiTypography: {
 			root: {
 				'& h1': {
-					fontWeight: 500,
+					fontWeight: 600,
 					fontSize: 28,
 				},
 				'& h2': {
-					fontWeight: 500,
+					fontWeight: 600,
 					fontSize: 23,
 					marginTop: 50,
 				},
 				'& h3': {
-					fontWeight: 500,
+					fontWeight: 600,
 					fontSize: 20,
 					marginBottom: -4,
 					marginTop: 30,
 				},
 				'& h4': {
-					fontWeight: 500,
+					fontWeight: 600,
 					fontSize: 18,
 					marginTop: 20,
 				},
 				'& h5': {
-					fontWeight: 500,
+					fontWeight: 600,
 					fontSize: 18,
 				},
 				'& h6': {
-					fontWeight: 500,
+					fontWeight: 600,
 					fontSize: 16,
 				},
 				'& body': {
-					fontWeight: 400,
+					fontWeight: 500,
 					fontSize: 16,
 				},
 			},

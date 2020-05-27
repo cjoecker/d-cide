@@ -10,5 +10,5 @@ body {
 	font-style: normal;
 	font-display: swap;
 	unicode-range: U+000-5FF;
-	src: local('Custom Font'), url('/fonts/Quicksand.woff2') format('woff2'), url('/fonts/Quicksand.woff2') format('woff2');
+	src: local('Custom Font'), url('/fonts/Quicksand.woff2') format('woff2'), url('/fonts/Quicksand.ttf') format('ttf');
 }
