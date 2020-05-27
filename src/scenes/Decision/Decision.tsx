@@ -163,6 +163,37 @@ const Decision: React.FC = () => {
 					);
 				})}
 			</Stepper>
+			{activeStepNum !== 1 ? (
+				<ButtonsTooltip title="Previous step">
+					<Fab
+						data-testid='PrevStepButton'
+						color='secondary'
+						aria-label='Previous step'
+						size='medium'
+						className={classes.buttonBack}
+						style={{bottom: isEdge ? 10 : 'env(safe-area-inset-bottom)', left: isEdge ? 10 : 'env(safe-area-inset-left)'}}
+						onClick={() => changeStep(activeStepNum - 1, 'previous button')}
+					>
+						<ArrowBackIcon />
+					</Fab>
+				</ButtonsTooltip>
+			) : null}
+			{activeStepNum !== steps.length ? (
+				<ButtonsTooltip title="Next step">
+					<Fab
+						data-testid='NextStepButton'
+						color='primary'
+						aria-label='Next step'
+						size='medium'
+						className={classes.buttonNext}
+						style={{bottom: isEdge ? 10 : 'env(safe-area-inset-bottom)', right: isEdge ? 10 : 'env(safe-area-inset-right)'}}
+						onClick={() => changeStep(activeStepNum + 1, 'next button')}
+						disabled={disableStepButtons}
+					>
+						<ArrowForwardIcon />
+					</Fab>
+				</ButtonsTooltip>
+			) : null}
 			<SwipeableViews
 				disabled
 				axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
@@ -176,33 +207,6 @@ const Decision: React.FC = () => {
 				<RateOptions hidden={loadedStepNum !== 3} />
 				<Results hidden={loadedStepNum !== 4} />
 			</SwipeableViews>
-			{activeStepNum !== 1 ? (
-				<Fab
-					data-testid='PrevStepButton'
-					color='secondary'
-					aria-label='Previous step'
-					size='medium'
-					className={classes.buttonBack}
-					style={{bottom: isEdge ? 10 : 'env(safe-area-inset-bottom)', left: isEdge ? 10 : 'env(safe-area-inset-left)'}}
-					onClick={() => changeStep(activeStepNum - 1, 'previous button')}
-				>
-					<ArrowBackIcon />
-				</Fab>
-			) : null}
-			{activeStepNum !== steps.length ? (
-				<Fab
-					data-testid='NextStepButton'
-					color='primary'
-					aria-label='Next step'
-					size='medium'
-					className={classes.buttonNext}
-					style={{bottom: isEdge ? 10 : 'env(safe-area-inset-bottom)', right: isEdge ? 10 : 'env(safe-area-inset-right)'}}
-					onClick={() => changeStep(activeStepNum + 1, 'next button')}
-					disabled={disableStepButtons}
-				>
-					<ArrowForwardIcon />
-				</Fab>
-			) : null}
 		</div>
 	);
 };
