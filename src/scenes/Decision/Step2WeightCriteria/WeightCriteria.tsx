@@ -204,10 +204,10 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
 					<div className={classes.title}>
 						<Typography component='span' variant='h1' gutterBottom>
 							Weight Criteria
-							<ButtonsTooltip>
+							<ButtonsTooltip title="Show help">
 								<IconButton
 									data-testid='WeightCriteriaInfoButton'
-									aria-label='Show help'
+									aria-label='Show weighted criteria help'
 									className={classes.infoButton}
 									onClick={() => setShowInfo(true)}
 									tabIndex={hidden ? -1 : 0}
@@ -245,7 +245,7 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
 									</Grid>
 									<Grid item xs={12} zeroMinWidth className={classes.gridItemSlider}>
 										<Slider
-											aria-label="Weight selection criteria"
+											aria-label='Weight selection criteria'
 											data-testid={`slider${index}`}
 											classes={{
 												track: classes.sliderTrack,
