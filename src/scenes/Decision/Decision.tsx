@@ -148,14 +148,14 @@ const Decision: React.FC = () => {
 				{steps.map(step => {
 					return (
 						<Step key={step.number}>
-							<ButtonsTooltip>
+							<ButtonsTooltip title={`Step ${step.number}`}>
 								<StepButton
 									focusRipple
 									data-testid={`Step${step.number}Button`}
 									onClick={() => changeStep(step.number, 'step button')}
 									completed={step.completed}
 									disabled={step.disabled}
-									aria-label={`Go to step ${step.number}`}
+									aria-label={`Step ${step.number}`}
 								>
 									<StepLabel StepIconProps={{classes: {root: classes.stepperLabel}}}>{step.name}</StepLabel>
 								</StepButton>
@@ -178,7 +178,7 @@ const Decision: React.FC = () => {
 				<Results hidden={loadedStepNum !== 4} />
 			</SwipeableViews>
 			{activeStepNum !== 1 ? (
-				<ButtonsTooltip>
+				<ButtonsTooltip title='Previous step'>
 					<Fab
 						data-testid='PrevStepButton'
 						color='secondary'
@@ -192,7 +192,7 @@ const Decision: React.FC = () => {
 				</ButtonsTooltip>
 			) : null}
 			{activeStepNum !== steps.length ? (
-				<ButtonsTooltip>
+				<ButtonsTooltip title="Next step">
 					<Fab
 						data-testid='NextStepButton'
 						color='primary'
