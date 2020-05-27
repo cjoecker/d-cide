@@ -6,7 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Slide from '@material-ui/core/Slide';
-import {isMobile,isEdge} from 'react-device-detect';
+import {isMobile, isEdge} from 'react-device-detect';
 import {Dialog} from '@material-ui/core';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -14,21 +14,13 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import {PrivacyText} from '../constants/PrivacyTexts';
 import theme from '../muiTheme';
 
-
 const useStyles = makeStyles({
 	grid: {
 		outline: 'none',
 	},
 
-	divDesktop: {
+	div: {
 		position: 'fixed',
-		bottom: 'env(safe-area-inset-bottom)',
-		margin: theme.spacing(0, 10, 3.5, 10),
-	},
-
-	divDesktopEdge: {
-		position: 'fixed',
-		bottom: 0,
 		margin: theme.spacing(0, 10, 3.5, 10),
 	},
 
@@ -64,7 +56,7 @@ const CookiesBanner: React.FC = () => {
 	};
 
 	const desktopBanner = (
-		<div className={isEdge ? classes.divDesktopEdge : classes.divDesktop}>
+		<div className={classes.div} style={{bottom: isEdge ? 10 : 'env(safe-area-inset-bottom)'}}>
 			<Slide direction='up' in={open} mountOnEnter unmountOnExit>
 				<Grid data-testid='cookiesConsent' className={classes.grid} container justify='center' alignContent='center'>
 					<Paper className={classes.paper} elevation={7}>

@@ -36,15 +36,6 @@ const useStyles = makeStyles({
 
 	buttonNext: {
 		position: 'fixed',
-		bottom: 'env(safe-area-inset-bottom)',
-		right: 'env(safe-area-inset-right)',
-		margin: theme.spacing(0, 2, 2, 0),
-	},
-
-	buttonNextEdge: {
-		position: 'fixed',
-		bottom: 0,
-		right: 0,
 		margin: theme.spacing(0, 2, 2, 0),
 	},
 
@@ -52,13 +43,6 @@ const useStyles = makeStyles({
 		position: 'fixed',
 		bottom: 'env(safe-area-inset-bottom)',
 		left: 'env(safe-area-inset-left)',
-		margin: theme.spacing(0, 0, 2, 2),
-	},
-
-	buttonBackEdge: {
-		position: 'fixed',
-		bottom: 0,
-		left: 0,
 		margin: theme.spacing(0, 0, 2, 2),
 	},
 });
@@ -199,7 +183,8 @@ const Decision: React.FC = () => {
 						color='secondary'
 						aria-label='Previous step'
 						size='medium'
-						className={isEdge ? classes.buttonBackEdge : classes.buttonBack}
+						className={classes.buttonBack}
+						style={{bottom: isEdge ? 10 : 'env(safe-area-inset-bottom)', left: isEdge ? 10 : 'env(safe-area-inset-left)'}}
 						onClick={() => changeStep(activeStepNum - 1, 'previous button')}
 					>
 						<ArrowBackIcon />
@@ -213,7 +198,8 @@ const Decision: React.FC = () => {
 						color='primary'
 						aria-label='Next step'
 						size='medium'
-						className={isEdge ? classes.buttonNextEdge : classes.buttonNext}
+						className={classes.buttonNext}
+						style={{bottom: isEdge ? 10 : 'env(safe-area-inset-bottom)', right: isEdge ? 10 : 'env(safe-area-inset-right)'}}
 						onClick={() => changeStep(activeStepNum + 1, 'next button')}
 						disabled={disableStepButtons}
 					>
