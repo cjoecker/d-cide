@@ -71,7 +71,7 @@ const EditableList: React.FC<Props> = (props: Props) => {
 	const [newEntry, setNewEntry] = useState('');
 	const [localItems, setLocalItems] = useState<OptionAndCriteria[]>([]);
 	const [stopAnimation, setStopAnimation] = useState(false);
-	const [itemsType, setItemsKeyForAnalytics] = useState('');
+	const [itemsType, setItemsType] = useState('');
 	const items = useSelector((state: RootState) => state.OptionsAndCriteria[itemsKey], shallowEqual);
 
 	const animationDelay = 100;
@@ -80,8 +80,8 @@ const EditableList: React.FC<Props> = (props: Props) => {
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		if (itemsKey === OptionsAndCriteriaKeys.decisionOptions) setItemsKeyForAnalytics('Decision options');
-		else setItemsKeyForAnalytics('Selection criteria');
+		if (itemsKey === OptionsAndCriteriaKeys.decisionOptions) setItemsType('Decision options');
+		else setItemsType('Selection criteria');
 
 		return () => {
 			dispatch(AppSlice.actions.deleteAlert(notEnoughItemsAlert));
@@ -224,7 +224,7 @@ const EditableList: React.FC<Props> = (props: Props) => {
 							multiline
 						/>
 						<ListItemSecondaryAction>
-							<ButtonsTooltip title="Create">
+							<ButtonsTooltip title='Create'>
 								<IconButton
 									data-testid='addButton'
 									aria-label={`Create new ${itemsType}`}
@@ -251,7 +251,7 @@ const EditableList: React.FC<Props> = (props: Props) => {
 					>
 						<Paper className={classes.paperItems} elevation={2}>
 							<ListItem>
-								<ButtonsTooltip title="Edit">
+								<ButtonsTooltip title='Edit'>
 									<TextField
 										aria-label={`Edit ${itemsType}`}
 										inputProps={{
@@ -274,7 +274,7 @@ const EditableList: React.FC<Props> = (props: Props) => {
 									/>
 								</ButtonsTooltip>
 								<ListItemSecondaryAction>
-									<ButtonsTooltip title="Delete">
+									<ButtonsTooltip title='Delete'>
 										<IconButton
 											data-testid={`deleteButton${index}`}
 											aria-label={`Delete ${itemsType}`}

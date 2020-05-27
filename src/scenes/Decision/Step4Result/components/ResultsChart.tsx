@@ -49,6 +49,7 @@ const ResultsChart: React.FC<Props> = (props: Props) => {
 	const [localItems, setLocalItems] = useState<OptionAndCriteria[]>([]);
 	const [showInfo, setShowInfo] = useState(false);
 	const [startAnimation, setStartAnimation] = useState(false);
+	const [itemsType, setItemsType] = useState('');
 
 	const {hidden, itemsKey, title, infoText} = props;
 
@@ -58,6 +59,8 @@ const ResultsChart: React.FC<Props> = (props: Props) => {
 
 	useEffect(() => {
 		if (!hidden) {
+			if (itemsKey === OptionsAndCriteriaKeys.decisionOptions) setItemsType('Decision options');
+			else setItemsType('Selection criteria');
 			setLocalItems(wrapLongWords(getSortedItems(items)));
 			setStartAnimation(true);
 		} else {
@@ -93,10 +96,10 @@ const ResultsChart: React.FC<Props> = (props: Props) => {
 				<Paper elevation={2} key='Option'>
 					<Typography variant='h2' gutterBottom className={classes.title}>
 						{title}
-						<ButtonsTooltip>
+						<ButtonsTooltip title="Show help">
 							<IconButton
 								data-testid={`${itemsKey}ResultsInfoButton`}
-								aria-label='Show help'
+								aria-label={`Show help for ${itemsType} results`}
 								className={classes.infoButton}
 								onClick={() => setShowInfo(true)}
 								tabIndex={hidden ? -1 : 0}
