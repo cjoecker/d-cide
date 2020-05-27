@@ -53,9 +53,9 @@ const OptionsAndCriteria: React.FC<Props> = (props: Props) => {
 				<Grid item xs={6} className={classes.gridItem}>
 					<Typography component='span' variant='h1'>
 						Decision Options
-						<ButtonsTooltip>
+						<ButtonsTooltip title="Show help">
 							<IconButton
-								aria-label='Show help'
+								aria-label='Show decision options help'
 								data-testid={`${OptionsAndCriteriaKeys.decisionOptions}InfoButton`}
 								className={classes.infoButton}
 								onClick={() => setShowOptionsInfo(true)}
@@ -74,9 +74,9 @@ const OptionsAndCriteria: React.FC<Props> = (props: Props) => {
 				<Grid item xs={6} className={classes.gridItem}>
 					<Typography component='span' variant='h1'>
 						Selection Criteria
-						<ButtonsTooltip>
+						<ButtonsTooltip title="Show help">
 							<IconButton
-								aria-label='Show help'
+								aria-label='Show selection criteria help'
 								data-testid={`${OptionsAndCriteriaKeys.selectionCriteria}InfoButton`}
 								className={classes.infoButton}
 								onClick={() => setShowCriteriaInfo(true)}
