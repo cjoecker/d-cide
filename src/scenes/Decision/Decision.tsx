@@ -37,13 +37,13 @@ const useStyles = makeStyles({
 	buttonNext: {
 		position: 'fixed',
 		margin: theme.spacing(0, 2, 2, 0),
+		zIndex: 1,
 	},
 
 	buttonBack: {
 		position: 'fixed',
-		bottom: 'env(safe-area-inset-bottom)',
-		left: 'env(safe-area-inset-left)',
 		margin: theme.spacing(0, 0, 2, 2),
+		zIndex: 1,
 	},
 });
 
@@ -201,6 +201,7 @@ const Decision: React.FC = () => {
 				onTransitionEnd={() => {
 					setLoadedStepNum(activeStepNum);
 				}}
+				style={{zIndex: 0}}
 			>
 				<OptionsAndCriteria hidden={loadedStepNum !== 1} />
 				<WeightCriteria hidden={loadedStepNum !== 2} />
