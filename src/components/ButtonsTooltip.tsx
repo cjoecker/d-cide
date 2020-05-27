@@ -1,19 +1,10 @@
 import React from 'react';
-import {Tooltip} from '@material-ui/core';
+import {Tooltip, TooltipProps} from '@material-ui/core';
 
-type ButtonsTooltipProps = {
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	children: React.ReactElement<any, any>;
-};
-
-const ButtonsTooltip = (props: ButtonsTooltipProps) => {
-	const {children} = props;
-
+const ButtonsTooltip = (props: TooltipProps) => {
 	return (
 		// eslint-disable-next-line react/jsx-props-no-spreading
-		<Tooltip title={children.props['aria-label']} placement='bottom' enterDelay={500} {...props}>
-			{children}
-		</Tooltip>
+		<Tooltip placement='bottom' enterDelay={500} {...props} />
 	);
 };
 

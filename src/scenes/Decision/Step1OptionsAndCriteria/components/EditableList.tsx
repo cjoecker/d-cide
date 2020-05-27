@@ -71,7 +71,7 @@ const EditableList: React.FC<Props> = (props: Props) => {
 	const [newEntry, setNewEntry] = useState('');
 	const [localItems, setLocalItems] = useState<OptionAndCriteria[]>([]);
 	const [stopAnimation, setStopAnimation] = useState(false);
-	const [itemsKeyForAnalytics, setItemsKeyForAnalytics] = useState('');
+	const [itemsType, setItemsKeyForAnalytics] = useState('');
 	const items = useSelector((state: RootState) => state.OptionsAndCriteria[itemsKey], shallowEqual);
 
 	const animationDelay = 100;
@@ -99,7 +99,7 @@ const EditableList: React.FC<Props> = (props: Props) => {
 			dispatch(AppSlice.actions.deleteAlert(notEnoughItemsAlert));
 
 			ReactGA.event({
-				category: itemsKeyForAnalytics,
+				category: itemsType,
 				action: 'Items number',
 				value: items.length,
 			});
@@ -131,8 +131,8 @@ const EditableList: React.FC<Props> = (props: Props) => {
 		};
 
 		ReactGA.event({
-			category: itemsKeyForAnalytics,
-			action: `Create ${itemsKeyForAnalytics}`,
+			category: itemsType,
+			action: `Create ${itemsType}`,
 		});
 
 		if (itemsKey === OptionsAndCriteriaKeys.decisionOptions) {
@@ -149,8 +149,8 @@ const EditableList: React.FC<Props> = (props: Props) => {
 	const onLeaveItem = (itemLocal: OptionAndCriteria) => {
 		if (itemLocal.name !== '') {
 			ReactGA.event({
-				category: itemsKeyForAnalytics,
-				action: `Edit ${itemsKeyForAnalytics}`,
+				category: itemsType,
+				action: `Edit ${itemsType}`,
 			});
 
 			if (itemsKey === OptionsAndCriteriaKeys.decisionOptions)
@@ -158,8 +158,8 @@ const EditableList: React.FC<Props> = (props: Props) => {
 			else dispatch(OptionsAndCriteriaSlice.actions.updateSelectionCriteria(itemLocal));
 		} else {
 			ReactGA.event({
-				category: itemsKeyForAnalytics,
-				action: `Delete ${itemsKeyForAnalytics} after empty`,
+				category: itemsType,
+				action: `Delete ${itemsType} after empty`,
 			});
 			if (itemsKey === OptionsAndCriteriaKeys.decisionOptions)
 				dispatch(OptionsAndCriteriaSlice.actions.deleteDecisionOption(itemLocal.id));
@@ -169,8 +169,8 @@ const EditableList: React.FC<Props> = (props: Props) => {
 
 	const onDeleteItem = (itemLocal: OptionAndCriteria) => {
 		ReactGA.event({
-			category: itemsKeyForAnalytics,
-			action: `Delete ${itemsKeyForAnalytics}`,
+			category: itemsType,
+			action: `Delete ${itemsType}`,
 		});
 
 		if (itemsKey === OptionsAndCriteriaKeys.decisionOptions)
@@ -204,32 +204,30 @@ const EditableList: React.FC<Props> = (props: Props) => {
 			<List>
 				<Paper className={classes.paperTitle} elevation={2} key='NewEntry'>
 					<ListItem>
-						<ButtonsTooltip>
-							<TextField
-								aria-label='Write new entry'
-								inputProps={{
-									'data-testid': 'entryInput',
-									tabIndex: hidden ? -1 : 0,
-								}}
-								variant='standard'
-								className={classes.inputBase}
-								placeholder='New Entry'
-								value={newEntry}
-								onKeyPress={event => {
-									if (event.key === 'Enter') {
-										event.preventDefault();
-										onCreateItem();
-									}
-								}}
-								onChange={event => setNewEntry(event.target.value)}
-								multiline
-							/>
-						</ButtonsTooltip>
+						<TextField
+							aria-label={`New ${itemsType}`}
+							inputProps={{
+								'data-testid': 'entryInput',
+								tabIndex: hidden ? -1 : 0,
+							}}
+							variant='standard'
+							className={classes.inputBase}
+							placeholder='New Entry'
+							value={newEntry}
+							onKeyPress={event => {
+								if (event.key === 'Enter') {
+									event.preventDefault();
+									onCreateItem();
+								}
+							}}
+							onChange={event => setNewEntry(event.target.value)}
+							multiline
+						/>
 						<ListItemSecondaryAction>
-							<ButtonsTooltip>
+							<ButtonsTooltip title="Create">
 								<IconButton
 									data-testid='addButton'
-									aria-label='Add new entry'
+									aria-label={`Create new ${itemsType}`}
 									className={classes.deleteButton}
 									onClick={() => onCreateItem()}
 									tabIndex={hidden ? -1 : 0}
@@ -253,9 +251,9 @@ const EditableList: React.FC<Props> = (props: Props) => {
 					>
 						<Paper className={classes.paperItems} elevation={2}>
 							<ListItem>
-								<ButtonsTooltip>
+								<ButtonsTooltip title="Edit">
 									<TextField
-										aria-label='Edit entry'
+										aria-label={`Edit ${itemsType}`}
 										inputProps={{
 											'data-testid': `itemInput`,
 										}}
@@ -276,10 +274,10 @@ const EditableList: React.FC<Props> = (props: Props) => {
 									/>
 								</ButtonsTooltip>
 								<ListItemSecondaryAction>
-									<ButtonsTooltip>
+									<ButtonsTooltip title="Delete">
 										<IconButton
 											data-testid={`deleteButton${index}`}
-											aria-label='Delete entry'
+											aria-label={`Delete ${itemsType}`}
 											onClick={() => onDeleteItem(item)}
 											className={classes.deleteButton}
 										>
