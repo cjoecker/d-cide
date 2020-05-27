@@ -188,7 +188,7 @@ const RateOptions: React.FC<Props> = (props: Props) => {
 				<Grid item xs={12}>
 					<Typography component='span' variant='h1' gutterBottom>
 						Rate Options
-						<ButtonsTooltip title="Show help">
+						<ButtonsTooltip title='Show help'>
 							<IconButton
 								data-testid='RateOptionsInfoButton'
 								aria-label='Show rate options help'
@@ -272,7 +272,7 @@ const RateOptions: React.FC<Props> = (props: Props) => {
 																	step={1}
 																	marks={sliderMarks}
 																	onChange={(event, value) => onChange(event, criteria.id, option.id, value as number)}
-																	aria-label='Rate decision option'
+																	aria-label={`Rate ${criteria.name} for ${option.name}`}
 																/>
 															</Grid>
 														</Grid>

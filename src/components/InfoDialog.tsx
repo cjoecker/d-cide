@@ -86,7 +86,7 @@ const InfoDialog: React.FC<Props> = (props: Props) => {
 					<Typography component='span' data-testid='infoText' variant='body1' className={classes.text}>
 						{text}
 					</Typography>
-					<ButtonsTooltip>
+					<ButtonsTooltip title="Close">
 						<IconButton
 							aria-label='Close'
 							data-testid='infoCloseButton'
