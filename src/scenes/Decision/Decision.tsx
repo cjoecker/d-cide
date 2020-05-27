@@ -10,6 +10,7 @@ import SwipeableViews from 'react-swipeable-views';
 import {StepLabel, Tooltip} from '@material-ui/core';
 import {shallowEqual, useSelector} from 'react-redux';
 import ReactGA from 'react-ga';
+import {isEdge} from 'react-device-detect';
 import theme from '../../muiTheme';
 import OptionsAndCriteria from './Step1OptionsAndCriteria/OptionsAndCriteria';
 import WeightCriteria from './Step2WeightCriteria/WeightCriteria';
@@ -40,10 +41,24 @@ const useStyles = makeStyles({
 		margin: theme.spacing(0, 2, 2, 0),
 	},
 
+	buttonNextEdge: {
+		position: 'fixed',
+		bottom: 0,
+		right: 0,
+		margin: theme.spacing(0, 2, 2, 0),
+	},
+
 	buttonBack: {
 		position: 'fixed',
 		bottom: 'env(safe-area-inset-bottom)',
 		left: 'env(safe-area-inset-left)',
+		margin: theme.spacing(0, 0, 2, 2),
+	},
+
+	buttonBackEdge: {
+		position: 'fixed',
+		bottom: 0,
+		left: 0,
 		margin: theme.spacing(0, 0, 2, 2),
 	},
 });
@@ -184,7 +199,7 @@ const Decision: React.FC = () => {
 						color='secondary'
 						aria-label='Previous step'
 						size='medium'
-						className={classes.buttonBack}
+						className={isEdge ? classes.buttonBackEdge : classes.buttonBack}
 						onClick={() => changeStep(activeStepNum - 1, 'previous button')}
 					>
 						<ArrowBackIcon />
@@ -192,13 +207,13 @@ const Decision: React.FC = () => {
 				</ButtonsTooltip>
 			) : null}
 			{activeStepNum !== steps.length ? (
-				<ButtonsTooltip title="Next step">
+				<ButtonsTooltip title='Next step'>
 					<Fab
 						data-testid='NextStepButton'
 						color='primary'
 						aria-label='Next step'
 						size='medium'
-						className={classes.buttonNext}
+						className={isEdge ? classes.buttonNextEdge : classes.buttonNext}
 						onClick={() => changeStep(activeStepNum + 1, 'next button')}
 						disabled={disableStepButtons}
 					>
