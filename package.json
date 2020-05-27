@@ -29,7 +29,7 @@
 		"cy:run": "cypress run",
 		"cy:open": "cypress open",
 		"preinstall": "npx npm-force-resolutions",
-		"predeploy": "git checkout master && git pull origin master && git merge develop && git branch -D develop",
+		"predeploy": "git checkout master && git pull origin master && git merge develop && git branch -D develop || git checkout -b develop",
 		"deploy": "cypress run && react-scripts test --watchAll=false --forceExit && npm version minor -f && git push origin master && git checkout -b develop"
 	},
 	"eslintConfig": {
