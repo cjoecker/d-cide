@@ -13,7 +13,7 @@ import InfoDialog from '../../../components/InfoDialog';
 import {RootState} from '../../../services/redux/rootReducer';
 import theme from '../../../muiTheme';
 import RatedOptionsSlice, {RatedOption} from '../../../services/redux/actionsAndSlicers/RatedOptionsSlice';
-import ButtonsTooltip from '../../../components/ButtonsTooltip';
+import ComponentsTooltip from '../../../components/ComponentsTooltip';
 
 const useStyles = makeStyles({
 	divMain: {
@@ -188,7 +188,7 @@ const RateOptions: React.FC<Props> = (props: Props) => {
 				<Grid item xs={12}>
 					<Typography component='span' variant='h1' gutterBottom>
 						Rate Options
-						<ButtonsTooltip title='Show help'>
+						<ComponentsTooltip title='Show help'>
 							<IconButton
 								data-testid='RateOptionsInfoButton'
 								aria-label='Show rate options help'
@@ -198,7 +198,7 @@ const RateOptions: React.FC<Props> = (props: Props) => {
 							>
 								<InfoIcon color='secondary' />
 							</IconButton>
-						</ButtonsTooltip>
+						</ComponentsTooltip>
 					</Typography>
 				</Grid>
 				{!hidden &&

@@ -23,7 +23,7 @@ import {
 	predefinedDecisionOptions,
 	predefinedSelectionCriteria,
 } from '../../../../constants/PredifinedOptionsAndCriteria';
-import ButtonsTooltip from '../../../../components/ButtonsTooltip';
+import ComponentsTooltip from '../../../../components/ComponentsTooltip';
 
 const useStyles = makeStyles({
 	divMain: {
@@ -204,27 +204,29 @@ const EditableList: React.FC<Props> = (props: Props) => {
 			<List>
 				<Paper className={classes.paperTitle} elevation={2} key='NewEntry'>
 					<ListItem>
-						<TextField
-							aria-label={`New ${itemsType}`}
-							inputProps={{
-								'data-testid': 'entryInput',
-								tabIndex: hidden ? -1 : 0,
-							}}
-							variant='standard'
-							className={classes.inputBase}
-							placeholder='New Entry'
-							value={newEntry}
-							onKeyPress={event => {
-								if (event.key === 'Enter') {
-									event.preventDefault();
-									onCreateItem();
-								}
-							}}
-							onChange={event => setNewEntry(event.target.value)}
-							multiline
-						/>
+						<ComponentsTooltip title="Write new entry">
+							<TextField
+								aria-label={`New ${itemsType}`}
+								inputProps={{
+									'data-testid': 'entryInput',
+									tabIndex: hidden ? -1 : 0,
+								}}
+								variant='standard'
+								className={classes.inputBase}
+								placeholder='New Entry'
+								value={newEntry}
+								onKeyPress={event => {
+									if (event.key === 'Enter') {
+										event.preventDefault();
+										onCreateItem();
+									}
+								}}
+								onChange={event => setNewEntry(event.target.value)}
+								multiline
+							/>
+						</ComponentsTooltip>
 						<ListItemSecondaryAction>
-							<ButtonsTooltip title='Add entry'>
+							<ComponentsTooltip title='Add entry'>
 								<IconButton
 									data-testid='addButton'
 									aria-label={`Create new ${itemsType}`}
@@ -234,7 +236,7 @@ const EditableList: React.FC<Props> = (props: Props) => {
 								>
 									<AddIcon />
 								</IconButton>
-							</ButtonsTooltip>
+							</ComponentsTooltip>
 						</ListItemSecondaryAction>
 					</ListItem>
 				</Paper>
@@ -251,7 +253,7 @@ const EditableList: React.FC<Props> = (props: Props) => {
 					>
 						<Paper className={classes.paperItems} elevation={2}>
 							<ListItem>
-								<ButtonsTooltip title='Edit entry'>
+								<ComponentsTooltip title='Edit entry'>
 									<TextField
 										aria-label={`Edit ${itemsType}`}
 										inputProps={{
@@ -272,9 +274,9 @@ const EditableList: React.FC<Props> = (props: Props) => {
 											}
 										}}
 									/>
-								</ButtonsTooltip>
+								</ComponentsTooltip>
 								<ListItemSecondaryAction>
-									<ButtonsTooltip title='Delete entry'>
+									<ComponentsTooltip title='Delete entry'>
 										<IconButton
 											data-testid={`deleteButton${index}`}
 											aria-label={`Delete ${itemsType}`}
@@ -283,7 +285,7 @@ const EditableList: React.FC<Props> = (props: Props) => {
 										>
 											<DeleteIcon />
 										</IconButton>
-									</ButtonsTooltip>
+									</ComponentsTooltip>
 								</ListItemSecondaryAction>
 							</ListItem>
 						</Paper>

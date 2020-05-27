@@ -18,7 +18,7 @@ import RateOptions from './Step3RateOptions/RateOptions';
 import Results from './Step4Result/Result';
 import {RootState} from '../../services/redux/rootReducer';
 import {NOT_ENOUGH_CRITERIA, NOT_ENOUGH_OPTIONS} from '../../constants/Alerts';
-import ButtonsTooltip from '../../components/ButtonsTooltip';
+import ComponentsTooltip from '../../components/ComponentsTooltip';
 
 const useStyles = makeStyles({
 	divMain: {
@@ -147,7 +147,7 @@ const Decision: React.FC = () => {
 				{steps.map(step => {
 					return (
 						<Step key={step.number}>
-							<ButtonsTooltip title={`Go to step ${step.number}`}>
+							<ComponentsTooltip>
 								<StepButton
 									focusRipple
 									data-testid={`Step${step.number}Button`}
@@ -158,13 +158,13 @@ const Decision: React.FC = () => {
 								>
 									<StepLabel StepIconProps={{classes: {root: classes.stepperLabel}}}>{step.name}</StepLabel>
 								</StepButton>
-							</ButtonsTooltip>
+							</ComponentsTooltip>
 						</Step>
 					);
 				})}
 			</Stepper>
 			{activeStepNum !== 1 ? (
-				<ButtonsTooltip title="Previous step">
+				<ComponentsTooltip>
 					<Fab
 						data-testid='PrevStepButton'
 						color='secondary'
@@ -176,10 +176,10 @@ const Decision: React.FC = () => {
 					>
 						<ArrowBackIcon />
 					</Fab>
-				</ButtonsTooltip>
+				</ComponentsTooltip>
 			) : null}
 			{activeStepNum !== steps.length ? (
-				<ButtonsTooltip title="Next step">
+				<ComponentsTooltip>
 					<Fab
 						data-testid='NextStepButton'
 						color='primary'
@@ -192,7 +192,7 @@ const Decision: React.FC = () => {
 					>
 						<ArrowForwardIcon />
 					</Fab>
-				</ButtonsTooltip>
+				</ComponentsTooltip>
 			) : null}
 			<SwipeableViews
 				disabled

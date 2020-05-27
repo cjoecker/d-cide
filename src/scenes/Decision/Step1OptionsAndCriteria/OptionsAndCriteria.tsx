@@ -10,7 +10,7 @@ import theme from '../../../muiTheme';
 import {DecisionOptionInfo, SelectionCriteriaInfo} from '../../../constants/InfoDialogTexts';
 import {OptionsAndCriteriaKeys} from '../../../services/redux/actionsAndSlicers/OptionsAndCriteriaSlice';
 import {NOT_ENOUGH_CRITERIA, NOT_ENOUGH_OPTIONS} from '../../../constants/Alerts';
-import ButtonsTooltip from '../../../components/ButtonsTooltip';
+import ComponentsTooltip from '../../../components/ComponentsTooltip';
 
 const useStyles = makeStyles({
 	divMain: {
@@ -53,7 +53,7 @@ const OptionsAndCriteria: React.FC<Props> = (props: Props) => {
 				<Grid item xs={6} className={classes.gridItem}>
 					<Typography component='span' variant='h1'>
 						Decision Options
-						<ButtonsTooltip title="Show help">
+						<ComponentsTooltip title='Show help'>
 							<IconButton
 								aria-label='Show decision options help'
 								data-testid={`${OptionsAndCriteriaKeys.decisionOptions}InfoButton`}
@@ -63,7 +63,7 @@ const OptionsAndCriteria: React.FC<Props> = (props: Props) => {
 							>
 								<InfoIcon color='secondary' />
 							</IconButton>
-						</ButtonsTooltip>
+						</ComponentsTooltip>
 					</Typography>
 					<EditableList
 						itemsKey={OptionsAndCriteriaKeys.decisionOptions}
@@ -74,7 +74,7 @@ const OptionsAndCriteria: React.FC<Props> = (props: Props) => {
 				<Grid item xs={6} className={classes.gridItem}>
 					<Typography component='span' variant='h1'>
 						Selection Criteria
-						<ButtonsTooltip title="Show help">
+						<ComponentsTooltip title='Show help'>
 							<IconButton
 								aria-label='Show selection criteria help'
 								data-testid={`${OptionsAndCriteriaKeys.selectionCriteria}InfoButton`}
@@ -84,7 +84,7 @@ const OptionsAndCriteria: React.FC<Props> = (props: Props) => {
 							>
 								<InfoIcon color='secondary' />
 							</IconButton>
-						</ButtonsTooltip>
+						</ComponentsTooltip>
 					</Typography>
 					<EditableList
 						itemsKey={OptionsAndCriteriaKeys.selectionCriteria}

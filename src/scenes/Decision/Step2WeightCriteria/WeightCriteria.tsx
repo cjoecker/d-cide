@@ -13,7 +13,7 @@ import * as LongStrings from '../../../constants/InfoDialogTexts';
 import InfoDialog from '../../../components/InfoDialog';
 import {RootState} from '../../../services/redux/rootReducer';
 import WeightedCriteriaSlice, {WeightedCriteria} from '../../../services/redux/actionsAndSlicers/WeightCriteriaSlice';
-import ButtonsTooltip from '../../../components/ButtonsTooltip';
+import ComponentsTooltip from '../../../components/ComponentsTooltip';
 
 const useStyles = makeStyles({
 	divMain: {
@@ -204,7 +204,7 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
 					<div className={classes.title}>
 						<Typography component='span' variant='h1' gutterBottom>
 							Weight Criteria
-							<ButtonsTooltip title='Show help'>
+							<ComponentsTooltip title='Show help'>
 								<IconButton
 									data-testid='WeightCriteriaInfoButton'
 									aria-label='Show weighted criteria help'
@@ -214,7 +214,7 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
 								>
 									<InfoIcon color='secondary' />
 								</IconButton>
-							</ButtonsTooltip>
+							</ComponentsTooltip>
 						</Typography>
 					</div>
 				</Grid>
