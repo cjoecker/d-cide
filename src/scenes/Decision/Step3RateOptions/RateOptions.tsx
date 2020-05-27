@@ -188,10 +188,10 @@ const RateOptions: React.FC<Props> = (props: Props) => {
 				<Grid item xs={12}>
 					<Typography component='span' variant='h1' gutterBottom>
 						Rate Options
-						<ButtonsTooltip>
+						<ButtonsTooltip title="Show help">
 							<IconButton
 								data-testid='RateOptionsInfoButton'
-								aria-label='Show help'
+								aria-label='Show rate options help'
 								className={classes.infoButton}
 								onClick={() => setShowInfo(true)}
 								tabIndex={hidden ? -1 : 0}
@@ -272,7 +272,7 @@ const RateOptions: React.FC<Props> = (props: Props) => {
 																	step={1}
 																	marks={sliderMarks}
 																	onChange={(event, value) => onChange(event, criteria.id, option.id, value as number)}
-																	aria-label="Rate decision option"
+																	aria-label='Rate decision option'
 																/>
 															</Grid>
 														</Grid>
