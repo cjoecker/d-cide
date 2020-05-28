@@ -7,7 +7,7 @@ import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import {makeStyles} from '@material-ui/core/styles';
 import SwipeableViews from 'react-swipeable-views';
-import {StepLabel, Tooltip} from '@material-ui/core';
+import {StepLabel} from '@material-ui/core';
 import {shallowEqual, useSelector} from 'react-redux';
 import ReactGA from 'react-ga';
 import {isEdge} from 'react-device-detect';
