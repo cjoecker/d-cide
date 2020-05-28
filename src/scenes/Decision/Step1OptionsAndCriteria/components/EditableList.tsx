@@ -9,8 +9,9 @@ import AddIcon from '@material-ui/icons/AddRounded';
 import Paper from '@material-ui/core/Paper';
 import {shallowEqual, useDispatch, useSelector} from 'react-redux';
 import Fade from '@material-ui/core/Fade';
-import {TextField, Tooltip} from '@material-ui/core';
+import {Box, TextField, Tooltip} from '@material-ui/core';
 import ReactGA from 'react-ga';
+import Grid from '@material-ui/core/Grid';
 import theme from '../../../../muiTheme';
 import OptionsAndCriteriaSlice, {
 	OptionAndCriteria,
@@ -31,16 +32,11 @@ const useStyles = makeStyles({
 	},
 
 	paperTitle: {
-		marginBottom: theme.spacing(2),
-		marginRight: theme.spacing(1.5),
-		marginLeft: theme.spacing(1.5),
+		margin: theme.spacing(2, 1, 2, 1),
 	},
 
 	paperItems: {
-		marginTop: theme.spacing(0.5),
-		marginRight: theme.spacing(1.5),
-		marginLeft: theme.spacing(1.5),
-		cursor: 'pointer',
+		margin: theme.spacing(0.5, 1, 0, 1),
 	},
 
 	editButton: {
@@ -52,7 +48,7 @@ const useStyles = makeStyles({
 	},
 
 	inputBase: {
-		marginRight: theme.spacing(2),
+		margin: theme.spacing(0.5, 1, 1, 2),
 		width: '100%',
 		wordWrap: 'break-word',
 	},
@@ -201,46 +197,49 @@ const EditableList: React.FC<Props> = (props: Props) => {
 
 	return (
 		<div className={classes.divMain} data-testid={`${itemsKey}List`}>
-			<List>
-				<Paper className={classes.paperTitle} elevation={2} key='NewEntry'>
-					<ListItem>
-						<ComponentsTooltip title="Write new entry">
-							<TextField
-								aria-label={`New ${itemsType}`}
-								inputProps={{
-									'data-testid': 'entryInput',
-									tabIndex: hidden ? -1 : 0,
-								}}
-								variant='standard'
-								className={classes.inputBase}
-								placeholder='New Entry'
-								value={newEntry}
-								onKeyPress={event => {
-									if (event.key === 'Enter') {
-										event.preventDefault();
-										onCreateItem();
-									}
-								}}
-								onChange={event => setNewEntry(event.target.value)}
-								multiline
-							/>
-						</ComponentsTooltip>
-						<ListItemSecondaryAction>
-							<ComponentsTooltip title='Add entry'>
-								<IconButton
-									data-testid='addButton'
-									aria-label={`Create new ${itemsType}`}
-									className={classes.deleteButton}
-									onClick={() => onCreateItem()}
-									tabIndex={hidden ? -1 : 0}
-								>
-									<AddIcon />
-								</IconButton>
-							</ComponentsTooltip>
-						</ListItemSecondaryAction>
-					</ListItem>
-				</Paper>
-
+			<Grid container justify='center' alignContent='center'>
+				<Grid item xs={12}>
+					<Paper className={classes.paperTitle} elevation={2} key='NewEntry'>
+						<Box display='flex' alignItems='center'>
+							<Box width='100%' mr={1}>
+								<ComponentsTooltip title='Write new entry'>
+									<TextField
+										aria-label={`New ${itemsType}`}
+										inputProps={{
+											'data-testid': 'entryInput',
+											tabIndex: hidden ? -1 : 0,
+										}}
+										variant='standard'
+										className={classes.inputBase}
+										placeholder='New Entry'
+										value={newEntry}
+										onKeyPress={event => {
+											if (event.key === 'Enter') {
+												event.preventDefault();
+												onCreateItem();
+											}
+										}}
+										onChange={event => setNewEntry(event.target.value)}
+										multiline
+									/>
+								</ComponentsTooltip>
+							</Box>
+							<Box minWidth={theme.spacing(8)}>
+								<ComponentsTooltip title='Add entry'>
+									<IconButton
+										data-testid='addButton'
+										aria-label={`Create new ${itemsType}`}
+										className={classes.deleteButton}
+										onClick={() => onCreateItem()}
+										tabIndex={hidden ? -1 : 0}
+									>
+										<AddIcon />
+									</IconButton>
+								</ComponentsTooltip>
+							</Box>
+						</Box>
+					</Paper>
+				</Grid>
 				{localItems.map((item, index) => (
 					<Fade
 						in
@@ -251,47 +250,51 @@ const EditableList: React.FC<Props> = (props: Props) => {
 						onEntered={() => endOfAnimation(index)}
 						key={item.id}
 					>
-						<Paper className={classes.paperItems} elevation={2}>
-							<ListItem>
-								<ComponentsTooltip title='Edit entry'>
-									<TextField
-										aria-label={`Edit ${itemsType}`}
-										inputProps={{
-											'data-testid': `itemInput`,
-										}}
-										className={classes.inputBase}
-										variant='standard'
-										value={item.name}
-										onChange={event => onChangeItem(event, item.id)}
-										onBlur={() => onLeaveItem(item)}
-										multiline
-										onKeyDown={event => {
-											if (event.key === 'Enter') {
-												event.preventDefault();
-												if (document.activeElement instanceof HTMLElement) {
-													document.activeElement.blur();
-												}
-											}
-										}}
-									/>
-								</ComponentsTooltip>
-								<ListItemSecondaryAction>
-									<ComponentsTooltip title='Delete entry'>
-										<IconButton
-											data-testid={`deleteButton${index}`}
-											aria-label={`Delete ${itemsType}`}
-											onClick={() => onDeleteItem(item)}
-											className={classes.deleteButton}
-										>
-											<DeleteIcon />
-										</IconButton>
-									</ComponentsTooltip>
-								</ListItemSecondaryAction>
-							</ListItem>
-						</Paper>
+						<Grid item xs={12}>
+							<Paper className={classes.paperItems} elevation={2}>
+								<Box display='flex' alignItems='center'>
+									<Box width='100%' mr={1}>
+										<ComponentsTooltip title='Edit entry'>
+											<TextField
+												aria-label={`Edit ${itemsType}`}
+												inputProps={{
+													'data-testid': `itemInput`,
+												}}
+												className={classes.inputBase}
+												variant='standard'
+												value={item.name}
+												onChange={event => onChangeItem(event, item.id)}
+												onBlur={() => onLeaveItem(item)}
+												multiline
+												onKeyDown={event => {
+													if (event.key === 'Enter') {
+														event.preventDefault();
+														if (document.activeElement instanceof HTMLElement) {
+															document.activeElement.blur();
+														}
+													}
+												}}
+											/>
+										</ComponentsTooltip>
+									</Box>
+									<Box minWidth={theme.spacing(8)}>
+										<ComponentsTooltip title='Delete entry'>
+											<IconButton
+												data-testid={`deleteButton${index}`}
+												aria-label={`Delete ${itemsType}`}
+												onClick={() => onDeleteItem(item)}
+												className={classes.deleteButton}
+											>
+												<DeleteIcon />
+											</IconButton>
+										</ComponentsTooltip>
+									</Box>
+								</Box>
+							</Paper>
+						</Grid>
 					</Fade>
 				))}
-			</List>
+			</Grid>
 		</div>
 	);
 };

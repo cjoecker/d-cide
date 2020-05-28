@@ -26,9 +26,7 @@ const useStyles = makeStyles({
 
 	gridItem: {
 		maxWidth: theme.spacing(62),
-		marginRight: theme.spacing(2),
-		marginLeft: theme.spacing(2),
-		marginBottom: theme.spacing(4),
+		margin: theme.spacing(0, 3, 4, 3),
 	},
 
 	emptySpace: {
