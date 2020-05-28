@@ -110,6 +110,7 @@ const ResultsChart: React.FC<Props> = (props: Props) => {
 					</Typography>
 					<Typography component='span' variant='body1'>
 						<ResponsiveContainer
+							id={`${itemsKey}ResponsiveContainer`}
 							height={localItems.length * theme.spacing(9) + theme.spacing(5)}
 							width='98%'
 							className={classes.chartContainer}
