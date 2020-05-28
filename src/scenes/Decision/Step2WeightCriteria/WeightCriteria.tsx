@@ -47,6 +47,10 @@ const useStyles = makeStyles({
 		alignItems: 'center',
 	},
 
+	gridItemCriteriaText: {
+		marginTop: theme.spacing(0.5),
+	},
+
 	unselectableText: {
 		userSelect: 'none',
 	},
@@ -63,7 +67,7 @@ const useStyles = makeStyles({
 	},
 
 	gridItemSlider: {
-		marginTop: theme.spacing(-2),
+		marginTop: theme.spacing(-2.5),
 		marginBottom: theme.spacing(-1),
 		marginLeft: theme.spacing(1),
 		marginRight: theme.spacing(1),
@@ -223,7 +227,7 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
 						<Grid item xs={6} className={classes.gridItemCriteria} key={criteria.id}>
 							<Paper elevation={2} className={classes.paper}>
 								<Grid container spacing={2} alignItems='center'>
-									<Grid item xs={6}>
+									<Grid item xs={6} className={classes.gridItemCriteriaText}>
 										<Typography
 											className={classes.unselectableText}
 											component='span'
@@ -233,7 +237,7 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
 											{getSelectionCriteriaName(criteria.selectionCriteria1Id)}
 										</Typography>
 									</Grid>
-									<Grid item xs={6}>
+									<Grid item xs={6} className={classes.gridItemCriteriaText}>
 										<Typography
 											className={classes.unselectableText}
 											component='span'

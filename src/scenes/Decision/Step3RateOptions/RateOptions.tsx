@@ -41,27 +41,27 @@ const useStyles = makeStyles({
 		marginTop: theme.spacing(1),
 	},
 
-	titleGridItem: {
+	gridItemCriteriaTitle: {
 		marginTop: theme.spacing(1),
 		marginBottom: theme.spacing(1),
 	},
 
-	gridItemGridContainer: {
+	gridItemOptionContainer: {
 		paddingBottom: theme.spacing(1),
 	},
 
-	gridItemGridContainerTitle: {
+	gridItemOptionTitle: {
 		paddingLeft: theme.spacing(2),
 	},
 
-	sliderLeftText: {
+	sliderTextGridLeft: {
 		paddingLeft: theme.spacing(1.8),
 		paddingRight: theme.spacing(1.8),
 		marginTop: theme.spacing(1),
 		textAlign: 'left',
 	},
 
-	sliderRightText: {
+	sliderTextGridRight: {
 		paddingLeft: theme.spacing(1.8),
 		paddingRight: theme.spacing(1.8),
 		marginTop: theme.spacing(1),
@@ -74,7 +74,8 @@ const useStyles = makeStyles({
 		marginRight: theme.spacing(1),
 	},
 
-	unselectableText: {
+	sliderText: {
+		fontSize: 11,
 		userSelect: 'none',
 	},
 
@@ -215,7 +216,7 @@ const RateOptions: React.FC<Props> = (props: Props) => {
 								<Paper className={classes.paper} elevation={2} key={criteria.id}>
 									<div>
 										<Grid container>
-											<Grid item xs={12} className={classes.titleGridItem}>
+											<Grid item xs={12} className={classes.gridItemCriteriaTitle}>
 												<Typography component='span' variant='h2'>
 													{criteria.name}
 												</Typography>
@@ -225,35 +226,23 @@ const RateOptions: React.FC<Props> = (props: Props) => {
 													container
 													justify='center'
 													alignItems='center'
-													className={classes.gridItemGridContainer}
+													className={classes.gridItemOptionContainer}
 													key={option.id}
 												>
-													<Grid item xs={4} className={classes.gridItemGridContainerTitle}>
+													<Grid item xs={4} className={classes.gridItemOptionTitle}>
 														<Typography component='span' variant='body1'>
 															{option.name}
 														</Typography>
 													</Grid>
 													<Grid item xs={8}>
 														<Grid container>
-															<Grid item xs={6} className={classes.sliderLeftText}>
-																<Typography
-																	variant='caption'
-																	style={{
-																		fontSize: 11,
-																	}}
-																	className={classes.unselectableText}
-																>
+															<Grid item xs={6} className={classes.sliderTextGridLeft}>
+																<Typography variant='caption' className={classes.sliderText}>
 																	Bad
 																</Typography>
 															</Grid>
-															<Grid item xs={6} className={classes.sliderRightText}>
-																<Typography
-																	variant='caption'
-																	style={{
-																		fontSize: 11,
-																	}}
-																	className={classes.unselectableText}
-																>
+															<Grid item xs={6} className={classes.sliderTextGridRight}>
+																<Typography variant='caption' className={classes.sliderText}>
 																	Good
 																</Typography>
 															</Grid>
