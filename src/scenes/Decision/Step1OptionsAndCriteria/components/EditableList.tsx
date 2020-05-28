@@ -1,15 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import {makeStyles} from '@material-ui/core/styles';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/DeleteOutlineRounded';
 import AddIcon from '@material-ui/icons/AddRounded';
 import Paper from '@material-ui/core/Paper';
 import {shallowEqual, useDispatch, useSelector} from 'react-redux';
 import Fade from '@material-ui/core/Fade';
-import {Box, Input, TextField, Tooltip} from '@material-ui/core';
+import {Box, Input} from '@material-ui/core';
 import ReactGA from 'react-ga';
 import Grid from '@material-ui/core/Grid';
 import theme from '../../../../muiTheme';

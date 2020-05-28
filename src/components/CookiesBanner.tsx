@@ -6,7 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import Slide from '@material-ui/core/Slide';
-import {isMobile, isEdge} from 'react-device-detect';
+import {isEdge, isMobile} from 'react-device-detect';
 import {Dialog} from '@material-ui/core';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
