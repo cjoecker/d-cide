@@ -9,7 +9,7 @@ import AddIcon from '@material-ui/icons/AddRounded';
 import Paper from '@material-ui/core/Paper';
 import {shallowEqual, useDispatch, useSelector} from 'react-redux';
 import Fade from '@material-ui/core/Fade';
-import {Box, TextField, Tooltip} from '@material-ui/core';
+import {Box, Input, TextField, Tooltip} from '@material-ui/core';
 import ReactGA from 'react-ga';
 import Grid from '@material-ui/core/Grid';
 import theme from '../../../../muiTheme';
@@ -203,13 +203,12 @@ const EditableList: React.FC<Props> = (props: Props) => {
 						<Box display='flex' alignItems='center'>
 							<Box width='100%' mr={1}>
 								<ComponentsTooltip title='Write new entry'>
-									<TextField
-										aria-label={`New ${itemsType}`}
+									<Input
 										inputProps={{
 											'data-testid': 'entryInput',
 											tabIndex: hidden ? -1 : 0,
+											'aria-label': `New ${itemsType}`,
 										}}
-										variant='standard'
 										className={classes.inputBase}
 										placeholder='New Entry'
 										value={newEntry}
@@ -255,13 +254,12 @@ const EditableList: React.FC<Props> = (props: Props) => {
 								<Box display='flex' alignItems='center'>
 									<Box width='100%' mr={1}>
 										<ComponentsTooltip title='Edit entry'>
-											<TextField
-												aria-label={`Edit ${itemsType}`}
+											<Input
 												inputProps={{
 													'data-testid': `itemInput`,
+													'aria-label': `Edit ${itemsType}`,
 												}}
 												className={classes.inputBase}
-												variant='standard'
 												value={item.name}
 												onChange={event => onChangeItem(event, item.id)}
 												onBlur={() => onLeaveItem(item)}
