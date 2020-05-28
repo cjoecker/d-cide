@@ -110,6 +110,7 @@ const App: React.FC = () => {
 										action: 'Redirect to cjoecker.de',
 									})
 								}
+								rel='noopener noreferrer'
 								underline='always'
 								target='_blank'
 								tabIndex={localStorage.getItem('cookieConsentAccepted') == null ? -1 : 0}
