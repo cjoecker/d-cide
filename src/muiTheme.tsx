@@ -38,6 +38,10 @@ const theme = createMuiTheme({
 			fontWeight: 500,
 			fontSize: 16,
 		},
+		body2: {
+			fontWeight: 500,
+			fontSize: 16,
+		},
 	},
 	overrides: {
 		MuiTypography: {
@@ -84,8 +88,12 @@ const theme = createMuiTheme({
 			contrastText: '#fafafa',
 		},
 		secondary: {
-			main: '#878787',
+			main: '#858585',
 			contrastText: '#fafafa',
+		},
+		text: {
+			secondary: '#4A4A4A',
+			disabled: '#858585',
 		},
 	},
 });
