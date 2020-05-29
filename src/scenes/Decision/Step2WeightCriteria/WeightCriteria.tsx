@@ -117,6 +117,7 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
 
 	useEffect(() => {
 		if (!hidden) createWeightedCriteria();
+		console.log(selectionCriteria);
 	}, [hidden]);
 
 	const onChange = (event: React.BaseSyntheticEvent, value: number, itemLocal: WeightedCriteria) => {
@@ -133,7 +134,7 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
 	//	https://github.com/oliviertassinari/react-swipeable-views/issues/533
 
 	const createWeightedCriteria = () => {
-		let newWeightedCriteria: WeightedCriteria[] = weightedCriteria;
+		let newWeightedCriteria: WeightedCriteria[] = [];
 
 		let id = Math.max(...weightedCriteria.map(object => object.id), 0) + 1;
 
@@ -147,19 +148,17 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
 							weightedCriteriaObj.selectionCriteria2Id === selectionCriteria[i].id)
 				);
 
-				if (existingWeightedCriteria == null) {
-					newWeightedCriteria = [
-						...newWeightedCriteria,
-						{
-							id,
-							weight: 0,
-							selectionCriteria1Id: selectionCriteria[i].id,
-							selectionCriteria2Id: selectionCriteria[j].id,
-						},
-					];
+				newWeightedCriteria = [
+					...newWeightedCriteria,
+					{
+						id,
+						weight: existingWeightedCriteria != null ? existingWeightedCriteria.weight : 0,
+						selectionCriteria1Id: selectionCriteria[i].id,
+						selectionCriteria2Id: selectionCriteria[j].id,
+					},
+				];
 
-					id += 1;
-				}
+				id += 1;
 			}
 		}
 		dispatch(WeightedCriteriaSlice.actions.setWeightedCriteria(newWeightedCriteria));
@@ -167,8 +166,8 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
 
 	const getSelectionCriteriaName = (selectionCriteriaId: number) => {
 		const FoundSelectionCriteria = selectionCriteria.find(obj => obj.id === selectionCriteriaId);
-
-		return FoundSelectionCriteria == null ? 'Loading...' : FoundSelectionCriteria.name;
+		console.log(selectionCriteriaId);
+		return FoundSelectionCriteria == null ? '' : FoundSelectionCriteria.name;
 	};
 
 	const getWeightInfoText = (weight: number, selectionCriteria1Id: number, selectionCriteria2Id: number): string => {
