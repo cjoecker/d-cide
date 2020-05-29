@@ -15,6 +15,8 @@ import {RootState} from '../../../services/redux/rootReducer';
 import theme from '../../../muiTheme';
 import RatedOptionsSlice, {RatedOption} from '../../../services/redux/actionsAndSlicers/RatedOptionsSlice';
 import ComponentsTooltip from '../../../components/ComponentsTooltip';
+import shuffleArray from '../../../services/shuffleArray';
+import {OptionAndCriteria} from '../../../services/redux/actionsAndSlicers/OptionsAndCriteriaSlice';
 
 const useStyles = makeStyles({
 	divMain: {
@@ -106,6 +108,8 @@ const RateOptions: React.FC<Props> = (props: Props) => {
 	const {hidden} = props;
 
 	const [showInfo, setShowInfo] = useState(false);
+	const [shuffledSelectionCriteria, setShuffledSelectionCriteria] = useState<OptionAndCriteria[]>([]);
+	const [shuffledDecisionOptions, setShuffledDecisionOptions] = useState<OptionAndCriteria[][]>([]);
 
 	const {selectionCriteria, decisionOptions} = useSelector((state: RootState) => state.OptionsAndCriteria, shallowEqual);
 
@@ -133,7 +137,11 @@ const RateOptions: React.FC<Props> = (props: Props) => {
 	];
 
 	useEffect(() => {
-		if (!hidden) createRatedOptions();
+		if (!hidden) {
+			createRatedOptions();
+			setShuffledSelectionCriteria(shuffleArray(selectionCriteria));
+			shuffleDecisionOptions();
+		}
 	}, [hidden]);
 
 	const onChange = (event: React.BaseSyntheticEvent, criteriaId: number, optionId: number, score: number) => {
@@ -164,7 +172,6 @@ const RateOptions: React.FC<Props> = (props: Props) => {
 							selectionCriteriaId: criteria.id,
 						},
 					];
-
 					id += 1;
 				}
 			});
@@ -178,6 +185,16 @@ const RateOptions: React.FC<Props> = (props: Props) => {
 		);
 
 		return foundRatedOption == null ? 50 : foundRatedOption.score;
+	};
+
+	const shuffleDecisionOptions = () => {
+		let newShuffledDecisionOptions: OptionAndCriteria[][] = [];
+
+		for (let i = 0; i < selectionCriteria.length; i += 1) {
+			newShuffledDecisionOptions = [...newShuffledDecisionOptions, shuffleArray(decisionOptions)];
+		}
+
+		setShuffledDecisionOptions(newShuffledDecisionOptions);
 	};
 
 	return (
@@ -200,7 +217,7 @@ const RateOptions: React.FC<Props> = (props: Props) => {
 					</Typography>
 				</Grid>
 				{!hidden &&
-					selectionCriteria.map((criteria, criteriaIndex) => (
+					shuffledSelectionCriteria.map((criteria, criteriaIndex) => (
 						<Fade in timeout={500} style={{transitionDelay: `${criteriaIndex * 100}ms`}} key={criteria.id}>
 							<Grid item xs={6} className={classes.mainGridItem} key={criteria.id}>
 								<Paper className={classes.paper} elevation={2} key={criteria.id}>
@@ -211,7 +228,7 @@ const RateOptions: React.FC<Props> = (props: Props) => {
 													{criteria.name}
 												</Typography>
 											</Grid>
-											{decisionOptions.map((option, optionIndex) => (
+											{shuffledDecisionOptions[criteriaIndex].map((option, optionIndex) => (
 												<Grid
 													container
 													justify='center'

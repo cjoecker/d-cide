@@ -14,6 +14,7 @@ import InfoDialog from '../../../components/InfoDialog';
 import {RootState} from '../../../services/redux/rootReducer';
 import WeightedCriteriaSlice, {WeightedCriteria} from '../../../services/redux/actionsAndSlicers/WeightCriteriaSlice';
 import ComponentsTooltip from '../../../components/ComponentsTooltip';
+import shuffleArray from '../../../services/shuffleArray';
 
 const useStyles = makeStyles({
 	divMain: {
@@ -117,7 +118,6 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
 
 	useEffect(() => {
 		if (!hidden) createWeightedCriteria();
-		console.log(selectionCriteria);
 	}, [hidden]);
 
 	const onChange = (event: React.BaseSyntheticEvent, value: number, itemLocal: WeightedCriteria) => {
@@ -161,12 +161,11 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
 				id += 1;
 			}
 		}
-		dispatch(WeightedCriteriaSlice.actions.setWeightedCriteria(newWeightedCriteria));
+		dispatch(WeightedCriteriaSlice.actions.setWeightedCriteria(shuffleArray(newWeightedCriteria)));
 	};
 
 	const getSelectionCriteriaName = (selectionCriteriaId: number) => {
 		const FoundSelectionCriteria = selectionCriteria.find(obj => obj.id === selectionCriteriaId);
-		console.log(selectionCriteriaId);
 		return FoundSelectionCriteria == null ? '' : FoundSelectionCriteria.name;
 	};
 
