@@ -273,7 +273,10 @@ const RateOptions: React.FC<Props> = (props: Props) => {
 																	step={1}
 																	marks={sliderMarks}
 																	onChange={(event, value) => onChange(event, criteria.id, option.id, value as number)}
-																	aria-label={`Rate ${criteria.name} for ${option.name}`}
+																	aria-label={`Rate ${criteria.name} for ${option.name}. Slider value: ${getScore(
+																		criteria.id,
+																		option.id
+																	)}`}
 																/>
 															</Grid>
 														</Grid>

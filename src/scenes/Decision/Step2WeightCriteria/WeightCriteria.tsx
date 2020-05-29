@@ -244,7 +244,7 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
 											<Slider
 												aria-label={`Weight ${getSelectionCriteriaName(
 													criteria.selectionCriteria1Id
-												)} (negative values) and ${getSelectionCriteriaName(criteria.selectionCriteria2Id)} (positive values)`}
+												)} and ${getSelectionCriteriaName(criteria.selectionCriteria2Id)}. Slider value: ${criteria.weight}`}
 												data-testid={`slider${index}`}
 												classes={{
 													track: classes.sliderTrack,
