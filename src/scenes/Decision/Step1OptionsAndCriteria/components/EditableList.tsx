@@ -90,12 +90,6 @@ const EditableList: React.FC<Props> = (props: Props) => {
 			setLocalItems([]);
 			setStopAnimation(false);
 			dispatch(AppSlice.actions.deleteAlert(notEnoughItemsAlert));
-
-			ReactGA.event({
-				category: itemsType,
-				action: 'Items number',
-				value: items.length,
-			});
 		}
 	}, [hidden]);
 
