@@ -15,13 +15,14 @@ import {PrivacyText} from '../constants/PrivacyTexts';
 import theme from '../muiTheme';
 
 const useStyles = makeStyles({
-	grid: {
-		outline: 'none',
-	},
-
 	div: {
 		position: 'fixed',
 		margin: theme.spacing(0, 10, 5, 10),
+		zIndex: 2000,
+	},
+
+	grid: {
+		outline: 'none',
 	},
 
 	paper: {
@@ -56,7 +57,7 @@ const CookiesBanner: React.FC = () => {
 	};
 
 	const desktopBanner = (
-		<div className={classes.div} style={{bottom: isEdge ? 10 : 'env(safe-area-inset-bottom)'}}>
+		<div role='banner' className={classes.div} style={{bottom: isEdge ? 10 : 'env(safe-area-inset-bottom)'}}>
 			<Slide direction='up' in={open} mountOnEnter unmountOnExit>
 				<Grid data-testid='cookiesConsent' className={classes.grid} container justify='center' alignContent='center'>
 					<Paper className={classes.paper} elevation={7}>
