@@ -106,7 +106,6 @@ const RateOptions: React.FC<Props> = (props: Props) => {
 	const {hidden} = props;
 
 	const [showInfo, setShowInfo] = useState(false);
-	const [startAnimation, setStartAnimation] = useState(false);
 
 	const {selectionCriteria, decisionOptions} = useSelector((state: RootState) => state.OptionsAndCriteria, shallowEqual);
 
@@ -134,12 +133,7 @@ const RateOptions: React.FC<Props> = (props: Props) => {
 	];
 
 	useEffect(() => {
-		if (!hidden) {
-			createRatedOptions();
-			setStartAnimation(true);
-		} else {
-			setStartAnimation(false);
-		}
+		if (!hidden) createRatedOptions();
 	}, [hidden]);
 
 	const onChange = (event: React.BaseSyntheticEvent, criteriaId: number, optionId: number, score: number) => {
@@ -207,14 +201,7 @@ const RateOptions: React.FC<Props> = (props: Props) => {
 				</Grid>
 				{!hidden &&
 					selectionCriteria.map((criteria, criteriaIndex) => (
-						<Fade
-							key={criteria.id}
-							in={startAnimation}
-							timeout={500}
-							style={{
-								transitionDelay: `${criteriaIndex * 100}ms`,
-							}}
-						>
+						<Fade in timeout={500} style={{transitionDelay: `${criteriaIndex * 100}ms`}} key={criteria.id}>
 							<Grid item xs={6} className={classes.mainGridItem} key={criteria.id}>
 								<Paper className={classes.paper} elevation={2} key={criteria.id}>
 									<div>
