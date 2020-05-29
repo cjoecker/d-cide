@@ -8,6 +8,7 @@ import IconButton from '@material-ui/core/IconButton';
 import InfoIcon from '@material-ui/icons/Info';
 import {shallowEqual, useDispatch, useSelector} from 'react-redux';
 import Fade from '@material-ui/core/Fade';
+import {isMobile} from 'react-device-detect';
 import * as LongStrings from '../../../constants/InfoDialogTexts';
 import InfoDialog from '../../../components/InfoDialog';
 import {RootState} from '../../../services/redux/rootReducer';
@@ -69,7 +70,6 @@ const useStyles = makeStyles({
 	},
 
 	gridItemSlider: {
-		marginTop: theme.spacing(-2),
 		marginLeft: theme.spacing(1),
 		marginRight: theme.spacing(1),
 	},
@@ -249,7 +249,12 @@ const RateOptions: React.FC<Props> = (props: Props) => {
 																	Good
 																</Typography>
 															</Grid>
-															<Grid item xs={12} className={classes.gridItemSlider}>
+															<Grid
+																item
+																xs={12}
+																className={classes.gridItemSlider}
+																style={{marginTop: isMobile ? theme.spacing(-3) : theme.spacing(-2)}}
+															>
 																<Slider
 																	data-testid={`slider${criteriaIndex}${optionIndex}`}
 																	classes={{

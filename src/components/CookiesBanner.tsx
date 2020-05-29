@@ -28,9 +28,11 @@ const useStyles = makeStyles({
 	paper: {
 		maxWidth: '85%',
 	},
+
 	typographyGridItem: {
 		margin: theme.spacing(0, 3, 0, 3),
 	},
+
 	button: {
 		margin: theme.spacing(0, 3, 2, 0),
 	},
