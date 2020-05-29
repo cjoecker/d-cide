@@ -63,11 +63,13 @@ const OptionsAndCriteria: React.FC<Props> = (props: Props) => {
 							</IconButton>
 						</ComponentsTooltip>
 					</Typography>
-					<EditableList
-						itemsKey={OptionsAndCriteriaKeys.decisionOptions}
-						notEnoughItemsAlert={NOT_ENOUGH_OPTIONS}
-						hidden={hidden}
-					/>
+					{!hidden && (
+						<EditableList
+							itemsKey={OptionsAndCriteriaKeys.decisionOptions}
+							notEnoughItemsAlert={NOT_ENOUGH_OPTIONS}
+							hidden={hidden}
+						/>
+					)}
 				</Grid>
 				<Grid item xs={6} className={classes.gridItem}>
 					<Typography component='span' variant='h1'>
@@ -84,11 +86,13 @@ const OptionsAndCriteria: React.FC<Props> = (props: Props) => {
 							</IconButton>
 						</ComponentsTooltip>
 					</Typography>
-					<EditableList
-						itemsKey={OptionsAndCriteriaKeys.selectionCriteria}
-						notEnoughItemsAlert={NOT_ENOUGH_CRITERIA}
-						hidden={hidden}
-					/>
+					{!hidden && (
+						<EditableList
+							itemsKey={OptionsAndCriteriaKeys.selectionCriteria}
+							notEnoughItemsAlert={NOT_ENOUGH_CRITERIA}
+							hidden={hidden}
+						/>
+					)}
 				</Grid>
 			</Grid>
 			<div className={classes.emptySpace} />

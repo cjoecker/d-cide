@@ -108,65 +108,67 @@ const ResultsChart: React.FC<Props> = (props: Props) => {
 							</IconButton>
 						</ComponentsTooltip>
 					</Typography>
-					<Typography component='span' variant='body1'>
-						<ResponsiveContainer
-							id={`${itemsKey}ResponsiveContainer`}
-							height={localItems.length * theme.spacing(9) + theme.spacing(5)}
-							width='98%'
-							className={classes.chartContainer}
-						>
-							<BarChart
-								data={localItems}
-								margin={{
-									top: theme.spacing(0),
-									right: theme.spacing(5),
-									left: theme.spacing(5),
-									bottom: theme.spacing(1),
-								}}
-								layout='vertical'
-								barCategoryGap='20%'
-								maxBarSize={10}
+					{!hidden && (
+						<Typography component='span' variant='body1'>
+							<ResponsiveContainer
+								id={`${itemsKey}ResponsiveContainer`}
+								height={localItems.length * theme.spacing(9) + theme.spacing(5)}
+								width='98%'
+								className={classes.chartContainer}
 							>
-								<CartesianGrid horizontal={false} stroke='#a0a0a0' strokeWidth={0.5} />
-								<XAxis
-									dataKey='score'
-									type='number'
-									dy={-5}
-									axisLine={false}
-									tickLine={false}
-									domain={[0, 10]}
-									ticks={[0, 2.5, 5, 7.5, 10]}
-									stroke='#a0a0a0'
-									tick={{fontSize: '0.8rem'}}
-								/>
-								<YAxis type='category' dataKey='name' width={theme.spacing(10)} />
-								<Bar
-									dataKey='score'
-									animationDuration={1000}
-									label={{
-										position: 'right',
+								<BarChart
+									data={localItems}
+									margin={{
+										top: theme.spacing(0),
+										right: theme.spacing(5),
+										left: theme.spacing(5),
+										bottom: theme.spacing(1),
 									}}
-									shape={<Rectangle className={classes.bars} radius={[0, 10, 10, 0]} />}
+									layout='vertical'
+									barCategoryGap='20%'
+									maxBarSize={10}
 								>
-									{localItems.map((entry, index) => (
-										<Cell
-											key={entry.id}
-											fill={(() => {
-												switch (index) {
-													case 0:
-														return '#0f61a0';
-													case 1:
-														return '#646464';
-													default:
-														return '#a0a0a0';
-												}
-											})()}
-										/>
-									))}
-								</Bar>
-							</BarChart>
-						</ResponsiveContainer>
-					</Typography>
+									<CartesianGrid horizontal={false} stroke='#a0a0a0' strokeWidth={0.5} />
+									<XAxis
+										dataKey='score'
+										type='number'
+										dy={-5}
+										axisLine={false}
+										tickLine={false}
+										domain={[0, 10]}
+										ticks={[0, 2.5, 5, 7.5, 10]}
+										stroke='#a0a0a0'
+										tick={{fontSize: '0.8rem'}}
+									/>
+									<YAxis type='category' dataKey='name' width={theme.spacing(10)} />
+									<Bar
+										dataKey='score'
+										animationDuration={1000}
+										label={{
+											position: 'right',
+										}}
+										shape={<Rectangle className={classes.bars} radius={[0, 10, 10, 0]} />}
+									>
+										{localItems.map((entry, index) => (
+											<Cell
+												key={entry.id}
+												fill={(() => {
+													switch (index) {
+														case 0:
+															return '#0f61a0';
+														case 1:
+															return '#646464';
+														default:
+															return '#a0a0a0';
+													}
+												})()}
+											/>
+										))}
+									</Bar>
+								</BarChart>
+							</ResponsiveContainer>
+						</Typography>
+					)}
 				</Paper>
 			</Fade>
 			<InfoDialog text={infoText} show={showInfo} onClose={() => setShowInfo(false)} />
