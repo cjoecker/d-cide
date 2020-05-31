@@ -8,7 +8,7 @@ declare namespace Cypress {
 		 * Custom command to select DOM element by data-cy attribute.
 		 * @example cy.dataCy('greeting')
 		 */
-		getTestElement(value: string): Chainable<Subject>
-		getTestElementStartingWith(value: string): Chainable<Subject>
+		getTestElement(value: string): Chainable<Subject>;
+		getTestElementStartingWith(value: string): Chainable<Subject>;
 	}
 }

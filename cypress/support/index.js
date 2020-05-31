@@ -1,8 +1,11 @@
-Cypress.Commands.add("getTestElement", selector => {
+/* eslint-disable no-undef*/
+// eslint-disable-next-line import/no-extraneous-dependencies
+import 'cypress-axe';
+
+Cypress.Commands.add('getTestElement', selector => {
 	return cy.get(`[data-testid="${selector}"]`);
 });
 
-Cypress.Commands.add("getTestElementStartingWith", selector => {
+Cypress.Commands.add('getTestElementStartingWith', selector => {
 	return cy.get(`[data-testid^="${selector}"]`);
 });
-

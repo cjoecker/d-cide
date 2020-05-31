@@ -85,4 +85,10 @@ context('Actions', () => {
 				cy.getTestElement('itemInput').first().should('have.value', changedItemText);
 			});
 	});
+
+	it.only('Has no detectable accessibility violations on load', () => {
+		cy.visit('/');
+		cy.injectAxe();
+		cy.checkA11y();
+	});
 });
