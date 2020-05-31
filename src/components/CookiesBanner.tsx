@@ -59,7 +59,7 @@ const CookiesBanner: React.FC = () => {
 	};
 
 	const desktopBanner = (
-		<div role='banner' className={classes.div} style={{bottom: isEdge ? 10 : 'env(safe-area-inset-bottom)'}}>
+		<div role='dialog' className={classes.div} style={{bottom: isEdge ? 10 : 'env(safe-area-inset-bottom)'}}>
 			<Slide direction='up' in={open} mountOnEnter unmountOnExit>
 				<Grid data-testid='cookiesConsent' className={classes.grid} container justify='center' alignContent='center'>
 					<Paper className={classes.paper} elevation={7}>

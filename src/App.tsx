@@ -82,59 +82,61 @@ const App: React.FC = () => {
 
 	return (
 		<ThemeProvider theme={theme}>
-			<div className={classes.divMain}>
-				<AppBar position='static' color='primary' className={classes.appBar}>
-					<Toolbar>
-						<img className={classes.imgDcideLogo} src={imgDcideLogo} alt='d-cide logo' />
-					</Toolbar>
-				</AppBar>
+			<main role='main'>
+				<div className={classes.divMain}>
+					<AppBar position='static' color='primary' className={classes.appBar}>
+						<Toolbar>
+							<img className={classes.imgDcideLogo} src={imgDcideLogo} alt='d-cide logo' />
+						</Toolbar>
+					</AppBar>
 
-				<div className={classes.divRouter}>
-					<Decision />
-				</div>
-				<Grid className={classes.footer} container justify='center' alignContent='center'>
-					<Typography component='span' variant='caption' align='center'>
-						<Grid item xs={12}>
-							Made with &nbsp;
-							<span role='img' aria-label='love'>
-								💖
-							</span>
-							&nbsp; by
+					<div className={classes.divRouter}>
+						<Decision />
+					</div>
+					<Grid className={classes.footer} container justify='center' alignContent='center'>
+						<Typography component='span' variant='caption' align='center'>
+							<Grid item xs={12}>
+								Made with &nbsp;
+								<span role='img' aria-label='love'>
+									💖
+								</span>
+								&nbsp; by
 {' '}
-							<Link
-								data-testid='cjoeckerLink'
-								href='https://www.cjoecker.de/'
-								onClick={() =>
-									ReactGA.event({
-										category: 'Redirect',
-										action: 'Redirect to cjoecker.de',
-									})
-								}
-								rel='noopener noreferrer'
-								underline='always'
-								target='_blank'
-								tabIndex={localStorage.getItem('cookieConsentAccepted') == null ? -1 : 0}
-								aria-label={"Christian Jöcker's(opens personal website in a new window)"}
-							>
-								Christian Jöcker
-							</Link>
-						</Grid>
-						<Grid item xs={12}>
-							<Button
-								className={classes.linkButton}
-								data-testid='privacyPolicyLink'
-								onClick={() => setShowPrivacyPolicy(true)}
-								color='primary'
-							>
-								Privacy Policy
-							</Button>
-						</Grid>
-					</Typography>
-				</Grid>
-				<AlertsBanner />
-				<CookiesBanner />
-				<InfoDialog fullWidth text={PrivacyPolicy} show={showPrivacyPolicy} onClose={() => setShowPrivacyPolicy(false)} />
-			</div>
+								<Link
+									data-testid='cjoeckerLink'
+									href='https://www.cjoecker.de/'
+									onClick={() =>
+										ReactGA.event({
+											category: 'Redirect',
+											action: 'Redirect to cjoecker.de',
+										})
+									}
+									rel='noopener noreferrer'
+									underline='always'
+									target='_blank'
+									tabIndex={localStorage.getItem('cookieConsentAccepted') == null ? -1 : 0}
+									aria-label={"Christian Jöcker's(opens personal website in a new window)"}
+								>
+									Christian Jöcker
+								</Link>
+							</Grid>
+							<Grid item xs={12}>
+								<Button
+									className={classes.linkButton}
+									data-testid='privacyPolicyLink'
+									onClick={() => setShowPrivacyPolicy(true)}
+									color='primary'
+								>
+									Privacy Policy
+								</Button>
+							</Grid>
+						</Typography>
+					</Grid>
+					<AlertsBanner />
+					<CookiesBanner />
+					<InfoDialog fullWidth text={PrivacyPolicy} show={showPrivacyPolicy} onClose={() => setShowPrivacyPolicy(false)} />
+				</div>
+			</main>
 		</ThemeProvider>
 	);
 };

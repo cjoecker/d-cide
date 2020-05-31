@@ -8,6 +8,11 @@ context('Actions', () => {
 		cy.getTestElement(`Step4Button`).click();
 	});
 
+	it.only('Has no detectable accessibility violations on load', () => {
+		cy.injectAxe();
+		cy.checkA11y('', Cypress.env('A11Y_RULES'));
+	});
+
 	describe('Decision Options', () => {
 		it('shows and hides info', () => {
 			showInfoDialog('decisionOptions', 'Decision Options Ranking');
