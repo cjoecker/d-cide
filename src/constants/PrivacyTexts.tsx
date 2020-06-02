@@ -31,7 +31,7 @@ export const PrivacyPolicy = (
 			when You use the Service and tells You about Your privacy rights and how the law protects You.
 		</p>
 		<p>
-			We don't save the data of your decisions. We use Your Personal data to improve the Service. By using the Service, You
+			We don't save the data of your decisions. We use Your Personal Data to improve the Service. By using the Service, You
 			agree to the collection and use of information in accordance with this Privacy Policy.&nbsp;
 		</p>
 		<h2>Interpretation and Definitions</h2>
@@ -48,8 +48,8 @@ export const PrivacyPolicy = (
 				behalf of which such individual is accessing or using the Service, as applicable.
 			</li>
 			<li>
-				<strong>Company</strong> (referred to as either "the Company", "We", "Us" or "Our" in this Agreement) refers to
-				d-cide.
+				<strong>Company</strong> (referred to as either "the Company", "We", "Us" or "Our" in this Agreement) refers to the
+				d-cide developer(s).
 			</li>
 			<li>
 				<strong>Affiliate</strong> means an entity that controls, is controlled by or is under common control with a party,
@@ -160,6 +160,18 @@ export const PrivacyPolicy = (
 					functionality of the Website to see how our users react to them.
 				</p>
 			</li>
+			<li>
+				<p>
+					<strong>Application data</strong>
+				</p>
+				<p>Type: Local Storage</p>
+				<p>Administered by: Us</p>
+				<p>
+					Purpose: The data you give in in the application is saved encrypted in your browser. This allows the application to
+					show the data you gave in the last session. The information stays in your device and is not sent anywhere. We don't
+					have access to that information.
+				</p>
+			</li>
 		</ul>
 		<h2>Use of Your Personal Data</h2>
 		<p>The Company may use Personal Data for the following purposes:</p>
@@ -171,11 +183,6 @@ export const PrivacyPolicy = (
 				<strong>For the performance of a contract:</strong> the development, compliance and undertaking of the purchase
 				contract for the products, items or services You have purchased or of any other contract with Us through the
 				Service.
-			</li>
-			<li>
-				<strong>To provide You</strong> with news, special offers and general information about other goods, services and
-				events which we offer that are similar to those that you have already purchased or enquired about unless You have
-				opted not to receive such information.
 			</li>
 		</ul>
 		<p>We may share your personal information in the following situations:</p>
@@ -272,7 +279,32 @@ export const PrivacyPolicy = (
 				<p>
 					<strong>Google Analytics</strong>
 				</p>
-				<p>Google Analytics is a web traffic analysis tool.</p>
+				<p>
+					This website uses Google Analytics, a web analytics service provided by Google Inc. (hereinafter referred to as
+					Google). Google Analytics uses so-called "cookies", i.e. text files stored on your computer that enable your
+					website use to be analysed. Cookie-generated information about your use of this website is usually transmitted to
+					and stored on a Google server in the USA.
+				</p>
+				<p>
+					However, if IP anonymization is activated on this website, Google will store your IP address in a shortened form if
+					you are accessing this site from within the European Union or the European Economic Area. Only in exceptional cases
+					will the full IP address be transferred to a Google server in the USA and shortened there. Google will use this
+					information on behalf of the operator of this website to evaluate your use of the website, to compile reports on
+					website activity, and to provide other services regarding website activity and internet usage for the website
+					operator. The IP address transmitted by your browser as part of Google Analytics is not conflated with other Google
+					data.
+				</p>
+				<p>
+					You may refuse the use of cookies by selecting the appropriate settings on your browser. However, please be advised
+					that if you opt-out of using cookies, you may not be able to use all the features of this website. You can also
+					prevent the collection of data produced by cookies and associated with your use of the website including your IP
+					address, its transmission to, and its processing by Google, by downloading and installing the browser plugin at the
+					following link:&nbsp;&nbsp;
+					<u>
+						<a href='http://tools.google.com/dlpage/gaoptout?hl=de'>Browser Add On zur Deaktivierung von Google Analytics</a>
+					</u>
+					.
+				</p>
 			</li>
 		</ul>
 		<h2>Children's Privacy</h2>
