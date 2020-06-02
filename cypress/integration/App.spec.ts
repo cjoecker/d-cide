@@ -2,19 +2,6 @@
 /* eslint-disable no-undef*/
 
 context('Actions', () => {
-	it.only('Has no detectable accessibility violations on load', () => {
-		cy.visit('/');
-		cy.injectAxe();
-		cy.checkA11y('', Cypress.env('A11Y_RULES'));
-
-		cy.viewport('iphone-6').visit('/');
-		cy.injectAxe();
-		cy.checkA11y('', Cypress.env('A11Y_RULES'));
-
-		cy.getTestElement('privacyPolicyLink').click();
-		cy.checkA11y('', Cypress.env('A11Y_RULES'));
-	});
-
 	it('shows cookie banner on desktop', () => {
 		cy
 			.visit('/')

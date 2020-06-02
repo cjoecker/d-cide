@@ -10,11 +10,6 @@ context('Actions', () => {
 	const firstDecisionOption = 'House 1';
 	const firstSelectionCriteria = 'Size';
 
-	it.only('Has no detectable accessibility violations on load', () => {
-		cy.injectAxe();
-		cy.checkA11y('', Cypress.env('A11Y_RULES'));
-	});
-
 	describe('Decision Options', () => {
 		const listName = 'decisionOptionsList';
 

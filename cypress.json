@@ -5,7 +5,7 @@
 		"A11Y_RULES": {
 			"runOnly": {
 				"type": "tag",
-				"values": ["wcag2a"]
+				"values": ["wcag21aa"]
 			}
 		}
 	}

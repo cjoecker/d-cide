@@ -12,11 +12,6 @@ context('Actions', () => {
 	// Code is in commit 0955a32C
 	// https://github.com/cypress-io/cypress/issues/1570
 
-	it.only('Has no detectable accessibility violations on load', () => {
-		cy.injectAxe();
-		cy.checkA11y('', Cypress.env('A11Y_RULES'));
-	});
-
 	it('shows and hides info', () => {
 		cy
 			.getTestElement(`WeightCriteriaInfoButton`)

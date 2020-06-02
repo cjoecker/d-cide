@@ -76,7 +76,6 @@ const OptionsAndCriteria: React.FC<Props> = (props: Props) => {
 						Selection Criteria
 						<ComponentsTooltip title='Show help'>
 							<IconButton
-								aria-label='Show selection criteria help'
 								data-testid={`${OptionsAndCriteriaKeys.selectionCriteria}InfoButton`}
 								className={classes.infoButton}
 								onClick={() => setShowCriteriaInfo(true)}
