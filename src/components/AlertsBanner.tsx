@@ -5,6 +5,7 @@ import {shallowEqual, useDispatch, useSelector} from 'react-redux';
 import {AlertInitialState, AlertType, AlertTypes} from '../constants/Alerts';
 import {RootState} from '../services/redux/rootReducer';
 import AppSlice from '../services/redux/actionsAndSlicers/AppSlice';
+import theme from '../muiTheme';
 
 const AlertsBanner: React.FC = () => {
 	const {alerts} = useSelector((state: RootState) => state.App, shallowEqual);
@@ -73,6 +74,7 @@ const AlertsBanner: React.FC = () => {
 		<div>
 			<Snackbar open={open} autoHideDuration={autoHideTime !== 0 ? autoHideTime : undefined} onClose={handleClose}>
 				<Alert
+					style={{marginBottom: theme.spacing(1)}}
 					data-testid={`${alert.type}Alert`}
 					onClose={alert.allowClose ? handleClose : undefined}
 					variant='filled'
