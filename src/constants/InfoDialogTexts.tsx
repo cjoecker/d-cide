@@ -28,8 +28,8 @@ export const DecisionOptionInfo = (
 			In case you have a binary decision (yes/no), you should write two decision options. <br />
 			For example:
 			<ul>
-				<li>To buy a new car</li>
-				<li>Not to buy a new car</li>
+				<li>Buy a new car</li>
+				<li>Don't buy a new car</li>
 			</ul>
 		</p>
 	</div>
