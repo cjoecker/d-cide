@@ -9,8 +9,6 @@ import * as serviceWorker from './serviceWorker';
 const App = require('./App').default;
 
 const render = () => {
-	console.log(`${process.env.REACT_APP_NAME} ${process.env.REACT_APP_VERSION}`);
-
 	ReactDOM.render(
 		<Provider store={store}>
 			<App />

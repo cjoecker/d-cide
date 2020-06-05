@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import './index.css';
 import AppBar from '@material-ui/core/AppBar';
 import {makeStyles, ThemeProvider} from '@material-ui/core/styles';
@@ -6,8 +6,9 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import ReactGA, {ga} from 'react-ga';
-import {Button, Link, useMediaQuery} from '@material-ui/core';
+import {Button, IconButton, Link, useMediaQuery} from '@material-ui/core';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import {Brightness3, Flare} from '@material-ui/icons';
 import Decision from './scenes/Decision/Decision';
 import AlertsBanner from './components/AlertsBanner';
 import {ReactComponent as Logo} from './images/d-cide_Logo.svg';
@@ -15,6 +16,7 @@ import CookiesBanner from './components/CookiesBanner';
 import InfoDialog from './components/InfoDialog';
 import {PrivacyPolicy} from './constants/PrivacyTexts';
 import theme from './muiTheme';
+import ComponentsTooltip from './components/ComponentsTooltip';
 
 const useStyles = makeStyles(styleTheme => ({
 	divMain: {
@@ -43,6 +45,10 @@ const useStyles = makeStyles(styleTheme => ({
 		height: '50%',
 	},
 
+	darkModeIcon: {
+		marginRight: styleTheme.spacing(-2),
+	},
+
 	divRouter: {
 		marginTop: styleTheme.spacing(6),
 	},
@@ -64,27 +70,63 @@ const App: React.FC = () => {
 	const classes = useStyles();
 
 	const [showPrivacyPolicy, setShowPrivacyPolicy] = useState(false);
+	const [darkModeActive, setDarkModeActive] = useState(false);
 
-	const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
+	const clientOnDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
 
-	if (process.env.REACT_APP_googleAnalyticsKey != null) ReactGA.initialize(process.env.REACT_APP_googleAnalyticsKey);
+	useEffect(() => {
+		defineDarkMode();
 
-	ReactGA.pageview(window.location.pathname + window.location.search);
-	ga('set', 'appVersion', process.env.REACT_APP_VERSION);
+		logAppVersion();
 
-	if (window.matchMedia('(display-mode: standalone)').matches) {
-		ReactGA.event({
-			category: 'App Mode',
-			action: 'Progressive Web App',
-		});
-	} else {
-		ReactGA.event({
-			category: 'App Mode',
-			action: 'Web App',
-		});
-	}
+		initializeGoogleAnalytics();
+	}, []);
 
-	const theme3 = React.useMemo(() => theme(prefersDarkMode), [prefersDarkMode]);
+	useEffect(() => {
+		if (darkModeActive) localStorage.setItem('darkModeActive', 'true');
+		else localStorage.setItem('darkModeActive', 'false');
+	}, [darkModeActive]);
+
+	const defineDarkMode = () => {
+		if (localStorage.getItem('darkModeActive') == null) {
+			if (clientOnDarkMode) {
+				setDarkModeActive(true);
+				localStorage.setItem('darkModeActive', 'true');
+			} else {
+				setDarkModeActive(false);
+				localStorage.setItem('darkModeActive', 'false');
+			}
+		} else if (localStorage.getItem('darkModeActive') === 'true') setDarkModeActive(true);
+	};
+
+	const initializeGoogleAnalytics = () => {
+		if (process.env.REACT_APP_googleAnalyticsKey != null) ReactGA.initialize(process.env.REACT_APP_googleAnalyticsKey);
+
+		if (window.matchMedia('(display-mode: standalone)').matches) {
+			ReactGA.event({
+				category: 'App Mode',
+				action: 'Progressive Web App',
+			});
+		} else {
+			ReactGA.event({
+				category: 'App Mode',
+				action: 'Web App',
+			});
+		}
+	};
+
+	const logAppVersion = () => {
+		ReactGA.pageview(window.location.pathname + window.location.search);
+		ga('set', 'appVersion', process.env.REACT_APP_VERSION);
+
+		console.log(`${process.env.REACT_APP_NAME} ${process.env.REACT_APP_VERSION}`);
+	};
+
+	const onClickDarkMode = () => {
+		setDarkModeActive(darkMode => !darkMode);
+	};
+
+	const theme3 = React.useMemo(() => theme(darkModeActive), [darkModeActive]);
 
 	return (
 		<ThemeProvider theme={theme3}>
@@ -94,9 +136,19 @@ const App: React.FC = () => {
 					<AppBar position='static' color='primary' className={classes.appBar}>
 						<Toolbar>
 							<Logo className={classes.logoBox} fill={theme3.palette.secondary.contrastText} />
+							<div style={{flexGrow: 1}} />
+							<ComponentsTooltip>
+								<IconButton
+									aria-label={darkModeActive ? 'Set light theme' : 'Set dark theme'}
+									color='inherit'
+									className={classes.darkModeIcon}
+									onClick={onClickDarkMode}
+								>
+									{darkModeActive ? <Flare /> : <Brightness3 />}
+								</IconButton>
+							</ComponentsTooltip>
 						</Toolbar>
 					</AppBar>
-
 					<div className={classes.divRouter}>
 						<Decision />
 					</div>

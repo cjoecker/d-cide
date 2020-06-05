@@ -85,6 +85,9 @@ function theme(darkMode = false): Theme {
 
 		palette: {
 			type: darkMode ? 'dark' : 'light',
+			background: {
+				default: darkMode ? '#303030' : '#e6e6e6',
+			},
 			primary: {
 				main: darkMode ? '#8AC6F4' : '#0f61a0',
 				contrastText: darkMode ? '#303030' : '#fafafa',
