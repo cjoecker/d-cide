@@ -8,7 +8,7 @@ import IconButton from '@material-ui/core/IconButton';
 import {shallowEqual, useDispatch, useSelector} from 'react-redux';
 import Fade from '@material-ui/core/Fade';
 import {makeStyles} from '@material-ui/core/styles';
-import theme from '../../../muiTheme';
+
 import * as LongStrings from '../../../constants/InfoDialogTexts';
 import InfoDialog from '../../../components/InfoDialog';
 import {RootState} from '../../../services/redux/rootReducer';
@@ -16,40 +16,40 @@ import WeightedCriteriaSlice, {WeightedCriteria} from '../../../services/redux/a
 import ComponentsTooltip from '../../../components/ComponentsTooltip';
 import shuffleArray from '../../../services/shuffleArray';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
 	divMain: {
-		paddingTop: theme().spacing(2.5),
-		paddingBottom: theme().spacing(5.5),
+		paddingTop: theme.spacing(2.5),
+		paddingBottom: theme.spacing(5.5),
 		textAlign: 'center',
 		alignContent: 'center',
 	},
 
 	title: {
-		paddingBottom: theme().spacing(1.5),
+		paddingBottom: theme.spacing(1.5),
 	},
 
 	infoButton: {
-		bottom: theme().spacing(0.25),
-		left: theme().spacing(1.2),
+		bottom: theme.spacing(0.25),
+		left: theme.spacing(1.2),
 	},
 
 	paper: {
-		padding: theme().spacing(1),
-		marginBottom: theme().spacing(2),
-		marginRight: theme().spacing(1),
-		marginLeft: theme().spacing(1),
+		padding: theme.spacing(1),
+		marginBottom: theme.spacing(2),
+		marginRight: theme.spacing(1),
+		marginLeft: theme.spacing(1),
 		width: '100%',
 	},
 
 	gridItemCriteria: {
-		minWidth: theme().spacing(40),
-		maxWidth: theme().spacing(50),
+		minWidth: theme.spacing(40),
+		maxWidth: theme.spacing(50),
 		display: 'flex',
 		alignItems: 'center',
 	},
 
 	gridItemCriteriaText: {
-		marginTop: theme().spacing(0.5),
+		marginTop: theme.spacing(0.5),
 	},
 
 	unselectableText: {
@@ -60,10 +60,7 @@ const useStyles = makeStyles({
 		height: 8,
 		width: 1,
 		marginTop: -3,
-	},
-
-	sliderMarksDark: {
-		backgroundColor: 'red',
+		backgroundColor: theme.palette.primary.main,
 	},
 
 	sliderTrack: {
@@ -71,20 +68,20 @@ const useStyles = makeStyles({
 	},
 
 	gridItemSlider: {
-		marginTop: theme().spacing(-2.5),
-		marginBottom: theme().spacing(-1),
-		marginLeft: theme().spacing(1),
-		marginRight: theme().spacing(1),
+		marginTop: theme.spacing(-2.5),
+		marginBottom: theme.spacing(-1),
+		marginLeft: theme.spacing(1),
+		marginRight: theme.spacing(1),
 	},
 
 	gridItemSliderInfo: {
-		marginTop: theme().spacing(-2.5),
+		marginTop: theme.spacing(-2.5),
 	},
 
 	emptySpace: {
-		height: theme().spacing(4),
+		height: theme.spacing(4),
 	},
-});
+}));
 
 type Props = {
 	hidden: boolean;
@@ -252,8 +249,8 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
 												classes={{
 													track: classes.sliderTrack,
 													rail: classes.sliderTrack,
-													mark: `${classes.sliderMarks} ${classes.sliderMarksDark}`,
-													markActive: `${classes.sliderMarks} ${classes.sliderMarksDark}`,
+													mark: classes.sliderMarks,
+													markActive: classes.sliderMarks,
 												}}
 												value={criteria.weight}
 												min={-100}
