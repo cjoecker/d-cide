@@ -6,9 +6,9 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import ReactGA, {ga} from 'react-ga';
-import {Button, IconButton, Link, useMediaQuery} from '@material-ui/core';
+import {Button, IconButton, Link} from '@material-ui/core';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import {Brightness3, Flare} from '@material-ui/icons';
+import {Brightness3, Brightness5Rounded} from '@material-ui/icons';
 import Decision from './scenes/Decision/Decision';
 import AlertsBanner from './components/AlertsBanner';
 import {ReactComponent as Logo} from './images/d-cide_Logo.svg';
@@ -72,8 +72,6 @@ const App: React.FC = () => {
 	const [showPrivacyPolicy, setShowPrivacyPolicy] = useState(false);
 	const [darkModeActive, setDarkModeActive] = useState(false);
 
-	const clientOnDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
-
 	useEffect(() => {
 		defineDarkMode();
 
@@ -89,7 +87,7 @@ const App: React.FC = () => {
 
 	const defineDarkMode = () => {
 		if (localStorage.getItem('darkModeActive') == null) {
-			if (clientOnDarkMode) {
+			if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
 				setDarkModeActive(true);
 				localStorage.setItem('darkModeActive', 'true');
 			} else {
@@ -123,6 +121,11 @@ const App: React.FC = () => {
 	};
 
 	const onClickDarkMode = () => {
+		ReactGA.event({
+			category: 'Change dark mode',
+			action: (!darkModeActive).toString(),
+		});
+
 		setDarkModeActive(darkMode => !darkMode);
 	};
 
@@ -144,7 +147,7 @@ const App: React.FC = () => {
 									className={classes.darkModeIcon}
 									onClick={onClickDarkMode}
 								>
-									{darkModeActive ? <Flare /> : <Brightness3 />}
+									{darkModeActive ? <Brightness5Rounded /> : <Brightness3 />}
 								</IconButton>
 							</ComponentsTooltip>
 						</Toolbar>
