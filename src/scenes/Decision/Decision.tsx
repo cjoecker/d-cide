@@ -5,13 +5,13 @@ import StepButton from '@material-ui/core/StepButton';
 import Fab from '@material-ui/core/Fab';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import {makeStyles} from '@material-ui/core/styles';
+import {makeStyles, useTheme} from '@material-ui/core/styles';
 import SwipeableViews from 'react-swipeable-views';
 import {StepLabel} from '@material-ui/core';
 import {shallowEqual, useSelector} from 'react-redux';
 import ReactGA from 'react-ga';
 import {isEdge} from 'react-device-detect';
-import theme from '../../muiTheme';
+
 import OptionsAndCriteria from './Step1OptionsAndCriteria/OptionsAndCriteria';
 import WeightCriteria from './Step2WeightCriteria/WeightCriteria';
 import RateOptions from './Step3RateOptions/RateOptions';
@@ -20,7 +20,7 @@ import {RootState} from '../../services/redux/rootReducer';
 import {NOT_ENOUGH_CRITERIA, NOT_ENOUGH_OPTIONS} from '../../constants/Alerts';
 import ComponentsTooltip from '../../components/ComponentsTooltip';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
 	divMain: {
 		flexGrow: 1,
 		width: '100%',
@@ -31,21 +31,21 @@ const useStyles = makeStyles({
 		backgroundColor: 'transparent',
 	},
 	stepperLabel: {
-		marginBottom: theme().spacing(-1.5),
+		marginBottom: theme.spacing(-1.5),
 	},
 
 	buttonNext: {
 		position: 'fixed',
-		margin: theme().spacing(0, 2, 2, 0),
+		margin: theme.spacing(0, 2, 2, 0),
 		zIndex: 1,
 	},
 
 	buttonBack: {
 		position: 'fixed',
-		margin: theme().spacing(0, 0, 2, 2),
+		margin: theme.spacing(0, 0, 2, 2),
 		zIndex: 1,
 	},
-});
+}));
 
 type stepsType = {
 	number: number;
@@ -88,6 +88,7 @@ const Decision: React.FC = () => {
 	const {alerts} = useSelector((state: RootState) => state.App, shallowEqual);
 
 	const classes = useStyles();
+	const theme = useTheme();
 
 	useEffect(() => {
 		return () => {
@@ -196,7 +197,7 @@ const Decision: React.FC = () => {
 			) : null}
 			<SwipeableViews
 				disabled
-				axis={theme().direction === 'rtl' ? 'x-reverse' : 'x'}
+				axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
 				index={activeStepNum - 1}
 				onTransitionEnd={() => {
 					setLoadedStepNum(activeStepNum);

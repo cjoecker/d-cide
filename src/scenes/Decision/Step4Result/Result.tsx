@@ -3,7 +3,7 @@ import Grid from '@material-ui/core/Grid';
 import {makeStyles} from '@material-ui/core/styles';
 import {shallowEqual, useDispatch, useSelector} from 'react-redux';
 import * as LongStrings from '../../../constants/InfoDialogTexts';
-import theme from '../../../muiTheme';
+
 import OptionsAndCriteriaSlice, {
 	OptionsAndCriteriaKeys,
 } from '../../../services/redux/actionsAndSlicers/OptionsAndCriteriaSlice';
@@ -11,19 +11,19 @@ import ResultsChart from './components/ResultsChart';
 import {getScoredDecisionOptions, getScoredSelectionCriteria} from '../../../services/scoresCalculator';
 import {RootState} from '../../../services/redux/rootReducer';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
 	divMain: {
-		paddingTop: theme().spacing(2.5),
-		paddingBottom: theme().spacing(5.5),
+		paddingTop: theme.spacing(2.5),
+		paddingBottom: theme.spacing(5.5),
 		textAlign: 'center',
 	},
 
 	gridItem: {
-		maxWidth: theme().spacing(75),
-		minWidth: theme().spacing(38),
-		margin: theme().spacing(2),
+		maxWidth: theme.spacing(75),
+		minWidth: theme.spacing(38),
+		margin: theme.spacing(2),
 	},
-});
+}));
 
 type Props = {
 	hidden: boolean;

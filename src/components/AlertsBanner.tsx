@@ -2,10 +2,10 @@ import React, {useEffect, useState} from 'react';
 import Snackbar from '@material-ui/core/Snackbar';
 import Alert from '@material-ui/lab/Alert';
 import {shallowEqual, useDispatch, useSelector} from 'react-redux';
+import {useTheme} from '@material-ui/core';
 import {AlertInitialState, AlertType, AlertTypes} from '../constants/Alerts';
 import {RootState} from '../services/redux/rootReducer';
 import AppSlice from '../services/redux/actionsAndSlicers/AppSlice';
-import theme from '../muiTheme';
 
 const AlertsBanner: React.FC = () => {
 	const {alerts} = useSelector((state: RootState) => state.App, shallowEqual);
@@ -15,6 +15,7 @@ const AlertsBanner: React.FC = () => {
 	const [alert, setAlert] = useState(AlertInitialState);
 
 	const dispatch = useDispatch();
+	const theme = useTheme();
 
 	useEffect(() => {
 		if (alerts[0] != null && alerts[0].text !== '') {
@@ -74,7 +75,7 @@ const AlertsBanner: React.FC = () => {
 		<div>
 			<Snackbar open={open} autoHideDuration={autoHideTime !== 0 ? autoHideTime : undefined} onClose={handleClose}>
 				<Alert
-					style={{marginBottom: theme().spacing(1)}}
+					style={{marginBottom: theme.spacing(1)}}
 					data-testid={`${alert.type}Alert`}
 					onClose={alert.allowClose ? handleClose : undefined}
 					variant='filled'

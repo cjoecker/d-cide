@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {makeStyles} from '@material-ui/core/styles';
+import {makeStyles, useTheme} from '@material-ui/core/styles';
 import {Bar, BarChart, CartesianGrid, Cell, Rectangle, ResponsiveContainer, XAxis, YAxis} from 'recharts';
 import {shallowEqual, useSelector} from 'react-redux';
 import Paper from '@material-ui/core/Paper';
@@ -7,7 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import InfoIcon from '@material-ui/icons/Info';
 import Fade from '@material-ui/core/Fade';
-import theme from '../../../../muiTheme';
+
 import {RootState} from '../../../../services/redux/rootReducer';
 import {
 	OptionAndCriteria,
@@ -16,27 +16,27 @@ import {
 import InfoDialog from '../../../../components/InfoDialog';
 import ComponentsTooltip from '../../../../components/ComponentsTooltip';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
 	divMain: {
-		paddingTop: theme().spacing(0.8),
-		paddingLeft: theme().spacing(0.8),
-		paddingRight: theme().spacing(0.8),
+		paddingTop: theme.spacing(0.8),
+		paddingLeft: theme.spacing(0.8),
+		paddingRight: theme.spacing(0.8),
 	},
 	title: {
-		padding: theme().spacing(2, 3, 0, 3),
+		padding: theme.spacing(2, 3, 0, 3),
 	},
 	chartContainer: {
-		marginLeft: theme().spacing(2),
+		marginLeft: theme.spacing(2),
 	},
 	infoButton: {
-		bottom: theme().spacing(0.25),
-		left: theme().spacing(1.2),
+		bottom: theme.spacing(0.25),
+		left: theme.spacing(1.2),
 	},
 
 	bars: {
-		width: theme().spacing(19),
+		width: theme.spacing(19),
 	},
-});
+}));
 
 type Props = {
 	itemsKey: OptionsAndCriteriaKeys;
@@ -56,6 +56,7 @@ const ResultsChart: React.FC<Props> = (props: Props) => {
 	const items = useSelector((state: RootState) => state.OptionsAndCriteria[itemsKey], shallowEqual);
 
 	const classes = useStyles();
+	const theme = useTheme();
 
 	useEffect(() => {
 		if (!hidden) {
@@ -112,17 +113,17 @@ const ResultsChart: React.FC<Props> = (props: Props) => {
 						<Typography component='span' variant='body1'>
 							<ResponsiveContainer
 								id={`${itemsKey}ResponsiveContainer`}
-								height={localItems.length * theme().spacing(9) + theme().spacing(5)}
+								height={localItems.length * theme.spacing(9) + theme.spacing(5)}
 								width='98%'
 								className={classes.chartContainer}
 							>
 								<BarChart
 									data={localItems}
 									margin={{
-										top: theme().spacing(0),
-										right: theme().spacing(5),
-										left: theme().spacing(5),
-										bottom: theme().spacing(1),
+										top: theme.spacing(0),
+										right: theme.spacing(5),
+										left: theme.spacing(5),
+										bottom: theme.spacing(1),
 									}}
 									layout='vertical'
 									barCategoryGap='20%'
@@ -140,7 +141,7 @@ const ResultsChart: React.FC<Props> = (props: Props) => {
 										stroke='#a0a0a0'
 										tick={{fontSize: '0.8rem'}}
 									/>
-									<YAxis type='category' dataKey='name' width={theme().spacing(10)} />
+									<YAxis type='category' dataKey='name' width={theme.spacing(10)} />
 									<Bar
 										dataKey='score'
 										animationDuration={1000}

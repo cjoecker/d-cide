@@ -6,33 +6,33 @@ import Typography from '@material-ui/core/Typography';
 import {makeStyles} from '@material-ui/core/styles';
 import InfoDialog from '../../../components/InfoDialog';
 import EditableList from './components/EditableList';
-import theme from '../../../muiTheme';
+
 import {DecisionOptionInfo, SelectionCriteriaInfo} from '../../../constants/InfoDialogTexts';
 import {OptionsAndCriteriaKeys} from '../../../services/redux/actionsAndSlicers/OptionsAndCriteriaSlice';
 import {NOT_ENOUGH_CRITERIA, NOT_ENOUGH_OPTIONS} from '../../../constants/Alerts';
 import ComponentsTooltip from '../../../components/ComponentsTooltip';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
 	divMain: {
-		paddingTop: theme().spacing(2.5),
-		paddingBottom: theme().spacing(5.5),
+		paddingTop: theme.spacing(2.5),
+		paddingBottom: theme.spacing(5.5),
 		textAlign: 'center',
 	},
 
 	infoButton: {
-		bottom: theme().spacing(0.25),
-		left: theme().spacing(1.2),
+		bottom: theme.spacing(0.25),
+		left: theme.spacing(1.2),
 	},
 
 	gridItem: {
-		maxWidth: theme().spacing(62),
-		margin: theme().spacing(0, 3, 4, 3),
+		maxWidth: theme.spacing(62),
+		margin: theme.spacing(0, 3, 4, 3),
 	},
 
 	emptySpace: {
-		height: theme().spacing(4),
+		height: theme.spacing(4),
 	},
-});
+}));
 
 type Props = {
 	hidden: boolean;

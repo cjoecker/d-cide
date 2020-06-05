@@ -6,27 +6,27 @@ import CloseIcon from '@material-ui/icons/Close';
 import Typography from '@material-ui/core/Typography';
 import DialogContent from '@material-ui/core/DialogContent/DialogContent';
 import ReactGA from 'react-ga';
-import theme from '../muiTheme';
+
 import ComponentsTooltip from './ComponentsTooltip';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
 	dialog: {
 		margin: 0,
 	},
 
 	dialogContent: {
-		marginTop: theme().spacing(-2),
+		marginTop: theme.spacing(-2),
 	},
 	closeButton: {
 		position: 'absolute',
-		right: theme().spacing(2),
-		top: theme().spacing(1),
-		backgroundColor: 'white',
+		right: theme.spacing(2),
+		top: theme.spacing(1),
+		backgroundColor: theme.palette.background.paper,
 	},
 	text: {
 		textAlign: 'justify',
 	},
-});
+}));
 
 type Props = {
 	text: JSX.Element;

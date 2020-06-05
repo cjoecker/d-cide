@@ -12,12 +12,11 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import {PrivacyText} from '../constants/PrivacyTexts';
-import theme from '../muiTheme';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
 	div: {
 		position: 'fixed',
-		margin: theme().spacing(0, 10, 5, 10),
+		margin: theme.spacing(0, 10, 5, 10),
 		zIndex: 2000,
 	},
 
@@ -30,13 +29,13 @@ const useStyles = makeStyles({
 	},
 
 	typographyGridItem: {
-		margin: theme().spacing(0, 3, 0, 3),
+		margin: theme.spacing(0, 3, 0, 3),
 	},
 
 	button: {
-		margin: theme().spacing(0, 3, 2, 0),
+		margin: theme.spacing(0, 3, 2, 0),
 	},
-});
+}));
 
 const CookiesBanner: React.FC = () => {
 	const [open, setOpen] = useState(false);

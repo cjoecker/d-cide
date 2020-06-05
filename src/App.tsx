@@ -10,13 +10,13 @@ import {Button, Link, useMediaQuery} from '@material-ui/core';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Decision from './scenes/Decision/Decision';
 import AlertsBanner from './components/AlertsBanner';
-import theme from './muiTheme';
 import {ReactComponent as Logo} from './images/d-cide_Logo.svg';
 import CookiesBanner from './components/CookiesBanner';
 import InfoDialog from './components/InfoDialog';
 import {PrivacyPolicy} from './constants/PrivacyTexts';
+import theme from './muiTheme';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(styleTheme => ({
 	divMain: {
 		flexGrow: 1,
 		width: '100%',
@@ -29,8 +29,8 @@ const useStyles = makeStyles({
 	appBar: {
 		position: 'fixed',
 		Top: 'env(safe-area-inset-top)',
-		marginBottom: theme().spacing(2),
-		height: theme().spacing(6),
+		marginBottom: styleTheme.spacing(2),
+		height: styleTheme.spacing(6),
 		justifyContent: 'center',
 		justifyItems: 'center',
 		paddingLeft: 'env(safe-area-inset-left)',
@@ -38,27 +38,27 @@ const useStyles = makeStyles({
 	},
 
 	logoBox: {
-		maxWidth: theme().spacing(17),
-		marginLeft: theme().spacing(-1),
+		maxWidth: styleTheme.spacing(17),
+		marginLeft: styleTheme.spacing(-1),
 		height: '50%',
 	},
 
 	divRouter: {
-		marginTop: theme().spacing(6),
+		marginTop: styleTheme.spacing(6),
 	},
 
 	footer: {
 		marginTop: 'auto',
-		marginBottom: theme().spacing(0.5),
+		marginBottom: styleTheme.spacing(0.5),
 		paddingBottom: 'env(safe-area-inset-bottom)',
 	},
 	linkButton: {
 		textTransform: 'none',
 		textDecoration: 'underline',
-		marginTop: theme().spacing(-0.5),
+		marginTop: styleTheme.spacing(-0.5),
 		fontWeight: 'normal',
 	},
-});
+}));
 
 const App: React.FC = () => {
 	const classes = useStyles();
