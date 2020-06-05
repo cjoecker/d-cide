@@ -146,6 +146,7 @@ const App: React.FC = () => {
 									color='inherit'
 									className={classes.darkModeIcon}
 									onClick={onClickDarkMode}
+									data-testid='darkModeButton'
 								>
 									{darkModeActive ? <Brightness5Rounded /> : <Brightness4Rounded />}
 								</IconButton>

@@ -3,8 +3,8 @@
 
 context('Actions', () => {
 	beforeEach(() => {
-		cy.visit('/');
 		window.localStorage.setItem('cookieConsentAccepted', 'true');
+		cy.visit('/');
 	});
 
 	it('changes step with arrow buttons', () => {

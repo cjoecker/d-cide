@@ -3,8 +3,8 @@
 
 context('Actions', () => {
 	beforeEach(() => {
-		cy.visit('/');
 		window.localStorage.setItem('cookieConsentAccepted', 'true');
+		cy.visit('/');
 	});
 
 	const firstDecisionOption = 'House 1';

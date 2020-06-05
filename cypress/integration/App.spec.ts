@@ -85,4 +85,29 @@ context('Actions', () => {
 				cy.getTestElement('itemInput').first().should('have.value', changedItemText);
 			});
 	});
+
+	it('toggles dark mode', () => {
+		window.localStorage.setItem('darkModeActive', 'true');
+		cy
+			.visit('/')
+			.get('[data-testid=cookiesConsent] > .MuiPaper-root')
+			.should('have.css', 'background-color', 'rgb(66, 66, 66)')
+
+			.getTestElement('darkModeButton')
+			.click()
+
+			.get('[data-testid=cookiesConsent] > .MuiPaper-root')
+			.should('have.css', 'background-color', 'rgb(255, 255, 255)')
+
+			.reload()
+
+			.get('[data-testid=cookiesConsent] > .MuiPaper-root')
+			.should('have.css', 'background-color', 'rgb(255, 255, 255)')
+
+			.getTestElement('darkModeButton')
+			.click()
+
+			.get('[data-testid=cookiesConsent] > .MuiPaper-root')
+			.should('have.css', 'background-color', 'rgb(66, 66, 66)');
+	});
 });
