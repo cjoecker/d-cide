@@ -11,7 +11,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import Decision from './scenes/Decision/Decision';
 import AlertsBanner from './components/AlertsBanner';
 import theme from './muiTheme';
-import imgDcideLogo from './images/d-cide_Logo.svg';
+import {ReactComponent as Logo} from './images/d-cide_Logo.svg';
 import CookiesBanner from './components/CookiesBanner';
 import InfoDialog from './components/InfoDialog';
 import {PrivacyPolicy} from './constants/PrivacyTexts';
@@ -37,9 +37,11 @@ const useStyles = makeStyles({
 		paddingRight: 'env(safe-area-inset-right)',
 	},
 
-	imgDcideLogo: {
-		maxWidth: theme().spacing(17),
+	logoBox: {
+		width: theme().spacing(20),
 		marginLeft: theme().spacing(-1),
+		height: '100%',
+		backgroundColor: 'red',
 	},
 
 	divRouter: {
@@ -92,7 +94,7 @@ const App: React.FC = () => {
 				<div className={classes.divMain}>
 					<AppBar position='static' color='primary' className={classes.appBar}>
 						<Toolbar>
-							<img className={classes.imgDcideLogo} src={imgDcideLogo} alt='d-cide logo' />
+							<Logo className={classes.logoBox} fill={theme3.palette.secondary.contrastText} />
 						</Toolbar>
 					</AppBar>
 
