@@ -25,27 +25,27 @@ import ComponentsTooltip from '../../../../components/ComponentsTooltip';
 
 const useStyles = makeStyles({
 	divMain: {
-		minWidth: theme.spacing(37),
+		minWidth: theme().spacing(37),
 	},
 
 	paperTitle: {
-		margin: theme.spacing(2, 1, 2, 1),
+		margin: theme().spacing(2, 1, 2, 1),
 	},
 
 	paperItems: {
-		margin: theme.spacing(0.5, 1, 0, 1),
+		margin: theme().spacing(0.5, 1, 0, 1),
 	},
 
 	editButton: {
-		marginRight: theme.spacing(-1),
+		marginRight: theme().spacing(-1),
 	},
 
 	deleteButton: {
-		marginRight: theme.spacing(-1.5),
+		marginRight: theme().spacing(-1.5),
 	},
 
 	inputBase: {
-		margin: theme.spacing(0.5, 1, 1, 2),
+		margin: theme().spacing(0.5, 1, 1, 2),
 		width: '100%',
 		wordWrap: 'break-word',
 	},
@@ -214,7 +214,7 @@ const EditableList: React.FC<Props> = (props: Props) => {
 									/>
 								</ComponentsTooltip>
 							</Box>
-							<Box minWidth={theme.spacing(8)}>
+							<Box minWidth={theme().spacing(8)}>
 								<ComponentsTooltip title='Add entry'>
 									<IconButton
 										data-testid='addButton'
@@ -266,7 +266,7 @@ const EditableList: React.FC<Props> = (props: Props) => {
 											/>
 										</ComponentsTooltip>
 									</Box>
-									<Box minWidth={theme.spacing(8)}>
+									<Box minWidth={theme().spacing(8)}>
 										<ComponentsTooltip title='Delete entry'>
 											<IconButton
 												data-testid={`deleteButton${index}`}

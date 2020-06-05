@@ -6,7 +6,8 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import ReactGA, {ga} from 'react-ga';
-import {Button, Link} from '@material-ui/core';
+import {Button, Link, useMediaQuery} from '@material-ui/core';
+import CssBaseline from '@material-ui/core/CssBaseline';
 import Decision from './scenes/Decision/Decision';
 import AlertsBanner from './components/AlertsBanner';
 import theme from './muiTheme';
@@ -28,8 +29,8 @@ const useStyles = makeStyles({
 	appBar: {
 		position: 'fixed',
 		Top: 'env(safe-area-inset-top)',
-		marginBottom: theme.spacing(2),
-		height: theme.spacing(6),
+		marginBottom: theme().spacing(2),
+		height: theme().spacing(6),
 		justifyContent: 'center',
 		justifyItems: 'center',
 		paddingLeft: 'env(safe-area-inset-left)',
@@ -37,23 +38,23 @@ const useStyles = makeStyles({
 	},
 
 	imgDcideLogo: {
-		maxWidth: theme.spacing(17),
-		marginLeft: theme.spacing(-1),
+		maxWidth: theme().spacing(17),
+		marginLeft: theme().spacing(-1),
 	},
 
 	divRouter: {
-		marginTop: theme.spacing(6),
+		marginTop: theme().spacing(6),
 	},
 
 	footer: {
 		marginTop: 'auto',
-		marginBottom: theme.spacing(0.5),
+		marginBottom: theme().spacing(0.5),
 		paddingBottom: 'env(safe-area-inset-bottom)',
 	},
 	linkButton: {
 		textTransform: 'none',
 		textDecoration: 'underline',
-		marginTop: theme.spacing(-0.5),
+		marginTop: theme().spacing(-0.5),
 		fontWeight: 'normal',
 	},
 });
@@ -62,6 +63,8 @@ const App: React.FC = () => {
 	const classes = useStyles();
 
 	const [showPrivacyPolicy, setShowPrivacyPolicy] = useState(false);
+
+	const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
 
 	if (process.env.REACT_APP_googleAnalyticsKey != null) ReactGA.initialize(process.env.REACT_APP_googleAnalyticsKey);
 
@@ -80,8 +83,11 @@ const App: React.FC = () => {
 		});
 	}
 
+	const theme3 = React.useMemo(() => theme(prefersDarkMode), [prefersDarkMode]);
+
 	return (
-		<ThemeProvider theme={theme}>
+		<ThemeProvider theme={theme3}>
+			<CssBaseline />
 			<main role='main'>
 				<div className={classes.divMain}>
 					<AppBar position='static' color='primary' className={classes.appBar}>

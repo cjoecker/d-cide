@@ -14,23 +14,23 @@ import ComponentsTooltip from '../../../components/ComponentsTooltip';
 
 const useStyles = makeStyles({
 	divMain: {
-		paddingTop: theme.spacing(2.5),
-		paddingBottom: theme.spacing(5.5),
+		paddingTop: theme().spacing(2.5),
+		paddingBottom: theme().spacing(5.5),
 		textAlign: 'center',
 	},
 
 	infoButton: {
-		bottom: theme.spacing(0.25),
-		left: theme.spacing(1.2),
+		bottom: theme().spacing(0.25),
+		left: theme().spacing(1.2),
 	},
 
 	gridItem: {
-		maxWidth: theme.spacing(62),
-		margin: theme.spacing(0, 3, 4, 3),
+		maxWidth: theme().spacing(62),
+		margin: theme().spacing(0, 3, 4, 3),
 	},
 
 	emptySpace: {
-		height: theme.spacing(4),
+		height: theme().spacing(4),
 	},
 });
 

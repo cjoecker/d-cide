@@ -20,60 +20,60 @@ import {OptionAndCriteria} from '../../../services/redux/actionsAndSlicers/Optio
 
 const useStyles = makeStyles({
 	divMain: {
-		paddingTop: theme.spacing(2.5),
-		paddingBottom: theme.spacing(5.5),
+		paddingTop: theme().spacing(2.5),
+		paddingBottom: theme().spacing(5.5),
 		textAlign: 'center',
 		alignContent: 'center',
 	},
 
 	infoButton: {
-		bottom: theme.spacing(0.25),
-		left: theme.spacing(1),
+		bottom: theme().spacing(0.25),
+		left: theme().spacing(1),
 	},
 
 	paper: {
-		padding: theme.spacing(1),
-		marginBottom: theme.spacing(2),
-		marginRight: theme.spacing(2),
-		marginLeft: theme.spacing(2),
+		padding: theme().spacing(1),
+		marginBottom: theme().spacing(2),
+		marginRight: theme().spacing(2),
+		marginLeft: theme().spacing(2),
 	},
 
 	mainGridItem: {
-		minWidth: theme.spacing(40),
-		maxWidth: theme.spacing(50),
-		marginTop: theme.spacing(1),
+		minWidth: theme().spacing(40),
+		maxWidth: theme().spacing(50),
+		marginTop: theme().spacing(1),
 	},
 
 	gridItemCriteriaTitle: {
-		marginTop: theme.spacing(1),
-		marginBottom: theme.spacing(1),
+		marginTop: theme().spacing(1),
+		marginBottom: theme().spacing(1),
 	},
 
 	gridItemOptionContainer: {
-		paddingBottom: theme.spacing(1),
+		paddingBottom: theme().spacing(1),
 	},
 
 	gridItemOptionTitle: {
-		paddingLeft: theme.spacing(2),
+		paddingLeft: theme().spacing(2),
 	},
 
 	sliderTextGridLeft: {
-		paddingLeft: theme.spacing(1.8),
-		paddingRight: theme.spacing(1.8),
-		marginTop: theme.spacing(1),
+		paddingLeft: theme().spacing(1.8),
+		paddingRight: theme().spacing(1.8),
+		marginTop: theme().spacing(1),
 		textAlign: 'left',
 	},
 
 	sliderTextGridRight: {
-		paddingLeft: theme.spacing(1.8),
-		paddingRight: theme.spacing(1.8),
-		marginTop: theme.spacing(1),
+		paddingLeft: theme().spacing(1.8),
+		paddingRight: theme().spacing(1.8),
+		marginTop: theme().spacing(1),
 		textAlign: 'right',
 	},
 
 	gridItemSlider: {
-		marginLeft: theme.spacing(1),
-		marginRight: theme.spacing(1),
+		marginLeft: theme().spacing(1),
+		marginRight: theme().spacing(1),
 	},
 
 	sliderText: {
@@ -85,7 +85,7 @@ const useStyles = makeStyles({
 		height: 8,
 		width: 1,
 		marginTop: -3,
-		backgroundColor: theme.palette.primary.main,
+		backgroundColor: theme().palette.primary.main,
 	},
 
 	sliderTrack: {
@@ -93,7 +93,7 @@ const useStyles = makeStyles({
 	},
 
 	emptySpace: {
-		height: theme.spacing(4),
+		height: theme().spacing(4),
 	},
 });
 
@@ -257,7 +257,7 @@ const RateOptions: React.FC<Props> = (props: Props) => {
 																item
 																xs={12}
 																className={classes.gridItemSlider}
-																style={{marginTop: isMobile ? theme.spacing(-3) : theme.spacing(-2)}}
+																style={{marginTop: isMobile ? theme().spacing(-3) : theme().spacing(-2)}}
 															>
 																<Slider
 																	data-testid={`slider${criteriaIndex}${optionIndex}`}

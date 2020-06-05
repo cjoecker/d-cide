@@ -74,7 +74,7 @@ const AlertsBanner: React.FC = () => {
 		<div>
 			<Snackbar open={open} autoHideDuration={autoHideTime !== 0 ? autoHideTime : undefined} onClose={handleClose}>
 				<Alert
-					style={{marginBottom: theme.spacing(1)}}
+					style={{marginBottom: theme().spacing(1)}}
 					data-testid={`${alert.type}Alert`}
 					onClose={alert.allowClose ? handleClose : undefined}
 					variant='filled'

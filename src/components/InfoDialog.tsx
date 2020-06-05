@@ -15,12 +15,12 @@ const useStyles = makeStyles({
 	},
 
 	dialogContent: {
-		marginTop: theme.spacing(-2),
+		marginTop: theme().spacing(-2),
 	},
 	closeButton: {
 		position: 'absolute',
-		right: theme.spacing(2),
-		top: theme.spacing(1),
+		right: theme().spacing(2),
+		top: theme().spacing(1),
 		backgroundColor: 'white',
 	},
 	text: {

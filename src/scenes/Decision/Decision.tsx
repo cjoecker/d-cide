@@ -31,18 +31,18 @@ const useStyles = makeStyles({
 		backgroundColor: 'transparent',
 	},
 	stepperLabel: {
-		marginBottom: theme.spacing(-1.5),
+		marginBottom: theme().spacing(-1.5),
 	},
 
 	buttonNext: {
 		position: 'fixed',
-		margin: theme.spacing(0, 2, 2, 0),
+		margin: theme().spacing(0, 2, 2, 0),
 		zIndex: 1,
 	},
 
 	buttonBack: {
 		position: 'fixed',
-		margin: theme.spacing(0, 0, 2, 2),
+		margin: theme().spacing(0, 0, 2, 2),
 		zIndex: 1,
 	},
 });
@@ -196,7 +196,7 @@ const Decision: React.FC = () => {
 			) : null}
 			<SwipeableViews
 				disabled
-				axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
+				axis={theme().direction === 'rtl' ? 'x-reverse' : 'x'}
 				index={activeStepNum - 1}
 				onTransitionEnd={() => {
 					setLoadedStepNum(activeStepNum);

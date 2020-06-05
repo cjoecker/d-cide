@@ -17,7 +17,7 @@ import theme from '../muiTheme';
 const useStyles = makeStyles({
 	div: {
 		position: 'fixed',
-		margin: theme.spacing(0, 10, 5, 10),
+		margin: theme().spacing(0, 10, 5, 10),
 		zIndex: 2000,
 	},
 
@@ -30,11 +30,11 @@ const useStyles = makeStyles({
 	},
 
 	typographyGridItem: {
-		margin: theme.spacing(0, 3, 0, 3),
+		margin: theme().spacing(0, 3, 0, 3),
 	},
 
 	button: {
-		margin: theme.spacing(0, 3, 2, 0),
+		margin: theme().spacing(0, 3, 2, 0),
 	},
 });
 
