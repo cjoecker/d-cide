@@ -60,7 +60,10 @@ const useStyles = makeStyles({
 		height: 8,
 		width: 1,
 		marginTop: -3,
-		backgroundColor: theme().palette.primary.main,
+	},
+
+	sliderMarksDark: {
+		backgroundColor: 'red',
 	},
 
 	sliderTrack: {
@@ -249,8 +252,8 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
 												classes={{
 													track: classes.sliderTrack,
 													rail: classes.sliderTrack,
-													mark: classes.sliderMarks,
-													markActive: classes.sliderMarks,
+													mark: `${classes.sliderMarks} ${classes.sliderMarksDark}`,
+													markActive: `${classes.sliderMarks} ${classes.sliderMarksDark}`,
 												}}
 												value={criteria.weight}
 												min={-100}
