@@ -38,10 +38,9 @@ const useStyles = makeStyles({
 	},
 
 	logoBox: {
-		width: theme().spacing(20),
+		maxWidth: theme().spacing(17),
 		marginLeft: theme().spacing(-1),
-		height: '100%',
-		backgroundColor: 'red',
+		height: '50%',
 	},
 
 	divRouter: {
