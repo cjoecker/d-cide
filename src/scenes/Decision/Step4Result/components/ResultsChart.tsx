@@ -129,7 +129,7 @@ const ResultsChart: React.FC<Props> = (props: Props) => {
 									barCategoryGap='20%'
 									maxBarSize={10}
 								>
-									<CartesianGrid horizontal={false} stroke='#a0a0a0' strokeWidth={0.5} />
+									<CartesianGrid horizontal={false} stroke={theme.palette.text.secondary} strokeWidth={0.5} />
 									<XAxis
 										dataKey='score'
 										type='number'
@@ -138,10 +138,10 @@ const ResultsChart: React.FC<Props> = (props: Props) => {
 										tickLine={false}
 										domain={[0, 10]}
 										ticks={[0, 2.5, 5, 7.5, 10]}
-										stroke='#a0a0a0'
+										stroke={theme.palette.text.secondary}
 										tick={{fontSize: '0.8rem'}}
 									/>
-									<YAxis type='category' dataKey='name' width={theme.spacing(10)} />
+									<YAxis type='category' dataKey='name' stroke={theme.palette.text.secondary} width={theme.spacing(10)} />
 									<Bar
 										dataKey='score'
 										animationDuration={1000}
@@ -156,11 +156,11 @@ const ResultsChart: React.FC<Props> = (props: Props) => {
 												fill={(() => {
 													switch (index) {
 														case 0:
-															return '#0f61a0';
+															return theme.palette.primary.main;
 														case 1:
-															return '#646464';
+															return theme.palette.secondary.main;
 														default:
-															return '#a0a0a0';
+															return theme.palette.text.secondary;
 													}
 												})()}
 											/>
