@@ -129,16 +129,16 @@ const App: React.FC = () => {
 		setDarkModeActive(darkMode => !darkMode);
 	};
 
-	const theme3 = React.useMemo(() => theme(darkModeActive), [darkModeActive]);
+	const appTheme = React.useMemo(() => theme(darkModeActive), [darkModeActive]);
 
 	return (
-		<ThemeProvider theme={theme3}>
+		<ThemeProvider theme={appTheme}>
 			<CssBaseline />
 			<main role='main'>
 				<div className={classes.divMain}>
 					<AppBar position='static' color='primary' className={classes.appBar}>
 						<Toolbar>
-							<Logo className={classes.logoBox} fill={theme3.palette.secondary.contrastText} />
+							<Logo className={classes.logoBox} fill={appTheme.palette.secondary.contrastText} />
 							<div style={{flexGrow: 1}} />
 							<ComponentsTooltip>
 								<IconButton
