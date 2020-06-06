@@ -86,6 +86,19 @@ function theme(darkMode = false): Theme {
 			},
 		},
 		overrides: {
+			MuiStepIcon: {
+				root: {
+					boxShadow: `4px 4px 8px rgba(0, 0, 0, 0.25), -4px -4px 8px rgba(180, 180, 180, 0.15);`,
+					borderRadius: '50%',
+					color: shadeHexColor(background, 0.1),
+					'&$active': {
+						color: primary,
+					},
+					'&$completed': {
+						color: primary,
+					},
+				},
+			},
 			MuiIconButton: {
 				root: {
 					'&:hover': {
