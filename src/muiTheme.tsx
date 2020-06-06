@@ -90,6 +90,13 @@ function theme(darkMode = false): Theme {
 				root: {
 					background: `linear-gradient(145deg, ${primary}, ${shadeHexColor(primary, -0.4)})`,
 					boxShadow: `6px 6px 12px rgba(0, 0, 0, 0.25), -6px -6px 12px rgba(180, 180, 180, 0.15);`,
+					'&:hover': {
+						background: `linear-gradient(145deg, ${shadeHexColor(primary, -0.15)}, ${shadeHexColor(primary, -0.45)})`,
+					},
+					'&:active': {
+						background: primary,
+						boxShadow: `inset 6px 6px 12px rgba(0, 0, 0, 0.5), inset -6px -6px 12px rgba(180, 180, 180, 0.4)`,
+					},
 				},
 			},
 			MuiCssBaseline: {
