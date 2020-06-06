@@ -88,8 +88,8 @@ function theme(darkMode = false): Theme {
 		overrides: {
 			MuiFab: {
 				root: {
-					background: 'linear-gradient(145deg, #1068ab, #063c65)',
-					boxShadow: '8px 8px 12px #cfcfcf, -8px -8px 12px #fdfdfd',
+					background: `linear-gradient(145deg, ${primary}, ${shadeHexColor(primary, -0.4)})`,
+					boxShadow: `6px 6px 12px rgba(0, 0, 0, 0.25), -6px -6px 12px rgba(180, 180, 180, 0.15);`,
 				},
 			},
 			MuiCssBaseline: {
