@@ -33,7 +33,7 @@ const useStyles = makeStyles(theme => ({
 	},
 
 	paperItems: {
-		margin: theme.spacing(0.5, 1, 0, 1),
+		margin: theme.spacing(1, 1, 0, 1),
 	},
 
 	editButton: {
@@ -41,12 +41,12 @@ const useStyles = makeStyles(theme => ({
 	},
 
 	deleteButton: {
-		marginRight: theme.spacing(-1.5),
+		marginRight: theme.spacing(-0.5),
 	},
 
 	inputBase: {
-		margin: theme.spacing(0.5, 1, 1, 2),
-		width: '100%',
+		margin: theme.spacing(0.5, 0, 1, 2),
+		width: '95%',
 		wordWrap: 'break-word',
 	},
 }));
@@ -191,7 +191,7 @@ const EditableList: React.FC<Props> = (props: Props) => {
 		<div className={classes.divMain} data-testid={`${itemsKey}List`}>
 			<Grid container justify='center' alignContent='center'>
 				<Grid item xs={12}>
-					<Paper className={classes.paperTitle} elevation={2} key='NewEntry'>
+					<Paper className={classes.paperTitle} elevation={1} key='NewEntry'>
 						<Box display='flex' alignItems='center'>
 							<Box width='100%' mr={1}>
 								<ComponentsTooltip title='Write new entry'>
@@ -242,7 +242,7 @@ const EditableList: React.FC<Props> = (props: Props) => {
 						key={item.id}
 					>
 						<Grid item xs={12}>
-							<Paper className={classes.paperItems} elevation={2}>
+							<Paper className={classes.paperItems} elevation={1}>
 								<Box display='flex' alignItems='center'>
 									<Box width='100%' mr={1}>
 										<ComponentsTooltip title='Edit entry'>

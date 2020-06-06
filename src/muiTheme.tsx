@@ -86,6 +86,16 @@ function theme(darkMode = false): Theme {
 			},
 		},
 		overrides: {
+			MuiIconButton: {
+				root: {
+					'&:hover': {
+						boxShadow: `4px 4px 8px rgba(0, 0, 0, 0.25), -4px -4px 8px rgba(180, 180, 180, 0.15);`,
+					},
+					'&:active': {
+						boxShadow: `inset 6px 6px 12px rgba(0, 0, 0, 0.5), inset -6px -6px 12px rgba(180, 180, 180, 0.4)`,
+					},
+				},
+			},
 			MuiFab: {
 				root: {
 					background: `linear-gradient(145deg, ${primary}, ${shadeHexColor(primary, -0.4)})`,
@@ -120,7 +130,9 @@ function theme(darkMode = false): Theme {
 					borderRadius: '20px',
 				},
 				elevation1: {
-					boxShadow: `10px 10px 35px 6px rgba(0,0,0,0.52);`,
+					background: shadeHexColor(background, 0.1),
+					boxShadow: `3px 3px 6px rgba(0, 0, 0, 0.25), -3px -3px 6px rgba(180, 180, 180, 0.15);`,
+					borderRadius: '10px',
 				},
 				elevation7: {
 					boxShadow: `10px 10px 35px 6px rgba(0,0,0,0.52);`,
