@@ -2,6 +2,27 @@ import React from 'react';
 import {createMuiTheme, Theme} from '@material-ui/core/styles';
 
 function theme(darkMode = false): Theme {
+	//Light Theme
+	let background = '#e6e6e6';
+	let primary = '#0f61a0';
+	let primaryContrastText = '#fafafa';
+	let secondary = '#858585';
+	let secondaryContrastText = '#fafafa';
+	let primaryText = '#000000';
+	let secondaryText = '#4A4A4A';
+	let disabledText = '#858585';
+
+	if (darkMode) {
+		background = '#303030';
+		primary = '#8AC6F4';
+		primaryContrastText = '#303030';
+		secondary = '#BFBFBF';
+		secondaryContrastText = '#303030';
+		primaryText = '#fcfcfc';
+		secondaryText = '#BDBDBD';
+		disabledText = '#BFBFBF';
+	}
+
 	return createMuiTheme({
 		typography: {
 			fontFamily: ['Quicksand', 'Calibri', 'sans-serif'].join(','),
@@ -45,6 +66,12 @@ function theme(darkMode = false): Theme {
 			},
 		},
 		overrides: {
+			MuiFab: {
+				root: {
+					background: 'linear-gradient(145deg, #1068ab, #063c65)',
+					boxShadow: '8px 8px 12px #cfcfcf, -8px -8px 12px #fdfdfd',
+				},
+			},
 			MuiTypography: {
 				root: {
 					'& h1': {
@@ -86,19 +113,20 @@ function theme(darkMode = false): Theme {
 		palette: {
 			type: darkMode ? 'dark' : 'light',
 			background: {
-				default: darkMode ? '#303030' : '#e6e6e6',
+				default: background,
 			},
 			primary: {
-				main: darkMode ? '#8AC6F4' : '#0f61a0',
-				contrastText: darkMode ? '#303030' : '#fafafa',
+				main: primary,
+				contrastText: primaryContrastText,
 			},
 			secondary: {
-				main: darkMode ? '#BFBFBF' : '#858585',
-				contrastText: darkMode ? '#303030' : '#fafafa',
+				main: secondary,
+				contrastText: secondaryContrastText,
 			},
 			text: {
-				secondary: darkMode ? '#BDBDBD' : '#4A4A4A',
-				disabled: darkMode ? '#BFBFBF' : '#858585',
+				primary: primaryText,
+				secondary: secondaryText,
+				disabled: disabledText,
 			},
 		},
 	});
