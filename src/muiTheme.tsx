@@ -15,7 +15,7 @@ function theme(darkMode = false): Theme {
 	if (darkMode) {
 		background = '#34393f';
 		primary = '#10a4f9';
-		primaryContrastText = '#303030';
+		primaryContrastText = '#ffffff';
 		secondary = '#BFBFBF';
 		secondaryContrastText = '#303030';
 		primaryText = '#fcfcfc';
@@ -97,6 +97,33 @@ function theme(darkMode = false): Theme {
 						background: primary,
 						boxShadow: `inset 6px 6px 12px rgba(0, 0, 0, 0.5), inset -6px -6px 12px rgba(180, 180, 180, 0.4)`,
 					},
+				},
+			},
+			MuiButton: {
+				contained: {
+					borderRadius: '20px',
+					background: `linear-gradient(145deg, ${primary}, ${shadeHexColor(primary, -0.4)})`,
+					boxShadow: `5px 5px 10px rgba(0, 0, 0, 0.25), -5px -5px 10px rgba(180, 180, 180, 0.15);`,
+					'&:hover': {
+						background: `linear-gradient(145deg, ${shadeHexColor(primary, -0.15)}, ${shadeHexColor(primary, -0.45)})`,
+						boxShadow: `5px 5px 10px rgba(0, 0, 0, 0.25), -5px -5px 10px rgba(180, 180, 180, 0.15);`,
+					},
+					'&:active': {
+						background: primary,
+						boxShadow: `inset 5px 5px 10px rgba(0, 0, 0, 0.5), inset -5px -5px 10px rgba(180, 180, 180, 0.4)`,
+					},
+				},
+			},
+			MuiPaper: {
+				rounded: {
+					background: `linear-gradient(145deg, ${shadeHexColor(background, 0.1)}, ${shadeHexColor(background, 0)})`,
+					borderRadius: '20px',
+				},
+				elevation1: {
+					boxShadow: `10px 10px 35px 6px rgba(0,0,0,0.52);`,
+				},
+				elevation7: {
+					boxShadow: `10px 10px 35px 6px rgba(0,0,0,0.52);`,
 				},
 			},
 			MuiCssBaseline: {
