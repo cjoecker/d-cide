@@ -13,14 +13,34 @@ function theme(darkMode = false): Theme {
 	let disabledText = '#858585';
 
 	if (darkMode) {
-		background = '#303030';
-		primary = '#8AC6F4';
+		background = '#34393f';
+		primary = '#10a4f9';
 		primaryContrastText = '#303030';
 		secondary = '#BFBFBF';
 		secondaryContrastText = '#303030';
 		primaryText = '#fcfcfc';
 		secondaryText = '#BDBDBD';
 		disabledText = '#BFBFBF';
+	}
+
+	function shadeHexColor(color: string, percent: number) {
+		var f = parseInt(color.slice(1), 16),
+			t = percent < 0 ? 0 : 255,
+			p = percent < 0 ? percent * -1 : percent,
+			R = f >> 16,
+			G = (f >> 8) & 0x00ff,
+			B = f & 0x0000ff;
+		return (
+			'#' +
+			(
+				0x1000000 +
+				(Math.round((t - R) * p) + R) * 0x10000 +
+				(Math.round((t - G) * p) + G) * 0x100 +
+				(Math.round((t - B) * p) + B)
+			)
+				.toString(16)
+				.slice(1)
+		);
 	}
 
 	return createMuiTheme({
@@ -70,6 +90,13 @@ function theme(darkMode = false): Theme {
 				root: {
 					background: 'linear-gradient(145deg, #1068ab, #063c65)',
 					boxShadow: '8px 8px 12px #cfcfcf, -8px -8px 12px #fdfdfd',
+				},
+			},
+			MuiCssBaseline: {
+				'@global': {
+					body: {
+						background: `linear-gradient(145deg, ${background}, ${shadeHexColor(background, -0.57)})`,
+					},
 				},
 			},
 			MuiTypography: {
