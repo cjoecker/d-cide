@@ -133,6 +133,7 @@ function theme(darkMode = false): Theme {
 			},
 			MuiIconButton: {
 				root: {
+					boxShadow: `inset 1px 1px 2px rgba(180, 180, 180, 0.2), inset -1px -1px 2px rgba(0, 0, 0, 0.4)`,
 					'&:hover': {
 						boxShadow: `4px 4px 8px rgba(0, 0, 0, 0.25), -4px -4px 8px rgba(180, 180, 180, 0.15);`,
 					},
