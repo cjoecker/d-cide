@@ -9,6 +9,7 @@ import ReactGA, {ga} from 'react-ga';
 import {Button, IconButton, Link} from '@material-ui/core';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import {Brightness3, FlareRounded} from '@material-ui/icons';
+import {isMobile} from 'react-device-detect';
 import Decision from './scenes/Decision/Decision';
 import AlertsBanner from './components/AlertsBanner';
 import {ReactComponent as Logo} from './images/d-cide_Logo.svg';
@@ -130,7 +131,12 @@ const App: React.FC = () => {
 			<CssBaseline />
 			<main role='main'>
 				<div className={classes.divMain}>
-					<AppBar position='static' color='primary' className={classes.appBar}>
+					<AppBar
+						position='static'
+						color='primary'
+						className={classes.appBar}
+						style={{marginBottom: isMobile ? 0 : appTheme.spacing(-2)}}
+					>
 						<Toolbar>
 							<Logo className={classes.logoBox} fill={darkModeActive ? 'white' : appTheme.palette.primary.main} />
 							<div style={{flexGrow: 1}} />
