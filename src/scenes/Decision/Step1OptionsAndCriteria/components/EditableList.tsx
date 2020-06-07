@@ -41,12 +41,12 @@ const useStyles = makeStyles(theme => ({
 	},
 
 	deleteButton: {
-		marginRight: theme.spacing(-0.5),
+		marginRight: theme.spacing(-1),
 	},
 
 	inputBase: {
 		margin: theme.spacing(0.5, 0, 1, 2),
-		width: '95%',
+		width: '100%',
 		wordWrap: 'break-word',
 	},
 }));
