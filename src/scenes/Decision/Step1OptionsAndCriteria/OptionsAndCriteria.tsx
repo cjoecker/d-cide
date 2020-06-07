@@ -28,10 +28,6 @@ const useStyles = makeStyles(theme => ({
 		maxWidth: theme.spacing(55),
 		margin: theme.spacing(0, 3, 4, 3),
 	},
-
-	emptySpace: {
-		height: theme.spacing(4),
-	},
 }));
 
 type Props = {
@@ -94,7 +90,6 @@ const OptionsAndCriteria: React.FC<Props> = (props: Props) => {
 					)}
 				</Grid>
 			</Grid>
-			<div className={classes.emptySpace} />
 			<InfoDialog text={DecisionOptionInfo} show={showOptionsInfo} onClose={() => setShowOptionsInfo(false)} />
 			<InfoDialog text={SelectionCriteriaInfo} show={showCriteriaInfo} onClose={() => setShowCriteriaInfo(false)} />
 		</div>

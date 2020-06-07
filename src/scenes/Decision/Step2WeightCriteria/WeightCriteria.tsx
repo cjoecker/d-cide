@@ -73,10 +73,6 @@ const useStyles = makeStyles(theme => ({
 	gridItemSliderInfo: {
 		marginTop: theme.spacing(-2.5),
 	},
-
-	emptySpace: {
-		height: theme.spacing(4),
-	},
 }));
 
 type Props = {
@@ -270,7 +266,6 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
 						</Fade>
 					))}
 			</Grid>
-			<div className={classes.emptySpace} />
 			<InfoDialog text={LongStrings.WeightCriteriaInfo} show={showInfo} onClose={() => setShowInfo(false)} />
 		</div>
 	);

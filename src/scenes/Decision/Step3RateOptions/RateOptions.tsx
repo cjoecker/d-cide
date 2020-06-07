@@ -86,10 +86,6 @@ const useStyles = makeStyles(theme => ({
 		marginTop: -3,
 		backgroundColor: theme.palette.primary.main,
 	},
-
-	emptySpace: {
-		height: theme.spacing(4),
-	},
 }));
 
 type Props = {
@@ -284,7 +280,6 @@ const RateOptions: React.FC<Props> = (props: Props) => {
 						</Fade>
 					))}
 			</Grid>
-			<div className={classes.emptySpace} />
 			<InfoDialog text={LongStrings.OptionsRatingInfo} show={showInfo} onClose={() => setShowInfo(false)} />
 		</div>
 	);

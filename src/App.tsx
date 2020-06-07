@@ -29,12 +29,10 @@ const useStyles = makeStyles(styleTheme => ({
 	},
 
 	appBar: {
-		position: 'fixed',
 		Top: 'env(safe-area-inset-top)',
 		background: 'transparent',
 		boxShadow: 'none',
-		marginBottom: styleTheme.spacing(2),
-
+		paddingTop: styleTheme.spacing(1),
 		justifyContent: 'center',
 		justifyItems: 'center',
 		paddingLeft: 'env(safe-area-inset-left)',
@@ -43,16 +41,7 @@ const useStyles = makeStyles(styleTheme => ({
 
 	logoBox: {
 		maxWidth: styleTheme.spacing(17),
-		marginLeft: styleTheme.spacing(-1),
 		height: '50%',
-	},
-
-	darkModeIcon: {
-		marginRight: styleTheme.spacing(-2),
-	},
-
-	divRouter: {
-		marginTop: styleTheme.spacing(6),
 	},
 
 	footer: {
@@ -148,7 +137,6 @@ const App: React.FC = () => {
 							<ComponentsTooltip>
 								<IconButton
 									aria-label={darkModeActive ? 'Set light theme' : 'Set dark theme'}
-									className={classes.darkModeIcon}
 									onClick={onClickDarkMode}
 									data-testid='darkModeButton'
 								>
@@ -157,9 +145,7 @@ const App: React.FC = () => {
 							</ComponentsTooltip>
 						</Toolbar>
 					</AppBar>
-					<div className={classes.divRouter}>
-						<Decision />
-					</div>
+					<Decision />
 					<Grid className={classes.footer} container justify='center' alignContent='center'>
 						<Typography component='span' variant='caption' align='center'>
 							<Grid item xs={12}>

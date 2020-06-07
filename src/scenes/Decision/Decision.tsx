@@ -37,13 +37,13 @@ const useStyles = makeStyles(theme => ({
 	buttonNext: {
 		position: 'fixed',
 		margin: theme.spacing(0, 2, 2, 0),
-		zIndex: 1,
+		zIndex: 1000,
 	},
 
 	buttonBack: {
 		position: 'fixed',
 		margin: theme.spacing(0, 0, 2, 2),
-		zIndex: 1,
+		zIndex: 1000,
 	},
 }));
 

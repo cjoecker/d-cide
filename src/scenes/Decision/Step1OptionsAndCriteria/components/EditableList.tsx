@@ -41,7 +41,7 @@ const useStyles = makeStyles(theme => ({
 	},
 
 	deleteButton: {
-		marginRight: theme.spacing(-1),
+		marginRight: theme.spacing(-1.5),
 	},
 
 	inputBase: {
