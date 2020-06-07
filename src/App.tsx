@@ -161,11 +161,11 @@ const App: React.FC = () => {
 					<Grid className={classes.footer} container justify='center' alignContent='center'>
 						<Typography component='span' variant='caption' align='center'>
 							<Grid item xs={12}>
-								Made with &nbsp;
+								Made with&nbsp;
 								<span role='img' aria-label='love'>
 									💖
 								</span>
-								&nbsp; by{' '}
+								&nbsp;by{' '}
 								<Link
 									data-testid='cjoeckerLink'
 									href='https://www.cjoecker.de/'
