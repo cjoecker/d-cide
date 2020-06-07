@@ -8,7 +8,7 @@ import Grid from '@material-ui/core/Grid';
 import ReactGA, {ga} from 'react-ga';
 import {Button, IconButton, Link} from '@material-ui/core';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import {Brightness4Rounded, Brightness5Rounded} from '@material-ui/icons';
+import {Brightness4Rounded, FlareRounded} from '@material-ui/icons';
 import Decision from './scenes/Decision/Decision';
 import AlertsBanner from './components/AlertsBanner';
 import {ReactComponent as Logo} from './images/d-cide_Logo.svg';
@@ -150,7 +150,7 @@ const App: React.FC = () => {
 									onClick={onClickDarkMode}
 									data-testid='darkModeButton'
 								>
-									{darkModeActive ? <Brightness5Rounded /> : <Brightness4Rounded />}
+									{darkModeActive ? <FlareRounded /> : <Brightness4Rounded />}
 								</IconButton>
 							</ComponentsTooltip>
 						</Toolbar>

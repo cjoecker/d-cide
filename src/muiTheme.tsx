@@ -158,6 +158,9 @@ function theme(darkMode = false): Theme {
 					'&:active': {
 						background: primary,
 					},
+					'&:disabled': {
+						background: `linear-gradient(145deg, ${shadeHexColor(primary, -0.65)}, ${shadeHexColor(primary, -0.85)})`,
+					},
 				},
 				secondary: {
 					background: `linear-gradient(145deg, ${secondary}, ${shadeHexColor(secondary, -0.4)})`,
@@ -242,7 +245,6 @@ function theme(darkMode = false): Theme {
 				},
 			},
 		},
-
 		palette: {
 			type: darkMode ? 'dark' : 'light',
 			background: {
