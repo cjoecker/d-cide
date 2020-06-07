@@ -133,10 +133,12 @@ function theme(darkMode = false): Theme {
 			},
 			MuiIconButton: {
 				root: {
+					backgroundColor: shadeHexColor(background, 0.05),
 					boxShadow: `3px 3px 6px rgba(0, 0, 0, 0.25), -3px -3px 6px rgba(180, 180, 180, 0.1);`,
 					padding: 6,
 					'&:hover': {
 						boxShadow: `4px 4px 8px rgba(0, 0, 0, 0.25), -4px -4px 8px rgba(180, 180, 180, 0.15);`,
+						backgroundColor: shadeHexColor(background, 0.05),
 					},
 					'&:active': {
 						boxShadow: `inset 6px 6px 12px rgba(0, 0, 0, 0.5), inset -6px -6px 12px rgba(180, 180, 180, 0.4)`,
@@ -247,6 +249,9 @@ function theme(darkMode = false): Theme {
 					'& body': {
 						fontWeight: 500,
 						fontSize: 16,
+					},
+					'& a': {
+						color: primary,
 					},
 				},
 			},
