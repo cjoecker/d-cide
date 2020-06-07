@@ -140,7 +140,7 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
 
 		for (let i = 0; i < selectionCriteria.length; i += 1) {
 			for (let j = i + 1; j < selectionCriteria.length; j += 1) {
-				const existingWeightedCriteria = newWeightedCriteria.find(
+				const existingWeightedCriteria = weightedCriteria.find(
 					weightedCriteriaObj =>
 						(weightedCriteriaObj.selectionCriteria1Id === selectionCriteria[i].id &&
 							weightedCriteriaObj.selectionCriteria2Id === selectionCriteria[j].id) ||
