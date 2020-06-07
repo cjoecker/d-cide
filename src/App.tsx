@@ -140,7 +140,7 @@ const App: React.FC = () => {
 				<div className={classes.divMain}>
 					<AppBar position='static' color='primary' className={classes.appBar}>
 						<Toolbar>
-							<Logo className={classes.logoBox} fill={'white'} />
+							<Logo className={classes.logoBox} fill={darkModeActive ? 'white' : appTheme.palette.primary.main} />
 							<div style={{flexGrow: 1}} />
 							<ComponentsTooltip>
 								<IconButton
