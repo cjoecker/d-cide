@@ -15,12 +15,12 @@ function theme(darkMode = false): Theme {
 	if (darkMode) {
 		background = '#34393f';
 		primary = '#10a4f9';
-		primaryContrastText = '#ffffff';
+		primaryContrastText = '#e3e3e3';
 		secondary = '#cdcdcd';
 		secondaryContrastText = '#303030';
-		primaryText = '#fcfcfc';
-		secondaryText = '#BDBDBD';
-		disabledText = '#BFBFBF';
+		primaryText = '#CFCFCF';
+		secondaryText = '#B0B0B0';
+		disabledText = '#B0B0B0';
 	}
 
 	function shadeHexColor(color: string, percent: number) {
@@ -122,10 +122,10 @@ function theme(darkMode = false): Theme {
 					borderRadius: '50%',
 					color: shadeHexColor(background, 0.1),
 					'&$active': {
-						color: primary,
+						color: shadeHexColor(primary, -0.2),
 					},
 					'&$completed': {
-						color: primary,
+						color: shadeHexColor(primary, -0.2),
 						borderRadius: '50%',
 						background: 'white',
 					},
@@ -141,6 +141,12 @@ function theme(darkMode = false): Theme {
 					'&:active': {
 						boxShadow: `inset 6px 6px 12px rgba(0, 0, 0, 0.5), inset -6px -6px 12px rgba(180, 180, 180, 0.4)`,
 					},
+				},
+			},
+			MuiTooltip: {
+				tooltip: {
+					boxShadow: `5px 5px 25px 2px rgba(0,0,0,0.4);`,
+					backgroundColor: shadeHexColor(background, 0.3),
 				},
 			},
 			MuiFab: {
