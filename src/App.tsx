@@ -31,8 +31,10 @@ const useStyles = makeStyles(styleTheme => ({
 	appBar: {
 		position: 'fixed',
 		Top: 'env(safe-area-inset-top)',
+		background: 'transparent',
+		boxShadow: 'none',
 		marginBottom: styleTheme.spacing(2),
-		height: styleTheme.spacing(6),
+
 		justifyContent: 'center',
 		justifyItems: 'center',
 		paddingLeft: 'env(safe-area-inset-left)',
@@ -138,7 +140,7 @@ const App: React.FC = () => {
 				<div className={classes.divMain}>
 					<AppBar position='static' color='primary' className={classes.appBar}>
 						<Toolbar>
-							<Logo className={classes.logoBox} fill={appTheme.palette.secondary.contrastText} />
+							<Logo className={classes.logoBox} fill={'white'} />
 							<div style={{flexGrow: 1}} />
 							<ComponentsTooltip>
 								<IconButton
@@ -163,8 +165,7 @@ const App: React.FC = () => {
 								<span role='img' aria-label='love'>
 									💖
 								</span>
-								&nbsp; by
-{' '}
+								&nbsp; by{' '}
 								<Link
 									data-testid='cjoeckerLink'
 									href='https://www.cjoecker.de/'

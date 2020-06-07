@@ -86,6 +86,13 @@ function theme(darkMode = false): Theme {
 			},
 		},
 		overrides: {
+			MuiAppBar: {
+				root: {
+					background: `linear-gradient(145deg, ${shadeHexColor(primary, -0.2)}, ${shadeHexColor(primary, -0.4)})`,
+					boxShadow: `3px 3px 6px rgba(0, 0, 0, 0.3), -3px -3px 6px rgba(180, 180, 180, 0.2);`,
+					shadows: ['none'],
+				},
+			},
 			MuiSlider: {
 				thumb: {
 					marginTop: -7,
