@@ -86,28 +86,28 @@ context('Actions', () => {
 			});
 	});
 
-	it('toggles dark mode', () => {
+	it.only('toggles dark mode', () => {
 		window.localStorage.setItem('darkModeActive', 'true');
 		cy
 			.visit('/')
 			.get('[data-testid=cookiesConsent] > .MuiPaper-root')
-			.should('have.css', 'background-color', 'rgb(66, 66, 66)')
+			.should('have.css', 'color', 'rgb(207, 207, 207)')
 
 			.getTestElement('darkModeButton')
 			.click()
 
 			.get('[data-testid=cookiesConsent] > .MuiPaper-root')
-			.should('have.css', 'background-color', 'rgb(255, 255, 255)')
+			.should('have.css', 'color', 'rgb(61, 61, 61)')
 
 			.reload()
 
 			.get('[data-testid=cookiesConsent] > .MuiPaper-root')
-			.should('have.css', 'background-color', 'rgb(255, 255, 255)')
+			.should('have.css', 'color', 'rgb(61, 61, 61)')
 
 			.getTestElement('darkModeButton')
 			.click()
 
 			.get('[data-testid=cookiesConsent] > .MuiPaper-root')
-			.should('have.css', 'background-color', 'rgb(66, 66, 66)');
+			.should('have.css', 'color', 'rgb(207, 207, 207)');
 	});
 });
