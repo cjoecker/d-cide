@@ -1,4 +1,3 @@
-import React from 'react';
 import {createMuiTheme, Theme} from '@material-ui/core/styles';
 
 function theme(darkMode = false): Theme {

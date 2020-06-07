@@ -67,7 +67,7 @@ const CookiesBanner: React.FC = () => {
 								{PrivacyText}
 							</Typography>
 						</Grid>
-						<Grid container xs={12} justify='flex-end'>
+						<Grid container justify='flex-end'>
 							<Button
 								data-testid='cookieConsentCloseButton'
 								onClick={() => handleClose()}
