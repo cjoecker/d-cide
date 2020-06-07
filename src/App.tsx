@@ -8,7 +8,7 @@ import Grid from '@material-ui/core/Grid';
 import ReactGA, {ga} from 'react-ga';
 import {Button, IconButton, Link} from '@material-ui/core';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import {Brightness4Rounded, FlareRounded} from '@material-ui/icons';
+import {Brightness3, FlareRounded} from '@material-ui/icons';
 import Decision from './scenes/Decision/Decision';
 import AlertsBanner from './components/AlertsBanner';
 import {ReactComponent as Logo} from './images/d-cide_Logo.svg';
@@ -145,12 +145,11 @@ const App: React.FC = () => {
 							<ComponentsTooltip>
 								<IconButton
 									aria-label={darkModeActive ? 'Set light theme' : 'Set dark theme'}
-									color='inherit'
 									className={classes.darkModeIcon}
 									onClick={onClickDarkMode}
 									data-testid='darkModeButton'
 								>
-									{darkModeActive ? <FlareRounded /> : <Brightness4Rounded />}
+									{darkModeActive ? <FlareRounded /> : <Brightness3 />}
 								</IconButton>
 							</ComponentsTooltip>
 						</Toolbar>

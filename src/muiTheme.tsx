@@ -118,7 +118,7 @@ function theme(darkMode = false): Theme {
 			},
 			MuiStepIcon: {
 				root: {
-					boxShadow: `4px 4px 8px rgba(0, 0, 0, ${darkMode ? 0.2 : 0.4}), -4px -4px 8px rgba(255, 255, 255, ${
+					boxShadow: `4px 4px 8px rgba(0, 0, 0, ${darkMode ? 0.3 : 0.4}), -4px -4px 8px rgba(255, 255, 255, ${
 						darkMode ? 0.07 : 0.6
 					})`,
 					borderRadius: '50%',

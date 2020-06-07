@@ -207,7 +207,7 @@ const RateOptions: React.FC<Props> = (props: Props) => {
 								onClick={() => setShowInfo(true)}
 								tabIndex={hidden ? -1 : 0}
 							>
-								<HelpOutlineRounded color='secondary' />
+								<HelpOutlineRounded />
 							</IconButton>
 						</ComponentsTooltip>
 					</Typography>

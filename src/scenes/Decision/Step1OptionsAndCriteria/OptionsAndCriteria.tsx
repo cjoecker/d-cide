@@ -59,7 +59,7 @@ const OptionsAndCriteria: React.FC<Props> = (props: Props) => {
 								onClick={() => setShowOptionsInfo(true)}
 								tabIndex={hidden ? -1 : 0}
 							>
-								<HelpOutlineRounded color='secondary' />
+								<HelpOutlineRounded />
 							</IconButton>
 						</ComponentsTooltip>
 					</Typography>
@@ -81,7 +81,7 @@ const OptionsAndCriteria: React.FC<Props> = (props: Props) => {
 								onClick={() => setShowCriteriaInfo(true)}
 								tabIndex={hidden ? -1 : 0}
 							>
-								<HelpOutlineRounded color='secondary' />
+								<HelpOutlineRounded />
 							</IconButton>
 						</ComponentsTooltip>
 					</Typography>
