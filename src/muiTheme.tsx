@@ -16,7 +16,7 @@ function theme(darkMode = false): Theme {
 		background = '#34393f';
 		primary = '#10a4f9';
 		primaryContrastText = '#ffffff';
-		secondary = '#BFBFBF';
+		secondary = '#cdcdcd';
 		secondaryContrastText = '#303030';
 		primaryText = '#fcfcfc';
 		secondaryText = '#BDBDBD';
@@ -96,6 +96,8 @@ function theme(darkMode = false): Theme {
 					},
 					'&$completed': {
 						color: primary,
+						borderRadius: '50%',
+						background: 'white',
 					},
 				},
 			},
@@ -111,14 +113,27 @@ function theme(darkMode = false): Theme {
 			},
 			MuiFab: {
 				root: {
-					background: `linear-gradient(145deg, ${primary}, ${shadeHexColor(primary, -0.4)})`,
 					boxShadow: `6px 6px 12px rgba(0, 0, 0, 0.25), -6px -6px 12px rgba(180, 180, 180, 0.15);`,
+					'&:active': {
+						boxShadow: `inset 6px 6px 12px rgba(0, 0, 0, 0.5), inset -6px -6px 12px rgba(180, 180, 180, 0.4)`,
+					},
+				},
+				primary: {
+					background: `linear-gradient(145deg, ${primary}, ${shadeHexColor(primary, -0.4)})`,
 					'&:hover': {
 						background: `linear-gradient(145deg, ${shadeHexColor(primary, -0.15)}, ${shadeHexColor(primary, -0.45)})`,
 					},
 					'&:active': {
 						background: primary,
-						boxShadow: `inset 6px 6px 12px rgba(0, 0, 0, 0.5), inset -6px -6px 12px rgba(180, 180, 180, 0.4)`,
+					},
+				},
+				secondary: {
+					background: `linear-gradient(145deg, ${secondary}, ${shadeHexColor(secondary, -0.4)})`,
+					'&:hover': {
+						background: `linear-gradient(145deg, ${shadeHexColor(secondary, -0.15)}, ${shadeHexColor(secondary, -0.45)})`,
+					},
+					'&:active': {
+						background: secondary,
 					},
 				},
 			},
