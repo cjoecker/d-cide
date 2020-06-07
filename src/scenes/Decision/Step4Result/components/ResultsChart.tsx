@@ -158,10 +158,8 @@ const ResultsChart: React.FC<Props> = (props: Props) => {
 													switch (index) {
 														case 0:
 															return theme.palette.primary.main;
-														case 1:
-															return theme.palette.secondary.main;
 														default:
-															return theme.palette.text.secondary;
+															return theme.palette.secondary.main;
 													}
 												})()}
 											/>

@@ -58,7 +58,7 @@ const useStyles = makeStyles(theme => ({
 
 	sliderMarks: {
 		height: 8,
-		width: 1,
+		width: 2,
 		marginTop: -3,
 		backgroundColor: theme.palette.primary.main,
 	},

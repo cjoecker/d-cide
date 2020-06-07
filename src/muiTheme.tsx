@@ -3,13 +3,13 @@ import {createMuiTheme, Theme} from '@material-ui/core/styles';
 
 function theme(darkMode = false): Theme {
 	//Light Theme
-	let background = '#cfcfe0';
+	let background = '#c5c5d7';
 	let primary = '#0f61a0';
 	let primaryContrastText = '#fafafa';
-	let secondary = '#858585';
+	let secondary = '#575757';
 	let secondaryContrastText = '#fafafa';
 	let primaryText = '#3D3D3D';
-	let secondaryText = '#4A4A4A';
+	let secondaryText = '#575757';
 	let disabledText = '#858585';
 
 	if (darkMode) {
@@ -103,17 +103,22 @@ function theme(darkMode = false): Theme {
 				},
 				track: {
 					opacity: '100%',
-					marginTop: -1.5,
+					marginTop: -1,
 					height: 4,
 					borderRadius: 4,
 					boxShadow: `inset 1px 1px 2px rgba(0, 0, 0, 0.5), inset -1px -1px 2px rgba(180, 180, 180, 0.4)`,
 				},
 				rail: {
 					opacity: '100%',
-					marginTop: -1.5,
+					marginTop: -1,
 					height: 4,
 					borderRadius: 4,
 					boxShadow: `inset 1px 1px 2px rgba(0, 0, 0, 0.5), inset -1px -1px 2px rgba(180, 180, 180, 0.4)`,
+				},
+			},
+			MuiStepConnector: {
+				line: {
+					borderColor: disabledText,
 				},
 			},
 			MuiStepIcon: {
@@ -136,7 +141,7 @@ function theme(darkMode = false): Theme {
 			MuiIconButton: {
 				root: {
 					backgroundColor: shadeHexColor(background, darkMode ? 0.05 : 0.2),
-					boxShadow: `3px 3px 6px rgba(0, 0, 0, 0.25), -3px -3px 6px rgba(255, 255, 255, ${darkMode ? 0.06 : 0.55})`,
+					boxShadow: `3px 3px 6px rgba(0, 0, 0, 0.25), -3px -3px 6px rgba(255, 255, 255, ${darkMode ? 0.06 : 0.3})`,
 					padding: 6,
 					'&:hover': {
 						backgroundColor: shadeHexColor(background, 0.05),
@@ -150,6 +155,7 @@ function theme(darkMode = false): Theme {
 				tooltip: {
 					boxShadow: `5px 5px 25px 2px rgba(0,0,0,0.4)`,
 					backgroundColor: shadeHexColor(background, 0.3),
+					color: primaryText,
 				},
 			},
 			MuiFab: {

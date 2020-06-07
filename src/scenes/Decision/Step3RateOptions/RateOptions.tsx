@@ -59,14 +59,14 @@ const useStyles = makeStyles(theme => ({
 	sliderTextGridLeft: {
 		paddingLeft: theme.spacing(1.8),
 		paddingRight: theme.spacing(1.8),
-		marginTop: theme.spacing(1),
+		marginTop: theme.spacing(1.6),
 		textAlign: 'left',
 	},
 
 	sliderTextGridRight: {
 		paddingLeft: theme.spacing(1.8),
 		paddingRight: theme.spacing(1.8),
-		marginTop: theme.spacing(1),
+		marginTop: theme.spacing(1.6),
 		textAlign: 'right',
 	},
 
@@ -82,7 +82,7 @@ const useStyles = makeStyles(theme => ({
 
 	sliderMarks: {
 		height: 8,
-		width: 1,
+		width: 2,
 		marginTop: -3,
 		backgroundColor: theme.palette.primary.main,
 	},
