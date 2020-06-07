@@ -34,7 +34,8 @@ const useStyles = makeStyles(theme => ({
 	},
 
 	bars: {
-		width: theme.spacing(19),
+		width: theme.spacing(190),
+		boxShadow: `inset 1px 1px 2px rgba(0, 0, 0, 0.5), inset -1px -1px 2px rgba(180, 180, 180, 0.4)`,
 	},
 }));
 
@@ -148,7 +149,7 @@ const ResultsChart: React.FC<Props> = (props: Props) => {
 										label={{
 											position: 'right',
 										}}
-										shape={<Rectangle className={classes.bars} radius={[0, 10, 10, 0]} />}
+										shape={<Rectangle radius={[0, 10, 10, 0]} />}
 									>
 										{localItems.map((entry, index) => (
 											<Cell
