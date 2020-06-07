@@ -1,6 +1,5 @@
 import React, {useState} from 'react';
 import Grid from '@material-ui/core/Grid';
-import InfoIcon from '@material-ui/icons/Info';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import {makeStyles} from '@material-ui/core/styles';
@@ -11,6 +10,7 @@ import {DecisionOptionInfo, SelectionCriteriaInfo} from '../../../constants/Info
 import {OptionsAndCriteriaKeys} from '../../../services/redux/actionsAndSlicers/OptionsAndCriteriaSlice';
 import {NOT_ENOUGH_CRITERIA, NOT_ENOUGH_OPTIONS} from '../../../constants/Alerts';
 import ComponentsTooltip from '../../../components/ComponentsTooltip';
+import {HelpOutlineRounded} from '@material-ui/icons';
 
 const useStyles = makeStyles(theme => ({
 	divMain: {
@@ -59,7 +59,7 @@ const OptionsAndCriteria: React.FC<Props> = (props: Props) => {
 								onClick={() => setShowOptionsInfo(true)}
 								tabIndex={hidden ? -1 : 0}
 							>
-								<InfoIcon color='secondary' />
+								<HelpOutlineRounded color='secondary' />
 							</IconButton>
 						</ComponentsTooltip>
 					</Typography>
@@ -81,7 +81,7 @@ const OptionsAndCriteria: React.FC<Props> = (props: Props) => {
 								onClick={() => setShowCriteriaInfo(true)}
 								tabIndex={hidden ? -1 : 0}
 							>
-								<InfoIcon color='secondary' />
+								<HelpOutlineRounded color='secondary' />
 							</IconButton>
 						</ComponentsTooltip>
 					</Typography>

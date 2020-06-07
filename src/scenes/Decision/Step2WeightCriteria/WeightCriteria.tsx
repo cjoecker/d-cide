@@ -3,7 +3,6 @@ import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Slider from '@material-ui/core/Slider';
 import Typography from '@material-ui/core/Typography';
-import InfoIcon from '@material-ui/icons/Info';
 import IconButton from '@material-ui/core/IconButton';
 import {shallowEqual, useDispatch, useSelector} from 'react-redux';
 import Fade from '@material-ui/core/Fade';
@@ -15,6 +14,7 @@ import {RootState} from '../../../services/redux/rootReducer';
 import WeightedCriteriaSlice, {WeightedCriteria} from '../../../services/redux/actionsAndSlicers/WeightCriteriaSlice';
 import ComponentsTooltip from '../../../components/ComponentsTooltip';
 import shuffleArray from '../../../services/shuffleArray';
+import {HelpOutlineRounded} from '@material-ui/icons';
 
 const useStyles = makeStyles(theme => ({
 	divMain: {
@@ -204,7 +204,7 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
 									onClick={() => setShowInfo(true)}
 									tabIndex={hidden ? -1 : 0}
 								>
-									<InfoIcon color='secondary' />
+									<HelpOutlineRounded color='secondary' />
 								</IconButton>
 							</ComponentsTooltip>
 						</Typography>

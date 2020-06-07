@@ -5,7 +5,6 @@ import {shallowEqual, useSelector} from 'react-redux';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
-import InfoIcon from '@material-ui/icons/Info';
 import Fade from '@material-ui/core/Fade';
 
 import {RootState} from '../../../../services/redux/rootReducer';
@@ -15,6 +14,7 @@ import {
 } from '../../../../services/redux/actionsAndSlicers/OptionsAndCriteriaSlice';
 import InfoDialog from '../../../../components/InfoDialog';
 import ComponentsTooltip from '../../../../components/ComponentsTooltip';
+import {HelpOutlineRounded} from '@material-ui/icons';
 
 const useStyles = makeStyles(theme => ({
 	divMain: {
@@ -94,7 +94,7 @@ const ResultsChart: React.FC<Props> = (props: Props) => {
 	return (
 		<div className={classes.divMain} data-testid={`${itemsKey}Diagram`}>
 			<Fade in={startAnimation} timeout={500}>
-				<Paper elevation={2} key='Option'>
+				<Paper elevation={1} key='Option'>
 					<Typography variant='h2' gutterBottom className={classes.title}>
 						{title}
 						<ComponentsTooltip title='Show help'>
@@ -105,7 +105,7 @@ const ResultsChart: React.FC<Props> = (props: Props) => {
 								onClick={() => setShowInfo(true)}
 								tabIndex={hidden ? -1 : 0}
 							>
-								<InfoIcon color='secondary' />
+								<HelpOutlineRounded color='secondary' />
 							</IconButton>
 						</ComponentsTooltip>
 					</Typography>

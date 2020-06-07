@@ -5,7 +5,6 @@ import Grid from '@material-ui/core/Grid';
 import Slider from '@material-ui/core/Slider';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
-import InfoIcon from '@material-ui/icons/Info';
 import {shallowEqual, useDispatch, useSelector} from 'react-redux';
 import Fade from '@material-ui/core/Fade';
 import {isMobile} from 'react-device-detect';
@@ -16,6 +15,7 @@ import RatedOptionsSlice, {RatedOption} from '../../../services/redux/actionsAnd
 import ComponentsTooltip from '../../../components/ComponentsTooltip';
 import shuffleArray from '../../../services/shuffleArray';
 import {OptionAndCriteria} from '../../../services/redux/actionsAndSlicers/OptionsAndCriteriaSlice';
+import {HelpOutlineRounded} from '@material-ui/icons';
 
 const useStyles = makeStyles(theme => ({
 	divMain: {
@@ -207,7 +207,7 @@ const RateOptions: React.FC<Props> = (props: Props) => {
 								onClick={() => setShowInfo(true)}
 								tabIndex={hidden ? -1 : 0}
 							>
-								<InfoIcon color='secondary' />
+								<HelpOutlineRounded color='secondary' />
 							</IconButton>
 						</ComponentsTooltip>
 					</Typography>

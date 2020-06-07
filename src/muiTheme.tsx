@@ -133,7 +133,8 @@ function theme(darkMode = false): Theme {
 			},
 			MuiIconButton: {
 				root: {
-					boxShadow: `inset 1px 1px 2px rgba(180, 180, 180, 0.2), inset -1px -1px 2px rgba(0, 0, 0, 0.4)`,
+					boxShadow: `3px 3px 6px rgba(0, 0, 0, 0.25), -3px -3px 6px rgba(180, 180, 180, 0.1);`,
+					padding: 6,
 					'&:hover': {
 						boxShadow: `4px 4px 8px rgba(0, 0, 0, 0.25), -4px -4px 8px rgba(180, 180, 180, 0.15);`,
 					},
@@ -190,7 +191,7 @@ function theme(darkMode = false): Theme {
 				},
 				elevation1: {
 					background: shadeHexColor(background, 0.05),
-					boxShadow: `2px 2px 4px rgba(0, 0, 0, 0.15), -2px -2px 4px rgba(180, 180, 180, 0.15);`,
+					boxShadow: `2px 2px 4px rgba(0, 0, 0, 0.2), -2px -2px 4px rgba(180, 180, 180, 0.07);`,
 					borderRadius: '10px',
 				},
 				elevation7: {
