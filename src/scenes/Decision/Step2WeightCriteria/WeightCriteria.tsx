@@ -63,10 +63,6 @@ const useStyles = makeStyles(theme => ({
 		backgroundColor: theme.palette.primary.main,
 	},
 
-	sliderTrack: {
-		opacity: 100,
-	},
-
 	gridItemSlider: {
 		marginTop: theme.spacing(-2.5),
 		marginBottom: theme.spacing(-1),
@@ -218,7 +214,7 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
 					weightedCriteria.map((criteria, index) => (
 						<Fade in timeout={500} style={{transitionDelay: `${index * 100}ms`}} key={criteria.id}>
 							<Grid item xs={6} className={classes.gridItemCriteria} key={criteria.id}>
-								<Paper elevation={2} className={classes.paper}>
+								<Paper elevation={1} className={classes.paper}>
 									<Grid container spacing={2} alignItems='center'>
 										<Grid item xs={6} className={classes.gridItemCriteriaText}>
 											<Typography
@@ -247,8 +243,6 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
 												)} and ${getSelectionCriteriaName(criteria.selectionCriteria2Id)}. Slider value: ${criteria.weight}`}
 												data-testid={`slider${index}`}
 												classes={{
-													track: classes.sliderTrack,
-													rail: classes.sliderTrack,
 													mark: classes.sliderMarks,
 													markActive: classes.sliderMarks,
 												}}

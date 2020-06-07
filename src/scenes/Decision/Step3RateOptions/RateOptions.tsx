@@ -87,10 +87,6 @@ const useStyles = makeStyles(theme => ({
 		backgroundColor: theme.palette.primary.main,
 	},
 
-	sliderTrack: {
-		opacity: 100,
-	},
-
 	emptySpace: {
 		height: theme.spacing(4),
 	},
@@ -220,7 +216,7 @@ const RateOptions: React.FC<Props> = (props: Props) => {
 					shuffledSelectionCriteria.map((criteria, criteriaIndex) => (
 						<Fade in timeout={500} style={{transitionDelay: `${criteriaIndex * 100}ms`}} key={criteria.id}>
 							<Grid item xs={6} className={classes.mainGridItem} key={criteria.id}>
-								<Paper className={classes.paper} elevation={2} key={criteria.id}>
+								<Paper className={classes.paper} elevation={1} key={criteria.id}>
 									<div>
 										<Grid container>
 											<Grid item xs={12} className={classes.gridItemCriteriaTitle}>
@@ -262,8 +258,6 @@ const RateOptions: React.FC<Props> = (props: Props) => {
 																<Slider
 																	data-testid={`slider${criteriaIndex}${optionIndex}`}
 																	classes={{
-																		track: classes.sliderTrack,
-																		rail: classes.sliderTrack,
 																		mark: classes.sliderMarks,
 																		markActive: classes.sliderMarks,
 																	}}

@@ -86,6 +86,29 @@ function theme(darkMode = false): Theme {
 			},
 		},
 		overrides: {
+			MuiSlider: {
+				thumb: {
+					marginTop: -7,
+					height: 15,
+					width: 15,
+					background: `linear-gradient(145deg, ${primary}, ${shadeHexColor(primary, -0.4)})`,
+					boxShadow: `3px 3px 6px rgba(0, 0, 0, 0.3), -3px -3px 6px rgba(180, 180, 180, 0.2);`,
+				},
+				track: {
+					opacity: '100%',
+					marginTop: -1.5,
+					height: 4,
+					borderRadius: 4,
+					boxShadow: `inset 1px 1px 2px rgba(0, 0, 0, 0.5), inset -1px -1px 2px rgba(180, 180, 180, 0.4)`,
+				},
+				rail: {
+					opacity: '100%',
+					marginTop: -1.5,
+					height: 4,
+					borderRadius: 4,
+					boxShadow: `inset 1px 1px 2px rgba(0, 0, 0, 0.5), inset -1px -1px 2px rgba(180, 180, 180, 0.4)`,
+				},
+			},
 			MuiStepIcon: {
 				root: {
 					boxShadow: `4px 4px 8px rgba(0, 0, 0, 0.25), -4px -4px 8px rgba(180, 180, 180, 0.15);`,
@@ -158,8 +181,8 @@ function theme(darkMode = false): Theme {
 					borderRadius: '20px',
 				},
 				elevation1: {
-					background: shadeHexColor(background, 0.1),
-					boxShadow: `3px 3px 6px rgba(0, 0, 0, 0.25), -3px -3px 6px rgba(180, 180, 180, 0.15);`,
+					background: shadeHexColor(background, 0.05),
+					boxShadow: `2px 2px 4px rgba(0, 0, 0, 0.15), -2px -2px 4px rgba(180, 180, 180, 0.15);`,
 					borderRadius: '10px',
 				},
 				elevation7: {
