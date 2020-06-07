@@ -65,6 +65,9 @@ const useStyles = makeStyles(styleTheme => ({
 		textDecoration: 'underline',
 		marginTop: styleTheme.spacing(-0.5),
 		fontWeight: 'normal',
+		'&:hover': {
+			textDecoration: 'underline',
+		},
 	},
 }));
 

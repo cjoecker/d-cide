@@ -176,7 +176,7 @@ function theme(darkMode = false): Theme {
 						background: primary,
 					},
 					'&:disabled': {
-						background: `linear-gradient(145deg, ${shadeHexColor(primary, -0.65)}, ${shadeHexColor(primary, -0.85)})`,
+						background: shadeHexColor(background, darkMode ? 0.2 : -0.2),
 					},
 				},
 				secondary: {
