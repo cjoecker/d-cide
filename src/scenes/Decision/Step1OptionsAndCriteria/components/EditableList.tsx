@@ -37,12 +37,12 @@ const useStyles = makeStyles(theme => ({
 	},
 
 	entryButtons: {
-		marginRight: theme.spacing(3),
+		marginRight: theme.spacing(1),
 		marginLeft: theme.spacing(3),
 	},
 
 	inputBase: {
-		margin: theme.spacing(1, 0, 1.5, 2.5),
+		margin: theme.spacing(1, 2, 1.5, 2.5),
 		width: '100%',
 		wordWrap: 'break-word',
 	},
@@ -209,7 +209,7 @@ const EditableList: React.FC<Props> = (props: Props) => {
 									/>
 								</ComponentsTooltip>
 							</Box>
-							<Box minWidth={theme.spacing(8)}>
+							<Box width={theme.spacing(10)}>
 								<ComponentsTooltip title='Add entry'>
 									<IconButton
 										data-testid='addButton'
@@ -261,7 +261,7 @@ const EditableList: React.FC<Props> = (props: Props) => {
 											/>
 										</ComponentsTooltip>
 									</Box>
-									<Box minWidth={theme.spacing(8)}>
+									<Box width={theme.spacing(10)}>
 										<ComponentsTooltip title='Delete entry'>
 											<IconButton
 												data-testid={`deleteButton${index}`}
