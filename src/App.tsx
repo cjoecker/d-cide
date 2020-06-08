@@ -8,7 +8,7 @@ import Grid from '@material-ui/core/Grid';
 import ReactGA, {ga} from 'react-ga';
 import {Button, IconButton, Link} from '@material-ui/core';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import {Brightness3, FlareRounded} from '@material-ui/icons';
+import {Brightness3, Favorite, FlareRounded} from '@material-ui/icons';
 import {isMobile} from 'react-device-detect';
 import Decision from './scenes/Decision/Decision';
 import AlertsBanner from './components/AlertsBanner';
@@ -156,9 +156,7 @@ const App: React.FC = () => {
 						<Typography component='span' variant='caption' align='center'>
 							<Grid item xs={12}>
 								Made with&nbsp;
-								<span role='img' aria-label='love'>
-									💖
-								</span>
+								<Favorite aria-label='love' fontSize='inherit' />
 								&nbsp;by{' '}
 								<Link
 									data-testid='cjoeckerLink'
