@@ -59,14 +59,14 @@ const useStyles = makeStyles(theme => ({
 	sliderTextGridLeft: {
 		paddingLeft: theme.spacing(1.8),
 		paddingRight: theme.spacing(1.8),
-		marginTop: theme.spacing(1.6),
+		marginTop: theme.spacing(0.5),
 		textAlign: 'left',
 	},
 
 	sliderTextGridRight: {
 		paddingLeft: theme.spacing(1.8),
 		paddingRight: theme.spacing(1.8),
-		marginTop: theme.spacing(1.6),
+		marginTop: theme.spacing(0.5),
 		textAlign: 'right',
 	},
 
@@ -249,7 +249,7 @@ const RateOptions: React.FC<Props> = (props: Props) => {
 																item
 																xs={12}
 																className={classes.gridItemSlider}
-																style={{marginTop: isMobile ? theme.spacing(-3) : theme.spacing(-2)}}
+																style={{marginTop: isMobile ? theme.spacing(-2.7) : theme.spacing(-2)}}
 															>
 																<Slider
 																	data-testid={`slider${criteriaIndex}${optionIndex}`}
