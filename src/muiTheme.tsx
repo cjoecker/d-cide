@@ -141,7 +141,7 @@ function theme(darkMode = false): Theme {
 				root: {
 					backgroundColor: shadeHexColor(background, darkMode ? 0.05 : 0.2),
 					boxShadow: `3px 3px 6px rgba(0, 0, 0, 0.25), -3px -3px 6px rgba(255, 255, 255, ${darkMode ? 0.06 : 0.3})`,
-					padding: 6,
+					padding: 8,
 					'&:hover': {
 						backgroundColor: shadeHexColor(background, 0.05),
 					},

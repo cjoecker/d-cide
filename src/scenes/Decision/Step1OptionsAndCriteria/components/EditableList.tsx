@@ -36,16 +36,13 @@ const useStyles = makeStyles(theme => ({
 		margin: theme.spacing(1, 1, 0, 1),
 	},
 
-	editButton: {
-		marginRight: theme.spacing(-1),
-	},
-
-	deleteButton: {
-		marginRight: theme.spacing(-1.5),
+	entryButtons: {
+		marginRight: theme.spacing(3),
+		marginLeft: theme.spacing(3),
 	},
 
 	inputBase: {
-		margin: theme.spacing(0.5, 0, 1, 2),
+		margin: theme.spacing(1, 0, 1.5, 2.5),
 		width: '100%',
 		wordWrap: 'break-word',
 	},
@@ -217,7 +214,7 @@ const EditableList: React.FC<Props> = (props: Props) => {
 									<IconButton
 										data-testid='addButton'
 										aria-label={`Create new ${itemsType}`}
-										className={classes.deleteButton}
+										className={classes.entryButtons}
 										onClick={() => onCreateItem()}
 										tabIndex={hidden ? -1 : 0}
 									>
@@ -270,7 +267,7 @@ const EditableList: React.FC<Props> = (props: Props) => {
 												data-testid={`deleteButton${index}`}
 												aria-label={`Delete ${itemsType}`}
 												onClick={() => onDeleteItem(item)}
-												className={classes.deleteButton}
+												className={classes.entryButtons}
 											>
 												<DeleteIcon />
 											</IconButton>
