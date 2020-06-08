@@ -102,7 +102,10 @@ const Decision: React.FC = () => {
 	}, [loadedStepNum]);
 
 	useEffect(() => {
-		disableButtons(alerts.includes(NOT_ENOUGH_OPTIONS) || alerts.includes(NOT_ENOUGH_CRITERIA));
+		disableButtons(
+			JSON.stringify(alerts).includes(JSON.stringify(NOT_ENOUGH_OPTIONS)) ||
+				JSON.stringify(alerts).includes(JSON.stringify(NOT_ENOUGH_CRITERIA))
+		);
 
 		alerts.forEach(alert =>
 			ReactGA.event({
