@@ -156,7 +156,9 @@ const App: React.FC = () => {
 						<Typography component='span' variant='caption' align='center'>
 							<Grid item xs={12}>
 								Made with&nbsp;
-								<Favorite aria-label='love' fontSize='inherit' />
+								<span style={{position: 'relative', top: appTheme.spacing(0.35)}}>
+									<Favorite aria-label='love' fontSize='inherit' />
+								</span>
 								&nbsp;by{' '}
 								<Link
 									data-testid='cjoeckerLink'
