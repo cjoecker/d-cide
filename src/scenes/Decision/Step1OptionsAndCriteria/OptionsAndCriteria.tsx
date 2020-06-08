@@ -21,7 +21,7 @@ const useStyles = makeStyles(theme => ({
 
 	infoButton: {
 		bottom: theme.spacing(0.25),
-		left: theme.spacing(1.2),
+		left: theme.spacing(1.5),
 	},
 
 	gridItem: {

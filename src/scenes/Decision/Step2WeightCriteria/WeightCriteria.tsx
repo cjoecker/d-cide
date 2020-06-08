@@ -29,8 +29,9 @@ const useStyles = makeStyles(theme => ({
 	},
 
 	infoButton: {
-		bottom: theme.spacing(0.25),
-		left: theme.spacing(1.2),
+		marginTop: theme.spacing(1.5),
+		bottom: theme.spacing(1),
+		left: theme.spacing(1.5),
 	},
 
 	paper: {
