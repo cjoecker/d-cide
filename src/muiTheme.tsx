@@ -2,10 +2,10 @@ import {createMuiTheme, Theme} from '@material-ui/core/styles';
 
 function theme(darkMode = false): Theme {
 	//Light Theme
-	let background = '#c5c5d7';
+	let background = '#cfcfe0';
 	let primary = '#0f61a0';
 	let primaryContrastText = '#fafafa';
-	let secondary = '#575757';
+	let secondary = '#6d6d6d';
 	let secondaryContrastText = '#fafafa';
 	let primaryText = '#3D3D3D';
 	let secondaryText = '#575757';
