@@ -40,9 +40,9 @@ const useStyles = makeStyles(styleTheme => ({
 		paddingRight: 'env(safe-area-inset-right)',
 	},
 
-	logoBox: {
+	logo: {
 		maxWidth: styleTheme.spacing(17),
-		height: '50%',
+		height: '60%',
 	},
 
 	footer: {
@@ -138,7 +138,7 @@ const App: React.FC = () => {
 						style={{marginBottom: isMobile ? 0 : appTheme.spacing(-2)}}
 					>
 						<Toolbar>
-							<Logo className={classes.logoBox} fill={darkModeActive ? 'white' : appTheme.palette.primary.main} />
+							<Logo className={classes.logo} fill={darkModeActive ? 'white' : appTheme.palette.primary.main} />
 							<div style={{flexGrow: 1}} />
 							<ComponentsTooltip>
 								<IconButton
