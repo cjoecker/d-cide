@@ -78,7 +78,6 @@ const AlertsBanner: React.FC = () => {
 					style={{marginBottom: theme.spacing(1)}}
 					data-testid={`${alert.type}Alert`}
 					onClose={alert.allowClose ? handleClose : undefined}
-					variant='filled'
 					severity={alert.type}
 				>
 					{alert.text}
