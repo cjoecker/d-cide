@@ -3,17 +3,17 @@ import {OptionAndCriteria} from '../services/redux/actionsAndSlicers/OptionsAndC
 export const predefinedDecisionOptions: OptionAndCriteria[] = [
 	{
 		id: 1,
-		name: 'House 1',
+		name: 'Invest in gold',
 		score: 0,
 	},
 	{
 		id: 2,
-		name: 'House 2',
+		name: 'Invest in shares',
 		score: 0,
 	},
 	{
 		id: 3,
-		name: 'House 3',
+		name: 'Invest in real state',
 		score: 0,
 	},
 ];
@@ -21,22 +21,22 @@ export const predefinedDecisionOptions: OptionAndCriteria[] = [
 export const predefinedSelectionCriteria: OptionAndCriteria[] = [
 	{
 		id: 1,
-		name: 'Size',
+		name: 'Risks',
 		score: 0,
 	},
 	{
 		id: 2,
-		name: 'Garden',
+		name: 'Long term profit',
 		score: 0,
 	},
 	{
 		id: 3,
-		name: 'Kitchen',
+		name: 'Short term profit',
 		score: 0,
 	},
 	{
 		id: 4,
-		name: 'Neighborhood',
+		name: 'Monthly cash flow',
 		score: 0,
 	},
 ];
