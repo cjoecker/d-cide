@@ -18,7 +18,7 @@ context('Actions', () => {
 		});
 
 		it('shows diagram correctly', () => {
-			showsDiagramCorrectly('decisionOptions', ['House 1', 'House 2', 'House 3']);
+			showsDiagramCorrectly('decisionOptions', ['Invest in', 'Invest in', 'Invest in']);
 		});
 
 		it('wraps long labels', () => {
@@ -36,7 +36,7 @@ context('Actions', () => {
 		});
 
 		it('shows diagram correctly', () => {
-			showsDiagramCorrectly('selectionCriteria', ['Kitchen', 'Size', 'Neighborhood', 'Garden']);
+			showsDiagramCorrectly('selectionCriteria', ['Short term', 'Risks', 'Monthly', 'Long term']);
 		});
 
 		it('wraps long labels', () => {

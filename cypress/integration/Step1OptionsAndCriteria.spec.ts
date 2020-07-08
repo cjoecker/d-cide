@@ -7,8 +7,8 @@ context('Actions', () => {
 		cy.visit('/');
 	});
 
-	const firstDecisionOption = 'House 1';
-	const firstSelectionCriteria = 'Size';
+	const firstDecisionOption = 'Invest in gold';
+	const firstSelectionCriteria = 'Risks';
 
 	describe('Decision Options', () => {
 		const listName = 'decisionOptionsList';
