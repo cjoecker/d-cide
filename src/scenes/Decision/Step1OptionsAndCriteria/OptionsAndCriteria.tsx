@@ -3,6 +3,7 @@ import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import {makeStyles} from '@material-ui/core/styles';
+import {HelpOutlineRounded} from '@material-ui/icons';
 import InfoDialog from '../../../components/InfoDialog';
 import EditableList from './components/EditableList';
 
@@ -10,7 +11,6 @@ import {DecisionOptionInfo, SelectionCriteriaInfo} from '../../../constants/Info
 import {OptionsAndCriteriaKeys} from '../../../services/redux/actionsAndSlicers/OptionsAndCriteriaSlice';
 import {NOT_ENOUGH_CRITERIA, NOT_ENOUGH_OPTIONS} from '../../../constants/Alerts';
 import ComponentsTooltip from '../../../components/ComponentsTooltip';
-import {HelpOutlineRounded} from '@material-ui/icons';
 
 const useStyles = makeStyles(theme => ({
 	divMain: {
@@ -59,13 +59,12 @@ const OptionsAndCriteria: React.FC<Props> = (props: Props) => {
 							</IconButton>
 						</ComponentsTooltip>
 					</Typography>
-					{!hidden && (
-						<EditableList
-							itemsKey={OptionsAndCriteriaKeys.decisionOptions}
-							notEnoughItemsAlert={NOT_ENOUGH_OPTIONS}
-							hidden={hidden}
-						/>
-					)}
+
+					<EditableList
+						itemsKey={OptionsAndCriteriaKeys.decisionOptions}
+						notEnoughItemsAlert={NOT_ENOUGH_OPTIONS}
+						hidden={hidden}
+					/>
 				</Grid>
 				<Grid item xs={6} className={classes.gridItem}>
 					<Typography component='span' variant='h1'>
@@ -81,13 +80,11 @@ const OptionsAndCriteria: React.FC<Props> = (props: Props) => {
 							</IconButton>
 						</ComponentsTooltip>
 					</Typography>
-					{!hidden && (
-						<EditableList
-							itemsKey={OptionsAndCriteriaKeys.selectionCriteria}
-							notEnoughItemsAlert={NOT_ENOUGH_CRITERIA}
-							hidden={hidden}
-						/>
-					)}
+					<EditableList
+						itemsKey={OptionsAndCriteriaKeys.selectionCriteria}
+						notEnoughItemsAlert={NOT_ENOUGH_CRITERIA}
+						hidden={hidden}
+					/>
 				</Grid>
 			</Grid>
 			<InfoDialog text={DecisionOptionInfo} show={showOptionsInfo} onClose={() => setShowOptionsInfo(false)} />

@@ -85,6 +85,7 @@ const EditableList: React.FC<Props> = (props: Props) => {
 			setLocalItems(items);
 			setDidMount(true);
 		} else {
+			onCreateItem();
 			setLocalItems([]);
 			setStopAnimation(false);
 			dispatch(AppSlice.actions.deleteAlert(notEnoughItemsAlert));
@@ -92,7 +93,7 @@ const EditableList: React.FC<Props> = (props: Props) => {
 	}, [hidden]);
 
 	useEffect(() => {
-		if (items.length !== localItems.length && !hidden && didMount) {
+		if (items.length !== localItems.length && didMount) {
 			clearNewEntryWhenCreated();
 		}
 

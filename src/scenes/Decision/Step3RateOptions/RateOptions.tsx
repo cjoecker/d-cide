@@ -135,7 +135,7 @@ const RateOptions: React.FC<Props> = (props: Props) => {
 			setShuffledSelectionCriteria(shuffleArray(selectionCriteria));
 			shuffleDecisionOptions();
 		}
-	}, [hidden]);
+	}, [hidden, selectionCriteria, decisionOptions]);
 
 	const onChange = (event: React.BaseSyntheticEvent, criteriaId: number, optionId: number, score: number) => {
 		ratedOptions.forEach(option => {

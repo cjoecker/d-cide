@@ -111,7 +111,7 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
 
 	useEffect(() => {
 		if (!hidden) createWeightedCriteria();
-	}, [hidden]);
+	}, [hidden, selectionCriteria]);
 
 	const onChange = (event: React.BaseSyntheticEvent, value: number, itemLocal: WeightedCriteria) => {
 		weightedCriteria.forEach(criteria => {
