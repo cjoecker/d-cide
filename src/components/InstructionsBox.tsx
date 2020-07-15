@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Button, IconButton, Theme} from '@material-ui/core';
+import {Box, Button, IconButton, Theme} from '@material-ui/core';
 import {makeStyles} from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
@@ -61,7 +61,8 @@ const useStyles = makeStyles<Theme, StyleProps>(theme => ({
 	linkButton: {
 		textTransform: 'none',
 		textDecoration: 'underline',
-		marginTop: theme.spacing(-0.5),
+		marginTop: theme.spacing(-1.5),
+		marginLeft: theme.spacing(1),
 		fontWeight: 'normal',
 		'&:hover': {
 			textDecoration: 'underline',
@@ -107,15 +108,17 @@ const InstructionsBox = (props: ComponentsTooltipProps) => {
 								<CloseIcon fontSize='small' />
 							</IconButton>
 						</Grid>
-						<Grid item xs={12}>
-							<Button
-								className={classes.linkButton}
-								data-testid='dontShowMoreHelp'
-								onClick={() => setIsVisible(false)}
-								color='primary'
-							>
-								Don&apos;t show more help
-							</Button>
+						<Grid item justify='flex-start' alignContent='flex-start' xs={12}>
+							<Box top={0} left={0} position='relative' display='flex' alignItems='left' justifyContent='left'>
+								<Button
+									className={classes.linkButton}
+									data-testid='dontShowMoreHelp'
+									onClick={() => setIsVisible(false)}
+									color='primary'
+								>
+									Don&apos;t show help anymore
+								</Button>
+							</Box>
 						</Grid>
 					</Grid>
 				</div>
