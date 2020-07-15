@@ -19,6 +19,10 @@ import AppSlice from '../../../../services/redux/actionsAndSlicers/AppSlice';
 import {AlertType} from '../../../../constants/Alerts';
 import ComponentsTooltip from '../../../../components/ComponentsTooltip';
 import InstructionsBox from '../../../../components/InstructionsBox';
+import {debounceTime} from 'rxjs/operators';
+import {Subject} from 'rxjs';
+
+const onChangeNewEntry$ = new Subject();
 
 const useStyles = makeStyles(theme => ({
 	divMain: {
@@ -113,6 +117,20 @@ const EditableList: React.FC<Props> = (props: Props) => {
 		else setShowInstructions(false);
 	}, [instructionsSteps]);
 
+	useEffect(() => {
+		const subscription = onChangeNewEntry$.pipe(debounceTime(1000)).subscribe(() => {
+			if (
+				(itemsKey === OptionsAndCriteriaKeys.decisionOptions && instructionsSteps === 0) ||
+				(itemsKey === OptionsAndCriteriaKeys.selectionCriteria && instructionsSteps === 3)
+			)
+				dispatch(AppSlice.actions.increaseInstructionsStep());
+		});
+
+		return () => {
+			subscription.unsubscribe();
+		};
+	}, []);
+
 	const onCreateItem = () => {
 		if (newEntry === '') return;
 
@@ -136,8 +154,7 @@ const EditableList: React.FC<Props> = (props: Props) => {
 
 	const onChangeNewEntry = (event: React.BaseSyntheticEvent) => {
 		setNewEntry(event.target.value);
-
-		if (instructionsSteps === 0) dispatch(AppSlice.actions.increaseInstructionsStep());
+		onChangeNewEntry$.next(event.target.value);
 	};
 
 	const onChangeItem = (event: React.BaseSyntheticEvent, itemId: number) => {

@@ -31,19 +31,6 @@ const useStyles = makeStyles<Theme, StyleProps>(theme => ({
 		animationTimingFunction: 'easeInOutSine',
 	},
 	instructionsBoxLeft: {
-		color: theme.palette.background.paper,
-		display: 'flex',
-		backgroundColor: 'currentColor',
-		position: 'relative',
-		top: '0px',
-		left: '0px',
-		width: '100%',
-		height: '100%',
-		borderRadius: theme.spacing(1),
-		boxShadow: '0px 0px 41px -11px rgba(0,0,0,0.7)',
-		animation: `$myEffect 2000ms`,
-		animationIterationCount: 'infinite',
-		animationTimingFunction: 'easeInOutSine',
 		'&::after': {
 			content: "''",
 			position: 'absolute',
@@ -113,7 +100,7 @@ const InstructionsBox = (props: ComponentsTooltipProps) => {
 	return (
 		<>
 			{isVisible && (
-				<div className={classes.instructionsBox}>
+				<div className={`${classes.instructionsBox} ${classes.instructionsBoxLeft}`}>
 					<Grid container justify='flex-start' alignContent='flex-start'>
 						<Grid item xs={10}>
 							<div className={classes.typography}>
