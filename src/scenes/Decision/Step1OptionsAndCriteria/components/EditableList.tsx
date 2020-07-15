@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {makeStyles, useTheme} from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/DeleteOutlineRounded';
@@ -17,11 +17,9 @@ import OptionsAndCriteriaSlice, {
 import {RootState} from '../../../../services/redux/rootReducer';
 import AppSlice from '../../../../services/redux/actionsAndSlicers/AppSlice';
 import {AlertType} from '../../../../constants/Alerts';
-import {
-	predefinedDecisionOptions,
-	predefinedSelectionCriteria,
-} from '../../../../constants/PredifinedOptionsAndCriteria';
 import ComponentsTooltip from '../../../../components/ComponentsTooltip';
+import InstructionsBox from '../../../../components/InstructionsBox';
+import {DecisionOptionsInstructions} from '../../../../constants/Instructions';
 
 const useStyles = makeStyles(theme => ({
 	divMain: {
@@ -63,6 +61,9 @@ const EditableList: React.FC<Props> = (props: Props) => {
 	const [stopAnimation, setStopAnimation] = useState(false);
 	const [itemsType, setItemsType] = useState('');
 	const items = useSelector((state: RootState) => state.OptionsAndCriteria[itemsKey], shallowEqual);
+	const {instructionsSteps} = useSelector((state: RootState) => state.App, shallowEqual);
+
+	const paperRef = useRef(null);
 
 	const animationDelay = 100;
 
@@ -81,7 +82,6 @@ const EditableList: React.FC<Props> = (props: Props) => {
 
 	useEffect(() => {
 		if (!hidden) {
-			if (items.length === 0) createStartItems();
 			setLocalItems(items);
 			setDidMount(true);
 		} else {
@@ -167,12 +167,6 @@ const EditableList: React.FC<Props> = (props: Props) => {
 		}
 	};
 
-	const createStartItems = () => {
-		if (itemsKey === OptionsAndCriteriaKeys.decisionOptions)
-			dispatch(OptionsAndCriteriaSlice.actions.setDecisionOptions(predefinedDecisionOptions));
-		else dispatch(OptionsAndCriteriaSlice.actions.setSelectionCriteria(predefinedSelectionCriteria));
-	};
-
 	const clearNewEntryWhenCreated = () => {
 		if (items.length > 0 && items[0].name === newEntry) setNewEntry('');
 	};
@@ -186,7 +180,7 @@ const EditableList: React.FC<Props> = (props: Props) => {
 		<div className={classes.divMain} data-testid={`${itemsKey}List`}>
 			<Grid container justify='center' alignContent='center'>
 				<Grid item xs={12}>
-					<Paper className={classes.paperTitle} elevation={1} key='NewEntry'>
+					<Paper className={classes.paperTitle} elevation={1} ref={paperRef} key='NewEntry'>
 						<Box display='flex' alignItems='center'>
 							<Box width='100%' mr={1}>
 								<ComponentsTooltip title='Write new entry'>
@@ -225,6 +219,12 @@ const EditableList: React.FC<Props> = (props: Props) => {
 							</Box>
 						</Box>
 					</Paper>
+					{/*<Popper open={instructionsSteps === 0} anchorEl={paperRef.current}>*/}
+					{/*	<InstructionsBox/>*/}
+					{/*</Popper>*/}
+				</Grid>
+				<Grid item xs={12}>
+					<InstructionsBox text={DecisionOptionsInstructions} show />
 				</Grid>
 				{localItems.map((item, index) => (
 					<Fade

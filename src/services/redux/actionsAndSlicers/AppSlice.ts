@@ -3,10 +3,12 @@ import {AlertType} from '../../../constants/Alerts';
 
 type AppState = {
 	alerts: AlertType[];
+	instructionsSteps: number;
 };
 
 const initialState: AppState = {
 	alerts: [],
+	instructionsSteps: 0,
 };
 
 const AppSlice = createSlice({
@@ -20,6 +22,9 @@ const AppSlice = createSlice({
 		},
 		deleteAlert(state, action: PayloadAction<AlertType>) {
 			state.alerts = state.alerts.filter(alert => JSON.stringify(alert) !== JSON.stringify(action.payload));
+		},
+		increaseInstructionsStep(state) {
+			state.instructionsSteps += 1;
 		},
 	},
 });
