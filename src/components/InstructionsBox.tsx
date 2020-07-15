@@ -6,7 +6,8 @@ import CloseIcon from '@material-ui/icons/Close';
 import Grid from '@material-ui/core/Grid';
 
 export interface StyleProps {
-	left?: number;
+	xPos: number;
+	arrowAlignRight?: boolean;
 }
 
 const useStyles = makeStyles<Theme, StyleProps>(theme => ({
@@ -24,10 +25,11 @@ const useStyles = makeStyles<Theme, StyleProps>(theme => ({
 		animation: `$myEffect 2000ms`,
 		animationIterationCount: 'infinite',
 		animationTimingFunction: 'easeInOutSine',
-		'&::before': {
+		'&::after': {
 			content: "''",
-			position: 'relative',
-			left: ({left}) => (left != null ? theme.spacing(left) : '50%'),
+			position: 'absolute',
+			left: ({xPos, arrowAlignRight}) => (!arrowAlignRight ? theme.spacing(xPos) : null),
+			right: ({xPos, arrowAlignRight}) => (arrowAlignRight ? theme.spacing(xPos) : null),
 			top: '-14px',
 			width: '0px',
 			height: '0px',
@@ -61,11 +63,12 @@ const useStyles = makeStyles<Theme, StyleProps>(theme => ({
 type ComponentsTooltipProps = {
 	text: JSX.Element;
 	show: boolean;
-	arrowXPos?: number;
+	arrowXPos: number;
+	arrowAlignRight?: boolean;
 };
 
 const InstructionsBox = (props: ComponentsTooltipProps) => {
-	const {text, show, arrowXPos} = props;
+	const {text, show, arrowXPos, arrowAlignRight} = props;
 
 	const [isVisible, setIsVisible] = useState(true);
 
@@ -73,7 +76,7 @@ const InstructionsBox = (props: ComponentsTooltipProps) => {
 		setIsVisible(show);
 	}, [show]);
 
-	const classes = useStyles({left: arrowXPos});
+	const classes = useStyles({xPos: arrowXPos, arrowAlignRight});
 
 	return (
 		<>

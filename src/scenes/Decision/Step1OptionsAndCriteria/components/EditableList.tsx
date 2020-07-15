@@ -64,6 +64,7 @@ const EditableList: React.FC<Props> = (props: Props) => {
 	const {instructionsSteps} = useSelector((state: RootState) => state.App, shallowEqual);
 	const [instructionsArrowPos, setInstructionsArrowPos] = useState(0);
 	const [showInstructions, setShowInstructions] = useState(false);
+	const [alignArrowRight, setAlignArrowRight] = useState(false);
 
 	const paperRef = useRef(null);
 
@@ -111,12 +112,15 @@ const EditableList: React.FC<Props> = (props: Props) => {
 		switch (instructionsSteps) {
 			case 0:
 				setInstructionsArrowPos(7);
+				setAlignArrowRight(false);
 				break;
 			case 1:
-				setInstructionsArrowPos(14);
+				setInstructionsArrowPos(3.5);
+				setAlignArrowRight(true);
 				break;
 			default:
 				setInstructionsArrowPos(0);
+				setAlignArrowRight(false);
 				break;
 		}
 	}, [instructionsSteps]);
@@ -260,6 +264,7 @@ const EditableList: React.FC<Props> = (props: Props) => {
 						text={instructionsText[instructionsSteps]}
 						arrowXPos={instructionsArrowPos}
 						show={showInstructions}
+						arrowAlignRight={alignArrowRight}
 					/>
 				</Grid>
 				{localItems.map((item, index) => (
