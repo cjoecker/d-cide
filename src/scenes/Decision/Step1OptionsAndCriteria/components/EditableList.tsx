@@ -19,7 +19,6 @@ import AppSlice from '../../../../services/redux/actionsAndSlicers/AppSlice';
 import {AlertType} from '../../../../constants/Alerts';
 import ComponentsTooltip from '../../../../components/ComponentsTooltip';
 import InstructionsBox from '../../../../components/InstructionsBox';
-import {instructionsText} from '../../../../constants/Instructions';
 
 const useStyles = makeStyles(theme => ({
 	divMain: {
@@ -61,10 +60,9 @@ const EditableList: React.FC<Props> = (props: Props) => {
 	const [stopAnimation, setStopAnimation] = useState(false);
 	const [itemsType, setItemsType] = useState('');
 	const items = useSelector((state: RootState) => state.OptionsAndCriteria[itemsKey], shallowEqual);
-	const {instructionsSteps} = useSelector((state: RootState) => state.App, shallowEqual);
-	const [instructionsArrowPos, setInstructionsArrowPos] = useState(0);
 	const [showInstructions, setShowInstructions] = useState(false);
-	const [alignArrowRight, setAlignArrowRight] = useState(false);
+
+	const {instructionsSteps} = useSelector((state: RootState) => state.App, shallowEqual);
 
 	const paperRef = useRef(null);
 
@@ -107,32 +105,13 @@ const EditableList: React.FC<Props> = (props: Props) => {
 	}, [items]);
 
 	useEffect(() => {
-		checkIfShowInstructions();
-
-		switch (instructionsSteps) {
-			case 0:
-				setInstructionsArrowPos(7);
-				setAlignArrowRight(false);
-				break;
-			case 1:
-				setInstructionsArrowPos(3.5);
-				setAlignArrowRight(true);
-				break;
-			default:
-				setInstructionsArrowPos(0);
-				setAlignArrowRight(false);
-				break;
-		}
-	}, [instructionsSteps]);
-
-	const checkIfShowInstructions = () => {
 		if (
 			(itemsKey === OptionsAndCriteriaKeys.decisionOptions && instructionsSteps >= 0 && instructionsSteps < 4) ||
 			(itemsKey === OptionsAndCriteriaKeys.selectionCriteria && instructionsSteps >= 4 && instructionsSteps < 8)
 		)
 			setShowInstructions(true);
 		else setShowInstructions(false);
-	};
+	}, [instructionsSteps]);
 
 	const onCreateItem = () => {
 		if (newEntry === '') return;
@@ -260,12 +239,7 @@ const EditableList: React.FC<Props> = (props: Props) => {
 					{/*</Popper>*/}
 				</Grid>
 				<Grid item xs={12}>
-					<InstructionsBox
-						text={instructionsText[instructionsSteps]}
-						arrowXPos={instructionsArrowPos}
-						show={showInstructions}
-						arrowAlignRight={alignArrowRight}
-					/>
+					<InstructionsBox show={showInstructions} />
 				</Grid>
 				{localItems.map((item, index) => (
 					<Fade

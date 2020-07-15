@@ -4,10 +4,14 @@ import {makeStyles} from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
 import Grid from '@material-ui/core/Grid';
+import {shallowEqual, useSelector} from 'react-redux';
+import {RootState} from '../services/redux/rootReducer';
+import {instructions} from '../constants/Instructions';
 
 export interface StyleProps {
-	xPos: number;
-	arrowAlignRight?: boolean;
+	arrowPos: 'top' | 'right' | 'bottom' | 'left';
+	arrowOffset: number;
+	invertArrowOffsetDirection: boolean;
 }
 
 const useStyles = makeStyles<Theme, StyleProps>(theme => ({
@@ -25,11 +29,28 @@ const useStyles = makeStyles<Theme, StyleProps>(theme => ({
 		animation: `$myEffect 2000ms`,
 		animationIterationCount: 'infinite',
 		animationTimingFunction: 'easeInOutSine',
+	},
+	instructionsBoxLeft: {
+		color: theme.palette.background.paper,
+		display: 'flex',
+		backgroundColor: 'currentColor',
+		position: 'relative',
+		top: '0px',
+		left: '0px',
+		width: '100%',
+		height: '100%',
+		borderRadius: theme.spacing(1),
+		boxShadow: '0px 0px 41px -11px rgba(0,0,0,0.7)',
+		animation: `$myEffect 2000ms`,
+		animationIterationCount: 'infinite',
+		animationTimingFunction: 'easeInOutSine',
 		'&::after': {
 			content: "''",
 			position: 'absolute',
-			left: ({xPos, arrowAlignRight}) => (!arrowAlignRight ? theme.spacing(xPos) : null),
-			right: ({xPos, arrowAlignRight}) => (arrowAlignRight ? theme.spacing(xPos) : null),
+			left: ({arrowOffset, invertArrowOffsetDirection}) =>
+				!invertArrowOffsetDirection ? theme.spacing(arrowOffset) : null,
+			right: ({arrowOffset, invertArrowOffsetDirection}) =>
+				invertArrowOffsetDirection ? theme.spacing(arrowOffset) : null,
 			top: '-14px',
 			width: '0px',
 			height: '0px',
@@ -74,22 +95,20 @@ const useStyles = makeStyles<Theme, StyleProps>(theme => ({
 }));
 
 type ComponentsTooltipProps = {
-	text: JSX.Element;
 	show: boolean;
-	arrowXPos: number;
-	arrowAlignRight?: boolean;
 };
 
 const InstructionsBox = (props: ComponentsTooltipProps) => {
-	const {text, show, arrowXPos, arrowAlignRight} = props;
+	const {show} = props;
 
 	const [isVisible, setIsVisible] = useState(true);
+	const {instructionsSteps} = useSelector((state: RootState) => state.App, shallowEqual);
 
 	useEffect(() => {
 		setIsVisible(show);
 	}, [show]);
 
-	const classes = useStyles({xPos: arrowXPos, arrowAlignRight});
+	const classes = useStyles(instructions[instructionsSteps]);
 
 	return (
 		<>
@@ -99,7 +118,7 @@ const InstructionsBox = (props: ComponentsTooltipProps) => {
 						<Grid item xs={10}>
 							<div className={classes.typography}>
 								<Typography component='span' variant='body1' align='left' color={'secondary'}>
-									{text}
+									{instructions[instructionsSteps].text}
 								</Typography>
 							</div>
 						</Grid>
