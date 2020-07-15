@@ -1,11 +1,15 @@
 import React, {useEffect, useState} from 'react';
-import {IconButton} from '@material-ui/core';
+import {IconButton, Theme} from '@material-ui/core';
 import {makeStyles} from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
 import Grid from '@material-ui/core/Grid';
 
-const useStyles = makeStyles(theme => ({
+export interface StyleProps {
+	left?: number;
+}
+
+const useStyles = makeStyles<Theme, StyleProps>(theme => ({
 	instructionsBox: {
 		color: theme.palette.background.paper,
 		display: 'flex',
@@ -23,7 +27,7 @@ const useStyles = makeStyles(theme => ({
 		'&::before': {
 			content: "''",
 			position: 'relative',
-			left: '50%',
+			left: ({left}) => (left != null ? theme.spacing(left) : '50%'),
 			top: '-14px',
 			width: '0px',
 			height: '0px',
@@ -57,22 +61,23 @@ const useStyles = makeStyles(theme => ({
 type ComponentsTooltipProps = {
 	text: JSX.Element;
 	show: boolean;
+	arrowXPos?: number;
 };
 
 const InstructionsBox = (props: ComponentsTooltipProps) => {
-	const {text, show} = props;
+	const {text, show, arrowXPos} = props;
 
-	const [_show, set_show] = useState(true);
+	const [isVisible, setIsVisible] = useState(true);
 
 	useEffect(() => {
-		set_show(show);
+		setIsVisible(show);
 	}, [show]);
 
-	const classes = useStyles();
+	const classes = useStyles({left: arrowXPos});
 
 	return (
 		<>
-			{_show && (
+			{isVisible && (
 				<div className={classes.instructionsBox}>
 					<Grid container justify='center' alignContent='center'>
 						<Grid item xs={10}>
@@ -81,7 +86,7 @@ const InstructionsBox = (props: ComponentsTooltipProps) => {
 							</Typography>
 						</Grid>
 						<Grid item xs={2}>
-							<IconButton aria-label='delete' className={classes.closeButton} onClick={() => set_show(false)}>
+							<IconButton aria-label='delete' className={classes.closeButton} onClick={() => setIsVisible(false)}>
 								<CloseIcon fontSize='small' />
 							</IconButton>
 						</Grid>

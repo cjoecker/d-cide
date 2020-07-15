@@ -227,7 +227,7 @@ const EditableList: React.FC<Props> = (props: Props) => {
 					{/*</Popper>*/}
 				</Grid>
 				<Grid item xs={12}>
-					<InstructionsBox text={instructionsText} show />
+					<InstructionsBox text={instructionsText} arrowXPos={7} show />
 				</Grid>
 				{localItems.map((item, index) => (
 					<Fade
