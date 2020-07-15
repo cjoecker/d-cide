@@ -19,7 +19,7 @@ import AppSlice from '../../../../services/redux/actionsAndSlicers/AppSlice';
 import {AlertType} from '../../../../constants/Alerts';
 import ComponentsTooltip from '../../../../components/ComponentsTooltip';
 import InstructionsBox from '../../../../components/InstructionsBox';
-import {DecisionOptionsInstructions} from '../../../../constants/Instructions';
+import {DecisionOptionsInstructions, SelectionCriteriaInstructions} from '../../../../constants/Instructions';
 
 const useStyles = makeStyles(theme => ({
 	divMain: {
@@ -62,6 +62,9 @@ const EditableList: React.FC<Props> = (props: Props) => {
 	const [itemsType, setItemsType] = useState('');
 	const items = useSelector((state: RootState) => state.OptionsAndCriteria[itemsKey], shallowEqual);
 	const {instructionsSteps} = useSelector((state: RootState) => state.App, shallowEqual);
+
+	const instructionsText =
+		itemsKey === OptionsAndCriteriaKeys.decisionOptions ? DecisionOptionsInstructions : SelectionCriteriaInstructions;
 
 	const paperRef = useRef(null);
 
@@ -224,7 +227,7 @@ const EditableList: React.FC<Props> = (props: Props) => {
 					{/*</Popper>*/}
 				</Grid>
 				<Grid item xs={12}>
-					<InstructionsBox text={DecisionOptionsInstructions} show />
+					<InstructionsBox text={instructionsText} show />
 				</Grid>
 				{localItems.map((item, index) => (
 					<Fade
