@@ -19,7 +19,7 @@ import AppSlice from '../../../../services/redux/actionsAndSlicers/AppSlice';
 import {AlertType} from '../../../../constants/Alerts';
 import ComponentsTooltip from '../../../../components/ComponentsTooltip';
 import InstructionsBox from '../../../../components/InstructionsBox';
-import {DecisionOptionsInstructions, SelectionCriteriaInstructions} from '../../../../constants/Instructions';
+import {instructionsText} from '../../../../constants/Instructions';
 
 const useStyles = makeStyles(theme => ({
 	divMain: {
@@ -62,9 +62,8 @@ const EditableList: React.FC<Props> = (props: Props) => {
 	const [itemsType, setItemsType] = useState('');
 	const items = useSelector((state: RootState) => state.OptionsAndCriteria[itemsKey], shallowEqual);
 	const {instructionsSteps} = useSelector((state: RootState) => state.App, shallowEqual);
-
-	const instructionsText =
-		itemsKey === OptionsAndCriteriaKeys.decisionOptions ? DecisionOptionsInstructions : SelectionCriteriaInstructions;
+	const [instructionsArrowPos, setInstructionsArrowPos] = useState(0);
+	const [showInstructions, setShowInstructions] = useState(false);
 
 	const paperRef = useRef(null);
 
@@ -103,9 +102,33 @@ const EditableList: React.FC<Props> = (props: Props) => {
 		if (!hidden && didMount) {
 			setLocalItems(items);
 		}
-
 		manageNotEnoughItemsAlerts();
 	}, [items]);
+
+	useEffect(() => {
+		checkIfShowInstructions();
+
+		switch (instructionsSteps) {
+			case 0:
+				setInstructionsArrowPos(7);
+				break;
+			case 1:
+				setInstructionsArrowPos(14);
+				break;
+			default:
+				setInstructionsArrowPos(0);
+				break;
+		}
+	}, [instructionsSteps]);
+
+	const checkIfShowInstructions = () => {
+		if (
+			(itemsKey === OptionsAndCriteriaKeys.decisionOptions && instructionsSteps >= 0 && instructionsSteps < 4) ||
+			(itemsKey === OptionsAndCriteriaKeys.selectionCriteria && instructionsSteps >= 4 && instructionsSteps < 8)
+		)
+			setShowInstructions(true);
+		else setShowInstructions(false);
+	};
 
 	const onCreateItem = () => {
 		if (newEntry === '') return;
@@ -126,6 +149,12 @@ const EditableList: React.FC<Props> = (props: Props) => {
 		} else {
 			dispatch(OptionsAndCriteriaSlice.actions.addSelectionCriteria(newItem));
 		}
+	};
+
+	const onChangeNewEntry = (event: React.BaseSyntheticEvent) => {
+		setNewEntry(event.target.value);
+
+		if (instructionsSteps === 0) dispatch(AppSlice.actions.increaseInstructionsStep());
 	};
 
 	const onChangeItem = (event: React.BaseSyntheticEvent, itemId: number) => {
@@ -202,7 +231,7 @@ const EditableList: React.FC<Props> = (props: Props) => {
 												onCreateItem();
 											}
 										}}
-										onChange={event => setNewEntry(event.target.value)}
+										onChange={onChangeNewEntry}
 										multiline
 									/>
 								</ComponentsTooltip>
@@ -227,7 +256,11 @@ const EditableList: React.FC<Props> = (props: Props) => {
 					{/*</Popper>*/}
 				</Grid>
 				<Grid item xs={12}>
-					<InstructionsBox text={instructionsText} arrowXPos={7} show />
+					<InstructionsBox
+						text={instructionsText[instructionsSteps]}
+						arrowXPos={instructionsArrowPos}
+						show={showInstructions}
+					/>
 				</Grid>
 				{localItems.map((item, index) => (
 					<Fade
