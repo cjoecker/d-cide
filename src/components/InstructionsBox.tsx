@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {IconButton, Theme} from '@material-ui/core';
+import {Button, IconButton, Theme} from '@material-ui/core';
 import {makeStyles} from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
@@ -58,6 +58,18 @@ const useStyles = makeStyles<Theme, StyleProps>(theme => ({
 		backgroundColor: theme.palette.background.paper,
 		boxShadow: 'none',
 	},
+	linkButton: {
+		textTransform: 'none',
+		textDecoration: 'underline',
+		marginTop: theme.spacing(-0.5),
+		fontWeight: 'normal',
+		'&:hover': {
+			textDecoration: 'underline',
+		},
+	},
+	typography: {
+		margin: theme.spacing(0, 0, 0, 2),
+	},
 }));
 
 type ComponentsTooltipProps = {
@@ -82,16 +94,28 @@ const InstructionsBox = (props: ComponentsTooltipProps) => {
 		<>
 			{isVisible && (
 				<div className={classes.instructionsBox}>
-					<Grid container justify='center' alignContent='center'>
+					<Grid container justify='flex-start' alignContent='flex-start'>
 						<Grid item xs={10}>
-							<Typography component='span' variant='body1' align='left' color={'secondary'}>
-								{text}
-							</Typography>
+							<div className={classes.typography}>
+								<Typography component='span' variant='body1' align='left' color={'secondary'}>
+									{text}
+								</Typography>
+							</div>
 						</Grid>
 						<Grid item xs={2}>
 							<IconButton aria-label='delete' className={classes.closeButton} onClick={() => setIsVisible(false)}>
 								<CloseIcon fontSize='small' />
 							</IconButton>
+						</Grid>
+						<Grid item xs={12}>
+							<Button
+								className={classes.linkButton}
+								data-testid='dontShowMoreHelp'
+								onClick={() => setIsVisible(false)}
+								color='primary'
+							>
+								Don&apos;t show more help
+							</Button>
 						</Grid>
 					</Grid>
 				</div>
