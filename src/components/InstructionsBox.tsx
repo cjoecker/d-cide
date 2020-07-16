@@ -27,21 +27,35 @@ const useStyles = makeStyles<Theme, StyleProps>(theme => ({
 		height: '100%',
 		borderRadius: theme.spacing(1),
 		boxShadow: '0px 0px 41px -11px rgba(0,0,0,0.7)',
-	},
-	instructionsBoxLeft: {
 		'&::after': {
 			content: "''",
 			position: 'absolute',
+			width: '0px',
+			height: '0px',
+		},
+	},
+	instructionsBoxTop: {
+		'&::after': {
 			left: ({arrowOffset, invertArrowOffsetDirection}) =>
 				!invertArrowOffsetDirection ? theme.spacing(arrowOffset) : null,
 			right: ({arrowOffset, invertArrowOffsetDirection}) =>
 				invertArrowOffsetDirection ? theme.spacing(arrowOffset) : null,
-			top: '-14px',
-			width: '0px',
-			height: '0px',
+			top: '-13px',
 			borderLeft: `7px solid transparent`,
 			borderRight: `7px solid transparent`,
 			borderBottom: `14px solid currentColor`,
+		},
+	},
+	instructionsBoxRight: {
+		'&::after': {
+			top: ({arrowOffset, invertArrowOffsetDirection}) =>
+				!invertArrowOffsetDirection ? theme.spacing(arrowOffset) : null,
+			bottom: ({arrowOffset, invertArrowOffsetDirection}) =>
+				invertArrowOffsetDirection ? theme.spacing(arrowOffset) : null,
+			right: '-13px',
+			borderTop: `7px solid transparent`,
+			borderBottom: `7px solid transparent`,
+			borderLeft: `14px solid currentColor`,
 		},
 	},
 	text: {
@@ -106,6 +120,11 @@ const InstructionsBox = (props: ComponentsTooltipProps) => {
 	const [isVisible, setIsVisible] = useState(true);
 	const {instructionsSteps} = useSelector((state: RootState) => state.App, shallowEqual);
 
+	const classes = useStyles(instructions[instructionsSteps]);
+
+	const arrowClass =
+		instructions[instructionsSteps].arrowPos === 'top' ? classes.instructionsBoxTop : classes.instructionsBoxRight;
+
 	useEffect(() => {
 		setIsVisible(show);
 	}, [show]);
@@ -114,14 +133,12 @@ const InstructionsBox = (props: ComponentsTooltipProps) => {
 		setIsVisible(show);
 	}, [instructionsSteps]);
 
-	const classes = useStyles(instructions[instructionsSteps]);
-
 	return (
 		<AnimatePresence exitBeforeEnter>
 			{isVisible && (
 				<motion.div variants={loopAnimation} initial={'from'} animate={'to'}>
 					<motion.div variants={startAnimation} initial={'hidden'} animate={'visible'} exit={'hidden'}>
-						<motion.div className={`${classes.instructionsBox} ${classes.instructionsBoxLeft}`} layout>
+						<motion.div className={`${classes.instructionsBox} ${arrowClass}`} layout>
 							<Grid container justify='flex-start' alignContent='flex-start'>
 								<Grid item xs={10}>
 									<div className={classes.typography}>

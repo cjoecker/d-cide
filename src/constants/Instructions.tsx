@@ -3,7 +3,7 @@ import React from 'react';
 
 export type instructionsType = {
 	step: number;
-	arrowPos: 'top' | 'right' | 'bottom' | 'left';
+	arrowPos: 'top' | 'right';
 	arrowOffset: number;
 	invertArrowOffsetDirection: boolean;
 	text: JSX.Element;
