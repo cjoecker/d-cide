@@ -27,9 +27,6 @@ const useStyles = makeStyles<Theme, StyleProps>(theme => ({
 		height: '100%',
 		borderRadius: theme.spacing(1),
 		boxShadow: '0px 0px 41px -11px rgba(0,0,0,0.7)',
-		// animation: `$myEffect 2000ms`,
-		// animationIterationCount: 'infinite',
-		// animationTimingFunction: 'easeInOutSine',
 	},
 	instructionsBoxLeft: {
 		'&::after': {
@@ -45,28 +42,6 @@ const useStyles = makeStyles<Theme, StyleProps>(theme => ({
 			borderLeft: `7px solid transparent`,
 			borderRight: `7px solid transparent`,
 			borderBottom: `14px solid currentColor`,
-		},
-	},
-	'@keyframes myEffect': {
-		'0%': {
-			transform: 'translateY(0%)',
-		},
-		'50%': {
-			transform: 'translateY(-7%)',
-		},
-		'100%': {
-			transform: 'translateY(0)',
-		},
-	},
-	'@keyframes popOut': {
-		'0%': {
-			transform: 'scale(0)',
-		},
-		'80%': {
-			transform: 'scale(1.2)',
-		},
-		'100%': {
-			transform: 'scale(1)',
 		},
 	},
 	text: {
@@ -109,7 +84,7 @@ const loopAnimation = {
 	to: {
 		translateY: -5,
 		transition: {
-			delay: 1.5,
+			delay: 20,
 			duration: 0.5,
 			yoyo: Infinity,
 			when: 'afterChildren',
@@ -144,7 +119,7 @@ const InstructionsBox = (props: ComponentsTooltipProps) => {
 	return (
 		<AnimatePresence exitBeforeEnter>
 			{isVisible && (
-				<motion.div variants={loopAnimation} initial={'from'} animate={'to'}>
+				<motion.div variants={loopAnimation} initial={'from'} animate={'to'} layout>
 					<motion.div
 						className={`${classes.instructionsBox} ${classes.instructionsBoxLeft}`}
 						variants={startAnimation}
