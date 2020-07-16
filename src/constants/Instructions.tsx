@@ -40,8 +40,8 @@ export const instructions: instructionsType[] = [
 	{
 		step: 2,
 		arrowPos: 'top',
-		arrowOffset: 3.5,
-		invertArrowOffsetDirection: true,
+		arrowOffset: 7,
+		invertArrowOffsetDirection: false,
 		text: <p>Add at least another decision option.</p>,
 	},
 	{

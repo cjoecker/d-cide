@@ -80,7 +80,12 @@ const EditableList: React.FC<Props> = (props: Props) => {
 		if (itemsKey === OptionsAndCriteriaKeys.decisionOptions) setItemsType('Decision options');
 		else setItemsType('Selection criteria');
 
+		const subscription = onChangeNewEntry$.pipe(debounceTime(1000)).subscribe(() => {
+			dispatch(AppSlice.actions.goToInstructionsStep(1));
+		});
+
 		return () => {
+			subscription.unsubscribe();
 			dispatch(AppSlice.actions.deleteAlert(notEnoughItemsAlert));
 		};
 	}, []);
@@ -106,30 +111,27 @@ const EditableList: React.FC<Props> = (props: Props) => {
 			setLocalItems(items);
 		}
 		manageNotEnoughItemsAlerts();
+
+		if (items.length >= 1 && instructionsSteps === 1) {
+			dispatch(AppSlice.actions.goToInstructionsStep(2));
+		}
+		if (items.length >= 2 && instructionsSteps === 2) {
+			dispatch(AppSlice.actions.goToInstructionsStep(3));
+		}
 	}, [items]);
 
 	useEffect(() => {
 		if (
-			(itemsKey === OptionsAndCriteriaKeys.decisionOptions && instructionsSteps >= 0 && instructionsSteps < 4) ||
-			(itemsKey === OptionsAndCriteriaKeys.selectionCriteria && instructionsSteps >= 4 && instructionsSteps < 8)
+			(itemsKey === OptionsAndCriteriaKeys.decisionOptions && instructionsSteps >= 0 && instructionsSteps < 3) ||
+			(itemsKey === OptionsAndCriteriaKeys.selectionCriteria && instructionsSteps >= 3 && instructionsSteps < 8)
 		)
 			setShowInstructions(true);
 		else setShowInstructions(false);
+
+		if (items.length >= 1 && instructionsSteps === 1) {
+			dispatch(AppSlice.actions.goToInstructionsStep(2));
+		}
 	}, [instructionsSteps]);
-
-	useEffect(() => {
-		const subscription = onChangeNewEntry$.pipe(debounceTime(1000)).subscribe(() => {
-			if (
-				(itemsKey === OptionsAndCriteriaKeys.decisionOptions && instructionsSteps === 0) ||
-				(itemsKey === OptionsAndCriteriaKeys.selectionCriteria && instructionsSteps === 3)
-			)
-				dispatch(AppSlice.actions.increaseInstructionsStep());
-		});
-
-		return () => {
-			subscription.unsubscribe();
-		};
-	}, []);
 
 	const onCreateItem = () => {
 		if (newEntry === '') return;
@@ -154,7 +156,9 @@ const EditableList: React.FC<Props> = (props: Props) => {
 
 	const onChangeNewEntry = (event: React.BaseSyntheticEvent) => {
 		setNewEntry(event.target.value);
-		onChangeNewEntry$.next(event.target.value);
+
+		if (itemsKey === OptionsAndCriteriaKeys.decisionOptions && instructionsSteps === 0)
+			onChangeNewEntry$.next(event.target.value);
 	};
 
 	const onChangeItem = (event: React.BaseSyntheticEvent, itemId: number) => {

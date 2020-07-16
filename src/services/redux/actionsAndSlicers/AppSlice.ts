@@ -23,8 +23,8 @@ const AppSlice = createSlice({
 		deleteAlert(state, action: PayloadAction<AlertType>) {
 			state.alerts = state.alerts.filter(alert => JSON.stringify(alert) !== JSON.stringify(action.payload));
 		},
-		increaseInstructionsStep(state) {
-			state.instructionsSteps += 1;
+		goToInstructionsStep(state, action: PayloadAction<number>) {
+			state.instructionsSteps = action.payload;
 		},
 	},
 });
