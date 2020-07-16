@@ -110,9 +110,10 @@ const loopAnimation = {
 		translateY: -5,
 		transition: {
 			delay: 1.5,
-			duration: 0.3,
+			duration: 0.5,
 			yoyo: Infinity,
 			when: 'afterChildren',
+			ease: 'easeInOut',
 		},
 	},
 	from: {translateY: 0},
