@@ -84,7 +84,7 @@ const loopAnimation = {
 	to: {
 		translateY: -5,
 		transition: {
-			delay: 20,
+			delay: 0.2,
 			duration: 0.5,
 			yoyo: Infinity,
 			when: 'afterChildren',
@@ -119,40 +119,36 @@ const InstructionsBox = (props: ComponentsTooltipProps) => {
 	return (
 		<AnimatePresence exitBeforeEnter>
 			{isVisible && (
-				<motion.div variants={loopAnimation} initial={'from'} animate={'to'} layout>
-					<motion.div
-						className={`${classes.instructionsBox} ${classes.instructionsBoxLeft}`}
-						variants={startAnimation}
-						initial={'hidden'}
-						animate={'visible'}
-						exit={'hidden'}
-					>
-						<Grid container justify='flex-start' alignContent='flex-start'>
-							<Grid item xs={10}>
-								<div className={classes.typography}>
-									<Typography component='span' variant='body1' align='left' color='secondary'>
-										{instructions[instructionsSteps].text}
-									</Typography>
-								</div>
+				<motion.div variants={loopAnimation} initial={'from'} animate={'to'}>
+					<motion.div variants={startAnimation} initial={'hidden'} animate={'visible'} exit={'hidden'}>
+						<motion.div className={`${classes.instructionsBox} ${classes.instructionsBoxLeft}`} layout>
+							<Grid container justify='flex-start' alignContent='flex-start'>
+								<Grid item xs={10}>
+									<div className={classes.typography}>
+										<Typography component='span' variant='body1' align='left' color='secondary'>
+											{instructions[instructionsSteps].text}
+										</Typography>
+									</div>
+								</Grid>
+								<Grid item xs={2}>
+									<IconButton aria-label='delete' className={classes.closeButton} onClick={() => setIsVisible(false)}>
+										<CloseIcon fontSize='small' />
+									</IconButton>
+								</Grid>
+								<Grid item justify='flex-start' alignContent='flex-start' xs={12}>
+									<Box top={0} left={0} position='relative' display='flex' alignItems='left' justifyContent='left'>
+										<Button
+											className={classes.linkButton}
+											data-testid='dontShowMoreHelp'
+											onClick={() => setIsVisible(false)}
+											color='primary'
+										>
+											Don&apos;t show help anymore
+										</Button>
+									</Box>
+								</Grid>
 							</Grid>
-							<Grid item xs={2}>
-								<IconButton aria-label='delete' className={classes.closeButton} onClick={() => setIsVisible(false)}>
-									<CloseIcon fontSize='small' />
-								</IconButton>
-							</Grid>
-							<Grid item justify='flex-start' alignContent='flex-start' xs={12}>
-								<Box top={0} left={0} position='relative' display='flex' alignItems='left' justifyContent='left'>
-									<Button
-										className={classes.linkButton}
-										data-testid='dontShowMoreHelp'
-										onClick={() => setIsVisible(false)}
-										color='primary'
-									>
-										Don&apos;t show help anymore
-									</Button>
-								</Box>
-							</Grid>
-						</Grid>
+						</motion.div>
 					</motion.div>
 				</motion.div>
 			)}

@@ -47,8 +47,8 @@ export const instructions: instructionsType[] = [
 	{
 		step: 3,
 		arrowPos: 'top',
-		arrowOffset: 3.5,
-		invertArrowOffsetDirection: true,
+		arrowOffset: 7,
+		invertArrowOffsetDirection: false,
 		text: (
 			<div>
 				<p>Add here the criteria you must consider for your decision.</p>
@@ -69,8 +69,8 @@ export const instructions: instructionsType[] = [
 	{
 		step: 4,
 		arrowPos: 'top',
-		arrowOffset: 3.5,
-		invertArrowOffsetDirection: true,
-		text: <p>Click here or press enter to add your entry.</p>,
+		arrowOffset: 7,
+		invertArrowOffsetDirection: false,
+		text: <p>Add at least another criteria.</p>,
 	},
 ];

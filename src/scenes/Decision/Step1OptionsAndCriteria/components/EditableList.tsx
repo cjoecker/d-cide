@@ -72,12 +72,14 @@ const EditableList: React.FC<Props> = (props: Props) => {
 
 	const animationDelay = 100;
 
+	const isDecisionOptionsList = itemsKey === OptionsAndCriteriaKeys.decisionOptions;
+
 	const classes = useStyles();
 	const dispatch = useDispatch();
 	const theme = useTheme();
 
 	useEffect(() => {
-		if (itemsKey === OptionsAndCriteriaKeys.decisionOptions) setItemsType('Decision options');
+		if (isDecisionOptionsList) setItemsType('Decision options');
 		else setItemsType('Selection criteria');
 
 		const subscription = onChangeNewEntry$.pipe(debounceTime(1000)).subscribe(() => {
@@ -112,25 +114,18 @@ const EditableList: React.FC<Props> = (props: Props) => {
 		}
 		manageNotEnoughItemsAlerts();
 
-		if (items.length >= 1 && instructionsSteps === 1) {
-			dispatch(AppSlice.actions.goToInstructionsStep(2));
-		}
-		if (items.length >= 2 && instructionsSteps === 2) {
-			dispatch(AppSlice.actions.goToInstructionsStep(3));
-		}
+		manageInstructionsSteps();
 	}, [items]);
 
 	useEffect(() => {
 		if (
-			(itemsKey === OptionsAndCriteriaKeys.decisionOptions && instructionsSteps >= 0 && instructionsSteps < 3) ||
-			(itemsKey === OptionsAndCriteriaKeys.selectionCriteria && instructionsSteps >= 3 && instructionsSteps < 8)
+			(isDecisionOptionsList && instructionsSteps >= 0 && instructionsSteps < 3) ||
+			(!isDecisionOptionsList && instructionsSteps >= 3 && instructionsSteps < 8)
 		)
 			setShowInstructions(true);
 		else setShowInstructions(false);
 
-		if (items.length >= 1 && instructionsSteps === 1) {
-			dispatch(AppSlice.actions.goToInstructionsStep(2));
-		}
+		manageInstructionsSteps();
 	}, [instructionsSteps]);
 
 	const onCreateItem = () => {
@@ -147,7 +142,7 @@ const EditableList: React.FC<Props> = (props: Props) => {
 			action: `Create ${itemsType}`,
 		});
 
-		if (itemsKey === OptionsAndCriteriaKeys.decisionOptions) {
+		if (isDecisionOptionsList) {
 			dispatch(OptionsAndCriteriaSlice.actions.addDecisionOption(newItem));
 		} else {
 			dispatch(OptionsAndCriteriaSlice.actions.addSelectionCriteria(newItem));
@@ -157,8 +152,7 @@ const EditableList: React.FC<Props> = (props: Props) => {
 	const onChangeNewEntry = (event: React.BaseSyntheticEvent) => {
 		setNewEntry(event.target.value);
 
-		if (itemsKey === OptionsAndCriteriaKeys.decisionOptions && instructionsSteps === 0)
-			onChangeNewEntry$.next(event.target.value);
+		if (isDecisionOptionsList && instructionsSteps === 0) onChangeNewEntry$.next(event.target.value);
 	};
 
 	const onChangeItem = (event: React.BaseSyntheticEvent, itemId: number) => {
@@ -172,16 +166,14 @@ const EditableList: React.FC<Props> = (props: Props) => {
 				action: `Edit ${itemsType}`,
 			});
 
-			if (itemsKey === OptionsAndCriteriaKeys.decisionOptions)
-				dispatch(OptionsAndCriteriaSlice.actions.updateDecisionOption(itemLocal));
+			if (isDecisionOptionsList) dispatch(OptionsAndCriteriaSlice.actions.updateDecisionOption(itemLocal));
 			else dispatch(OptionsAndCriteriaSlice.actions.updateSelectionCriteria(itemLocal));
 		} else {
 			ReactGA.event({
 				category: itemsType,
 				action: `Delete ${itemsType} after empty`,
 			});
-			if (itemsKey === OptionsAndCriteriaKeys.decisionOptions)
-				dispatch(OptionsAndCriteriaSlice.actions.deleteDecisionOption(itemLocal.id));
+			if (isDecisionOptionsList) dispatch(OptionsAndCriteriaSlice.actions.deleteDecisionOption(itemLocal.id));
 			else dispatch(OptionsAndCriteriaSlice.actions.deleteSelectionCriteria(itemLocal.id));
 		}
 	};
@@ -192,9 +184,20 @@ const EditableList: React.FC<Props> = (props: Props) => {
 			action: `Delete ${itemsType}`,
 		});
 
-		if (itemsKey === OptionsAndCriteriaKeys.decisionOptions)
-			dispatch(OptionsAndCriteriaSlice.actions.deleteDecisionOption(itemLocal.id));
+		if (isDecisionOptionsList) dispatch(OptionsAndCriteriaSlice.actions.deleteDecisionOption(itemLocal.id));
 		else dispatch(OptionsAndCriteriaSlice.actions.deleteSelectionCriteria(itemLocal.id));
+	};
+
+	const manageInstructionsSteps = () => {
+		if (isDecisionOptionsList && items.length >= 1 && instructionsSteps === 1) {
+			dispatch(AppSlice.actions.goToInstructionsStep(2));
+		}
+		if (isDecisionOptionsList && items.length >= 2 && instructionsSteps === 2) {
+			dispatch(AppSlice.actions.goToInstructionsStep(3));
+		}
+		if (!isDecisionOptionsList && items.length >= 1 && instructionsSteps === 3) {
+			dispatch(AppSlice.actions.goToInstructionsStep(4));
+		}
 	};
 
 	const endOfAnimation = (index: number) => {
