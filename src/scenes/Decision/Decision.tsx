@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import Step from '@material-ui/core/Step';
 import Stepper from '@material-ui/core/Stepper';
 import StepButton from '@material-ui/core/StepButton';
@@ -7,7 +7,7 @@ import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import {makeStyles, useTheme} from '@material-ui/core/styles';
 import SwipeableViews from 'react-swipeable-views';
-import {StepLabel} from '@material-ui/core';
+import {Popper, StepLabel} from '@material-ui/core';
 import {shallowEqual, useSelector} from 'react-redux';
 import ReactGA from 'react-ga';
 import {isEdge} from 'react-device-detect';
@@ -19,6 +19,7 @@ import Results from './Step4Result/Result';
 import {RootState} from '../../services/redux/rootReducer';
 import {NOT_ENOUGH_CRITERIA, NOT_ENOUGH_OPTIONS} from '../../constants/Alerts';
 import ComponentsTooltip from '../../components/ComponentsTooltip';
+import InstructionsBox from '../../components/InstructionsBox';
 
 const useStyles = makeStyles(theme => ({
 	divMain: {
@@ -44,6 +45,10 @@ const useStyles = makeStyles(theme => ({
 		position: 'fixed',
 		margin: theme.spacing(0, 0, 2, 2),
 		zIndex: 1000,
+	},
+	popper: {
+		marginRight: theme.spacing(8),
+		marginBottom: theme.spacing(-5),
 	},
 }));
 
@@ -86,6 +91,9 @@ const Decision: React.FC = () => {
 	]);
 
 	const {alerts} = useSelector((state: RootState) => state.App, shallowEqual);
+	const {instructionsSteps} = useSelector((state: RootState) => state.App, shallowEqual);
+
+	const nextButtonRef = useRef(null);
 
 	const classes = useStyles();
 	const theme = useTheme();
@@ -183,20 +191,26 @@ const Decision: React.FC = () => {
 				</ComponentsTooltip>
 			) : null}
 			{activeStepNum !== steps.length ? (
-				<ComponentsTooltip>
-					<Fab
-						data-testid='NextStepButton'
-						color='primary'
-						aria-label='Next step'
-						size='medium'
-						className={classes.buttonNext}
-						style={{bottom: isEdge ? 10 : 'env(safe-area-inset-bottom)', right: isEdge ? 10 : 'env(safe-area-inset-right)'}}
-						onClick={() => changeStep(activeStepNum + 1, 'next button')}
-						disabled={disableStepButtons}
-					>
-						<ArrowForwardIcon />
-					</Fab>
-				</ComponentsTooltip>
+				<>
+					<ComponentsTooltip>
+						<Fab
+							data-testid='NextStepButton'
+							color='primary'
+							aria-label='Next step'
+							size='medium'
+							className={classes.buttonNext}
+							style={{bottom: isEdge ? 10 : 'env(safe-area-inset-bottom)', right: isEdge ? 10 : 'env(safe-area-inset-right)'}}
+							onClick={() => changeStep(activeStepNum + 1, 'next button')}
+							disabled={disableStepButtons}
+							ref={nextButtonRef}
+						>
+							<ArrowForwardIcon />
+						</Fab>
+					</ComponentsTooltip>
+					<Popper open anchorEl={nextButtonRef.current} className={classes.popper}>
+						<InstructionsBox show={instructionsSteps === 5} />
+					</Popper>
+				</>
 			) : null}
 			<SwipeableViews
 				disabled

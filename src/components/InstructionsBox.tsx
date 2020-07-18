@@ -26,6 +26,7 @@ const useStyles = makeStyles<Theme, StyleProps>(theme => ({
 		width: '100%',
 		height: '100%',
 		borderRadius: theme.spacing(1),
+		maxWidth: theme.spacing(50),
 		boxShadow: '0px 0px 41px -11px rgba(0,0,0,0.7)',
 		'&::after': {
 			content: "''",

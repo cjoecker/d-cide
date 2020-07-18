@@ -120,7 +120,7 @@ const EditableList: React.FC<Props> = (props: Props) => {
 	useEffect(() => {
 		if (
 			(isDecisionOptionsList && instructionsSteps >= 0 && instructionsSteps < 3) ||
-			(!isDecisionOptionsList && instructionsSteps >= 3 && instructionsSteps < 8)
+			(!isDecisionOptionsList && instructionsSteps >= 3 && instructionsSteps < 5)
 		)
 			setShowInstructions(true);
 		else setShowInstructions(false);
@@ -198,6 +198,9 @@ const EditableList: React.FC<Props> = (props: Props) => {
 		if (!isDecisionOptionsList && items.length >= 1 && instructionsSteps === 3) {
 			dispatch(AppSlice.actions.goToInstructionsStep(4));
 		}
+		if (!isDecisionOptionsList && items.length >= 2 && instructionsSteps === 4) {
+			dispatch(AppSlice.actions.goToInstructionsStep(5));
+		}
 	};
 
 	const endOfAnimation = (index: number) => {
@@ -258,9 +261,6 @@ const EditableList: React.FC<Props> = (props: Props) => {
 							</Box>
 						</Box>
 					</Paper>
-					{/*<Popper open={instructionsSteps === 0} anchorEl={paperRef.current}>*/}
-					{/*	<InstructionsBox/>*/}
-					{/*</Popper>*/}
 				</Grid>
 				<Grid item xs={12}>
 					<InstructionsBox show={showInstructions} />

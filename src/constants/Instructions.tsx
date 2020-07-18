@@ -73,4 +73,11 @@ export const instructions: instructionsType[] = [
 		invertArrowOffsetDirection: false,
 		text: <p>Add at least another criteria.</p>,
 	},
+	{
+		step: 5,
+		arrowPos: 'right',
+		arrowOffset: 7,
+		invertArrowOffsetDirection: false,
+		text: <p>Click here after you finish to go to the next step.</p>,
+	},
 ];
