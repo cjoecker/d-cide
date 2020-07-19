@@ -7,7 +7,7 @@ import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import {makeStyles, useTheme} from '@material-ui/core/styles';
 import SwipeableViews from 'react-swipeable-views';
-import {Popper, StepLabel} from '@material-ui/core';
+import {StepLabel} from '@material-ui/core';
 import {shallowEqual, useSelector} from 'react-redux';
 import ReactGA from 'react-ga';
 import {isEdge} from 'react-device-detect';
@@ -207,9 +207,6 @@ const Decision: React.FC = () => {
 							<ArrowForwardIcon />
 						</Fab>
 					</ComponentsTooltip>
-					<Popper open anchorEl={nextButtonRef.current} className={classes.popper}>
-						<InstructionsBox show={instructionsSteps === 5} />
-					</Popper>
 				</>
 			) : null}
 			<SwipeableViews
@@ -226,6 +223,7 @@ const Decision: React.FC = () => {
 				<RateOptions hidden={loadedStepNum !== 3} />
 				<Results hidden={loadedStepNum !== 4} />
 			</SwipeableViews>
+			<InstructionsBox show={instructionsSteps === 5} anchor={nextButtonRef.current} />
 		</div>
 	);
 };

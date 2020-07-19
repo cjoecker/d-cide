@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Box, Button, IconButton, Theme} from '@material-ui/core';
+import {Box, Button, IconButton, Popper, Theme} from '@material-ui/core';
 import {makeStyles} from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
@@ -113,10 +113,11 @@ const loopAnimation = {
 
 type ComponentsTooltipProps = {
 	show: boolean;
+	anchor?: any;
 };
 
 const InstructionsBox = (props: ComponentsTooltipProps) => {
-	const {show} = props;
+	const {show, anchor} = props;
 
 	const [isVisible, setIsVisible] = useState(true);
 	const {instructionsSteps} = useSelector((state: RootState) => state.App, shallowEqual);
@@ -134,44 +135,54 @@ const InstructionsBox = (props: ComponentsTooltipProps) => {
 		setIsVisible(show);
 	}, [instructionsSteps]);
 
-	return (
+	const box = (
 		<AnimatePresence exitBeforeEnter>
-			{isVisible && (
-				<motion.div variants={loopAnimation} initial={'from'} animate={'to'}>
-					<motion.div variants={startAnimation} initial={'hidden'} animate={'visible'} exit={'hidden'}>
-						<motion.div className={`${classes.instructionsBox} ${arrowClass}`} layout>
-							<Grid container justify='flex-start' alignContent='flex-start'>
-								<Grid item xs={10}>
-									<div className={classes.typography}>
-										<Typography component='span' variant='body1' align='left' color='secondary'>
-											{instructions[instructionsSteps].text}
-										</Typography>
-									</div>
-								</Grid>
-								<Grid item xs={2}>
-									<IconButton aria-label='delete' className={classes.closeButton} onClick={() => setIsVisible(false)}>
-										<CloseIcon fontSize='small' />
-									</IconButton>
-								</Grid>
-								<Grid item justify='flex-start' alignContent='flex-start' xs={12}>
-									<Box top={0} left={0} position='relative' display='flex' alignItems='left' justifyContent='left'>
-										<Button
-											className={classes.linkButton}
-											data-testid='dontShowMoreHelp'
-											onClick={() => setIsVisible(false)}
-											color='primary'
-										>
-											Don&apos;t show help anymore
-										</Button>
-									</Box>
-								</Grid>
+			<motion.div variants={loopAnimation} initial={'from'} animate={'to'}>
+				<motion.div variants={startAnimation} initial={'hidden'} animate={'visible'} exit={'hidden'}>
+					<motion.div className={`${classes.instructionsBox} ${arrowClass}`} layout>
+						<Grid container justify='flex-start' alignContent='flex-start'>
+							<Grid item xs={10}>
+								<div className={classes.typography}>
+									<Typography component='span' variant='body1' align='left' color='secondary'>
+										{instructions[instructionsSteps].text}
+									</Typography>
+								</div>
 							</Grid>
-						</motion.div>
+							<Grid item xs={2}>
+								<IconButton aria-label='delete' className={classes.closeButton} onClick={() => setIsVisible(false)}>
+									<CloseIcon fontSize='small' />
+								</IconButton>
+							</Grid>
+							<Grid item justify='flex-start' alignContent='flex-start' xs={12}>
+								<Box top={0} left={0} position='relative' display='flex' alignItems='left' justifyContent='left'>
+									<Button
+										className={classes.linkButton}
+										data-testid='dontShowMoreHelp'
+										onClick={() => setIsVisible(false)}
+										color='primary'
+									>
+										Don&apos;t show help anymore
+									</Button>
+								</Box>
+							</Grid>
+						</Grid>
 					</motion.div>
 				</motion.div>
-			)}
+			</motion.div>
 		</AnimatePresence>
 	);
+
+	const withPopper = (
+		<>
+			<Popper open placement='left' anchorEl={anchor}>
+				{box}
+			</Popper>
+		</>
+	);
+
+	const component = anchor ? withPopper : box;
+
+	return <>{isVisible && component}</>;
 };
 
 export default InstructionsBox;
