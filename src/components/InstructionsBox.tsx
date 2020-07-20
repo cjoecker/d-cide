@@ -174,7 +174,7 @@ const InstructionsBox = (props: ComponentsTooltipProps) => {
 
 	const withPopper = (
 		<>
-			<Popper open placement='left' anchorEl={anchor}>
+			<Popper open placement='left-end' anchorEl={anchor}>
 				{box}
 			</Popper>
 		</>
