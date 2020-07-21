@@ -76,8 +76,8 @@ export const instructions: instructionsType[] = [
 	{
 		step: 5,
 		arrowPos: 'right',
-		arrowOffset: 7,
-		invertArrowOffsetDirection: false,
+		arrowOffset: 2,
+		invertArrowOffsetDirection: true,
 		text: <p>Click here after you finish to go to the next step.</p>,
 	},
 ];

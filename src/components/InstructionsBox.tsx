@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Box, Button, IconButton, Popper, Theme} from '@material-ui/core';
+import {Button, IconButton, Popper, Theme} from '@material-ui/core';
 import {makeStyles} from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
@@ -22,11 +22,9 @@ const useStyles = makeStyles<Theme, StyleProps>(theme => ({
 		backgroundColor: 'currentColor',
 		position: 'relative',
 		top: '0px',
-		left: '0px',
 		width: '100%',
 		height: '100%',
 		borderRadius: theme.spacing(1),
-		maxWidth: theme.spacing(50),
 		boxShadow: '0px 0px 41px -11px rgba(0,0,0,0.7)',
 		'&::after': {
 			content: "''",
@@ -36,6 +34,7 @@ const useStyles = makeStyles<Theme, StyleProps>(theme => ({
 		},
 	},
 	instructionsBoxTop: {
+		left: '0px',
 		'&::after': {
 			left: ({arrowOffset, invertArrowOffsetDirection}) =>
 				!invertArrowOffsetDirection ? theme.spacing(arrowOffset) : null,
@@ -48,6 +47,7 @@ const useStyles = makeStyles<Theme, StyleProps>(theme => ({
 		},
 	},
 	instructionsBoxRight: {
+		left: '-20px',
 		'&::after': {
 			top: ({arrowOffset, invertArrowOffsetDirection}) =>
 				!invertArrowOffsetDirection ? theme.spacing(arrowOffset) : null,
@@ -64,7 +64,7 @@ const useStyles = makeStyles<Theme, StyleProps>(theme => ({
 	},
 	closeButton: {
 		marginTop: theme.spacing(1),
-		marginRight: theme.spacing(-2),
+		marginRight: theme.spacing(1),
 		backgroundColor: theme.palette.background.paper,
 		boxShadow: 'none',
 	},
@@ -81,6 +81,9 @@ const useStyles = makeStyles<Theme, StyleProps>(theme => ({
 	typography: {
 		margin: theme.spacing(0, 0, 0, 2),
 	},
+	div: {
+		maxWidth: '300px',
+	},
 }));
 
 const startAnimation = {
@@ -93,20 +96,6 @@ const startAnimation = {
 		},
 	},
 	hidden: {scale: 0, duration: 0.2},
-};
-
-const loopAnimation = {
-	to: {
-		translateY: -5,
-		transition: {
-			delay: 0.2,
-			duration: 0.5,
-			yoyo: Infinity,
-			when: 'afterChildren',
-			ease: 'easeInOut',
-		},
-	},
-	from: {translateY: 0},
 };
 
 //TODO check if after animation button can be tabbed
@@ -124,8 +113,24 @@ const InstructionsBox = (props: ComponentsTooltipProps) => {
 
 	const classes = useStyles(instructions[instructionsSteps]);
 
-	const arrowClass =
-		instructions[instructionsSteps].arrowPos === 'top' ? classes.instructionsBoxTop : classes.instructionsBoxRight;
+	const arrowPos = instructions[instructionsSteps].arrowPos;
+
+	const arrowClass = arrowPos === 'top' ? classes.instructionsBoxTop : classes.instructionsBoxRight;
+
+	const loopAnimation = {
+		to: {
+			translateY: arrowPos === 'top' ? -5 : undefined,
+			translateX: arrowPos === 'top' ? undefined : -5,
+			transition: {
+				delay: 0.2,
+				duration: 0.5,
+				yoyo: Infinity,
+				when: 'afterChildren',
+				ease: 'easeInOut',
+			},
+		},
+		from: {translateY: 0},
+	};
 
 	useEffect(() => {
 		setIsVisible(show);
@@ -136,25 +141,27 @@ const InstructionsBox = (props: ComponentsTooltipProps) => {
 	}, [instructionsSteps]);
 
 	const box = (
-		<AnimatePresence exitBeforeEnter>
-			<motion.div variants={loopAnimation} initial={'from'} animate={'to'}>
-				<motion.div variants={startAnimation} initial={'hidden'} animate={'visible'} exit={'hidden'}>
-					<motion.div className={`${classes.instructionsBox} ${arrowClass}`} layout>
-						<Grid container justify='flex-start' alignContent='flex-start'>
-							<Grid item xs={10}>
-								<div className={classes.typography}>
-									<Typography component='span' variant='body1' align='left' color='secondary'>
-										{instructions[instructionsSteps].text}
-									</Typography>
-								</div>
-							</Grid>
-							<Grid item xs={2}>
-								<IconButton aria-label='delete' className={classes.closeButton} onClick={() => setIsVisible(false)}>
-									<CloseIcon fontSize='small' />
-								</IconButton>
-							</Grid>
-							<Grid item justify='flex-start' alignContent='flex-start' xs={12}>
-								<Box top={0} left={0} position='relative' display='flex' alignItems='left' justifyContent='left'>
+		<div className={classes.div}>
+			<AnimatePresence exitBeforeEnter>
+				<motion.div variants={loopAnimation} initial={'from'} animate={'to'}>
+					<motion.div variants={startAnimation} initial={'hidden'} animate={'visible'} exit={'hidden'}>
+						<motion.div className={`${classes.instructionsBox} ${arrowClass}`} layout>
+							<Grid container justify='flex-end' alignContent='flex-start'>
+								<Grid item xs={10}>
+									<div className={classes.typography}>
+										<Typography component='span' variant='body1' align='left' color='secondary'>
+											{instructions[instructionsSteps].text}
+										</Typography>
+									</div>
+								</Grid>
+								<Grid xs={2}>
+									<Grid container justify='flex-end' alignContent='flex-end'>
+										<IconButton aria-label='delete' className={classes.closeButton} onClick={() => setIsVisible(false)}>
+											<CloseIcon fontSize='small' />
+										</IconButton>
+									</Grid>
+								</Grid>
+								<Grid item xs={12}>
 									<Button
 										className={classes.linkButton}
 										data-testid='dontShowMoreHelp'
@@ -163,13 +170,13 @@ const InstructionsBox = (props: ComponentsTooltipProps) => {
 									>
 										Don&apos;t show help anymore
 									</Button>
-								</Box>
+								</Grid>
 							</Grid>
-						</Grid>
+						</motion.div>
 					</motion.div>
 				</motion.div>
-			</motion.div>
-		</AnimatePresence>
+			</AnimatePresence>
+		</div>
 	);
 
 	const withPopper = (
