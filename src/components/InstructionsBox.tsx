@@ -72,7 +72,7 @@ const useStyles = makeStyles<Theme, StyleProps>(theme => ({
 		textTransform: 'none',
 		textDecoration: 'underline',
 		marginTop: theme.spacing(-1.5),
-		marginLeft: theme.spacing(1),
+		marginLeft: theme.spacing(2),
 		fontWeight: 'normal',
 		'&:hover': {
 			textDecoration: 'underline',
@@ -113,7 +113,7 @@ const InstructionsBox = (props: ComponentsTooltipProps) => {
 
 	const classes = useStyles(instructions[instructionsSteps]);
 
-	const arrowPos = instructions[instructionsSteps].arrowPos;
+	const {arrowPos} = instructions[instructionsSteps];
 
 	const arrowClass = arrowPos === 'top' ? classes.instructionsBoxTop : classes.instructionsBoxRight;
 
@@ -143,8 +143,8 @@ const InstructionsBox = (props: ComponentsTooltipProps) => {
 	const box = (
 		<div className={classes.div}>
 			<AnimatePresence exitBeforeEnter>
-				<motion.div variants={loopAnimation} initial={'from'} animate={'to'}>
-					<motion.div variants={startAnimation} initial={'hidden'} animate={'visible'} exit={'hidden'}>
+				<motion.div variants={loopAnimation} initial="from" animate="to">
+					<motion.div variants={startAnimation} initial="hidden" animate="visible" exit="hidden">
 						<motion.div className={`${classes.instructionsBox} ${arrowClass}`} layout>
 							<Grid container justify='flex-end' alignContent='flex-start'>
 								<Grid item xs={10}>
