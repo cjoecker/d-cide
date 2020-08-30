@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Slider from '@material-ui/core/Slider';
@@ -8,13 +8,15 @@ import {shallowEqual, useDispatch, useSelector} from 'react-redux';
 import Fade from '@material-ui/core/Fade';
 import {makeStyles} from '@material-ui/core/styles';
 
+import {HelpOutlineRounded} from '@material-ui/icons';
 import * as LongStrings from '../../../constants/InfoDialogTexts';
 import InfoDialog from '../../../components/InfoDialog';
 import {RootState} from '../../../services/redux/rootReducer';
-import WeightedCriteriaSlice, {WeightedCriteria} from '../../../services/redux/actionsAndSlicers/WeightCriteriaSlice';
+import WeightedCriteriaSlice, {
+	WeightedCriteriaType,
+} from '../../../services/redux/actionsAndSlicers/WeightCriteriaSlice';
 import ComponentsTooltip from '../../../components/ComponentsTooltip';
 import shuffleArray from '../../../services/shuffleArray';
-import {HelpOutlineRounded} from '@material-ui/icons';
 
 const useStyles = makeStyles(theme => ({
 	divMain: {
@@ -113,7 +115,7 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
 		if (!hidden) createWeightedCriteria();
 	}, [hidden, selectionCriteria]);
 
-	const onChange = (event: React.BaseSyntheticEvent, value: number, itemLocal: WeightedCriteria) => {
+	const onChange = (event: React.BaseSyntheticEvent, value: number, itemLocal: WeightedCriteriaType) => {
 		weightedCriteria.forEach(criteria => {
 			if (criteria.id === itemLocal.id)
 				dispatch(WeightedCriteriaSlice.actions.updateWeightedCriteria({...criteria, weight: value}));
@@ -121,13 +123,13 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
 	};
 
 	//TODO improve scrolling from slider after it is implemented in Material-UI - Check also Rate options!
-	//https://github.com/mui-org/material-ui/issues/20990
+	// https://github.com/mui-org/material-ui/issues/20990
 
 	//TODO remove tabIndex={-1} from all info boxes when this ticket is solved
 	//	https://github.com/oliviertassinari/react-swipeable-views/issues/533
 
 	const createWeightedCriteria = () => {
-		let newWeightedCriteria: WeightedCriteria[] = [];
+		let newWeightedCriteria: WeightedCriteriaType[] = [];
 
 		let id = Math.max(...weightedCriteria.map(object => object.id), 0) + 1;
 
@@ -209,62 +211,60 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
 				</Grid>
 				{!hidden &&
 					weightedCriteria.map((criteria, index) => (
-						<Fade in timeout={500} style={{transitionDelay: `${index * 100}ms`}} key={criteria.id}>
-							<Grid item xs={6} className={classes.gridItemCriteria} key={criteria.id}>
-								<Paper elevation={1} className={classes.paper}>
-									<Grid container spacing={2} alignItems='center'>
-										<Grid item xs={6} className={classes.gridItemCriteriaText}>
-											<Typography
-												className={classes.unselectableText}
-												component='span'
-												data-testid={`textSlider${index}CriteriaLeft`}
-												variant='body1'
-											>
-												{getSelectionCriteriaName(criteria.selectionCriteria1Id)}
-											</Typography>
-										</Grid>
-										<Grid item xs={6} className={classes.gridItemCriteriaText}>
-											<Typography
-												className={classes.unselectableText}
-												component='span'
-												data-testid={`textSlider${index}CriteriaRight`}
-												variant='body1'
-											>
-												{getSelectionCriteriaName(criteria.selectionCriteria2Id)}
-											</Typography>
-										</Grid>
-										<Grid item xs={12} zeroMinWidth className={classes.gridItemSlider}>
-											<Slider
-												aria-label={`Weight ${getSelectionCriteriaName(
-													criteria.selectionCriteria1Id
-												)} and ${getSelectionCriteriaName(criteria.selectionCriteria2Id)}. Slider value: ${criteria.weight}`}
-												data-testid={`slider${index}`}
-												classes={{
-													mark: classes.sliderMarks,
-													markActive: classes.sliderMarks,
-												}}
-												value={criteria.weight}
-												min={-100}
-												max={100}
-												step={1}
-												marks={sliderMarks}
-												onChange={(event, value) => onChange(event, value as number, criteria)}
-											/>
-										</Grid>
-										<Grid item xs={12} className={classes.gridItemSliderInfo}>
-											<Typography
-												className={classes.unselectableText}
-												component='span'
-												data-testid={`infoTextSlider${index}`}
-												variant='caption'
-											>
-												{getWeightInfoText(criteria.weight, criteria.selectionCriteria1Id, criteria.selectionCriteria2Id)}
-											</Typography>
-										</Grid>
+						<Grid item xs={6} className={classes.gridItemCriteria} key={criteria.id}>
+							<Paper elevation={1} className={classes.paper}>
+								<Grid container spacing={2} alignItems='center'>
+									<Grid item xs={6} className={classes.gridItemCriteriaText}>
+										<Typography
+											className={classes.unselectableText}
+											component='span'
+											data-testid={`textSlider${index}CriteriaLeft`}
+											variant='body1'
+										>
+											{getSelectionCriteriaName(criteria.selectionCriteria1Id)}
+										</Typography>
 									</Grid>
-								</Paper>
-							</Grid>
-						</Fade>
+									<Grid item xs={6} className={classes.gridItemCriteriaText}>
+										<Typography
+											className={classes.unselectableText}
+											component='span'
+											data-testid={`textSlider${index}CriteriaRight`}
+											variant='body1'
+										>
+											{getSelectionCriteriaName(criteria.selectionCriteria2Id)}
+										</Typography>
+									</Grid>
+									<Grid item xs={12} zeroMinWidth className={classes.gridItemSlider}>
+										<Slider
+											aria-label={`Weight ${getSelectionCriteriaName(
+												criteria.selectionCriteria1Id
+											)} and ${getSelectionCriteriaName(criteria.selectionCriteria2Id)}. Slider value: ${criteria.weight}`}
+											data-testid={`slider${index}`}
+											classes={{
+												mark: classes.sliderMarks,
+												markActive: classes.sliderMarks,
+											}}
+											value={criteria.weight}
+											min={-100}
+											max={100}
+											step={1}
+											marks={sliderMarks}
+											onChange={(event, value) => onChange(event, value as number, criteria)}
+										/>
+									</Grid>
+									<Grid item xs={12} className={classes.gridItemSliderInfo}>
+										<Typography
+											className={classes.unselectableText}
+											component='span'
+											data-testid={`infoTextSlider${index}`}
+											variant='caption'
+										>
+											{getWeightInfoText(criteria.weight, criteria.selectionCriteria1Id, criteria.selectionCriteria2Id)}
+										</Typography>
+									</Grid>
+								</Grid>
+							</Paper>
+						</Grid>
 					))}
 			</Grid>
 			<InfoDialog text={LongStrings.WeightCriteriaInfo} show={showInfo} onClose={() => setShowInfo(false)} />

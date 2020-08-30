@@ -1,19 +1,16 @@
 <component name="InspectionProjectProfileManager">
   <settings>
-    <info color="ab58be">
-      <option name="EFFECT_COLOR" value="ab58be" />
-      <option name="ERROR_STRIPE_COLOR" value="ab58be" />
+    <info color="525229">
+      <option name="EFFECT_COLOR" value="9f67be" />
       <option name="EFFECT_TYPE" value="2" />
-      <option name="myName" value="Eslint" />
+      <option name="myName" value="ESLint" />
       <option name="myVal" value="50" />
-      <option name="myExternalName" value="Eslint" />
-      <option name="myDefaultAttributes">
-        <option name="ERROR_STRIPE_COLOR" value="ab58be" />
-      </option>
+      <option name="myExternalName" value="ESLint" />
+      <option name="myDefaultAttributes" />
     </info>
     <list size="8">
       <item index="0" class="java.lang.String" itemvalue="INFORMATION" />
-      <item index="1" class="java.lang.String" itemvalue="Eslint" />
+      <item index="1" class="java.lang.String" itemvalue="ESLint" />
       <item index="2" class="java.lang.String" itemvalue="TYPO" />
       <item index="3" class="java.lang.String" itemvalue="SERVER PROBLEM" />
       <item index="4" class="java.lang.String" itemvalue="WEAK WARNING" />

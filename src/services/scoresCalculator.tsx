@@ -1,11 +1,11 @@
 import {OptionAndCriteria} from './redux/actionsAndSlicers/OptionsAndCriteriaSlice';
-import {WeightedCriteria} from './redux/actionsAndSlicers/WeightCriteriaSlice';
+import {WeightedCriteriaType} from './redux/actionsAndSlicers/WeightCriteriaSlice';
 import {RatedOption} from './redux/actionsAndSlicers/RatedOptionsSlice';
 
 export const getScoredDecisionOptions = (
 	decisionOptions: OptionAndCriteria[],
 	selectionCriteria: OptionAndCriteria[],
-	weightedCriteria: WeightedCriteria[],
+	weightedCriteria: WeightedCriteriaType[],
 	ratedOptions: RatedOption[]
 ): OptionAndCriteria[] => {
 	const newDecisionOptions: OptionAndCriteria[] = [];
@@ -33,7 +33,7 @@ export const getScoredDecisionOptions = (
 export const getScoredSelectionCriteria = (
 	decisionOptions: OptionAndCriteria[],
 	selectionCriteria: OptionAndCriteria[],
-	weightedCriteria: WeightedCriteria[]
+	weightedCriteria: WeightedCriteriaType[]
 ): OptionAndCriteria[] => {
 	const newSelectionCriteria: OptionAndCriteria[] = [];
 
@@ -51,7 +51,7 @@ export const getScoredSelectionCriteria = (
 };
 
 const sumWeightedCriteriaOfSelectionCriteria = (
-	weightedCriteria: WeightedCriteria[],
+	weightedCriteria: WeightedCriteriaType[],
 	selectionCriteriaId: number
 ): number => {
 	let weightedCriteriaSummed = 0;

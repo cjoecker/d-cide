@@ -10,7 +10,7 @@ import {RootState} from '../services/redux/rootReducer';
 import {instructions} from '../constants/Instructions';
 
 export interface StyleProps {
-	arrowPos: 'top' | 'right' | 'bottom' | 'left';
+	arrowPos: 'top' | 'right';
 	arrowOffset: number;
 	invertArrowOffsetDirection: boolean;
 }
@@ -22,8 +22,6 @@ const useStyles = makeStyles<Theme, StyleProps>(theme => ({
 		backgroundColor: 'currentColor',
 		position: 'relative',
 		top: '0px',
-		width: '100%',
-		height: '100%',
 		borderRadius: theme.spacing(1),
 		boxShadow: '0px 0px 41px -11px rgba(0,0,0,0.7)',
 		'&::after': {
@@ -47,7 +45,7 @@ const useStyles = makeStyles<Theme, StyleProps>(theme => ({
 		},
 	},
 	instructionsBoxRight: {
-		left: '-20px',
+		left: '0px',
 		'&::after': {
 			top: ({arrowOffset, invertArrowOffsetDirection}) =>
 				!invertArrowOffsetDirection ? theme.spacing(arrowOffset) : null,
@@ -65,6 +63,7 @@ const useStyles = makeStyles<Theme, StyleProps>(theme => ({
 	closeButton: {
 		marginTop: theme.spacing(1),
 		marginRight: theme.spacing(1),
+		marginLeft: theme.spacing(1),
 		backgroundColor: theme.palette.background.paper,
 		boxShadow: 'none',
 	},
@@ -82,7 +81,8 @@ const useStyles = makeStyles<Theme, StyleProps>(theme => ({
 		margin: theme.spacing(0, 0, 0, 2),
 	},
 	div: {
-		maxWidth: '300px',
+		width: '100%',
+		height: '100%',
 	},
 }));
 
@@ -120,7 +120,7 @@ const InstructionsBox = (props: ComponentsTooltipProps) => {
 	const loopAnimation = {
 		to: {
 			translateY: arrowPos === 'top' ? -5 : undefined,
-			translateX: arrowPos === 'top' ? undefined : -5,
+			translateX: arrowPos === 'top' ? undefined : -10,
 			transition: {
 				delay: 0.2,
 				duration: 0.5,
@@ -142,40 +142,40 @@ const InstructionsBox = (props: ComponentsTooltipProps) => {
 
 	const box = (
 		<div className={classes.div}>
-			<AnimatePresence exitBeforeEnter>
-				<motion.div variants={loopAnimation} initial='from' animate='to'>
-					<motion.div variants={startAnimation} initial='hidden' animate='visible' exit='hidden'>
-						<motion.div className={`${classes.instructionsBox} ${arrowClass}`} layout>
-							<Grid container justify='flex-end' alignContent='flex-start'>
-								<Grid item xs={10}>
-									<div className={classes.typography}>
-										<Typography component='span' variant='body1' align='left' color='secondary'>
-											{instructions[instructionsSteps].text}
-										</Typography>
-									</div>
-								</Grid>
-								<Grid xs={2}>
-									<Grid container justify='flex-end' alignContent='flex-end'>
-										<IconButton aria-label='delete' className={classes.closeButton} onClick={() => setIsVisible(false)}>
-											<CloseIcon fontSize='small' />
-										</IconButton>
+			<Grid container justify='flex-end' alignContent='flex-start'>
+				<AnimatePresence exitBeforeEnter>
+					<motion.div variants={loopAnimation} initial='from' animate='to'>
+						<motion.div variants={startAnimation} initial='hidden' animate='visible' exit='hidden'>
+							<motion.div className={`${classes.instructionsBox} ${arrowClass}`} layout>
+								<Grid container justify='flex-end' alignContent='flex-start'>
+									<Grid item xs={11}>
+										<div className={classes.typography}>
+											<Typography component='span' variant='body1' align='left' color='secondary'>
+												{instructions[instructionsSteps].text}
+											</Typography>
+										</div>
+										<Button
+											className={classes.linkButton}
+											data-testid='dontShowMoreHelp'
+											onClick={() => setIsVisible(false)}
+											color='primary'
+										>
+											Don&apos;t show help anymore
+										</Button>
+									</Grid>
+									<Grid xs={1}>
+										<Grid container justify='flex-end' alignContent='flex-end'>
+											<IconButton aria-label='delete' className={classes.closeButton} onClick={() => setIsVisible(false)}>
+												<CloseIcon fontSize='small' />
+											</IconButton>
+										</Grid>
 									</Grid>
 								</Grid>
-								<Grid item xs={12}>
-									<Button
-										className={classes.linkButton}
-										data-testid='dontShowMoreHelp'
-										onClick={() => setIsVisible(false)}
-										color='primary'
-									>
-										Don&apos;t show help anymore
-									</Button>
-								</Grid>
-							</Grid>
+							</motion.div>
 						</motion.div>
 					</motion.div>
-				</motion.div>
-			</AnimatePresence>
+				</AnimatePresence>
+			</Grid>
 		</div>
 	);
 
