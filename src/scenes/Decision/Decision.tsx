@@ -127,11 +127,7 @@ const Decision: React.FC = () => {
     setDisableStepButtons(disabled);
     setSteps(
       steps.map(step => {
-        if (step.number > 1)
-          return {
-            ...step,
-            disabled,
-          };
+        if (step.number > 1) return {...step, disabled};
         return step;
       })
     );
@@ -147,6 +143,7 @@ const Decision: React.FC = () => {
 
   const changeStep = (stepNumber: number, element: string) => {
     setStepCompleted(activeStepNum);
+    console.log(stepNumber);
     setActiveStepNum(stepNumber);
     window.scrollTo(0, 0);
 
@@ -189,7 +186,7 @@ const Decision: React.FC = () => {
           })}
         </Stepper>
 
-        <Grid container className={classes.divParent} justify='flex-end' alignItems='flex-end' wrap="nowrap">
+        <Grid container className={classes.divParent} justify='flex-end' alignItems='flex-end' wrap='nowrap'>
           <Grid item>
             {activeStepNum !== 1 && (
               <ComponentsTooltip>
@@ -224,7 +221,6 @@ const Decision: React.FC = () => {
                   className={classes.buttonNext}
                   onClick={() => changeStep(activeStepNum + 1, 'next button')}
                   disabled={disableStepButtons}
-                  ref={nextButtonRef}
                   style={{
                     marginBottom: isEdge ? 10 : 'env(safe-area-inset-bottom',
                     marginRight: isEdge ? 10 : 'env(safe-area-inset-right)',
@@ -242,6 +238,7 @@ const Decision: React.FC = () => {
           axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
           index={activeStepNum - 1}
           onTransitionEnd={() => {
+            console.log(activeStepNum);
             setLoadedStepNum(activeStepNum);
           }}
           style={{
