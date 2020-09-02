@@ -29,10 +29,11 @@ const useStyles = makeStyles(theme => ({
     overflowX: 'hidden',
   },
   divStepsContainer: {
-    display: 'inline-flex',
+    display: 'grid',
   },
   divSteps: {
     width: '100vw',
+    gridArea: '1 / 1 / 2 / 2',
   },
   stepper: {
     backgroundColor: 'transparent',
@@ -67,7 +68,7 @@ type stepsType = {
 const variants = {
   enter: (direction: number) => {
     return {
-      x: direction > 0 ? 500 : -500,
+      x: direction > 0 ? 1000 : -1000,
       opacity: 0,
     };
   },
@@ -79,15 +80,15 @@ const variants = {
   exit: (direction: number) => {
     return {
       zIndex: 0,
-      x: direction < 0 ? 500 : -500,
+      x: direction < 0 ? 1000 : -1000,
       opacity: 0,
     };
   },
 };
 
 const Decision: React.FC = () => {
-  const [activeStepNum, setActiveStepNum] = useState(1);
-  const [loadedStepNum, setLoadedStepNum] = useState(1);
+  const [[activeStepNum, direction], setActiveStepNum] = useState([1, 0]);
+
   const [disableStepButtons, setDisableStepButtons] = useState(false);
   const [steps, setSteps] = useState<stepsType[]>([
     {
@@ -116,28 +117,14 @@ const Decision: React.FC = () => {
     },
   ]);
 
-  const [[page, direction], setPage] = useState([0, 0]);
-
-  const paginate = (newDirection: number) => {
-    setPage([page + newDirection, newDirection]);
-  };
-
   const {alerts} = useSelector((state: RootState) => state.App, shallowEqual);
   const {instructionsSteps} = useSelector((state: RootState) => state.App, shallowEqual);
 
   const classes = useStyles();
-  const theme = useTheme();
 
   useEffect(() => {
-    return () => {
-      setActiveStepNum(0);
-      setLoadedStepNum(0);
-    };
-  }, []);
-
-  useEffect(() => {
-    ReactGA.modalview(`Step ${loadedStepNum}`);
-  }, [loadedStepNum]);
+    ReactGA.modalview(`Step ${activeStepNum}`);
+  }, [activeStepNum]);
 
   useEffect(() => {
     disableButtons(
@@ -163,28 +150,24 @@ const Decision: React.FC = () => {
     );
   };
 
-  // const setStepCompleted = (stepNumber: number) => {
-  //   const newSteps = [...steps];
-  //   const index = newSteps.findIndex(obj => obj.number === stepNumber);
-  //   newSteps[index].completed = true;
-  //
-  //   setSteps(newSteps);
-  // };
+  const setStepCompleted = (stepNumber: number) => {
+    const newSteps = [...steps];
+    const index = newSteps.findIndex(obj => obj.number === stepNumber);
+    newSteps[index].completed = true;
 
-  const changeStep = (stepNumber: number, element: string) => {
-    // setStepCompleted(activeStepNum);
-    // setActiveStepNum(stepNumber);
-    window.scrollTo(0, 0);
-
-    ReactGA.event({
-      category: 'Change step',
-      action: `Change to step ${stepNumber} with ${element}`,
-    });
+    setSteps(newSteps);
   };
 
-  useEffect(() => {
-    console.log(page);
-  }, [page]);
+  const changeStep = (newDirection: number, element: string) => {
+    const newStep = activeStepNum + newDirection;
+    setStepCompleted(activeStepNum);
+    setActiveStepNum([newStep, newDirection]);
+    window.scrollTo(0, 0);
+    ReactGA.event({
+      category: 'Change step',
+      action: `Change to step ${newStep} with ${element}`,
+    });
+  };
 
   const stepsComponents = [
     <OptionsAndCriteria hidden={false} />,
@@ -205,7 +188,7 @@ const Decision: React.FC = () => {
                 <StepButton
                   focusRipple
                   data-testid={`Step${step.number}Button`}
-                  onClick={() => changeStep(step.number, 'step button')}
+                  onClick={() => changeStep(step.number - activeStepNum, 'step button')}
                   completed={step.completed}
                   disabled={step.disabled}
                   aria-label={`Go to step ${step.number}`}
@@ -217,28 +200,28 @@ const Decision: React.FC = () => {
           );
         })}
       </Stepper>
-
-      <AnimatePresence initial={false} custom={direction} exitBeforeEnter>
-        <motion.div
-          className={classes.divSteps}
-          key={page}
-          custom={direction}
-          variants={variants}
-          initial='enter'
-          animate='center'
-          exit='exit'
-          transition={{
-            x: {type: 'spring', stiffness: 500, damping: 20, restSpeed: 5},
-            opacity: {duration: 0.2},
-          }}
-        >
-          {stepsComponents[page]}
-        </motion.div>
-      </AnimatePresence>
-
+      <div className={classes.divStepsContainer}>
+        <AnimatePresence initial={false} custom={direction}>
+          <motion.div
+            className={classes.divSteps}
+            key={activeStepNum}
+            custom={direction}
+            variants={variants}
+            initial='enter'
+            animate='center'
+            exit='exit'
+            transition={{
+              x: {type: 'spring', stiffness: 150, damping: 17},
+              opacity: {duration: 0.5},
+            }}
+          >
+            {stepsComponents[activeStepNum - 1]}
+          </motion.div>
+        </AnimatePresence>
+      </div>
       <Grid container className={classes.gridButtons} justify='flex-end' alignItems='flex-end' wrap='nowrap'>
         <Grid item>
-          {page !== 0 && (
+          {activeStepNum !== 0 && (
             <ComponentsTooltip>
               <Fab
                 data-testid='PrevStepButton'
@@ -250,8 +233,7 @@ const Decision: React.FC = () => {
                   bottom: isEdge ? 10 : 'env(safe-area-inset-bottom)',
                   left: isEdge ? 10 : 'env(safe-area-inset-left)',
                 }}
-                onClick={() => paginate(-1)}
-                //onClick={() => changeStep(activeStepNum - 1, 'previous button')}
+                onClick={() => changeStep(-1, 'previous button')}
               >
                 <ArrowBackIcon />
               </Fab>
@@ -262,7 +244,7 @@ const Decision: React.FC = () => {
           <InstructionsBox show={instructionsSteps === 5} />
         </Grid>
         <Grid item>
-          {page !== steps.length && (
+          {activeStepNum !== steps.length && (
             <ComponentsTooltip>
               <Fab
                 data-testid='NextStepButton'
@@ -270,8 +252,7 @@ const Decision: React.FC = () => {
                 aria-label='Next step'
                 size='medium'
                 className={classes.buttonNext}
-                onClick={() => paginate(1)}
-                // onClick={() => changeStep(activeStepNum + 1, 'next button')}
+                onClick={() => changeStep(1, 'next button')}
                 disabled={disableStepButtons}
                 style={{
                   marginBottom: isEdge ? 10 : 'env(safe-area-inset-bottom',
@@ -284,21 +265,6 @@ const Decision: React.FC = () => {
           )}
         </Grid>
       </Grid>
-
-      {/*<SwipeableViews*/}
-      {/* disabled*/}
-      {/* axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}*/}
-      {/* index={activeStepNum - 1}*/}
-      {/* onTransitionEnd={() => {*/}
-      {/*   setLoadedStepNum(activeStepNum);*/}
-      {/* }}*/}
-      {/* style={{zIndex: 0}}*/}
-      {/*>*/}
-      {/*  <OptionsAndCriteria hidden={loadedStepNum !== 1} />*/}
-      {/*  <WeightCriteria hidden={loadedStepNum !== 2} />*/}
-      {/*  <RateOptions hidden={loadedStepNum !== 3} />*/}
-      {/*  <Results hidden={loadedStepNum !== 4} />*/}
-      {/*</SwipeableViews>*/}
     </div>
   );
 };
