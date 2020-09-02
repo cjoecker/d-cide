@@ -67,7 +67,7 @@ type stepsType = {
 const variants = {
   enter: (direction: number) => {
     return {
-      x: direction > 0 ? 1000 : -1000,
+      x: direction > 0 ? 500 : -500,
       opacity: 0,
     };
   },
@@ -79,7 +79,7 @@ const variants = {
   exit: (direction: number) => {
     return {
       zIndex: 0,
-      x: direction < 0 ? 1000 : -1000,
+      x: direction < 0 ? 500 : -500,
       opacity: 0,
     };
   },
@@ -217,25 +217,25 @@ const Decision: React.FC = () => {
           );
         })}
       </Stepper>
-      <div className={classes.divStepsContainer}>
-        <AnimatePresence initial={false} custom={direction} exitBeforeEnter>
-          <motion.div
-            className={classes.divSteps}
-            key={page}
-            custom={direction}
-            variants={variants}
-            initial='enter'
-            animate='center'
-            exit='exit'
-            transition={{
-              x: {type: 'spring', stiffness: 300, damping: 200},
-              opacity: {duration: 0.2},
-            }}
-          >
-            {stepsComponents[page]}
-          </motion.div>
-        </AnimatePresence>
-      </div>
+
+      <AnimatePresence initial={false} custom={direction} exitBeforeEnter>
+        <motion.div
+          className={classes.divSteps}
+          key={page}
+          custom={direction}
+          variants={variants}
+          initial='enter'
+          animate='center'
+          exit='exit'
+          transition={{
+            x: {type: 'spring', stiffness: 500, damping: 20, restSpeed: 5},
+            opacity: {duration: 0.2},
+          }}
+        >
+          {stepsComponents[page]}
+        </motion.div>
+      </AnimatePresence>
+
       <Grid container className={classes.gridButtons} justify='flex-end' alignItems='flex-end' wrap='nowrap'>
         <Grid item>
           {page !== 0 && (
