@@ -107,12 +107,7 @@ export const instructions: instructionsType[] = [
     arrowPos: 'top',
     arrowOffset: '50%',
     invertArrowOffsetDirection: false,
-    text: (
-      <div>
-        <p>How good or bad is the Risk in invest in gold?</p>
-        <p>Move the slider left or right to rate it.</p>
-      </div>
-    ),
+    text: <div />,
   },
   {
     step: 9,
@@ -126,23 +121,13 @@ export const instructions: instructionsType[] = [
     arrowPos: 'right',
     arrowOffset: 2,
     invertArrowOffsetDirection: true,
-    text: (
-      <div>
-        <p>Gold is your best option.</p>
-        <p>Your second best option is Real</p>
-      </div>
-    ),
+    text: <div />,
   },
   {
     step: 11,
     arrowPos: 'right',
     arrowOffset: 2,
     invertArrowOffsetDirection: true,
-    text: (
-      <div>
-        <p>Risk is the most important criteria for your decision.</p>
-        <p>Time is after gold, the mos important criteria.</p>
-      </div>
-    ),
+    text: <div />,
   },
 ];

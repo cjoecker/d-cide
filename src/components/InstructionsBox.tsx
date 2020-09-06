@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Button, IconButton, Popper, Theme} from '@material-ui/core';
+import {Button, IconButton, Theme} from '@material-ui/core';
 import {makeStyles} from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
@@ -59,23 +59,23 @@ const useStyles = makeStyles<Theme, StyleProps>(theme => ({
   },
   closeButton: {
     marginTop: theme.spacing(1),
-    marginRight: theme.spacing(1),
+    marginRight: theme.spacing(-1),
     marginLeft: theme.spacing(1),
     backgroundColor: theme.palette.background.paper,
     boxShadow: 'none',
+    float: 'right',
   },
   linkButton: {
     textTransform: 'none',
     textDecoration: 'underline',
     marginTop: theme.spacing(-1.5),
-    marginLeft: theme.spacing(1),
     fontWeight: 'normal',
     '&:hover': {
       textDecoration: 'underline',
     },
   },
   typography: {
-    margin: theme.spacing(0, 0, 0, 2),
+    margin: theme.spacing(0, 2, 0, 2),
   },
   gridContainer: {
     paddingLeft: ({arrowPos}) => (arrowPos === 'right' ? 5 : 0),
@@ -107,11 +107,11 @@ const startAnimation = {
 
 type ComponentsTooltipProps = {
   show: boolean;
-  anchor?: any;
+  customText?: JSX.Element | null;
 };
 
 const InstructionsBox = (props: ComponentsTooltipProps) => {
-  const {show} = props;
+  const {show, customText} = props;
 
   const [isVisible, setIsVisible] = useState(true);
   const {instructionsSteps, showInstructions} = useSelector((state: RootState) => state.App, shallowEqual);
@@ -158,24 +158,9 @@ const InstructionsBox = (props: ComponentsTooltipProps) => {
             >
               <motion.div variants={startAnimation} initial='hidden' animate='visible' exit='hidden'>
                 <motion.div className={`${classes.instructionsBox} ${arrowClass}`} layout>
-                  <Grid container justify='flex-end' alignContent='flex-start'>
-                    <Grid item xs={11}>
-                      <div className={classes.typography}>
-                        <Typography component='span' variant='body1' align='left' color='secondary'>
-                          {instructions[instructionsSteps].text}
-                        </Typography>
-                      </div>
-                      <Button
-                        className={classes.linkButton}
-                        data-testid='dontShowMoreHelp'
-                        onClick={() => setIsVisible(false)}
-                        color='primary'
-                      >
-                        Don&apos;t show help anymore
-                      </Button>
-                    </Grid>
-                    <Grid xs={1}>
-                      <Grid container justify='flex-end' alignContent='flex-end'>
+                  <Grid container justify='center' alignContent='flex-start'>
+                    <div className={classes.typography}>
+                      <Typography component='span' variant='body1' align='left' color='secondary'>
                         <IconButton
                           aria-label='delete'
                           className={classes.closeButton}
@@ -183,8 +168,17 @@ const InstructionsBox = (props: ComponentsTooltipProps) => {
                         >
                           <CloseIcon fontSize='small' />
                         </IconButton>
-                      </Grid>
-                    </Grid>
+                        {customText ?? instructions[instructionsSteps].text}
+                      </Typography>
+                    </div>
+                    <Button
+                      className={classes.linkButton}
+                      data-testid='dontShowMoreHelp'
+                      onClick={() => setIsVisible(false)}
+                      color='primary'
+                    >
+                      Don&apos;t show help anymore
+                    </Button>
                   </Grid>
                 </motion.div>
               </motion.div>

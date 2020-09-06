@@ -83,7 +83,7 @@ const useStyles = makeStyles(theme => ({
 type Props = {
   hidden: boolean;
 };
-
+//TODO : delete hidden props
 const WeightCriteria: React.FC<Props> = (props: Props) => {
   const {hidden} = props;
 
@@ -225,7 +225,7 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
         </Grid>
         {weightedCriteria.map((criteria, index) => (
           <Grid item xs={6} className={classes.gridItemCriteria} key={criteria.id}>
-            <Paper elevation={1} className={classes.paper} ref={paperRef}>
+            <Paper elevation={1} className={classes.paper} ref={index === 0 ? paperRef : null}>
               <Grid container spacing={2} alignItems='center'>
                 <Grid item xs={6} className={classes.gridItemCriteriaText}>
                   <Typography
@@ -283,7 +283,7 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
           </Grid>
         ))}
       </Grid>
-      {paperRef.current && !hidden && (
+      {paperRef.current && (
         <Popper
           style={{marginTop: theme.spacing(2), width: paperRef.current.offsetWidth, zIndex: 1000}}
           id='popper'
