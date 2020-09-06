@@ -5,8 +5,7 @@ import StepButton from '@material-ui/core/StepButton';
 import Fab from '@material-ui/core/Fab';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import {makeStyles, useTheme} from '@material-ui/core/styles';
-import SwipeableViews from 'react-swipeable-views';
+import {makeStyles} from '@material-ui/core/styles';
 import {StepLabel} from '@material-ui/core';
 import {shallowEqual, useDispatch, useSelector} from 'react-redux';
 import ReactGA from 'react-ga';
@@ -171,7 +170,8 @@ const Decision: React.FC = () => {
       action: `Change to step ${newStep} with ${element}`,
     });
 
-    if (instructionsSteps === 5) dispatch(AppSlice.actions.goToInstructionsStep(6));
+    if (instructionsSteps === 5 && activeStepNum === 1) dispatch(AppSlice.actions.goToInstructionsStep(6));
+    if (instructionsSteps === 7 && activeStepNum === 2) dispatch(AppSlice.actions.goToInstructionsStep(8));
   };
 
   const stepsComponents = [
@@ -220,7 +220,7 @@ const Decision: React.FC = () => {
             animate='center'
             exit='exit'
             transition={{
-              x: {type: 'spring', stiffness: 200, damping: 25, mass: 2},
+              x: {type: 'spring', stiffness: 200, damping: 25, mass: 2, restSpeed: 1},
               opacity: {duration: 0.5},
             }}
           >
@@ -250,7 +250,9 @@ const Decision: React.FC = () => {
           )}
         </Grid>
         <Grid style={{width: '100%'}} item>
-          <InstructionsBox show={instructionsSteps === 5} />
+          <InstructionsBox
+            show={(instructionsSteps === 5 && activeStepNum === 1) || (instructionsSteps === 7 && activeStepNum === 2)}
+          />
         </Grid>
         <Grid item>
           {activeStepNum !== steps.length && (

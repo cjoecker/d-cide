@@ -10,7 +10,7 @@ type AppState = {
 const initialState: AppState = {
   alerts: [],
   instructionsSteps: 0,
-  showInstructions: false,
+  showInstructions: true,
 };
 
 const AppSlice = createSlice({

@@ -1,11 +1,10 @@
-import React, {useEffect, useMemo, useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Slider from '@material-ui/core/Slider';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import {shallowEqual, useDispatch, useSelector} from 'react-redux';
-import Fade from '@material-ui/core/Fade';
 import {makeStyles, useTheme} from '@material-ui/core/styles';
 
 import {HelpOutlineRounded} from '@material-ui/icons';
@@ -19,6 +18,7 @@ import WeightedCriteriaSlice, {
 import ComponentsTooltip from '../../../components/ComponentsTooltip';
 import shuffleArray from '../../../services/shuffleArray';
 import InstructionsBox from '../../../components/InstructionsBox';
+import AppSlice from '../../../services/redux/actionsAndSlicers/AppSlice';
 
 const useStyles = makeStyles(theme => ({
   divMain: {
@@ -132,6 +132,8 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
       if (criteria.id === itemLocal.id)
         dispatch(WeightedCriteriaSlice.actions.updateWeightedCriteria({...criteria, weight: value}));
     });
+
+    if (instructionsSteps === 6) dispatch(AppSlice.actions.goToInstructionsStep(7));
   };
 
   //TODO improve scrolling from slider after it is implemented in Material-UI - Check also Rate options!
