@@ -8,7 +8,7 @@ import ArrowBackIcon from '@material-ui/icons/ArrowBack';
 import {makeStyles, useTheme} from '@material-ui/core/styles';
 import SwipeableViews from 'react-swipeable-views';
 import {StepLabel} from '@material-ui/core';
-import {shallowEqual, useSelector} from 'react-redux';
+import {shallowEqual, useDispatch, useSelector} from 'react-redux';
 import ReactGA from 'react-ga';
 import {isEdge} from 'react-device-detect';
 
@@ -22,6 +22,7 @@ import {RootState} from '../../services/redux/rootReducer';
 import {NOT_ENOUGH_CRITERIA, NOT_ENOUGH_OPTIONS} from '../../constants/Alerts';
 import ComponentsTooltip from '../../components/ComponentsTooltip';
 import InstructionsBox from '../../components/InstructionsBox';
+import AppSlice from '../../services/redux/actionsAndSlicers/AppSlice';
 
 const useStyles = makeStyles(theme => ({
   divMain: {
@@ -121,6 +122,7 @@ const Decision: React.FC = () => {
   const {instructionsSteps} = useSelector((state: RootState) => state.App, shallowEqual);
 
   const classes = useStyles();
+  const dispatch = useDispatch();
 
   useEffect(() => {
     ReactGA.modalview(`Step ${activeStepNum}`);
@@ -159,6 +161,7 @@ const Decision: React.FC = () => {
   };
 
   const changeStep = (newDirection: number, element: string) => {
+    dispatch(AppSlice.actions.setShowInstructions(false));
     const newStep = activeStepNum + newDirection;
     setStepCompleted(activeStepNum);
     setActiveStepNum([newStep, newDirection]);
@@ -167,6 +170,8 @@ const Decision: React.FC = () => {
       category: 'Change step',
       action: `Change to step ${newStep} with ${element}`,
     });
+
+    if (instructionsSteps === 5) dispatch(AppSlice.actions.goToInstructionsStep(6));
   };
 
   const stepsComponents = [
@@ -201,7 +206,11 @@ const Decision: React.FC = () => {
         })}
       </Stepper>
       <div className={classes.divStepsContainer}>
-        <AnimatePresence initial={false} custom={direction}>
+        <AnimatePresence
+          initial={false}
+          custom={direction}
+          onExitComplete={() => dispatch(AppSlice.actions.setShowInstructions(true))}
+        >
           <motion.div
             className={classes.divSteps}
             key={activeStepNum}
@@ -211,7 +220,7 @@ const Decision: React.FC = () => {
             animate='center'
             exit='exit'
             transition={{
-              x: {type: 'spring', stiffness: 150, damping: 17},
+              x: {type: 'spring', stiffness: 200, damping: 25, mass: 2},
               opacity: {duration: 0.5},
             }}
           >
@@ -221,7 +230,7 @@ const Decision: React.FC = () => {
       </div>
       <Grid container className={classes.gridButtons} justify='flex-end' alignItems='flex-end' wrap='nowrap'>
         <Grid item>
-          {activeStepNum !== 0 && (
+          {activeStepNum !== 1 && (
             <ComponentsTooltip>
               <Fab
                 data-testid='PrevStepButton'

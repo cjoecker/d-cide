@@ -2,31 +2,36 @@ import {createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {AlertType} from '../../../constants/Alerts';
 
 type AppState = {
-	alerts: AlertType[];
-	instructionsSteps: number;
+  alerts: AlertType[];
+  instructionsSteps: number;
+  showInstructions: boolean;
 };
 
 const initialState: AppState = {
-	alerts: [],
-	instructionsSteps: 0,
+  alerts: [],
+  instructionsSteps: 0,
+  showInstructions: false,
 };
 
 const AppSlice = createSlice({
-	name: 'App',
-	initialState,
-	reducers: {
-		addAlert(state, action: PayloadAction<AlertType>) {
-			state.alerts = state.alerts.some(alert => JSON.stringify(alert) === JSON.stringify(action.payload))
-				? state.alerts
-				: [action.payload, ...state.alerts];
-		},
-		deleteAlert(state, action: PayloadAction<AlertType>) {
-			state.alerts = state.alerts.filter(alert => JSON.stringify(alert) !== JSON.stringify(action.payload));
-		},
-		goToInstructionsStep(state, action: PayloadAction<number>) {
-			state.instructionsSteps = action.payload;
-		},
-	},
+  name: 'App',
+  initialState,
+  reducers: {
+    addAlert(state, action: PayloadAction<AlertType>) {
+      state.alerts = state.alerts.some(alert => JSON.stringify(alert) === JSON.stringify(action.payload))
+        ? state.alerts
+        : [action.payload, ...state.alerts];
+    },
+    deleteAlert(state, action: PayloadAction<AlertType>) {
+      state.alerts = state.alerts.filter(alert => JSON.stringify(alert) !== JSON.stringify(action.payload));
+    },
+    goToInstructionsStep(state, action: PayloadAction<number>) {
+      state.instructionsSteps = action.payload;
+    },
+    setShowInstructions(state, action: PayloadAction<boolean>) {
+      state.showInstructions = action.payload;
+    },
+  },
 });
 
 export default AppSlice;

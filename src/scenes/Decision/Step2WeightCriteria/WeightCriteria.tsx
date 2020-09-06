@@ -1,4 +1,4 @@
-import React, {useEffect, useMemo, useState} from 'react';
+import React, {useEffect, useMemo, useRef, useState} from 'react';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import Slider from '@material-ui/core/Slider';
@@ -6,9 +6,10 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import {shallowEqual, useDispatch, useSelector} from 'react-redux';
 import Fade from '@material-ui/core/Fade';
-import {makeStyles} from '@material-ui/core/styles';
+import {makeStyles, useTheme} from '@material-ui/core/styles';
 
 import {HelpOutlineRounded} from '@material-ui/icons';
+import {Popper} from '@material-ui/core';
 import * as LongStrings from '../../../constants/InfoDialogTexts';
 import InfoDialog from '../../../components/InfoDialog';
 import {RootState} from '../../../services/redux/rootReducer';
@@ -17,6 +18,7 @@ import WeightedCriteriaSlice, {
 } from '../../../services/redux/actionsAndSlicers/WeightCriteriaSlice';
 import ComponentsTooltip from '../../../components/ComponentsTooltip';
 import shuffleArray from '../../../services/shuffleArray';
+import InstructionsBox from '../../../components/InstructionsBox';
 
 const useStyles = makeStyles(theme => ({
   divMain: {
@@ -86,12 +88,17 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
   const {hidden} = props;
 
   const [showInfo, setShowInfo] = useState(false);
+  const [showInstructions, setShowInstructions] = useState(false);
+  const sliderRef = useRef<HTMLElement>(null);
+  const paperRef = useRef<HTMLElement>(null);
 
   const selectionCriteria = useSelector((state: RootState) => state.OptionsAndCriteria.selectionCriteria, shallowEqual);
   const weightedCriteria = useSelector((state: RootState) => state.WeightedCriteria, shallowEqual);
+  const {instructionsSteps} = useSelector((state: RootState) => state.App, shallowEqual);
 
   const classes = useStyles();
   const dispatch = useDispatch();
+  const theme = useTheme();
 
   const sliderMarks = [
     {
@@ -113,11 +120,12 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
 
   useEffect(() => {
     createWeightedCriteria();
-    console.log(hidden);
-    if (!hidden) {
-      createWeightedCriteria();
-    }
-  }, [hidden, selectionCriteria]);
+  }, [selectionCriteria]);
+
+  useEffect(() => {
+    if (instructionsSteps === 6) setShowInstructions(true);
+    else setShowInstructions(false);
+  }, [instructionsSteps]);
 
   const onChange = (event: React.BaseSyntheticEvent, value: number, itemLocal: WeightedCriteriaType) => {
     weightedCriteria.forEach(criteria => {
@@ -206,7 +214,6 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
                   aria-label='Show weighted criteria help'
                   className={classes.infoButton}
                   onClick={() => setShowInfo(true)}
-                  tabIndex={hidden ? -1 : 0}
                 >
                   <HelpOutlineRounded />
                 </IconButton>
@@ -214,66 +221,77 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
             </Typography>
           </div>
         </Grid>
-        {!hidden &&
-          weightedCriteria.map((criteria, index) => (
-            <Grid item xs={6} className={classes.gridItemCriteria} key={criteria.id}>
-              <Paper elevation={1} className={classes.paper}>
-                <Grid container spacing={2} alignItems='center'>
-                  <Grid item xs={6} className={classes.gridItemCriteriaText}>
-                    <Typography
-                      className={classes.unselectableText}
-                      component='span'
-                      data-testid={`textSlider${index}CriteriaLeft`}
-                      variant='body1'
-                    >
-                      {getSelectionCriteriaName(criteria.selectionCriteria1Id)}
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={6} className={classes.gridItemCriteriaText}>
-                    <Typography
-                      className={classes.unselectableText}
-                      component='span'
-                      data-testid={`textSlider${index}CriteriaRight`}
-                      variant='body1'
-                    >
-                      {getSelectionCriteriaName(criteria.selectionCriteria2Id)}
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={12} zeroMinWidth className={classes.gridItemSlider}>
-                    <Slider
-                      aria-label={`Weight ${getSelectionCriteriaName(
-                        criteria.selectionCriteria1Id
-                      )} and ${getSelectionCriteriaName(criteria.selectionCriteria2Id)}. Slider value: ${
-                        criteria.weight
-                      }`}
-                      data-testid={`slider${index}`}
-                      classes={{
-                        mark: classes.sliderMarks,
-                        markActive: classes.sliderMarks,
-                      }}
-                      value={criteria.weight}
-                      min={-100}
-                      max={100}
-                      step={1}
-                      marks={sliderMarks}
-                      onChange={(event, value) => onChange(event, value as number, criteria)}
-                    />
-                  </Grid>
-                  <Grid item xs={12} className={classes.gridItemSliderInfo}>
-                    <Typography
-                      className={classes.unselectableText}
-                      component='span'
-                      data-testid={`infoTextSlider${index}`}
-                      variant='caption'
-                    >
-                      {getWeightInfoText(criteria.weight, criteria.selectionCriteria1Id, criteria.selectionCriteria2Id)}
-                    </Typography>
-                  </Grid>
+        {weightedCriteria.map((criteria, index) => (
+          <Grid item xs={6} className={classes.gridItemCriteria} key={criteria.id}>
+            <Paper elevation={1} className={classes.paper} ref={paperRef}>
+              <Grid container spacing={2} alignItems='center'>
+                <Grid item xs={6} className={classes.gridItemCriteriaText}>
+                  <Typography
+                    className={classes.unselectableText}
+                    component='span'
+                    data-testid={`textSlider${index}CriteriaLeft`}
+                    variant='body1'
+                  >
+                    {getSelectionCriteriaName(criteria.selectionCriteria1Id)}
+                  </Typography>
                 </Grid>
-              </Paper>
-            </Grid>
-          ))}
+                <Grid item xs={6} className={classes.gridItemCriteriaText}>
+                  <Typography
+                    className={classes.unselectableText}
+                    component='span'
+                    data-testid={`textSlider${index}CriteriaRight`}
+                    variant='body1'
+                  >
+                    {getSelectionCriteriaName(criteria.selectionCriteria2Id)}
+                  </Typography>
+                </Grid>
+                <Grid item xs={12} zeroMinWidth className={classes.gridItemSlider}>
+                  <Slider
+                    aria-label={`Weight ${getSelectionCriteriaName(
+                      criteria.selectionCriteria1Id
+                    )} and ${getSelectionCriteriaName(criteria.selectionCriteria2Id)}. Slider value: ${
+                      criteria.weight
+                    }`}
+                    data-testid={`slider${index}`}
+                    classes={{
+                      mark: classes.sliderMarks,
+                      markActive: classes.sliderMarks,
+                    }}
+                    ref={index === 0 ? sliderRef : null}
+                    value={criteria.weight}
+                    min={-100}
+                    max={100}
+                    step={1}
+                    marks={sliderMarks}
+                    onChange={(event, value) => onChange(event, value as number, criteria)}
+                  />
+                </Grid>
+                <Grid item xs={12} className={classes.gridItemSliderInfo}>
+                  <Typography
+                    className={classes.unselectableText}
+                    component='span'
+                    data-testid={`infoTextSlider${index}`}
+                    variant='caption'
+                  >
+                    {getWeightInfoText(criteria.weight, criteria.selectionCriteria1Id, criteria.selectionCriteria2Id)}
+                  </Typography>
+                </Grid>
+              </Grid>
+            </Paper>
+          </Grid>
+        ))}
       </Grid>
+      {paperRef.current && !hidden && (
+        <Popper
+          style={{marginTop: theme.spacing(2), width: paperRef.current.offsetWidth, zIndex: 1000}}
+          id='popper'
+          open
+          anchorEl={sliderRef.current}
+        >
+          <InstructionsBox show={showInstructions} />
+        </Popper>
+      )}
+
       <InfoDialog text={LongStrings.WeightCriteriaInfo} show={showInfo} onClose={() => setShowInfo(false)} />
     </div>
   );

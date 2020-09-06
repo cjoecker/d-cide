@@ -70,7 +70,8 @@ const EditableList: React.FC<Props> = (props: Props) => {
 
   const paperRef = useRef(null);
 
-  const animationDelay = 100;
+  const startAnimationDelay = 400;
+  const animationDelayPerItem = 200;
 
   const isDecisionOptionsList = itemsKey === OptionsAndCriteriaKeys.decisionOptions;
 
@@ -269,7 +270,7 @@ const EditableList: React.FC<Props> = (props: Props) => {
           <Fade
             in
             style={{
-              transitionDelay: `${index * (stopAnimation ? 0 : animationDelay)}ms`,
+              transitionDelay: `${startAnimationDelay + index * (stopAnimation ? 0 : animationDelayPerItem)}ms`,
             }}
             timeout={500}
             onEntered={() => endOfAnimation(index)}

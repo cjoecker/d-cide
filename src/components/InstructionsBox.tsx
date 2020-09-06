@@ -11,7 +11,7 @@ import {instructions} from '../constants/Instructions';
 
 export interface StyleProps {
   arrowPos: 'top' | 'right';
-  arrowOffset: number;
+  arrowOffset: number | string;
   invertArrowOffsetDirection: boolean;
 }
 
@@ -32,13 +32,14 @@ const useStyles = makeStyles<Theme, StyleProps>(theme => ({
     left: '0px',
     '&::after': {
       left: ({arrowOffset, invertArrowOffsetDirection}) =>
-        !invertArrowOffsetDirection ? theme.spacing(arrowOffset) : null,
+        getConditionalPos(!invertArrowOffsetDirection, arrowOffset, theme),
       right: ({arrowOffset, invertArrowOffsetDirection}) =>
-        invertArrowOffsetDirection ? theme.spacing(arrowOffset) : null,
+        getConditionalPos(invertArrowOffsetDirection, arrowOffset, theme),
       top: '-13px',
       borderLeft: `7px solid transparent`,
       borderRight: `7px solid transparent`,
       borderBottom: `14px solid currentColor`,
+      marginLeft: '-6px',
     },
   },
   instructionsBoxRight: {
@@ -47,9 +48,9 @@ const useStyles = makeStyles<Theme, StyleProps>(theme => ({
     flex: 1,
     '&::after': {
       top: ({arrowOffset, invertArrowOffsetDirection}) =>
-        !invertArrowOffsetDirection ? theme.spacing(arrowOffset) : null,
+        getConditionalPos(!invertArrowOffsetDirection, arrowOffset, theme),
       bottom: ({arrowOffset, invertArrowOffsetDirection}) =>
-        invertArrowOffsetDirection ? theme.spacing(arrowOffset) : null,
+        getConditionalPos(invertArrowOffsetDirection, arrowOffset, theme),
       right: '-13px',
       borderTop: `7px solid transparent`,
       borderBottom: `7px solid transparent`,
@@ -77,10 +78,18 @@ const useStyles = makeStyles<Theme, StyleProps>(theme => ({
     margin: theme.spacing(0, 0, 0, 2),
   },
   gridContainer: {
-    paddingLeft: 5,
+    paddingLeft: ({arrowPos}) => (arrowPos === 'right' ? 5 : 0),
     width: '100%',
   },
 }));
+
+const getConditionalPos = (condition: boolean, offset: string | number, theme: Theme) => {
+  if (!condition) return null;
+
+  if (typeof offset === 'string') return offset;
+
+  return theme.spacing(offset);
+};
 
 const startAnimation = {
   visible: {
@@ -105,7 +114,7 @@ const InstructionsBox = (props: ComponentsTooltipProps) => {
   const {show} = props;
 
   const [isVisible, setIsVisible] = useState(true);
-  const {instructionsSteps} = useSelector((state: RootState) => state.App, shallowEqual);
+  const {instructionsSteps, showInstructions} = useSelector((state: RootState) => state.App, shallowEqual);
 
   const classes = useStyles(instructions[instructionsSteps]);
 
@@ -138,7 +147,7 @@ const InstructionsBox = (props: ComponentsTooltipProps) => {
 
   return (
     <>
-      {isVisible && (
+      {isVisible && showInstructions && (
         <Grid container className={classes.gridContainer} justify='flex-end' alignContent='flex-start'>
           <AnimatePresence exitBeforeEnter>
             <motion.div

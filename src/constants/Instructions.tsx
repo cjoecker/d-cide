@@ -4,7 +4,7 @@ import React from 'react';
 export type instructionsType = {
   step: number;
   arrowPos: 'top' | 'right';
-  arrowOffset: number;
+  arrowOffset: number | string;
   invertArrowOffsetDirection: boolean;
   text: JSX.Element;
 };
@@ -83,5 +83,16 @@ export const instructions: instructionsType[] = [
     arrowOffset: 2,
     invertArrowOffsetDirection: true,
     text: <p>Click here go to the next step.</p>,
+  },
+  {
+    step: 6,
+    arrowPos: 'top',
+    arrowOffset: '50%',
+    invertArrowOffsetDirection: false,
+    text: (
+      <div>
+        <p>Move the slider right or left depending on which criteria is more important to you.</p>
+      </div>
+    ),
   },
 ];
