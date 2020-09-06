@@ -158,7 +158,7 @@ const InstructionsBox = (props: ComponentsTooltipProps) => {
             >
               <motion.div variants={startAnimation} initial='hidden' animate='visible' exit='hidden'>
                 <motion.div className={`${classes.instructionsBox} ${arrowClass}`} layout>
-                  <Grid container justify='center' alignContent='flex-start'>
+                  <Grid container justify='center' alignContent='flex-start' direction='column'>
                     <div className={classes.typography}>
                       <Typography component='span' variant='body1' align='left' color='secondary'>
                         <IconButton
@@ -171,14 +171,16 @@ const InstructionsBox = (props: ComponentsTooltipProps) => {
                         {customText ?? instructions[instructionsSteps].text}
                       </Typography>
                     </div>
-                    <Button
-                      className={classes.linkButton}
-                      data-testid='dontShowMoreHelp'
-                      onClick={() => setIsVisible(false)}
-                      color='primary'
-                    >
-                      Don&apos;t show help anymore
-                    </Button>
+                    <Grid container justify='center'>
+                      <Button
+                        className={classes.linkButton}
+                        data-testid='dontShowMoreHelp'
+                        onClick={() => setIsVisible(false)}
+                        color='primary'
+                      >
+                        Don&apos;t show help anymore
+                      </Button>
+                    </Grid>
                   </Grid>
                 </motion.div>
               </motion.div>

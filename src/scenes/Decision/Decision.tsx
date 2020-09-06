@@ -172,6 +172,7 @@ const Decision: React.FC = () => {
 
     if (instructionsSteps === 5 && activeStepNum === 1) dispatch(AppSlice.actions.goToInstructionsStep(6));
     if (instructionsSteps === 7 && activeStepNum === 2) dispatch(AppSlice.actions.goToInstructionsStep(8));
+    if (instructionsSteps === 9 && activeStepNum === 3) dispatch(AppSlice.actions.goToInstructionsStep(10));
   };
 
   const stepsComponents = [
@@ -251,7 +252,11 @@ const Decision: React.FC = () => {
         </Grid>
         <Grid style={{width: '100%'}} item>
           <InstructionsBox
-            show={(instructionsSteps === 5 && activeStepNum === 1) || (instructionsSteps === 7 && activeStepNum === 2)}
+            show={
+              (instructionsSteps === 5 && activeStepNum === 1) ||
+              (instructionsSteps === 7 && activeStepNum === 2) ||
+              (instructionsSteps === 9 && activeStepNum === 3)
+            }
           />
         </Grid>
         <Grid item>
