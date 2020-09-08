@@ -81,9 +81,8 @@ const ResultsChart: React.FC<Props> = (props: Props) => {
         <div>
           <p>
             {`${localItems[0].name} `}
-            is the best decision option for you.
-            {` ${localItems[1].name} `}
-            is the second best option.
+            is the best decision option for you. The second best option is
+            {` ${localItems[1].name}.`}
           </p>
         </div>
       );
