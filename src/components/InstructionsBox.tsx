@@ -108,6 +108,7 @@ const getConditionalPos = (condition: boolean, offset: string | number, theme: T
 
 const startAnimation = {
   visible: {
+    opacity: 1,
     scale: 1,
     transition: {
       type: 'spring',
@@ -115,7 +116,7 @@ const startAnimation = {
       stiffness: 200,
     },
   },
-  hidden: {scale: 0, duration: 0.2},
+  hidden: {scale: 0, opacity: 0, duration: 0.2},
 };
 
 //TODO check if after animation button can be tabbed
@@ -133,12 +134,11 @@ const InstructionsBox = (props: ComponentsTooltipProps) => {
   const {instructionsSteps, showInstructions} = useSelector((state: RootState) => state.App, shallowEqual);
 
   const theme = useTheme();
-
   const classes = useStyles(instructions[instructionsSteps]);
 
   const {arrowPos} = instructions[instructionsSteps];
-
   const arrowClass = classes[`instructionsBox${arrowPos.charAt(0).toUpperCase()}${arrowPos.slice(1)}`];
+  const hideHelpPermanently = localStorage.getItem('hideHelp') === 'true';
 
   const loopAnimation = {
     to: {
@@ -155,6 +155,11 @@ const InstructionsBox = (props: ComponentsTooltipProps) => {
     from: {translateY: 0},
   };
 
+  const dontShowHelpAnymore = () => {
+    localStorage.setItem('hideHelp', 'true');
+    setIsVisible(false);
+  };
+
   useEffect(() => {
     setIsVisible(show);
   }, [show]);
@@ -165,14 +170,14 @@ const InstructionsBox = (props: ComponentsTooltipProps) => {
 
   return (
     <>
-      {isVisible && showInstructions && (
-        <Grid
-          container
-          className={classes.gridContainer}
-          justify={arrowPos === 'right' ? 'flex-end' : 'center'}
-          alignContent='flex-start'
-        >
-          <AnimatePresence exitBeforeEnter>
+      <Grid
+        container
+        className={classes.gridContainer}
+        justify={arrowPos === 'right' ? 'flex-end' : 'center'}
+        alignContent='flex-start'
+      >
+        <AnimatePresence exitBeforeEnter>
+          {isVisible && showInstructions && !hideHelpPermanently && (
             <motion.div
               style={{width: fullWidth ? '100%' : undefined}}
               variants={loopAnimation}
@@ -181,7 +186,7 @@ const InstructionsBox = (props: ComponentsTooltipProps) => {
             >
               <motion.div variants={startAnimation} initial='hidden' animate='visible' exit='hidden'>
                 <motion.div className={`${classes.instructionsBox} ${arrowClass}`} layout>
-                  <Grid container justify='center' alignContent='flex-start' direction="column">
+                  <Grid container justify='center' alignContent='flex-start' direction='column'>
                     <Grid item xs={12} className={classes.typography}>
                       <ComponentsTooltip>
                         <IconButton
@@ -202,7 +207,7 @@ const InstructionsBox = (props: ComponentsTooltipProps) => {
                       <Button
                         className={classes.linkButton}
                         data-testid='dontShowMoreHelp'
-                        onClick={() => setIsVisible(false)}
+                        onClick={dontShowHelpAnymore}
                         color='primary'
                       >
                         Don&apos;t show help anymore
@@ -212,9 +217,9 @@ const InstructionsBox = (props: ComponentsTooltipProps) => {
                 </motion.div>
               </motion.div>
             </motion.div>
-          </AnimatePresence>
-        </Grid>
-      )}
+          )}
+        </AnimatePresence>
+      </Grid>
     </>
   );
 };
