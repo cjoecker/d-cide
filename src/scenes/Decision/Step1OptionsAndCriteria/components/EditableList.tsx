@@ -211,9 +211,7 @@ const EditableList: React.FC<Props> = (props: Props) => {
   };
 
   const endOfAnimation = (index: number) => {
-    if (index === localItems.length) {
-      setStopAnimation(true);
-    }
+    if (index === localItems.length - 1) setStopAnimation(true);
   };
 
   const clearNewEntryWhenCreated = () => {
@@ -276,7 +274,7 @@ const EditableList: React.FC<Props> = (props: Props) => {
           <Fade
             in
             style={{
-              transitionDelay: `${startAnimationDelay + index * (stopAnimation ? 0 : animationDelayPerItem)}ms`,
+              transitionDelay: `${stopAnimation ? 0 : startAnimationDelay + index * animationDelayPerItem}ms`,
             }}
             timeout={500}
             onEntered={() => endOfAnimation(index)}

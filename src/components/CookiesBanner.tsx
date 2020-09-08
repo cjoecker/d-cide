@@ -17,7 +17,7 @@ const useStyles = makeStyles(theme => ({
   div: {
     position: 'fixed',
     margin: theme.spacing(0, 10, 5, 10),
-    zIndex: 1200,
+    zIndex: 2000,
   },
 
   grid: {
