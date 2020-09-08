@@ -189,6 +189,12 @@ const EditableList: React.FC<Props> = (props: Props) => {
     else dispatch(OptionsAndCriteriaSlice.actions.deleteSelectionCriteria(itemLocal.id));
   };
 
+  useEffect(() => {
+    if (newEntry === '' && instructionsSteps === 1) {
+      dispatch(AppSlice.actions.goToInstructionsStep(0));
+    }
+  }, [newEntry]);
+
   const manageInstructionsSteps = () => {
     if (isDecisionOptionsList && items.length >= 1 && instructionsSteps === 1) {
       dispatch(AppSlice.actions.goToInstructionsStep(2));
@@ -264,7 +270,7 @@ const EditableList: React.FC<Props> = (props: Props) => {
           </Paper>
         </Grid>
         <Grid item xs={12}>
-          <InstructionsBox show={showInstructions} />
+          <InstructionsBox show={showInstructions} fullWidth />
         </Grid>
         {localItems.map((item, index) => (
           <Fade

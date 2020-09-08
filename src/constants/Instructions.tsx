@@ -3,7 +3,7 @@ import React from 'react';
 
 export type instructionsType = {
   step: number;
-  arrowPos: 'top' | 'right';
+  arrowPos: 'top' | 'right' | 'bottom';
   arrowOffset: number | string;
   invertArrowOffsetDirection: boolean;
   text: JSX.Element;
@@ -118,16 +118,9 @@ export const instructions: instructionsType[] = [
   },
   {
     step: 10,
-    arrowPos: 'right',
-    arrowOffset: 2,
-    invertArrowOffsetDirection: true,
-    text: <div />,
-  },
-  {
-    step: 11,
-    arrowPos: 'right',
-    arrowOffset: 2,
-    invertArrowOffsetDirection: true,
+    arrowPos: 'bottom',
+    arrowOffset: '50%',
+    invertArrowOffsetDirection: false,
     text: <div />,
   },
 ];

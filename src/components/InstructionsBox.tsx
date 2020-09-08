@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Button, IconButton, Theme} from '@material-ui/core';
+import {Button, IconButton, Theme, useTheme} from '@material-ui/core';
 import {makeStyles} from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
@@ -8,9 +8,10 @@ import {shallowEqual, useSelector} from 'react-redux';
 import {AnimatePresence, motion} from 'framer-motion';
 import {RootState} from '../services/redux/rootReducer';
 import {instructions} from '../constants/Instructions';
+import ComponentsTooltip from './ComponentsTooltip';
 
 export interface StyleProps {
-  arrowPos: 'top' | 'right';
+  arrowPos: 'top' | 'right' | 'bottom';
   arrowOffset: number | string;
   invertArrowOffsetDirection: boolean;
 }
@@ -39,6 +40,20 @@ const useStyles = makeStyles<Theme, StyleProps>(theme => ({
       borderLeft: `7px solid transparent`,
       borderRight: `7px solid transparent`,
       borderBottom: `14px solid currentColor`,
+      marginLeft: '-6px',
+    },
+  },
+  instructionsBoxBottom: {
+    left: '0px',
+    '&::after': {
+      left: ({arrowOffset, invertArrowOffsetDirection}) =>
+        getConditionalPos(!invertArrowOffsetDirection, arrowOffset, theme),
+      right: ({arrowOffset, invertArrowOffsetDirection}) =>
+        getConditionalPos(invertArrowOffsetDirection, arrowOffset, theme),
+      bottom: '-13px',
+      borderLeft: `7px solid transparent`,
+      borderRight: `7px solid transparent`,
+      borderTop: `14px solid currentColor`,
       marginLeft: '-6px',
     },
   },
@@ -108,24 +123,27 @@ const startAnimation = {
 type ComponentsTooltipProps = {
   show: boolean;
   customText?: JSX.Element | null;
+  fullWidth?: boolean;
 };
 
 const InstructionsBox = (props: ComponentsTooltipProps) => {
-  const {show, customText} = props;
+  const {show, customText, fullWidth} = props;
 
   const [isVisible, setIsVisible] = useState(true);
   const {instructionsSteps, showInstructions} = useSelector((state: RootState) => state.App, shallowEqual);
+
+  const theme = useTheme();
 
   const classes = useStyles(instructions[instructionsSteps]);
 
   const {arrowPos} = instructions[instructionsSteps];
 
-  const arrowClass = arrowPos === 'top' ? classes.instructionsBoxTop : classes.instructionsBoxRight;
+  const arrowClass = classes[`instructionsBox${arrowPos.charAt(0).toUpperCase()}${arrowPos.slice(1)}`];
 
   const loopAnimation = {
     to: {
-      translateY: arrowPos === 'top' ? -5 : undefined,
-      translateX: arrowPos === 'top' ? undefined : -10,
+      translateY: arrowPos === 'right' ? undefined : -5,
+      translateX: arrowPos === 'right' ? -10 : undefined,
       transition: {
         delay: 0.2,
         duration: 0.5,
@@ -148,29 +166,38 @@ const InstructionsBox = (props: ComponentsTooltipProps) => {
   return (
     <>
       {isVisible && showInstructions && (
-        <Grid container className={classes.gridContainer} justify='flex-end' alignContent='flex-start'>
+        <Grid
+          container
+          className={classes.gridContainer}
+          justify={arrowPos === 'right' ? 'flex-end' : 'center'}
+          alignContent='flex-start'
+        >
           <AnimatePresence exitBeforeEnter>
             <motion.div
-              style={{width: arrowPos === 'top' ? '100%' : undefined}}
+              style={{width: fullWidth ? '100%' : undefined}}
               variants={loopAnimation}
               initial='from'
               animate='to'
             >
               <motion.div variants={startAnimation} initial='hidden' animate='visible' exit='hidden'>
                 <motion.div className={`${classes.instructionsBox} ${arrowClass}`} layout>
-                  <Grid container justify='center' alignContent='flex-start' direction='column'>
-                    <div className={classes.typography}>
-                      <Typography component='span' variant='body1' align='left' color='secondary'>
+                  <Grid container justify='center' alignContent='flex-start' direction="column">
+                    <Grid item xs={12} className={classes.typography}>
+                      <ComponentsTooltip>
                         <IconButton
-                          aria-label='delete'
+                          aria-label='Close dialog'
                           className={classes.closeButton}
                           onClick={() => setIsVisible(false)}
                         >
                           <CloseIcon fontSize='small' />
                         </IconButton>
-                        {customText ?? instructions[instructionsSteps].text}
-                      </Typography>
-                    </div>
+                      </ComponentsTooltip>
+                      <div style={{marginRight: theme.spacing(5)}}>
+                        <Typography component='span' variant='body1' align='left' color='secondary'>
+                          {customText ?? instructions[instructionsSteps].text}
+                        </Typography>
+                      </div>
+                    </Grid>
                     <Grid container justify='center'>
                       <Button
                         className={classes.linkButton}
