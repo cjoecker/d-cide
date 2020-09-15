@@ -191,6 +191,7 @@ const InstructionsBox = (props: ComponentsTooltipProps) => {
                     <ComponentsTooltip>
                       <IconButton
                         aria-label='Close dialog'
+                        data-testid='hideHelp'
                         className={classes.closeButton}
                         onClick={() => setIsVisible(false)}
                       >

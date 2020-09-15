@@ -161,7 +161,7 @@ const RateOptions: React.FC<Props> = (props: Props) => {
 {selectionCriteria[0].name}
           {' in '}
           {decisionOptions[0].name}
-          {' ?'}
+          ?
         </p>
         <p>Move the slider left or right to rate it.</p>
       </div>
