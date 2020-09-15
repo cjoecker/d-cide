@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {Button, IconButton, Theme, useTheme} from '@material-ui/core';
+import {Button, IconButton, Popper, Theme, useTheme} from '@material-ui/core';
 import {makeStyles} from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
@@ -22,7 +22,7 @@ const useStyles = makeStyles<Theme, StyleProps>(theme => ({
     backgroundColor: 'currentColor',
     position: 'relative',
     top: '0px',
-    borderRadius: theme.spacing(1),
+    borderRadius: '5px',
     boxShadow: '0px 0px 41px -11px rgba(0,0,0,0.7)',
     '&::after': {
       content: "''",
@@ -120,15 +120,17 @@ const startAnimation = {
 };
 
 //TODO check if after animation button can be tabbed
+//TODO check links for privacy policy
 
 type ComponentsTooltipProps = {
   show: boolean;
   customText?: JSX.Element | null;
-  fullWidth?: boolean;
+  width?: string | number;
+  anchor?: any;
 };
 
 const InstructionsBox = (props: ComponentsTooltipProps) => {
-  const {show, customText, fullWidth} = props;
+  const {show, customText, width, anchor} = props;
 
   const [isVisible, setIsVisible] = useState(true);
   const {instructionsSteps, showInstructions} = useSelector((state: RootState) => state.App, shallowEqual);
@@ -139,6 +141,10 @@ const InstructionsBox = (props: ComponentsTooltipProps) => {
   const {arrowPos} = instructions[instructionsSteps];
   const arrowClass = classes[`instructionsBox${arrowPos.charAt(0).toUpperCase()}${arrowPos.slice(1)}`];
   const hideHelpPermanently = localStorage.getItem('hideHelp') === 'true';
+
+  useEffect(() => {
+    console.log(width);
+  }, [width]);
 
   const loopAnimation = {
     to: {
@@ -168,60 +174,73 @@ const InstructionsBox = (props: ComponentsTooltipProps) => {
     setIsVisible(show);
   }, [instructionsSteps]);
 
-  return (
-    <>
-      <Grid
-        container
-        className={classes.gridContainer}
-        justify={arrowPos === 'right' ? 'flex-end' : 'center'}
-        alignContent='flex-start'
-      >
-        <AnimatePresence exitBeforeEnter>
-          {isVisible && showInstructions && !hideHelpPermanently && (
-            <motion.div
-              style={{width: fullWidth ? '100%' : undefined}}
-              variants={loopAnimation}
-              initial='from'
-              animate='to'
-            >
-              <motion.div variants={startAnimation} initial='hidden' animate='visible' exit='hidden'>
-                <motion.div className={`${classes.instructionsBox} ${arrowClass}`} layout>
-                  <Grid container justify='center' alignContent='flex-start' direction='column'>
-                    <Grid item xs={12} className={classes.typography}>
-                      <ComponentsTooltip>
-                        <IconButton
-                          aria-label='Close dialog'
-                          className={classes.closeButton}
-                          onClick={() => setIsVisible(false)}
-                        >
-                          <CloseIcon fontSize='small' />
-                        </IconButton>
-                      </ComponentsTooltip>
-                      <div style={{marginRight: theme.spacing(5)}}>
-                        <Typography component='span' variant='body1' align='left' color='secondary'>
-                          {customText ?? instructions[instructionsSteps].text}
-                        </Typography>
-                      </div>
-                    </Grid>
-                    <Grid container justify='center'>
-                      <Button
-                        className={classes.linkButton}
-                        data-testid='dontShowMoreHelp'
-                        onClick={dontShowHelpAnymore}
-                        color='primary'
+  const box = (
+    <Grid
+      container
+      className={classes.gridContainer}
+      justify={arrowPos === 'right' ? 'flex-end' : 'center'}
+      alignContent='flex-start'
+    >
+      <AnimatePresence exitBeforeEnter>
+        {isVisible && showInstructions && !hideHelpPermanently && (
+          <motion.div style={{width: anchor ? undefined : width}} variants={loopAnimation} initial='from' animate='to'>
+            <motion.div variants={startAnimation} initial='hidden' animate='visible' exit='hidden'>
+              <motion.div className={`${classes.instructionsBox} ${arrowClass}`} layout>
+                <Grid container justify='center' alignContent='flex-start' direction='column'>
+                  <Grid item xs={12} className={classes.typography}>
+                    <ComponentsTooltip>
+                      <IconButton
+                        aria-label='Close dialog'
+                        className={classes.closeButton}
+                        onClick={() => setIsVisible(false)}
                       >
-                        Don&apos;t show help anymore
-                      </Button>
-                    </Grid>
+                        <CloseIcon fontSize='small' />
+                      </IconButton>
+                    </ComponentsTooltip>
+                    <div style={{marginRight: theme.spacing(5)}}>
+                      <Typography component='span' variant='body1' align='left' color='secondary'>
+                        {customText ?? instructions[instructionsSteps].text}
+                      </Typography>
+                    </div>
                   </Grid>
-                </motion.div>
+                  <Grid container justify='center'>
+                    <Button
+                      className={classes.linkButton}
+                      data-testid='dontShowMoreHelp'
+                      onClick={dontShowHelpAnymore}
+                      color='primary'
+                    >
+                      Don&apos;t show help anymore
+                    </Button>
+                  </Grid>
+                </Grid>
               </motion.div>
             </motion.div>
-          )}
-        </AnimatePresence>
-      </Grid>
-    </>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </Grid>
   );
-};
 
+  const withPopper = (
+    <Popper
+      style={{width, zIndex: 1000}}
+      id='popper'
+      open
+      anchorEl={anchor}
+      placement='bottom'
+      modifiers={{
+        flip: {
+          enabled: false,
+        },
+      }}
+    >
+      {box}
+    </Popper>
+  );
+
+  const component = anchor ? withPopper : box;
+
+  return <>{isVisible && component}</>;
+};
 export default InstructionsBox;

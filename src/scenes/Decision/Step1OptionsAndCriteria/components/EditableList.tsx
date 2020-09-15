@@ -100,7 +100,7 @@ const EditableList: React.FC<Props> = (props: Props) => {
     } else {
       onCreateItem();
       setLocalItems([]);
-      setStopAnimation(false);
+      setStopAnimation(true);
       dispatch(AppSlice.actions.deleteAlert(notEnoughItemsAlert));
     }
   }, [hidden]);
@@ -268,7 +268,7 @@ const EditableList: React.FC<Props> = (props: Props) => {
           </Paper>
         </Grid>
         <Grid item xs={12}>
-          <InstructionsBox show={showInstructions} fullWidth />
+          <InstructionsBox show={showInstructions} width="100%" />
         </Grid>
         {localItems.map((item, index) => (
           <Fade

@@ -8,7 +8,6 @@ import {shallowEqual, useDispatch, useSelector} from 'react-redux';
 import {makeStyles, useTheme} from '@material-ui/core/styles';
 
 import {HelpOutlineRounded} from '@material-ui/icons';
-import {Popper} from '@material-ui/core';
 import * as LongStrings from '../../../constants/InfoDialogTexts';
 import InfoDialog from '../../../components/InfoDialog';
 import {RootState} from '../../../services/redux/rootReducer';
@@ -284,14 +283,7 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
         ))}
       </Grid>
       {paperRef.current && (
-        <Popper
-          style={{marginTop: theme.spacing(2), width: paperRef.current.offsetWidth, zIndex: 1000}}
-          id='popper'
-          open
-          anchorEl={sliderRef.current}
-        >
-          <InstructionsBox show={showInstructions} />
-        </Popper>
+        <InstructionsBox show={showInstructions} anchor={sliderRef.current} width={paperRef.current.offsetWidth} />
       )}
 
       <InfoDialog text={LongStrings.WeightCriteriaInfo} show={showInfo} onClose={() => setShowInfo(false)} />

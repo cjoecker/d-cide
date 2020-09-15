@@ -250,7 +250,7 @@ const Decision: React.FC = () => {
             </ComponentsTooltip>
           )}
         </Grid>
-        <Grid style={{width: '100%'}} item>
+        <Grid style={{width: '100%', zIndex: 2000}} item>
           <InstructionsBox
             show={
               (instructionsSteps === 5 && activeStepNum === 1) ||
