@@ -224,7 +224,7 @@ const InstructionsBox = (props: ComponentsTooltipProps) => {
 
   const withPopper = (
     <Popper
-      style={{width, zIndex: 1000}}
+      style={{marginTop: theme.spacing(2), width, zIndex: 1000}}
       id='popper'
       open
       anchorEl={anchor}
