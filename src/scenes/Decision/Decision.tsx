@@ -40,21 +40,24 @@ const useStyles = makeStyles(theme => ({
   },
   gridButtons: {
     position: 'fixed',
-    zIndex: 1000,
     width: '100%',
     bottom: 0,
     padding: theme.spacing(0, 2, 2, 0),
+    pointerEvents: 'none',
+    zIndex: 1000,
   },
   stepperLabel: {
     marginBottom: theme.spacing(-1.5),
   },
   buttonNext: {
     zIndex: 1000,
+    pointerEvents: 'auto',
   },
   buttonBack: {
     position: 'fixed',
     margin: theme.spacing(0, 0, 2, 2),
     zIndex: 1000,
+    pointerEvents: 'auto',
   },
 }));
 
