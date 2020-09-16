@@ -5,7 +5,7 @@ import Slider from '@material-ui/core/Slider';
 import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import {shallowEqual, useDispatch, useSelector} from 'react-redux';
-import {makeStyles, useTheme} from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 
 import {HelpOutlineRounded} from '@material-ui/icons';
 import * as LongStrings from '../../../constants/InfoDialogTexts';
@@ -18,6 +18,7 @@ import ComponentsTooltip from '../../../components/ComponentsTooltip';
 import shuffleArray from '../../../services/shuffleArray';
 import InstructionsBox from '../../../components/InstructionsBox';
 import AppSlice from '../../../services/redux/actionsAndSlicers/AppSlice';
+import wrapWord from '../../../services/wrapWord';
 
 const useStyles = makeStyles(theme => ({
   divMain: {
@@ -84,8 +85,6 @@ type Props = {
 };
 //TODO : delete hidden props
 const WeightCriteria: React.FC<Props> = (props: Props) => {
-  const {hidden} = props;
-
   const [showInfo, setShowInfo] = useState(false);
   const [showInstructions, setShowInstructions] = useState(false);
   const sliderRef = useRef<HTMLElement>(null);
@@ -97,7 +96,6 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
 
   const classes = useStyles();
   const dispatch = useDispatch();
-  const theme = useTheme();
 
   const sliderMarks = [
     {
@@ -175,7 +173,7 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
 
   const getSelectionCriteriaName = (selectionCriteriaId: number) => {
     const FoundSelectionCriteria = selectionCriteria.find(obj => obj.id === selectionCriteriaId);
-    return FoundSelectionCriteria == null ? '' : FoundSelectionCriteria.name;
+    return FoundSelectionCriteria == null ? '' : wrapWord(FoundSelectionCriteria.name, 25);
   };
 
   const getWeightInfoText = (weight: number, selectionCriteria1Id: number, selectionCriteria2Id: number): string => {

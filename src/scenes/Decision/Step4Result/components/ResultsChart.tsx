@@ -17,6 +17,7 @@ import {
 import InfoDialog from '../../../../components/InfoDialog';
 import ComponentsTooltip from '../../../../components/ComponentsTooltip';
 import InstructionsBox from '../../../../components/InstructionsBox';
+import wrapWord from '../../../../services/wrapWord';
 
 const useStyles = makeStyles(theme => ({
   divMain: {
@@ -68,7 +69,11 @@ const ResultsChart: React.FC<Props> = (props: Props) => {
     if (!hidden) {
       if (itemsKey === OptionsAndCriteriaKeys.decisionOptions) setItemsType('Decision options');
       else setItemsType('Selection criteria');
-      setLocalItems(wrapLongWords(getSortedItems(items)));
+      setLocalItems(
+        getSortedItems(items).map(item => {
+          return {...item, name: wrapWord(item.name, 13)};
+        })
+      );
       setStartAnimation(true);
     } else {
       setStartAnimation(false);
@@ -110,22 +115,6 @@ const ResultsChart: React.FC<Props> = (props: Props) => {
     if (instructionsSteps === 10) setShowInstructions(true);
     else setShowInstructions(false);
   }, [instructionsSteps]);
-
-  const wrapLongWords = (originalItems: OptionAndCriteria[]) => {
-    const maxCharsPerLine = 13;
-
-    return originalItems.map(item => {
-      if (item.name.length > maxCharsPerLine) {
-        const breakLongWords = new RegExp(`([^s]{${maxCharsPerLine}})`, 'g');
-        const dropLastDash = new RegExp(`-\n$`, 'g');
-
-        const newName = item.name.replace(breakLongWords, '$1-\n').replace(dropLastDash, '');
-
-        return {...item, name: newName};
-      }
-      return item;
-    });
-  };
 
   const getSortedItems = (itemsLocal: OptionAndCriteria[]): OptionAndCriteria[] => {
     return [...itemsLocal].sort((a, b) => {

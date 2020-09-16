@@ -18,6 +18,7 @@ import shuffleArray from '../../../services/shuffleArray';
 import {OptionAndCriteria} from '../../../services/redux/actionsAndSlicers/OptionsAndCriteriaSlice';
 import InstructionsBox from '../../../components/InstructionsBox';
 import AppSlice from '../../../services/redux/actionsAndSlicers/AppSlice';
+import wrapWord from '../../../services/wrapWord';
 
 const useStyles = makeStyles(theme => ({
   divMain: {
@@ -161,7 +162,7 @@ const RateOptions: React.FC<Props> = (props: Props) => {
 {selectionCriteria[0].name}
           {' in '}
           {decisionOptions[0].name}
-          ?
+?
         </p>
         <p>Move the slider left or right to rate it.</p>
       </div>
@@ -251,7 +252,7 @@ const RateOptions: React.FC<Props> = (props: Props) => {
                     <Grid container>
                       <Grid item xs={12} className={classes.gridItemCriteriaTitle}>
                         <Typography component='span' variant='h2'>
-                          {criteria.name}
+                          {wrapWord(criteria.name, 25)}
                         </Typography>
                       </Grid>
                       {shuffledDecisionOptions[criteriaIndex].map((option, optionIndex) => (
@@ -264,7 +265,7 @@ const RateOptions: React.FC<Props> = (props: Props) => {
                         >
                           <Grid item xs={4} className={classes.gridItemOptionTitle}>
                             <Typography component='span' variant='body1'>
-                              {option.name}
+                              {wrapWord(option.name, 12)}
                             </Typography>
                           </Grid>
                           <Grid item xs={8} ref={criteriaIndex === 0 && optionIndex === 0 ? paperRef : null}>
