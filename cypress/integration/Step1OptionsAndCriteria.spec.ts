@@ -1,9 +1,9 @@
 /// <reference types="cypress" />
 /* eslint-disable no-undef*/
 
-context('Actions', () => {
+context('Step 1 Options and Criteria', () => {
   beforeEach(() => {
-    window.localStorage.setItem('cookieConsentAccepted', 'true');
+    cy.setStartItems();
     cy.visit('/');
   });
 

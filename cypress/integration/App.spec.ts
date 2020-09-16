@@ -1,7 +1,7 @@
 /// <reference types="cypress" />
 /* eslint-disable no-undef*/
 
-context('Actions', () => {
+context('App', () => {
   it('shows cookie banner on desktop', () => {
     cy.visit('/')
       .getTestElement('cookiesConsent')
@@ -63,15 +63,8 @@ context('Actions', () => {
 
       .getTestElement('decisionOptionsList')
       .within(() => {
-        cy.getTestElement('itemInput')
-          .first()
-          .clear()
-          .type(changedItemText)
-          .blur()
-
-          .getTestElement('itemInput')
-          .first()
-          .should('have.value', changedItemText);
+        cy.getTestElement('entryInput').type(changedItemText).getTestElement('addButton').click();
+        cy.getTestElement('itemInput').first().should('have.value', changedItemText);
       })
 
       .visit('/')

@@ -1,103 +1,100 @@
 /// <reference types="cypress" />
 /* eslint-disable no-undef*/
 
-context('Actions', () => {
-	beforeEach(() => {
-		window.localStorage.setItem('cookieConsentAccepted', 'true');
-		cy.visit('/');
-		cy.getTestElement(`Step4Button`).click();
-	});
+context('Step 4 Results', () => {
+  beforeEach(() => {
+    cy.setStartItems();
+    cy.visit('/');
+    cy.getTestElement(`Step4Button`).click();
+  });
 
-	describe('Decision Options', () => {
-		it('shows and hides info', () => {
-			showInfoDialog('decisionOptions', 'Decision Options Ranking');
-		});
+  describe('Decision Options', () => {
+    it('shows and hides info', () => {
+      showInfoDialog('decisionOptions', 'Decision Options Ranking');
+    });
 
-		it('shows decision options title', () => {
-			cy.contains('Decision Options Ranking');
-		});
+    it('shows decision options title', () => {
+      cy.contains('Decision Options Ranking');
+    });
 
-		it('shows diagram correctly', () => {
-			showsDiagramCorrectly('decisionOptions', ['Invest in', 'Invest in', 'Invest in']);
-		});
+    it('shows diagram correctly', () => {
+      showsDiagramCorrectly('decisionOptions', ['Invest in', 'Invest in', 'Invest in']);
+    });
 
-		it('wraps long labels', () => {
-			wrapDiagramText('decisionOptions');
-		});
-	});
+    it('wraps long labels', () => {
+      wrapDiagramText('decisionOptions');
+    });
+  });
 
-	describe('Selection Criteria', () => {
-		it('shows and hides info', () => {
-			showInfoDialog('selectionCriteria', 'Selection Criteria Ranking');
-		});
+  describe('Selection Criteria', () => {
+    it('shows and hides info', () => {
+      showInfoDialog('selectionCriteria', 'Selection Criteria Ranking');
+    });
 
-		it('shows decision options title', () => {
-			cy.contains('Selection Criteria Ranking');
-		});
+    it('shows decision options title', () => {
+      cy.contains('Selection Criteria Ranking');
+    });
 
-		it('shows diagram correctly', () => {
-			showsDiagramCorrectly('selectionCriteria', ['Short term', 'Risks', 'Monthly', 'Long term']);
-		});
+    it('shows diagram correctly', () => {
+      showsDiagramCorrectly('selectionCriteria', ['Short term', 'Risks', 'Monthly', 'Long term']);
+    });
 
-		it('wraps long labels', () => {
-			wrapDiagramText('selectionCriteria');
-		});
-	});
+    it('wraps long labels', () => {
+      wrapDiagramText('selectionCriteria');
+    });
+  });
 
-	const showInfoDialog = (infoName: string, title: string) => {
-		cy
-			.getTestElement(`${infoName}ResultsInfoButton`)
-			.click()
+  const showInfoDialog = (infoName: string, title: string) => {
+    cy.getTestElement(`${infoName}ResultsInfoButton`)
+      .click()
 
-			.getTestElement('infoText')
-			.contains(title)
+      .getTestElement('infoText')
+      .contains(title)
 
-			.getTestElement('infoCloseButton')
-			.click()
+      .getTestElement('infoCloseButton')
+      .click()
 
-			.getTestElement('infoText')
-			.should('have.length', 0);
-	};
+      .getTestElement('infoText')
+      .should('have.length', 0);
+  };
 
-	const wrapDiagramText = (sectionName: string) => {
-		cy
-			.getTestElement(`Step1Button`)
-			.click()
-			.getTestElement(`${sectionName}List`)
-			.within(() => {
-				cy.getTestElement('entryInput').type('12345678901234567890').type('{enter}');
-			})
-			.getTestElement(`Step4Button`)
-			.click()
+  const wrapDiagramText = (sectionName: string) => {
+    cy.getTestElement(`Step1Button`)
+      .click()
+      .getTestElement(`${sectionName}List`)
+      .within(() => {
+        cy.getTestElement('entryInput').type('12345678901234567890').type('{enter}');
+      })
+      .wait(1000)
+      .getTestElement(`Step4Button`)
+      .click()
 
-			.getTestElement(`${sectionName}Diagram`)
-			.contains(/1234567890123-(\n)*4567890/);
-	};
+      .getTestElement(`${sectionName}Diagram`)
+      .contains(/1234567890123-(\n)*4567890/);
+  };
 
-	const showsDiagramCorrectly = (sectionName: string, items: string[]) => {
-		cy
-			.getTestElement(`${sectionName}Diagram`)
-			.children()
-			.should('contain', '0')
-			.and('contain', '2.5')
-			.and('contain', '5')
-			.and('contain', '7.5')
-			.and('contain', '10');
+  const showsDiagramCorrectly = (sectionName: string, items: string[]) => {
+    cy.getTestElement(`${sectionName}Diagram`)
+      .children()
+      .should('contain', '0')
+      .and('contain', '2.5')
+      .and('contain', '5')
+      .and('contain', '7.5')
+      .and('contain', '10');
 
-		items.forEach(item => {
-			cy.getTestElement(`${sectionName}Diagram`).children().should('contain', item);
-		});
+    items.forEach(item => {
+      cy.getTestElement(`${sectionName}Diagram`).children().should('contain', item);
+    });
 
-		cy.getTestElement(`${sectionName}Diagram`).within(() => {
-			cy
-				.get('.recharts-cartesian-grid-vertical')
-				.should('have.length', 1)
-				.get('.recharts-layer.recharts-yAxis')
-				.should('have.length', 1)
-				.get('g[class="recharts-layer recharts-bar-rectangle"]')
-				.should('have.length', items.length)
-				.get('text[class="recharts-text recharts-label"]')
-				.should('have.length', items.length);
-		});
-	};
+    cy.getTestElement(`${sectionName}Diagram`).within(() => {
+      cy.get('.recharts-cartesian-grid-vertical')
+        .should('have.length', 1)
+        .get('.recharts-layer.recharts-yAxis')
+        .should('have.length', 1)
+        .get('g[class="recharts-layer recharts-bar-rectangle"]')
+        .should('have.length', items.length)
+        .get('text[class="recharts-text recharts-label"]')
+        .should('have.length', items.length);
+    });
+  };
 });
