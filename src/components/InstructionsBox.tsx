@@ -9,6 +9,7 @@ import {AnimatePresence, motion} from 'framer-motion';
 import {RootState} from '../services/redux/rootReducer';
 import {instructions} from '../constants/Instructions';
 import ComponentsTooltip from './ComponentsTooltip';
+import {useEffectUnsafe} from '../services/unsafeHooks';
 
 export interface StyleProps {
   arrowPos: 'top' | 'right' | 'bottom';
@@ -126,7 +127,7 @@ type ComponentsTooltipProps = {
   show: boolean;
   customText?: JSX.Element | null;
   width?: string | number;
-  anchor?: any;
+  anchor?: HTMLElement | null;
 };
 
 const InstructionsBox = (props: ComponentsTooltipProps) => {
@@ -141,10 +142,6 @@ const InstructionsBox = (props: ComponentsTooltipProps) => {
   const {arrowPos} = instructions[instructionsSteps];
   const arrowClass = classes[`instructionsBox${arrowPos.charAt(0).toUpperCase()}${arrowPos.slice(1)}`];
   const hideHelpPermanently = localStorage.getItem('hideHelp') === 'true';
-
-  useEffect(() => {
-    console.log(width);
-  }, [width]);
 
   const loopAnimation = {
     to: {
@@ -167,10 +164,14 @@ const InstructionsBox = (props: ComponentsTooltipProps) => {
   };
 
   useEffect(() => {
+    console.log(anchor);
+  }, [anchor]);
+
+  useEffect(() => {
     setIsVisible(show);
   }, [show]);
 
-  useEffect(() => {
+  useEffectUnsafe(() => {
     setIsVisible(show);
   }, [instructionsSteps]);
 
@@ -223,7 +224,7 @@ const InstructionsBox = (props: ComponentsTooltipProps) => {
     </Grid>
   );
 
-  const withPopper = (
+  const withPopper = anchor && (
     <Popper
       style={{marginTop: theme.spacing(2), width, zIndex: 1000}}
       id='popper'

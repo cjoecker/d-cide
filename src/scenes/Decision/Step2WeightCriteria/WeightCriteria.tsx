@@ -19,6 +19,7 @@ import shuffleArray from '../../../services/shuffleArray';
 import InstructionsBox from '../../../components/InstructionsBox';
 import AppSlice from '../../../services/redux/actionsAndSlicers/AppSlice';
 import wrapWord from '../../../services/wrapWord';
+import {useEffectUnsafe} from '../../../services/unsafeHooks';
 
 const useStyles = makeStyles(theme => ({
   divMain: {
@@ -115,7 +116,7 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
     },
   ];
 
-  useEffect(() => {
+  useEffectUnsafe(() => {
     createWeightedCriteria();
   }, [selectionCriteria]);
 

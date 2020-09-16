@@ -18,6 +18,7 @@ import InfoDialog from '../../../../components/InfoDialog';
 import ComponentsTooltip from '../../../../components/ComponentsTooltip';
 import InstructionsBox from '../../../../components/InstructionsBox';
 import wrapWord from '../../../../services/wrapWord';
+import {useEffectUnsafe} from '../../../../services/unsafeHooks';
 
 const useStyles = makeStyles(theme => ({
   divMain: {
@@ -65,7 +66,7 @@ const ResultsChart: React.FC<Props> = (props: Props) => {
   const classes = useStyles();
   const theme = useTheme();
 
-  useEffect(() => {
+  useEffectUnsafe(() => {
     if (!hidden) {
       if (itemsKey === OptionsAndCriteriaKeys.decisionOptions) setItemsType('Decision options');
       else setItemsType('Selection criteria');
@@ -109,7 +110,7 @@ const ResultsChart: React.FC<Props> = (props: Props) => {
           : selectionCriteriaInstructions
       );
     }
-  }, [localItems]);
+  }, [localItems, itemsKey]);
 
   useEffect(() => {
     if (instructionsSteps === 10) setShowInstructions(true);

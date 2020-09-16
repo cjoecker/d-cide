@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useRef, useState} from 'react';
 import {makeStyles, useTheme} from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/DeleteOutlineRounded';
@@ -21,6 +21,7 @@ import AppSlice from '../../../../services/redux/actionsAndSlicers/AppSlice';
 import {AlertType} from '../../../../constants/Alerts';
 import ComponentsTooltip from '../../../../components/ComponentsTooltip';
 import InstructionsBox from '../../../../components/InstructionsBox';
+import {useEffectUnsafe} from '../../../../services/unsafeHooks';
 
 const onChangeNewEntry$ = new Subject();
 
@@ -79,7 +80,7 @@ const EditableList: React.FC<Props> = (props: Props) => {
   const dispatch = useDispatch();
   const theme = useTheme();
 
-  useEffect(() => {
+  useEffectUnsafe(() => {
     if (isDecisionOptionsList) setItemsType('Decision options');
     else setItemsType('Selection criteria');
 
@@ -93,7 +94,7 @@ const EditableList: React.FC<Props> = (props: Props) => {
     };
   }, []);
 
-  useEffect(() => {
+  useEffectUnsafe(() => {
     if (!hidden) {
       setLocalItems(items);
       setDidMount(true);
@@ -105,7 +106,7 @@ const EditableList: React.FC<Props> = (props: Props) => {
     }
   }, [hidden]);
 
-  useEffect(() => {
+  useEffectUnsafe(() => {
     if (items.length !== localItems.length && didMount) {
       clearNewEntryWhenCreated();
     }
@@ -118,7 +119,7 @@ const EditableList: React.FC<Props> = (props: Props) => {
     manageInstructionsSteps();
   }, [items]);
 
-  useEffect(() => {
+  useEffectUnsafe(() => {
     if (
       (isDecisionOptionsList && instructionsSteps >= 0 && instructionsSteps < 3) ||
       (!isDecisionOptionsList && instructionsSteps >= 3 && instructionsSteps < 5)
@@ -189,7 +190,7 @@ const EditableList: React.FC<Props> = (props: Props) => {
     else dispatch(OptionsAndCriteriaSlice.actions.deleteSelectionCriteria(itemLocal.id));
   };
 
-  useEffect(() => {
+  useEffectUnsafe(() => {
     if (newEntry === '' && instructionsSteps === 1) {
       dispatch(AppSlice.actions.goToInstructionsStep(0));
     }
@@ -268,7 +269,7 @@ const EditableList: React.FC<Props> = (props: Props) => {
           </Paper>
         </Grid>
         <Grid item xs={12}>
-          <InstructionsBox show={showInstructions} width="100%" />
+          <InstructionsBox show={showInstructions} width='100%' />
         </Grid>
         {localItems.map((item, index) => (
           <Fade

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import Grid from '@material-ui/core/Grid';
 import {makeStyles} from '@material-ui/core/styles';
 import {shallowEqual, useDispatch, useSelector} from 'react-redux';
@@ -10,6 +10,7 @@ import OptionsAndCriteriaSlice, {
 import ResultsChart from './components/ResultsChart';
 import {getScoredDecisionOptions, getScoredSelectionCriteria} from '../../../services/scoresCalculator';
 import {RootState} from '../../../services/redux/rootReducer';
+import {useEffectUnsafe} from '../../../services/unsafeHooks';
 
 const useStyles = makeStyles(theme => ({
   divMain: {
@@ -42,7 +43,7 @@ const Results: React.FC<Props> = (props: Props) => {
   const dispatch = useDispatch();
   const classes = useStyles();
 
-  useEffect(() => {
+  useEffectUnsafe(() => {
     if (!hidden)
       dispatch(
         OptionsAndCriteriaSlice.actions.setSelectionCriteria(
@@ -52,7 +53,7 @@ const Results: React.FC<Props> = (props: Props) => {
     else setHiddenAfterCalcScores(true);
   }, [hidden]);
 
-  useEffect(() => {
+  useEffectUnsafe(() => {
     if (!hidden) {
       dispatch(
         OptionsAndCriteriaSlice.actions.setDecisionOptions(

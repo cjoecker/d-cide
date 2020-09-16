@@ -22,6 +22,7 @@ import {NOT_ENOUGH_CRITERIA, NOT_ENOUGH_OPTIONS} from '../../constants/Alerts';
 import ComponentsTooltip from '../../components/ComponentsTooltip';
 import InstructionsBox from '../../components/InstructionsBox';
 import AppSlice from '../../services/redux/actionsAndSlicers/AppSlice';
+import {useEffectUnsafe} from '../../services/unsafeHooks';
 
 const useStyles = makeStyles(theme => ({
   divMain: {
@@ -130,7 +131,7 @@ const Decision: React.FC = () => {
     ReactGA.modalview(`Step ${activeStepNum}`);
   }, [activeStepNum]);
 
-  useEffect(() => {
+  useEffectUnsafe(() => {
     disableButtons(
       JSON.stringify(alerts).includes(JSON.stringify(NOT_ENOUGH_OPTIONS)) ||
         JSON.stringify(alerts).includes(JSON.stringify(NOT_ENOUGH_CRITERIA))

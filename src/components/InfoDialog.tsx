@@ -8,6 +8,7 @@ import DialogContent from '@material-ui/core/DialogContent/DialogContent';
 import ReactGA from 'react-ga';
 
 import ComponentsTooltip from './ComponentsTooltip';
+import {useEffectUnsafe} from '../services/unsafeHooks';
 
 const useStyles = makeStyles(theme => ({
   dialog: {
@@ -46,7 +47,7 @@ const InfoDialog: React.FC<Props> = (props: Props) => {
     setIsMounted(true);
   }, []);
 
-  useEffect(() => {
+  useEffectUnsafe(() => {
     if (isMounted) {
       const dialogTitle = text.props.children.find((obj: {type: string}) => obj.type === 'h1').props.children;
 
