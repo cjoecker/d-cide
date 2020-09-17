@@ -81,11 +81,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-type Props = {
-  hidden: boolean;
-};
-//TODO : delete hidden props
-const WeightCriteria: React.FC<Props> = (props: Props) => {
+const WeightCriteria: React.FC = () => {
   const [showInfo, setShowInfo] = useState(false);
   const [showInstructions, setShowInstructions] = useState(false);
   const sliderRef = useRef<HTMLElement>(null);
@@ -133,12 +129,6 @@ const WeightCriteria: React.FC<Props> = (props: Props) => {
 
     if (instructionsSteps === 6) dispatch(AppSlice.actions.goToInstructionsStep(7));
   };
-
-  //TODO improve scrolling from slider after it is implemented in Material-UI - Check also Rate options!
-  // https://github.com/mui-org/material-ui/issues/20990
-
-  //TODO remove tabIndex={-1} from all info boxes when this ticket is solved
-  //	https://github.com/oliviertassinari/react-swipeable-views/issues/533
 
   const createWeightedCriteria = () => {
     let newWeightedCriteria: WeightedCriteriaType[] = [];

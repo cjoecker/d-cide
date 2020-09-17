@@ -180,14 +180,12 @@ const Decision: React.FC = () => {
   };
 
   const stepsComponents = [
-    <OptionsAndCriteria hidden={false} />,
-    <WeightCriteria hidden={false} />,
+    <OptionsAndCriteria />,
+    <WeightCriteria />,
     <RateOptions hidden={false} />,
     <Results hidden={false} />,
   ];
 
-  //TODO remove tabIndex={-1} when this ticket is solved:
-  //	https://github.com/mui-org/material-ui/issues/21208
   return (
     <div className={classes.divMain}>
       <Stepper className={classes.stepper} alternativeLabel nonLinear activeStep={activeStepNum - 1}>

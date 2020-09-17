@@ -56,7 +56,7 @@ const CookiesBanner: React.FC = () => {
 
     localStorage.setItem('cookieConsentAccepted', 'true');
   };
-  //TODO wrap text around close button
+
   const desktopBanner = (
     <div role='dialog' className={classes.div} style={{bottom: isEdge ? 10 : 'env(safe-area-inset-bottom)'}}>
       <Slide direction='up' in={open} mountOnEnter unmountOnExit>

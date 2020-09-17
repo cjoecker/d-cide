@@ -13,84 +13,69 @@ import {NOT_ENOUGH_CRITERIA, NOT_ENOUGH_OPTIONS} from '../../../constants/Alerts
 import ComponentsTooltip from '../../../components/ComponentsTooltip';
 
 const useStyles = makeStyles(theme => ({
-	divMain: {
-		paddingTop: theme.spacing(2.5),
-		paddingBottom: theme.spacing(5.5),
-		textAlign: 'center',
-	},
+  divMain: {
+    paddingTop: theme.spacing(2.5),
+    paddingBottom: theme.spacing(5.5),
+    textAlign: 'center',
+  },
 
-	infoButton: {
-		bottom: theme.spacing(0.25),
-		left: theme.spacing(1.5),
-	},
+  infoButton: {
+    bottom: theme.spacing(0.25),
+    left: theme.spacing(1.5),
+  },
 
-	gridItem: {
-		maxWidth: theme.spacing(55),
-		margin: theme.spacing(0, 3, 4, 3),
-	},
+  gridItem: {
+    maxWidth: theme.spacing(55),
+    margin: theme.spacing(0, 3, 4, 3),
+  },
 }));
 
-type Props = {
-	hidden: boolean;
-};
+const OptionsAndCriteria: React.FC = () => {
+  const [showOptionsInfo, setShowOptionsInfo] = useState(false);
+  const [showCriteriaInfo, setShowCriteriaInfo] = useState(false);
 
-const OptionsAndCriteria: React.FC<Props> = (props: Props) => {
-	const [showOptionsInfo, setShowOptionsInfo] = useState(false);
-	const [showCriteriaInfo, setShowCriteriaInfo] = useState(false);
+  const classes = useStyles();
 
-	const {hidden} = props;
-	const classes = useStyles();
+  return (
+    <div className={classes.divMain}>
+      <Grid container justify='center' alignContent='center'>
+        <Grid item xs={6} className={classes.gridItem}>
+          <Typography component='span' variant='h1'>
+            Decision Options
+            <ComponentsTooltip title='Show help'>
+              <IconButton
+                aria-label='Show decision options help'
+                data-testid={`${OptionsAndCriteriaKeys.decisionOptions}InfoButton`}
+                className={classes.infoButton}
+                onClick={() => setShowOptionsInfo(true)}
+              >
+                <HelpOutlineRounded />
+              </IconButton>
+            </ComponentsTooltip>
+          </Typography>
 
-	return (
-		<div className={classes.divMain}>
-			<Grid container justify='center' alignContent='center'>
-				<Grid item xs={6} className={classes.gridItem}>
-					<Typography component='span' variant='h1'>
-						Decision Options
-						<ComponentsTooltip title='Show help'>
-							<IconButton
-								aria-label='Show decision options help'
-								data-testid={`${OptionsAndCriteriaKeys.decisionOptions}InfoButton`}
-								className={classes.infoButton}
-								onClick={() => setShowOptionsInfo(true)}
-								tabIndex={hidden ? -1 : 0}
-							>
-								<HelpOutlineRounded />
-							</IconButton>
-						</ComponentsTooltip>
-					</Typography>
-
-					<EditableList
-						itemsKey={OptionsAndCriteriaKeys.decisionOptions}
-						notEnoughItemsAlert={NOT_ENOUGH_OPTIONS}
-						hidden={hidden}
-					/>
-				</Grid>
-				<Grid item xs={6} className={classes.gridItem}>
-					<Typography component='span' variant='h1'>
-						Selection Criteria
-						<ComponentsTooltip title='Show help'>
-							<IconButton
-								data-testid={`${OptionsAndCriteriaKeys.selectionCriteria}InfoButton`}
-								className={classes.infoButton}
-								onClick={() => setShowCriteriaInfo(true)}
-								tabIndex={hidden ? -1 : 0}
-							>
-								<HelpOutlineRounded />
-							</IconButton>
-						</ComponentsTooltip>
-					</Typography>
-					<EditableList
-						itemsKey={OptionsAndCriteriaKeys.selectionCriteria}
-						notEnoughItemsAlert={NOT_ENOUGH_CRITERIA}
-						hidden={hidden}
-					/>
-				</Grid>
-			</Grid>
-			<InfoDialog text={DecisionOptionInfo} show={showOptionsInfo} onClose={() => setShowOptionsInfo(false)} />
-			<InfoDialog text={SelectionCriteriaInfo} show={showCriteriaInfo} onClose={() => setShowCriteriaInfo(false)} />
-		</div>
-	);
+          <EditableList itemsKey={OptionsAndCriteriaKeys.decisionOptions} notEnoughItemsAlert={NOT_ENOUGH_OPTIONS} />
+        </Grid>
+        <Grid item xs={6} className={classes.gridItem}>
+          <Typography component='span' variant='h1'>
+            Selection Criteria
+            <ComponentsTooltip title='Show help'>
+              <IconButton
+                data-testid={`${OptionsAndCriteriaKeys.selectionCriteria}InfoButton`}
+                className={classes.infoButton}
+                onClick={() => setShowCriteriaInfo(true)}
+              >
+                <HelpOutlineRounded />
+              </IconButton>
+            </ComponentsTooltip>
+          </Typography>
+          <EditableList itemsKey={OptionsAndCriteriaKeys.selectionCriteria} notEnoughItemsAlert={NOT_ENOUGH_CRITERIA} />
+        </Grid>
+      </Grid>
+      <InfoDialog text={DecisionOptionInfo} show={showOptionsInfo} onClose={() => setShowOptionsInfo(false)} />
+      <InfoDialog text={SelectionCriteriaInfo} show={showCriteriaInfo} onClose={() => setShowCriteriaInfo(false)} />
+    </div>
+  );
 };
 
 export default OptionsAndCriteria;

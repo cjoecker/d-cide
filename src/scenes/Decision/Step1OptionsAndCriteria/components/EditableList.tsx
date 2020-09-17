@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {makeStyles, useTheme} from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/DeleteOutlineRounded';
@@ -28,6 +28,7 @@ const onChangeNewEntry$ = new Subject();
 const useStyles = makeStyles(theme => ({
   divMain: {
     minWidth: theme.spacing(37),
+    marginBottom: theme.spacing(6),
   },
 
   paperTitle: {
@@ -53,11 +54,10 @@ const useStyles = makeStyles(theme => ({
 type Props = {
   itemsKey: OptionsAndCriteriaKeys;
   notEnoughItemsAlert: AlertType;
-  hidden: boolean;
 };
 
 const EditableList: React.FC<Props> = (props: Props) => {
-  const {hidden, notEnoughItemsAlert, itemsKey} = props;
+  const {notEnoughItemsAlert, itemsKey} = props;
 
   const [didMount, setDidMount] = useState(false);
   const [newEntry, setNewEntry] = useState('');
@@ -94,24 +94,24 @@ const EditableList: React.FC<Props> = (props: Props) => {
     };
   }, []);
 
-  useEffectUnsafe(() => {
-    if (!hidden) {
-      setLocalItems(items);
-      setDidMount(true);
-    } else {
+  useEffect(() => {
+    setLocalItems(items);
+    setDidMount(true);
+
+    return () => {
       onCreateItem();
       setLocalItems([]);
       setStopAnimation(true);
       dispatch(AppSlice.actions.deleteAlert(notEnoughItemsAlert));
-    }
-  }, [hidden]);
+    };
+  }, []);
 
   useEffectUnsafe(() => {
     if (items.length !== localItems.length && didMount) {
       clearNewEntryWhenCreated();
     }
 
-    if (!hidden && didMount) {
+    if (didMount) {
       setLocalItems(items);
     }
     manageNotEnoughItemsAlerts();
@@ -235,7 +235,6 @@ const EditableList: React.FC<Props> = (props: Props) => {
                   <Input
                     inputProps={{
                       'data-testid': 'entryInput',
-                      tabIndex: hidden ? -1 : 0,
                       'aria-label': `New ${itemsType}`,
                     }}
                     className={classes.inputBase}
@@ -259,7 +258,6 @@ const EditableList: React.FC<Props> = (props: Props) => {
                     aria-label={`Create new ${itemsType}`}
                     className={classes.entryButtons}
                     onClick={() => onCreateItem()}
-                    tabIndex={hidden ? -1 : 0}
                   >
                     <AddIcon />
                   </IconButton>

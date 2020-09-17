@@ -97,9 +97,6 @@ type Props = {
   hidden: boolean;
 };
 
-//TODO improve position of good and bad when this issue is solved:
-// https://github.com/mui-org/material-ui/issues/21231
-
 const RateOptions: React.FC<Props> = (props: Props) => {
   const {hidden} = props;
 

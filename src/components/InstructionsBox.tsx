@@ -120,9 +120,6 @@ const startAnimation = {
   hidden: {scale: 0, opacity: 0, duration: 0.2},
 };
 
-//TODO check if after animation button can be tabbed
-//TODO check links for privacy policy
-
 type ComponentsTooltipProps = {
   show: boolean;
   customText?: JSX.Element | null;
@@ -162,10 +159,6 @@ const InstructionsBox = (props: ComponentsTooltipProps) => {
     localStorage.setItem('hideHelp', 'true');
     setIsVisible(false);
   };
-
-  useEffect(() => {
-    console.log(anchor);
-  }, [anchor]);
 
   useEffect(() => {
     setIsVisible(show);
