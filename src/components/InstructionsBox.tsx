@@ -4,12 +4,13 @@ import {makeStyles} from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
 import Grid from '@material-ui/core/Grid';
-import {shallowEqual, useSelector} from 'react-redux';
+import {shallowEqual, useDispatch, useSelector} from 'react-redux';
 import {AnimatePresence, motion} from 'framer-motion';
 import {RootState} from '../services/redux/rootReducer';
 import {instructions} from '../constants/Instructions';
 import ComponentsTooltip from './ComponentsTooltip';
 import {useEffectUnsafe} from '../services/unsafeHooks';
+import AppSlice from '../services/redux/actionsAndSlicers/AppSlice';
 
 export interface StyleProps {
   arrowPos: 'top' | 'right' | 'bottom';
@@ -139,6 +140,7 @@ const InstructionsBox = (props: ComponentsTooltipProps) => {
   const {arrowPos} = instructions[instructionsSteps];
   const arrowClass = classes[`instructionsBox${arrowPos.charAt(0).toUpperCase()}${arrowPos.slice(1)}`];
   const hideHelpPermanently = localStorage.getItem('hideHelp') === 'true';
+  const dispatch = useDispatch();
 
   const loopAnimation = {
     to: {
@@ -158,6 +160,7 @@ const InstructionsBox = (props: ComponentsTooltipProps) => {
   const dontShowHelpAnymore = () => {
     localStorage.setItem('hideHelp', 'true');
     setIsVisible(false);
+    dispatch(AppSlice.actions.goToInstructionsStep(0));
   };
 
   useEffect(() => {
@@ -217,7 +220,7 @@ const InstructionsBox = (props: ComponentsTooltipProps) => {
     </Grid>
   );
 
-  const withPopper = anchor && (
+  const withPopper = isVisible && anchor && (
     <Popper
       style={{marginTop: theme.spacing(2), width, zIndex: 1000}}
       id='popper'

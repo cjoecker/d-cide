@@ -19,6 +19,7 @@ import InstructionsBox from '../../../components/InstructionsBox';
 import AppSlice from '../../../services/redux/actionsAndSlicers/AppSlice';
 import wrapWord from '../../../services/wrapWord';
 import {shuffleArray} from '../../../services/arraysUtils';
+import {useEffectUnsafe} from '../../../services/unsafeHooks';
 
 const useStyles = makeStyles(theme => ({
   divMain: {
@@ -131,7 +132,7 @@ const RateOptions: React.FC = () => {
     },
   ];
 
-  useEffect(() => {
+  useEffectUnsafe(() => {
     createRatedOptions();
     setShuffledSelectionCriteria(shuffleArray(selectionCriteria));
     shuffleDecisionOptions();

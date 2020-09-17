@@ -27,7 +27,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Results: React.FC = () => {
-  const [hiddenAfterCalcScores, setHiddenAfterCalcScores] = useState(true);
+  const [hiddenBeforeCalcScores, setHiddenBeforeCalcScores] = useState(true);
 
   const {selectionCriteria, decisionOptions} = useSelector(
     (state: RootState) => state.OptionsAndCriteria,
@@ -52,7 +52,7 @@ const Results: React.FC = () => {
         getScoredDecisionOptions(decisionOptions, selectionCriteria, weightedCriteria, ratedOptions)
       )
     );
-    setHiddenAfterCalcScores(false);
+    setHiddenBeforeCalcScores(false);
   }, [selectionCriteria]);
 
   return (
@@ -61,7 +61,7 @@ const Results: React.FC = () => {
         <Grid className={classes.gridItem} key='1' item xs={12}>
           <ResultsChart
             itemsKey={OptionsAndCriteriaKeys.decisionOptions}
-            hidden={hiddenAfterCalcScores}
+            hidden={hiddenBeforeCalcScores}
             title='Decision Options Ranking'
             infoText={LongStrings.OptionsResultInfo}
           />
@@ -69,7 +69,7 @@ const Results: React.FC = () => {
         <Grid className={classes.gridItem} key='2' item xs={12}>
           <ResultsChart
             itemsKey={OptionsAndCriteriaKeys.selectionCriteria}
-            hidden={hiddenAfterCalcScores}
+            hidden={hiddenBeforeCalcScores}
             title='Selection Criteria Ranking'
             infoText={LongStrings.CriteriaResultInfo}
           />

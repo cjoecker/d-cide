@@ -53,7 +53,7 @@ type Props = {
 const ResultsChart: React.FC<Props> = (props: Props) => {
   const [localItems, setLocalItems] = useState<OptionAndCriteria[]>([]);
   const [showInfo, setShowInfo] = useState(false);
-  const [startAnimation, setStartAnimation] = useState(false);
+  const [startAnimation, setStartAnimation] = useState(true);
   const [itemsType, setItemsType] = useState('');
   const [showInstructions, setShowInstructions] = useState(false);
   const [instructionsText, setInstructionsText] = useState<JSX.Element | null>(null);
@@ -67,19 +67,17 @@ const ResultsChart: React.FC<Props> = (props: Props) => {
   const theme = useTheme();
 
   useEffectUnsafe(() => {
-    if (!hidden) {
+    const newOrderedItems = getSortedItems(items).map(item => {
+      return {...item, name: wrapWord(item.name, 13)};
+    });
+
+    if (!hidden && JSON.stringify(newOrderedItems) !== JSON.stringify(localItems)) {
       if (itemsKey === OptionsAndCriteriaKeys.decisionOptions) setItemsType('Decision options');
       else setItemsType('Selection criteria');
-      setLocalItems(
-        getSortedItems(items).map(item => {
-          return {...item, name: wrapWord(item.name, 13)};
-        })
-      );
+      setLocalItems(newOrderedItems);
       setStartAnimation(true);
-    } else {
-      setStartAnimation(false);
     }
-  }, [hidden]);
+  }, [hidden, items]);
 
   useEffect(() => {
     if (localItems.length > 1) {
@@ -184,6 +182,7 @@ const ResultsChart: React.FC<Props> = (props: Props) => {
                   />
                   <Bar
                     dataKey='score'
+                    animationBegin={500}
                     animationDuration={1000}
                     label={{
                       position: 'right',
