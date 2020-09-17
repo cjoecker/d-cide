@@ -8,9 +8,9 @@ import OptionsAndCriteriaSlice, {
   OptionsAndCriteriaKeys,
 } from '../../../services/redux/actionsAndSlicers/OptionsAndCriteriaSlice';
 import ResultsChart from './components/ResultsChart';
-import {getScoredDecisionOptions, getScoredSelectionCriteria} from '../../../services/scoresCalculator';
 import {RootState} from '../../../services/redux/rootReducer';
 import {useEffectUnsafe} from '../../../services/unsafeHooks';
+import {getScoredDecisionOptions, getScoredSelectionCriteria} from '../../../services/scoresCalculator';
 
 const useStyles = makeStyles(theme => ({
   divMain: {
@@ -26,10 +26,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-type Props = {
-  hidden: boolean;
-};
-const Results: React.FC<Props> = (props: Props) => {
+const Results: React.FC = () => {
   const [hiddenAfterCalcScores, setHiddenAfterCalcScores] = useState(true);
 
   const {selectionCriteria, decisionOptions} = useSelector(
@@ -38,30 +35,24 @@ const Results: React.FC<Props> = (props: Props) => {
   );
   const ratedOptions = useSelector((state: RootState) => state.RatedOptions, shallowEqual);
   const weightedCriteria = useSelector((state: RootState) => state.WeightedCriteria, shallowEqual);
-
-  const {hidden} = props;
   const dispatch = useDispatch();
   const classes = useStyles();
 
   useEffectUnsafe(() => {
-    if (!hidden)
-      dispatch(
-        OptionsAndCriteriaSlice.actions.setSelectionCriteria(
-          getScoredSelectionCriteria(decisionOptions, selectionCriteria, weightedCriteria)
-        )
-      );
-    else setHiddenAfterCalcScores(true);
-  }, [hidden]);
+    dispatch(
+      OptionsAndCriteriaSlice.actions.setSelectionCriteria(
+        getScoredSelectionCriteria(decisionOptions, selectionCriteria, weightedCriteria)
+      )
+    );
+  }, []);
 
   useEffectUnsafe(() => {
-    if (!hidden) {
-      dispatch(
-        OptionsAndCriteriaSlice.actions.setDecisionOptions(
-          getScoredDecisionOptions(decisionOptions, selectionCriteria, weightedCriteria, ratedOptions)
-        )
-      );
-      setHiddenAfterCalcScores(false);
-    }
+    dispatch(
+      OptionsAndCriteriaSlice.actions.setDecisionOptions(
+        getScoredDecisionOptions(decisionOptions, selectionCriteria, weightedCriteria, ratedOptions)
+      )
+    );
+    setHiddenAfterCalcScores(false);
   }, [selectionCriteria]);
 
   return (

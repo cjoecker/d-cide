@@ -14,12 +14,11 @@ import InfoDialog from '../../../components/InfoDialog';
 import {RootState} from '../../../services/redux/rootReducer';
 import RatedOptionsSlice, {RatedOption} from '../../../services/redux/actionsAndSlicers/RatedOptionsSlice';
 import ComponentsTooltip from '../../../components/ComponentsTooltip';
-import shuffleArray from '../../../services/shuffleArray';
 import {OptionAndCriteria} from '../../../services/redux/actionsAndSlicers/OptionsAndCriteriaSlice';
 import InstructionsBox from '../../../components/InstructionsBox';
 import AppSlice from '../../../services/redux/actionsAndSlicers/AppSlice';
 import wrapWord from '../../../services/wrapWord';
-import {useEffectUnsafe} from '../../../services/unsafeHooks';
+import {shuffleArray} from '../../../services/arraysUtils';
 
 const useStyles = makeStyles(theme => ({
   divMain: {
@@ -93,13 +92,7 @@ const useStyles = makeStyles(theme => ({
   },
 }));
 
-type Props = {
-  hidden: boolean;
-};
-
-const RateOptions: React.FC<Props> = (props: Props) => {
-  const {hidden} = props;
-
+const RateOptions: React.FC = () => {
   const [showInfo, setShowInfo] = useState(false);
   const [shuffledSelectionCriteria, setShuffledSelectionCriteria] = useState<OptionAndCriteria[]>([]);
   const [shuffledDecisionOptions, setShuffledDecisionOptions] = useState<OptionAndCriteria[][]>([]);
@@ -138,20 +131,11 @@ const RateOptions: React.FC<Props> = (props: Props) => {
     },
   ];
 
-  useEffectUnsafe(() => {
-    if (!hidden) {
-      createRatedOptions();
-      setShuffledSelectionCriteria(shuffleArray(selectionCriteria));
-      shuffleDecisionOptions();
-    }
-  }, [hidden, selectionCriteria, decisionOptions]);
-
   useEffect(() => {
-    if (instructionsSteps === 8) setShowInstructions(true);
-    else setShowInstructions(false);
-  }, [instructionsSteps]);
+    createRatedOptions();
+    setShuffledSelectionCriteria(shuffleArray(selectionCriteria));
+    shuffleDecisionOptions();
 
-  useEffect(() => {
     setInstructionsText(
       <div>
         <p>
@@ -166,6 +150,11 @@ const RateOptions: React.FC<Props> = (props: Props) => {
       </div>
     );
   }, [selectionCriteria, decisionOptions]);
+
+  useEffect(() => {
+    if (instructionsSteps === 8) setShowInstructions(true);
+    else setShowInstructions(false);
+  }, [instructionsSteps]);
 
   const onChange = (event: React.BaseSyntheticEvent, criteriaId: number, optionId: number, score: number) => {
     ratedOptions.forEach(option => {
@@ -234,85 +223,83 @@ const RateOptions: React.FC<Props> = (props: Props) => {
                 aria-label='Show rate options help'
                 className={classes.infoButton}
                 onClick={() => setShowInfo(true)}
-                tabIndex={hidden ? -1 : 0}
               >
                 <HelpOutlineRounded />
               </IconButton>
             </ComponentsTooltip>
           </Typography>
         </Grid>
-        {!hidden &&
-          shuffledSelectionCriteria.map((criteria, criteriaIndex) => (
-            <Fade in timeout={500} style={{transitionDelay: `${criteriaIndex * 100}ms`}} key={criteria.id}>
-              <Grid item xs={6} className={classes.mainGridItem} key={criteria.id}>
-                <Paper className={classes.paper} elevation={1} key={criteria.id}>
-                  <div>
-                    <Grid container>
-                      <Grid item xs={12} className={classes.gridItemCriteriaTitle}>
-                        <Typography component='span' variant='h2'>
-                          {wrapWord(criteria.name, 25)}
-                        </Typography>
-                      </Grid>
-                      {shuffledDecisionOptions[criteriaIndex].map((option, optionIndex) => (
-                        <Grid
-                          container
-                          justify='center'
-                          alignItems='center'
-                          className={classes.gridItemOptionContainer}
-                          key={option.id}
-                        >
-                          <Grid item xs={4} className={classes.gridItemOptionTitle}>
-                            <Typography component='span' variant='body1'>
-                              {wrapWord(option.name, 12)}
-                            </Typography>
-                          </Grid>
-                          <Grid item xs={8} ref={criteriaIndex === 0 && optionIndex === 0 ? paperRef : null}>
-                            <Grid container>
-                              <Grid item xs={6} className={classes.sliderTextGridLeft}>
-                                <Typography variant='caption' className={classes.sliderText}>
-                                  Bad
-                                </Typography>
-                              </Grid>
-                              <Grid item xs={6} className={classes.sliderTextGridRight}>
-                                <Typography variant='caption' className={classes.sliderText}>
-                                  Good
-                                </Typography>
-                              </Grid>
-                              <Grid
-                                item
-                                xs={12}
-                                className={classes.gridItemSlider}
-                                style={{marginTop: isMobile ? theme.spacing(-2.7) : theme.spacing(-2)}}
-                              >
-                                <Slider
-                                  data-testid={`slider${criteriaIndex}${optionIndex}`}
-                                  classes={{
-                                    mark: classes.sliderMarks,
-                                    markActive: classes.sliderMarks,
-                                  }}
-                                  value={getScore(criteria.id, option.id)}
-                                  min={0}
-                                  max={100}
-                                  step={1}
-                                  ref={criteriaIndex === 0 && optionIndex === 0 ? sliderRef : null}
-                                  marks={sliderMarks}
-                                  onChange={(event, value) => onChange(event, criteria.id, option.id, value as number)}
-                                  aria-label={`Rate ${criteria.name} for ${option.name}. Slider value: ${getScore(
-                                    criteria.id,
-                                    option.id
-                                  )}`}
-                                />
-                              </Grid>
+        {shuffledSelectionCriteria.map((criteria, criteriaIndex) => (
+          <Fade in timeout={500} style={{transitionDelay: `${criteriaIndex * 100}ms`}} key={criteria.id}>
+            <Grid item xs={6} className={classes.mainGridItem} key={criteria.id}>
+              <Paper className={classes.paper} elevation={1} key={criteria.id}>
+                <div>
+                  <Grid container>
+                    <Grid item xs={12} className={classes.gridItemCriteriaTitle}>
+                      <Typography component='span' variant='h2'>
+                        {wrapWord(criteria.name, 25)}
+                      </Typography>
+                    </Grid>
+                    {shuffledDecisionOptions[criteriaIndex].map((option, optionIndex) => (
+                      <Grid
+                        container
+                        justify='center'
+                        alignItems='center'
+                        className={classes.gridItemOptionContainer}
+                        key={option.id}
+                      >
+                        <Grid item xs={4} className={classes.gridItemOptionTitle}>
+                          <Typography component='span' variant='body1'>
+                            {wrapWord(option.name, 12)}
+                          </Typography>
+                        </Grid>
+                        <Grid item xs={8} ref={criteriaIndex === 0 && optionIndex === 0 ? paperRef : null}>
+                          <Grid container>
+                            <Grid item xs={6} className={classes.sliderTextGridLeft}>
+                              <Typography variant='caption' className={classes.sliderText}>
+                                Bad
+                              </Typography>
+                            </Grid>
+                            <Grid item xs={6} className={classes.sliderTextGridRight}>
+                              <Typography variant='caption' className={classes.sliderText}>
+                                Good
+                              </Typography>
+                            </Grid>
+                            <Grid
+                              item
+                              xs={12}
+                              className={classes.gridItemSlider}
+                              style={{marginTop: isMobile ? theme.spacing(-2.7) : theme.spacing(-2)}}
+                            >
+                              <Slider
+                                data-testid={`slider${criteriaIndex}${optionIndex}`}
+                                classes={{
+                                  mark: classes.sliderMarks,
+                                  markActive: classes.sliderMarks,
+                                }}
+                                value={getScore(criteria.id, option.id)}
+                                min={0}
+                                max={100}
+                                step={1}
+                                ref={criteriaIndex === 0 && optionIndex === 0 ? sliderRef : null}
+                                marks={sliderMarks}
+                                onChange={(event, value) => onChange(event, criteria.id, option.id, value as number)}
+                                aria-label={`Rate ${criteria.name} for ${option.name}. Slider value: ${getScore(
+                                  criteria.id,
+                                  option.id
+                                )}`}
+                              />
                             </Grid>
                           </Grid>
                         </Grid>
-                      ))}
-                    </Grid>
-                  </div>
-                </Paper>
-              </Grid>
-            </Fade>
-          ))}
+                      </Grid>
+                    ))}
+                  </Grid>
+                </div>
+              </Paper>
+            </Grid>
+          </Fade>
+        ))}
       </Grid>
       {paperRef.current && (
         <InstructionsBox

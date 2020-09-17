@@ -15,11 +15,11 @@ import WeightedCriteriaSlice, {
   WeightedCriteriaType,
 } from '../../../services/redux/actionsAndSlicers/WeightCriteriaSlice';
 import ComponentsTooltip from '../../../components/ComponentsTooltip';
-import shuffleArray from '../../../services/shuffleArray';
 import InstructionsBox from '../../../components/InstructionsBox';
 import AppSlice from '../../../services/redux/actionsAndSlicers/AppSlice';
 import wrapWord from '../../../services/wrapWord';
 import {useEffectUnsafe} from '../../../services/unsafeHooks';
+import {shuffleArray} from '../../../services/arraysUtils';
 
 const useStyles = makeStyles(theme => ({
   divMain: {

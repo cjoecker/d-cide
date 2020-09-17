@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useRef, useState} from 'react';
 import {makeStyles, useTheme} from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/DeleteOutlineRounded';
@@ -66,6 +66,7 @@ const EditableList: React.FC<Props> = (props: Props) => {
   const [itemsType, setItemsType] = useState('');
   const items = useSelector((state: RootState) => state.OptionsAndCriteria[itemsKey], shallowEqual);
   const [showInstructions, setShowInstructions] = useState(false);
+  const newEntryRef = useRef('');
 
   const {instructionsSteps} = useSelector((state: RootState) => state.App, shallowEqual);
 
@@ -88,21 +89,13 @@ const EditableList: React.FC<Props> = (props: Props) => {
       dispatch(AppSlice.actions.goToInstructionsStep(1));
     });
 
-    return () => {
-      subscription.unsubscribe();
-      dispatch(AppSlice.actions.deleteAlert(notEnoughItemsAlert));
-    };
-  }, []);
-
-  useEffect(() => {
     setLocalItems(items);
     setDidMount(true);
 
     return () => {
-      onCreateItem();
-      setLocalItems([]);
-      setStopAnimation(true);
+      subscription.unsubscribe();
       dispatch(AppSlice.actions.deleteAlert(notEnoughItemsAlert));
+      onCreateItem(newEntryRef.current);
     };
   }, []);
 
@@ -130,12 +123,12 @@ const EditableList: React.FC<Props> = (props: Props) => {
     manageInstructionsSteps();
   }, [instructionsSteps]);
 
-  const onCreateItem = () => {
-    if (newEntry === '') return;
+  const onCreateItem = (_newEntry: string) => {
+    if (_newEntry === '') return;
 
     const newItem: OptionAndCriteria = {
       id: Math.max(...items.map(object => object.id), 0) + 1,
-      name: newEntry,
+      name: _newEntry,
       score: 0,
     };
 
@@ -194,6 +187,8 @@ const EditableList: React.FC<Props> = (props: Props) => {
     if (newEntry === '' && instructionsSteps === 1) {
       dispatch(AppSlice.actions.goToInstructionsStep(0));
     }
+
+    newEntryRef.current = newEntry;
   }, [newEntry]);
 
   const manageInstructionsSteps = () => {
@@ -243,7 +238,7 @@ const EditableList: React.FC<Props> = (props: Props) => {
                     onKeyPress={event => {
                       if (event.key === 'Enter') {
                         event.preventDefault();
-                        onCreateItem();
+                        onCreateItem(newEntry);
                       }
                     }}
                     onChange={onChangeNewEntry}
@@ -257,7 +252,7 @@ const EditableList: React.FC<Props> = (props: Props) => {
                     data-testid='addButton'
                     aria-label={`Create new ${itemsType}`}
                     className={classes.entryButtons}
-                    onClick={() => onCreateItem()}
+                    onClick={() => onCreateItem(newEntry)}
                   >
                     <AddIcon />
                   </IconButton>

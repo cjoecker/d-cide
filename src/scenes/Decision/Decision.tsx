@@ -167,7 +167,11 @@ const Decision: React.FC = () => {
     dispatch(AppSlice.actions.setShowInstructions(false));
     const newStep = activeStepNum + newDirection;
     setStepCompleted(activeStepNum);
-    setActiveStepNum([newStep, newDirection]);
+
+    setTimeout(() => {
+      setActiveStepNum([newStep, newDirection]);
+    }, 0);
+
     window.scrollTo(0, 0);
     ReactGA.event({
       category: 'Change step',
@@ -179,12 +183,7 @@ const Decision: React.FC = () => {
     if (instructionsSteps === 9 && activeStepNum === 3) dispatch(AppSlice.actions.goToInstructionsStep(10));
   };
 
-  const stepsComponents = [
-    <OptionsAndCriteria />,
-    <WeightCriteria />,
-    <RateOptions hidden={false} />,
-    <Results hidden={false} />,
-  ];
+  const stepsComponents = [<OptionsAndCriteria />, <WeightCriteria />, <RateOptions />, <Results />];
 
   return (
     <div className={classes.divMain}>
