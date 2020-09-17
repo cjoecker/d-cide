@@ -22,6 +22,8 @@ import {AlertType} from '../../../../constants/Alerts';
 import ComponentsTooltip from '../../../../components/ComponentsTooltip';
 import InstructionsBox from '../../../../components/InstructionsBox';
 import {useEffectUnsafe} from '../../../../services/unsafeHooks';
+import RatedOptionsSlice from '../../../../services/redux/actionsAndSlicers/RatedOptionsSlice';
+import WeightedCriteriaSlice from '../../../../services/redux/actionsAndSlicers/WeightCriteriaSlice';
 
 const onChangeNewEntry$ = new Subject();
 
@@ -179,8 +181,14 @@ const EditableList: React.FC<Props> = (props: Props) => {
       action: `Delete ${itemsType}`,
     });
 
-    if (isDecisionOptionsList) dispatch(OptionsAndCriteriaSlice.actions.deleteDecisionOption(itemLocal.id));
-    else dispatch(OptionsAndCriteriaSlice.actions.deleteSelectionCriteria(itemLocal.id));
+    if (isDecisionOptionsList) {
+      dispatch(OptionsAndCriteriaSlice.actions.deleteDecisionOption(itemLocal.id));
+      dispatch(RatedOptionsSlice.actions.deleteRatedOptionsOfDecisionOption(itemLocal));
+    } else {
+      dispatch(OptionsAndCriteriaSlice.actions.deleteSelectionCriteria(itemLocal.id));
+      dispatch(RatedOptionsSlice.actions.deleteRatedOptionsOfSelectionCriteria(itemLocal));
+      dispatch(WeightedCriteriaSlice.actions.deleteWeightedCriteriaOfSelectionCriteria(itemLocal));
+    }
   };
 
   useEffectUnsafe(() => {
