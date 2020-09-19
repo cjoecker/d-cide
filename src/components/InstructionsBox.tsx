@@ -112,6 +112,10 @@ const InstructionsBox = (props: ComponentsTooltipProps) => {
 	const [_isVisible, set_isVisible] = useState(true);
 	const {instructionsStepNum, areInstructionsVisible} = useSelector((state: RootState) => state.App, shallowEqual);
 
+	useEffect(() => {
+		console.log(instructionsStepNum);
+	}, [instructionsStepNum]);
+
 	const theme = useTheme();
 	const classes = useStyles(instructions[instructionsStepNum]);
 	const dispatch = useDispatch();

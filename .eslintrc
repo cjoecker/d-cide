@@ -27,6 +27,7 @@
 		"@typescript-eslint/explicit-function-return-type": "off",
 		"react/jsx-curly-newline": "off",
 		"react-hooks/exhaustive-deps": "off",
+		"react/require-default-props": "off",
 		"react/jsx-filename-extension": [
 			2,
 			{
