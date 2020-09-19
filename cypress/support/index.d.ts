@@ -10,6 +10,6 @@ declare namespace Cypress {
 		 */
 		getTestElement(value: string): Chainable<Subject>;
 		getTestElementStartingWith(value: string): Chainable<Subject>;
-		setStartItems(): Chainable<Subject>;
+		setInitialState(): Chainable<Subject>;
 	}
 }
