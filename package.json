@@ -27,7 +27,7 @@
 	"scripts": {
 		"start": "react-scripts start",
 		"build": "react-scripts build",
-		"test": "npm run cy:run & react-scripts test --watchAll=false --forceExit",
+		"test": "react-scripts test --watchAll=false --forceExit & npm run cy:run",
 		"cy:run": "cypress run",
 		"cy:open": "cypress open",
 		"preinstall": "npx npm-force-resolutions",
