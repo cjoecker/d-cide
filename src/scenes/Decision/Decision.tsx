@@ -62,64 +62,11 @@ const useStyles = makeStyles(theme => ({
 	},
 }));
 
-type stepsType = {
-	number: number;
-	name: string;
-	isDisabled: boolean;
-	isCompleted: boolean;
-};
-
-const variants = {
-	enter: (direction: number) => {
-		return {
-			x: direction > 0 ? 1000 : -1000,
-			opacity: 0,
-		};
-	},
-	center: {
-		zIndex: 1,
-		x: 0,
-		opacity: 1,
-	},
-	exit: (direction: number) => {
-		return {
-			zIndex: 0,
-			x: direction < 0 ? 1000 : -1000,
-			opacity: 0,
-		};
-	},
-};
-
 const Decision: React.FC = () => {
 	const [[activeStepNum, direction], setActiveStepNum] = useState([1, 0]);
 
 	const [areStepButtonsDisabled, setAreStepButtonsDisabled] = useState(false);
-	const [steps, setSteps] = useState<stepsType[]>([
-		{
-			number: 1,
-			name: 'Options and selection criteria',
-			isDisabled: false,
-			isCompleted: false,
-		},
-		{
-			number: 2,
-			name: 'Weight criteria',
-			isDisabled: false,
-			isCompleted: false,
-		},
-		{
-			number: 3,
-			name: 'Rate options',
-			isDisabled: false,
-			isCompleted: false,
-		},
-		{
-			number: 4,
-			name: 'Result',
-			isDisabled: false,
-			isCompleted: false,
-		},
-	]);
+	const [steps, setSteps] = useState<stepsType[]>(initialStepsState);
 
 	const {alerts} = useSelector((state: RootState) => state.App, shallowEqual);
 	const {instructionsStepNum} = useSelector((state: RootState) => state.App, shallowEqual);
@@ -163,7 +110,7 @@ const Decision: React.FC = () => {
 		setSteps(newSteps);
 	};
 
-	const changeStep = (newDirection: number, element: string) => {
+	const handleStepChange = (newDirection: number, element: string) => {
 		dispatch(AppSlice.actions.setAreInstructionsVisible(false));
 		const newStep = activeStepNum + newDirection;
 		setStepCompleted(activeStepNum);
@@ -195,7 +142,7 @@ const Decision: React.FC = () => {
 								<StepButton
 									focusRipple
 									data-testid={`Step${step.number}Button`}
-									onClick={() => changeStep(step.number - activeStepNum, 'step button')}
+									onClick={() => handleStepChange(step.number - activeStepNum, 'step button')}
 									completed={step.isCompleted}
 									disabled={step.isDisabled}
 									aria-label={`Go to step ${step.number}`}
@@ -244,7 +191,7 @@ const Decision: React.FC = () => {
 									bottom: isEdge ? 10 : 'env(safe-area-inset-bottom)',
 									left: isEdge ? 10 : 'env(safe-area-inset-left)',
 								}}
-								onClick={() => changeStep(-1, 'previous button')}
+								onClick={() => handleStepChange(-1, 'previous button')}
 							>
 								<ArrowBackIcon />
 							</Fab>
@@ -269,7 +216,7 @@ const Decision: React.FC = () => {
 								aria-label='Next step'
 								size='medium'
 								className={classes.buttonNext}
-								onClick={() => changeStep(1, 'next button')}
+								onClick={() => handleStepChange(1, 'next button')}
 								disabled={areStepButtonsDisabled}
 								style={{
 									marginBottom: isEdge ? 10 : 'env(safe-area-inset-bottom',
@@ -287,3 +234,58 @@ const Decision: React.FC = () => {
 };
 
 export default Decision;
+
+type stepsType = {
+	number: number;
+	name: string;
+	isDisabled: boolean;
+	isCompleted: boolean;
+};
+
+const initialStepsState = [
+	{
+		number: 1,
+		name: 'Options and selection criteria',
+		isDisabled: false,
+		isCompleted: false,
+	},
+	{
+		number: 2,
+		name: 'Weight criteria',
+		isDisabled: false,
+		isCompleted: false,
+	},
+	{
+		number: 3,
+		name: 'Rate options',
+		isDisabled: false,
+		isCompleted: false,
+	},
+	{
+		number: 4,
+		name: 'Result',
+		isDisabled: false,
+		isCompleted: false,
+	},
+];
+
+const variants = {
+	enter: (direction: number) => {
+		return {
+			x: direction > 0 ? 1000 : -1000,
+			opacity: 0,
+		};
+	},
+	center: {
+		zIndex: 1,
+		x: 0,
+		opacity: 1,
+	},
+	exit: (direction: number) => {
+		return {
+			zIndex: 0,
+			x: direction < 0 ? 1000 : -1000,
+			opacity: 0,
+		};
+	},
+};

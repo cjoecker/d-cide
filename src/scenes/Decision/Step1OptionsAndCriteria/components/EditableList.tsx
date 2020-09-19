@@ -111,7 +111,7 @@ const EditableList: React.FC<Props> = (props: Props) => {
 		}
 		manageNotEnoughItemsAlerts();
 
-		manageinstructionsStepNum();
+		manageInstructionsStepNum();
 	}, [items]);
 
 	useEffectUnsafe(() => {
@@ -122,7 +122,7 @@ const EditableList: React.FC<Props> = (props: Props) => {
 			setAreInstructionsVisible(true);
 		else setAreInstructionsVisible(false);
 
-		manageinstructionsStepNum();
+		manageInstructionsStepNum();
 	}, [instructionsStepNum]);
 
 	const onCreateItem = (_newEntry: string) => {
@@ -199,7 +199,7 @@ const EditableList: React.FC<Props> = (props: Props) => {
 		newEntryRef.current = newEntry;
 	}, [newEntry]);
 
-	const manageinstructionsStepNum = () => {
+	const manageInstructionsStepNum = () => {
 		if (isDecisionOptionsList && items.length >= 1 && instructionsStepNum === 1) {
 			dispatch(AppSlice.actions.goToInstructionsStep(2));
 		}

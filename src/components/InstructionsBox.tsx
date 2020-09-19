@@ -75,9 +75,7 @@ const useStyles = makeStyles<Theme, StyleProps>(theme => ({
 		},
 	},
 	closeButton: {
-		marginTop: theme.spacing(1),
-		marginRight: theme.spacing(-1),
-		marginLeft: theme.spacing(1),
+		margin: theme.spacing(1, -1, 0, 1),
 		backgroundColor: theme.palette.background.paper,
 		boxShadow: 'none',
 		float: 'right',
@@ -100,27 +98,6 @@ const useStyles = makeStyles<Theme, StyleProps>(theme => ({
 	},
 }));
 
-const getConditionalPos = (shouldReturnPos: boolean, offset: string | number, theme: Theme) => {
-	if (!shouldReturnPos) return null;
-
-	if (typeof offset === 'string') return offset;
-
-	return theme.spacing(offset);
-};
-
-const startAnimation = {
-	visible: {
-		opacity: 1,
-		scale: 1,
-		transition: {
-			type: 'spring',
-			delay: 0.2,
-			stiffness: 200,
-		},
-	},
-	hidden: {scale: 0, opacity: 0, duration: 0.2},
-};
-
 type ComponentsTooltipProps = {
 	isVisible: boolean;
 	customText?: JSX.Element | null;
@@ -137,28 +114,13 @@ const InstructionsBox = (props: ComponentsTooltipProps) => {
 
 	const theme = useTheme();
 	const classes = useStyles(instructions[instructionsStepNum]);
+	const dispatch = useDispatch();
 
 	const {arrowPos} = instructions[instructionsStepNum];
 	const arrowClass = classes[`instructionsBox${arrowPos.charAt(0).toUpperCase()}${arrowPos.slice(1)}`];
-	const hideHelpPermanently = localStorage.getItem('hideHelp') === 'true';
-	const dispatch = useDispatch();
+	const isHiddenPermanently = localStorage.getItem('hideHelp') === 'true';
 
-	const loopAnimation = {
-		to: {
-			translateY: arrowPos === 'right' ? undefined : -5,
-			translateX: arrowPos === 'right' ? -10 : undefined,
-			transition: {
-				delay: 0.2,
-				duration: 0.5,
-				yoyo: Infinity,
-				when: 'afterChildren',
-				ease: 'easeInOut',
-			},
-		},
-		from: {translateY: 0},
-	};
-
-	const handleClickDonShowHelpAnymore = () => {
+	const handleClickDontShowHelpAnymore = () => {
 		localStorage.setItem('hideHelp', 'true');
 		set_isVisible(false);
 		dispatch(AppSlice.actions.goToInstructionsStep(0));
@@ -180,8 +142,13 @@ const InstructionsBox = (props: ComponentsTooltipProps) => {
 			alignContent='flex-start'
 		>
 			<AnimatePresence exitBeforeEnter>
-				{_isVisible && areInstructionsVisible && !hideHelpPermanently && (
-					<motion.div style={{width: anchor ? undefined : width}} variants={loopAnimation} initial='from' animate='to'>
+				{_isVisible && areInstructionsVisible && !isHiddenPermanently && (
+					<motion.div
+						style={{width: anchor ? undefined : width}}
+						variants={loopAnimation(arrowPos)}
+						initial='from'
+						animate='to'
+					>
 						<motion.div variants={startAnimation} initial='hidden' animate='visible' exit='hidden'>
 							<motion.div className={`${classes.instructionsBox} ${arrowClass}`} layout>
 								<Grid container justify='center' alignContent='flex-start' direction='column'>
@@ -206,7 +173,7 @@ const InstructionsBox = (props: ComponentsTooltipProps) => {
 										<Button
 											className={classes.linkButton}
 											data-testid='dontShowMoreHelp'
-											onClick={handleClickDonShowHelpAnymore}
+											onClick={handleClickDontShowHelpAnymore}
 											color='primary'
 										>
 											Don&apos;t show help anymore
@@ -243,3 +210,39 @@ const InstructionsBox = (props: ComponentsTooltipProps) => {
 	return <>{_isVisible && component}</>;
 };
 export default InstructionsBox;
+
+const getConditionalPos = (shouldReturnPos: boolean, offset: string | number, theme: Theme) => {
+	if (!shouldReturnPos) return null;
+
+	if (typeof offset === 'string') return offset;
+
+	return theme.spacing(offset);
+};
+
+const startAnimation = {
+	visible: {
+		opacity: 1,
+		scale: 1,
+		transition: {
+			type: 'spring',
+			delay: 0.2,
+			stiffness: 200,
+		},
+	},
+	hidden: {scale: 0, opacity: 0, duration: 0.2},
+};
+
+const loopAnimation = (arrowPos: 'top' | 'right' | 'bottom') => ({
+	to: {
+		translateY: arrowPos === 'right' ? undefined : -5,
+		translateX: arrowPos === 'right' ? -10 : undefined,
+		transition: {
+			delay: 0.2,
+			duration: 0.5,
+			yoyo: Infinity,
+			when: 'afterChildren',
+			ease: 'easeInOut',
+		},
+	},
+	from: {translateY: 0},
+});
