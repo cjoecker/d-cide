@@ -13,23 +13,22 @@ export const DecisionOptionInfo = (
 		<p>
 			Write every decision option you need to decide for.
 			<br />
-			If you need to decide which house to buy, you may write something like this:
+			For example, if you want to make an investment, your decision options may look like this:
 		</p>
 		<ul>
-			<li>House in Albert road</li>
-			<li>House in Crown avenue</li>
-			<li>House in East street</li>
+			<li>Invest in gold</li>
+			<li>Invest in shares</li>
+			<li>Invest in real state</li>
 		</ul>
 		<p>
 			Take some time to think about every other option "out of the box" that may also exist.
 			<br />
-			For example your parent's house, a trailer, a tent, etc. <br />
 			<br />
 			In case you have a binary decision (yes/no), you should write two decision options. <br />
 			For example:
 			<ul>
-				<li>Buy a new car</li>
-				<li>Don't buy a new car</li>
+				<li>Invest money</li>
+				<li>Don't invest money</li>
 			</ul>
 		</p>
 	</div>
@@ -46,12 +45,12 @@ export const SelectionCriteriaInfo = (
 		</h1>
 		<p>Write every important selection criteria that play a role in your decision.</p>
 		<p>
-			If you need to decide which house to buy, you may write something like this:
+			If you need to decide where to invest your savings:
 			<ul>
-				<li>Neighborhood</li>
-				<li>Size</li>
-				<li>Garden</li>
-				<li>Kitchen</li>
+				<li>Risks</li>
+				<li>Long term profit</li>
+				<li>Short term profit</li>
+				<li>Monthly cash flow</li>
 			</ul>
 		</p>
 	</div>
