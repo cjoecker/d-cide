@@ -3,7 +3,7 @@
 
 context('Step 4 Results', () => {
 	beforeEach(() => {
-		cy.setStartItems();
+		cy.setInitialState();
 		cy.visit('/');
 		cy.getTestElement(`Step4Button`).click();
 	});

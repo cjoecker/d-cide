@@ -3,7 +3,7 @@
 
 context('Step 2 Weight Criteria', () => {
 	beforeEach(() => {
-		cy.setStartItems();
+		cy.setInitialState();
 		cy.visit('/');
 		cy.getTestElement(`Step2Button`).click();
 	});

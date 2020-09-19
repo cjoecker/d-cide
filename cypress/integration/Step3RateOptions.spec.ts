@@ -3,7 +3,7 @@
 
 context('Step 3 Rate Options', () => {
 	beforeEach(() => {
-		cy.setStartItems();
+		cy.setInitialState();
 		cy.visit('/');
 		cy.getTestElement(`Step3Button`).click();
 	});

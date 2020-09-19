@@ -3,7 +3,7 @@
 
 context('Step 1 Options and Criteria', () => {
 	beforeEach(() => {
-		cy.setStartItems();
+		cy.setInitialState();
 		cy.visit('/');
 	});
 

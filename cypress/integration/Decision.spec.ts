@@ -3,7 +3,7 @@
 
 context('Decision', () => {
 	beforeEach(() => {
-		cy.setStartItems();
+		cy.setInitialState();
 		cy.visit('/');
 	});
 
