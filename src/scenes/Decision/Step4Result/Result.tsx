@@ -10,7 +10,7 @@ import OptionsAndCriteriaSlice, {
 import ResultsChart from './components/ResultsChart';
 import {RootState} from '../../../services/redux/rootReducer';
 import {useEffectUnsafe} from '../../../services/unsafeHooks';
-import {getScoredDecisionOptions, getScoredSelectionCriteria} from '../../../services/scoresCalculator';
+import {getScoredDecisionOptions, getScoredSelectionCriteria} from '../../../services/calculateScores';
 
 const useStyles = makeStyles(theme => ({
 	divMain: {
@@ -27,7 +27,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const Results: React.FC = () => {
-	const [hiddenBeforeCalcScores, setHiddenBeforeCalcScores] = useState(true);
+	const [isHiddenBeforeCalcScores, setIsHiddenBeforeCalcScores] = useState(true);
 
 	const {selectionCriteria, decisionOptions} = useSelector((state: RootState) => state.OptionsAndCriteria, shallowEqual);
 	const ratedOptions = useSelector((state: RootState) => state.RatedOptions, shallowEqual);
@@ -49,7 +49,7 @@ const Results: React.FC = () => {
 				getScoredDecisionOptions(decisionOptions, selectionCriteria, weightedCriteria, ratedOptions)
 			)
 		);
-		setHiddenBeforeCalcScores(false);
+		setIsHiddenBeforeCalcScores(false);
 	}, [selectionCriteria]);
 
 	return (
@@ -58,7 +58,7 @@ const Results: React.FC = () => {
 				<Grid className={classes.gridItem} key='1' item xs={12}>
 					<ResultsChart
 						itemsKey={OptionsAndCriteriaKeys.decisionOptions}
-						hidden={hiddenBeforeCalcScores}
+						isVisible={!isHiddenBeforeCalcScores}
 						title='Decision Options Ranking'
 						infoText={LongStrings.OptionsResultInfo}
 					/>
@@ -66,7 +66,7 @@ const Results: React.FC = () => {
 				<Grid className={classes.gridItem} key='2' item xs={12}>
 					<ResultsChart
 						itemsKey={OptionsAndCriteriaKeys.selectionCriteria}
-						hidden={hiddenBeforeCalcScores}
+						isVisible={!isHiddenBeforeCalcScores}
 						title='Selection Criteria Ranking'
 						infoText={LongStrings.CriteriaResultInfo}
 					/>

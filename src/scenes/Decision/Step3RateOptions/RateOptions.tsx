@@ -12,7 +12,7 @@ import {HelpOutlineRounded} from '@material-ui/icons';
 import * as LongStrings from '../../../constants/InfoDialogTexts';
 import InfoDialog from '../../../components/InfoDialog';
 import {RootState} from '../../../services/redux/rootReducer';
-import RatedOptionsSlice, {RatedOption} from '../../../services/redux/actionsAndSlicers/RatedOptionsSlice';
+import RatedOptionsSlice from '../../../services/redux/actionsAndSlicers/RatedOptionsSlice';
 import ComponentsTooltip from '../../../components/ComponentsTooltip';
 import {OptionAndCriteria} from '../../../services/redux/actionsAndSlicers/OptionsAndCriteriaSlice';
 import InstructionsBox from '../../../components/InstructionsBox';
@@ -20,6 +20,7 @@ import AppSlice from '../../../services/redux/actionsAndSlicers/AppSlice';
 import wrapWord from '../../../services/wrapWord';
 import {shuffleArray} from '../../../services/arraysUtils';
 import {useEffectUnsafe} from '../../../services/unsafeHooks';
+import {createRatedOptions} from '../../../services/createData';
 
 const useStyles = makeStyles(theme => ({
 	divMain: {
@@ -94,17 +95,17 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const RateOptions: React.FC = () => {
-	const [showInfo, setShowInfo] = useState(false);
+	const [isInfoVisible, setIsInfoVisible] = useState(false);
 	const [shuffledSelectionCriteria, setShuffledSelectionCriteria] = useState<OptionAndCriteria[]>([]);
 	const [shuffledDecisionOptions, setShuffledDecisionOptions] = useState<OptionAndCriteria[][]>([]);
-	const [showInstructions, setShowInstructions] = useState(false);
+	const [areInstructionsVisible, setAreInstructionsVisible] = useState(false);
 	const [instructionsText, setInstructionsText] = useState<JSX.Element | null>(null);
 
 	const sliderRef = useRef<HTMLElement>(null);
 	const paperRef = useRef<HTMLDivElement>(null);
 
 	const {selectionCriteria, decisionOptions} = useSelector((state: RootState) => state.OptionsAndCriteria, shallowEqual);
-	const {instructionsSteps} = useSelector((state: RootState) => state.App, shallowEqual);
+	const {instructionsStepNum} = useSelector((state: RootState) => state.App, shallowEqual);
 	const ratedOptions = useSelector((state: RootState) => state.RatedOptions, shallowEqual);
 
 	const classes = useStyles();
@@ -130,9 +131,11 @@ const RateOptions: React.FC = () => {
 	];
 
 	useEffectUnsafe(() => {
-		createRatedOptions();
+		dispatch(
+			RatedOptionsSlice.actions.setRatedOptions(createRatedOptions(ratedOptions, decisionOptions, selectionCriteria))
+		);
 		setShuffledSelectionCriteria(shuffleArray(selectionCriteria));
-		shuffleDecisionOptions();
+		setShuffledDecisionOptions(shuffleDecisionOptions(decisionOptions, selectionCriteria));
 
 		setInstructionsText(
 			<div>
@@ -150,9 +153,9 @@ const RateOptions: React.FC = () => {
 	}, [selectionCriteria, decisionOptions]);
 
 	useEffect(() => {
-		if (instructionsSteps === 8) setShowInstructions(true);
-		else setShowInstructions(false);
-	}, [instructionsSteps]);
+		if (instructionsStepNum === 8) setAreInstructionsVisible(true);
+		else setAreInstructionsVisible(false);
+	}, [instructionsStepNum]);
 
 	const onChange = (event: React.BaseSyntheticEvent, criteriaId: number, optionId: number, score: number) => {
 		ratedOptions.forEach(option => {
@@ -160,35 +163,7 @@ const RateOptions: React.FC = () => {
 				dispatch(RatedOptionsSlice.actions.updateRatedOptions({...option, score}));
 		});
 
-		if (instructionsSteps === 8) dispatch(AppSlice.actions.goToInstructionsStep(9));
-	};
-
-	const createRatedOptions = () => {
-		let newRatedOption: RatedOption[] = ratedOptions;
-
-		let id = Math.max(...ratedOptions.map(object => object.id), 0) + 1;
-
-		decisionOptions.forEach(option => {
-			selectionCriteria.forEach(criteria => {
-				const foundRatedOption = ratedOptions.find(
-					obj => obj.selectionCriteriaId === criteria.id && obj.decisionOptionId === option.id
-				);
-
-				if (foundRatedOption == null) {
-					newRatedOption = [
-						...newRatedOption,
-						{
-							id,
-							score: 50,
-							decisionOptionId: option.id,
-							selectionCriteriaId: criteria.id,
-						},
-					];
-					id += 1;
-				}
-			});
-		});
-		dispatch(RatedOptionsSlice.actions.setRatedOptions(newRatedOption));
+		if (instructionsStepNum === 8) dispatch(AppSlice.actions.goToInstructionsStep(9));
 	};
 
 	const getScore = (criteriaId: number, optionId: number): number => {
@@ -199,14 +174,13 @@ const RateOptions: React.FC = () => {
 		return foundRatedOption == null ? 50 : foundRatedOption.score;
 	};
 
-	const shuffleDecisionOptions = () => {
+	const shuffleDecisionOptions = (_decisionOptions: OptionAndCriteria[], _selectionCriteria: OptionAndCriteria[]) => {
 		let newShuffledDecisionOptions: OptionAndCriteria[][] = [];
 
-		for (let i = 0; i < selectionCriteria.length; i += 1) {
-			newShuffledDecisionOptions = [...newShuffledDecisionOptions, shuffleArray(decisionOptions)];
+		for (let i = 0; i < _selectionCriteria.length; i += 1) {
+			newShuffledDecisionOptions = [...newShuffledDecisionOptions, shuffleArray(_decisionOptions)];
 		}
-
-		setShuffledDecisionOptions(newShuffledDecisionOptions);
+		return newShuffledDecisionOptions;
 	};
 
 	return (
@@ -220,7 +194,7 @@ const RateOptions: React.FC = () => {
 								data-testid='RateOptionsInfoButton'
 								aria-label='Show rate options help'
 								className={classes.infoButton}
-								onClick={() => setShowInfo(true)}
+								onClick={() => setIsInfoVisible(true)}
 							>
 								<HelpOutlineRounded />
 							</IconButton>
@@ -301,13 +275,13 @@ const RateOptions: React.FC = () => {
 			</Grid>
 			{paperRef.current && (
 				<InstructionsBox
-					show={showInstructions}
+					isVisible={areInstructionsVisible}
 					anchor={sliderRef.current}
 					width={paperRef.current.offsetWidth}
 					customText={instructionsText}
 				/>
 			)}
-			<InfoDialog text={LongStrings.OptionsRatingInfo} show={showInfo} onClose={() => setShowInfo(false)} />
+			<InfoDialog text={LongStrings.OptionsRatingInfo} isVisible={isInfoVisible} onClose={() => setIsInfoVisible(false)} />
 		</div>
 	);
 };

@@ -67,10 +67,10 @@ const EditableList: React.FC<Props> = (props: Props) => {
 	const [stopAnimation, setStopAnimation] = useState(false);
 	const [itemsType, setItemsType] = useState('');
 	const items = useSelector((state: RootState) => state.OptionsAndCriteria[itemsKey], shallowEqual);
-	const [showInstructions, setShowInstructions] = useState(false);
+	const [areInstructionsVisible, setAreInstructionsVisible] = useState(false);
 	const newEntryRef = useRef('');
 
-	const {instructionsSteps} = useSelector((state: RootState) => state.App, shallowEqual);
+	const {instructionsStepNum} = useSelector((state: RootState) => state.App, shallowEqual);
 
 	const paperRef = useRef(null);
 
@@ -111,19 +111,19 @@ const EditableList: React.FC<Props> = (props: Props) => {
 		}
 		manageNotEnoughItemsAlerts();
 
-		manageInstructionsSteps();
+		manageinstructionsStepNum();
 	}, [items]);
 
 	useEffectUnsafe(() => {
 		if (
-			(isDecisionOptionsList && instructionsSteps >= 0 && instructionsSteps < 3) ||
-			(!isDecisionOptionsList && instructionsSteps >= 3 && instructionsSteps < 5)
+			(isDecisionOptionsList && instructionsStepNum >= 0 && instructionsStepNum < 3) ||
+			(!isDecisionOptionsList && instructionsStepNum >= 3 && instructionsStepNum < 5)
 		)
-			setShowInstructions(true);
-		else setShowInstructions(false);
+			setAreInstructionsVisible(true);
+		else setAreInstructionsVisible(false);
 
-		manageInstructionsSteps();
-	}, [instructionsSteps]);
+		manageinstructionsStepNum();
+	}, [instructionsStepNum]);
 
 	const onCreateItem = (_newEntry: string) => {
 		if (_newEntry === '') return;
@@ -149,7 +149,7 @@ const EditableList: React.FC<Props> = (props: Props) => {
 	const onChangeNewEntry = (event: React.BaseSyntheticEvent) => {
 		setNewEntry(event.target.value);
 
-		if (isDecisionOptionsList && instructionsSteps === 0) onChangeNewEntry$.next(event.target.value);
+		if (isDecisionOptionsList && instructionsStepNum === 0) onChangeNewEntry$.next(event.target.value);
 	};
 
 	const onChangeItem = (event: React.BaseSyntheticEvent, itemId: number) => {
@@ -192,24 +192,24 @@ const EditableList: React.FC<Props> = (props: Props) => {
 	};
 
 	useEffectUnsafe(() => {
-		if (newEntry === '' && instructionsSteps === 1) {
+		if (newEntry === '' && instructionsStepNum === 1) {
 			dispatch(AppSlice.actions.goToInstructionsStep(0));
 		}
 
 		newEntryRef.current = newEntry;
 	}, [newEntry]);
 
-	const manageInstructionsSteps = () => {
-		if (isDecisionOptionsList && items.length >= 1 && instructionsSteps === 1) {
+	const manageinstructionsStepNum = () => {
+		if (isDecisionOptionsList && items.length >= 1 && instructionsStepNum === 1) {
 			dispatch(AppSlice.actions.goToInstructionsStep(2));
 		}
-		if (isDecisionOptionsList && items.length >= 2 && instructionsSteps === 2) {
+		if (isDecisionOptionsList && items.length >= 2 && instructionsStepNum === 2) {
 			dispatch(AppSlice.actions.goToInstructionsStep(3));
 		}
-		if (!isDecisionOptionsList && items.length >= 1 && instructionsSteps === 3) {
+		if (!isDecisionOptionsList && items.length >= 1 && instructionsStepNum === 3) {
 			dispatch(AppSlice.actions.goToInstructionsStep(4));
 		}
-		if (!isDecisionOptionsList && items.length >= 2 && instructionsSteps === 4) {
+		if (!isDecisionOptionsList && items.length >= 2 && instructionsStepNum === 4) {
 			dispatch(AppSlice.actions.goToInstructionsStep(5));
 		}
 	};
@@ -270,7 +270,7 @@ const EditableList: React.FC<Props> = (props: Props) => {
 					</Paper>
 				</Grid>
 				<Grid item xs={12}>
-					<InstructionsBox show={showInstructions} width='100%' />
+					<InstructionsBox isVisible={areInstructionsVisible} width='100%' />
 				</Grid>
 				{localItems.map((item, index) => (
 					<Fade

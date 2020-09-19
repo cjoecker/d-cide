@@ -15,7 +15,7 @@ import AppSlice from '../services/redux/actionsAndSlicers/AppSlice';
 export interface StyleProps {
 	arrowPos: 'top' | 'right' | 'bottom';
 	arrowOffset: number | string;
-	invertArrowOffsetDirection: boolean;
+	isArrowOffsetDirectionInverted: boolean;
 }
 
 const useStyles = makeStyles<Theme, StyleProps>(theme => ({
@@ -34,10 +34,10 @@ const useStyles = makeStyles<Theme, StyleProps>(theme => ({
 	instructionsBoxTop: {
 		left: '0px',
 		'&::after': {
-			left: ({arrowOffset, invertArrowOffsetDirection}) =>
-				getConditionalPos(!invertArrowOffsetDirection, arrowOffset, theme),
-			right: ({arrowOffset, invertArrowOffsetDirection}) =>
-				getConditionalPos(invertArrowOffsetDirection, arrowOffset, theme),
+			left: ({arrowOffset, isArrowOffsetDirectionInverted}) =>
+				getConditionalPos(!isArrowOffsetDirectionInverted, arrowOffset, theme),
+			right: ({arrowOffset, isArrowOffsetDirectionInverted}) =>
+				getConditionalPos(isArrowOffsetDirectionInverted, arrowOffset, theme),
 			top: '-13px',
 			borderLeft: `7px solid transparent`,
 			borderRight: `7px solid transparent`,
@@ -48,10 +48,10 @@ const useStyles = makeStyles<Theme, StyleProps>(theme => ({
 	instructionsBoxBottom: {
 		left: '0px',
 		'&::after': {
-			left: ({arrowOffset, invertArrowOffsetDirection}) =>
-				getConditionalPos(!invertArrowOffsetDirection, arrowOffset, theme),
-			right: ({arrowOffset, invertArrowOffsetDirection}) =>
-				getConditionalPos(invertArrowOffsetDirection, arrowOffset, theme),
+			left: ({arrowOffset, isArrowOffsetDirectionInverted}) =>
+				getConditionalPos(!isArrowOffsetDirectionInverted, arrowOffset, theme),
+			right: ({arrowOffset, isArrowOffsetDirectionInverted}) =>
+				getConditionalPos(isArrowOffsetDirectionInverted, arrowOffset, theme),
 			bottom: '-13px',
 			borderLeft: `7px solid transparent`,
 			borderRight: `7px solid transparent`,
@@ -64,10 +64,10 @@ const useStyles = makeStyles<Theme, StyleProps>(theme => ({
 		marginRight: '20px',
 		flex: 1,
 		'&::after': {
-			top: ({arrowOffset, invertArrowOffsetDirection}) =>
-				getConditionalPos(!invertArrowOffsetDirection, arrowOffset, theme),
-			bottom: ({arrowOffset, invertArrowOffsetDirection}) =>
-				getConditionalPos(invertArrowOffsetDirection, arrowOffset, theme),
+			top: ({arrowOffset, isArrowOffsetDirectionInverted}) =>
+				getConditionalPos(!isArrowOffsetDirectionInverted, arrowOffset, theme),
+			bottom: ({arrowOffset, isArrowOffsetDirectionInverted}) =>
+				getConditionalPos(isArrowOffsetDirectionInverted, arrowOffset, theme),
 			right: '-13px',
 			borderTop: `7px solid transparent`,
 			borderBottom: `7px solid transparent`,
@@ -100,8 +100,8 @@ const useStyles = makeStyles<Theme, StyleProps>(theme => ({
 	},
 }));
 
-const getConditionalPos = (condition: boolean, offset: string | number, theme: Theme) => {
-	if (!condition) return null;
+const getConditionalPos = (shouldReturnPos: boolean, offset: string | number, theme: Theme) => {
+	if (!shouldReturnPos) return null;
 
 	if (typeof offset === 'string') return offset;
 
@@ -122,22 +122,23 @@ const startAnimation = {
 };
 
 type ComponentsTooltipProps = {
-	show: boolean;
+	isVisible: boolean;
 	customText?: JSX.Element | null;
 	width?: string | number;
 	anchor?: HTMLElement | null;
 };
 
 const InstructionsBox = (props: ComponentsTooltipProps) => {
-	const {show, customText, width, anchor} = props;
+	const {isVisible, customText, width, anchor} = props;
 
-	const [isVisible, setIsVisible] = useState(true);
-	const {instructionsSteps, showInstructions} = useSelector((state: RootState) => state.App, shallowEqual);
+	// eslint-disable-next-line @typescript-eslint/camelcase
+	const [_isVisible, set_isVisible] = useState(true);
+	const {instructionsStepNum, areInstructionsVisible} = useSelector((state: RootState) => state.App, shallowEqual);
 
 	const theme = useTheme();
-	const classes = useStyles(instructions[instructionsSteps]);
+	const classes = useStyles(instructions[instructionsStepNum]);
 
-	const {arrowPos} = instructions[instructionsSteps];
+	const {arrowPos} = instructions[instructionsStepNum];
 	const arrowClass = classes[`instructionsBox${arrowPos.charAt(0).toUpperCase()}${arrowPos.slice(1)}`];
 	const hideHelpPermanently = localStorage.getItem('hideHelp') === 'true';
 	const dispatch = useDispatch();
@@ -157,19 +158,19 @@ const InstructionsBox = (props: ComponentsTooltipProps) => {
 		from: {translateY: 0},
 	};
 
-	const dontShowHelpAnymore = () => {
+	const handleClickDonShowHelpAnymore = () => {
 		localStorage.setItem('hideHelp', 'true');
-		setIsVisible(false);
+		set_isVisible(false);
 		dispatch(AppSlice.actions.goToInstructionsStep(0));
 	};
 
 	useEffect(() => {
-		setIsVisible(show);
-	}, [show]);
+		set_isVisible(isVisible);
+	}, [isVisible]);
 
 	useEffectUnsafe(() => {
-		setIsVisible(show);
-	}, [instructionsSteps]);
+		set_isVisible(isVisible);
+	}, [instructionsStepNum]);
 
 	const box = (
 		<Grid
@@ -179,7 +180,7 @@ const InstructionsBox = (props: ComponentsTooltipProps) => {
 			alignContent='flex-start'
 		>
 			<AnimatePresence exitBeforeEnter>
-				{isVisible && showInstructions && !hideHelpPermanently && (
+				{_isVisible && areInstructionsVisible && !hideHelpPermanently && (
 					<motion.div style={{width: anchor ? undefined : width}} variants={loopAnimation} initial='from' animate='to'>
 						<motion.div variants={startAnimation} initial='hidden' animate='visible' exit='hidden'>
 							<motion.div className={`${classes.instructionsBox} ${arrowClass}`} layout>
@@ -190,14 +191,14 @@ const InstructionsBox = (props: ComponentsTooltipProps) => {
 												aria-label='Close dialog'
 												data-testid='hideHelp'
 												className={classes.closeButton}
-												onClick={() => setIsVisible(false)}
+												onClick={() => set_isVisible(false)}
 											>
 												<CloseIcon fontSize='small' />
 											</IconButton>
 										</ComponentsTooltip>
 										<div style={{marginRight: theme.spacing(5)}}>
 											<Typography component='span' variant='body1' align='left' color='secondary'>
-												{customText ?? instructions[instructionsSteps].text}
+												{customText ?? instructions[instructionsStepNum].text}
 											</Typography>
 										</div>
 									</Grid>
@@ -205,7 +206,7 @@ const InstructionsBox = (props: ComponentsTooltipProps) => {
 										<Button
 											className={classes.linkButton}
 											data-testid='dontShowMoreHelp'
-											onClick={dontShowHelpAnymore}
+											onClick={handleClickDonShowHelpAnymore}
 											color='primary'
 										>
 											Don&apos;t show help anymore
@@ -220,7 +221,7 @@ const InstructionsBox = (props: ComponentsTooltipProps) => {
 		</Grid>
 	);
 
-	const withPopper = isVisible && anchor && (
+	const withPopper = _isVisible && anchor && (
 		<Popper
 			style={{marginTop: theme.spacing(2), width, zIndex: 1000}}
 			id='popper'
@@ -239,6 +240,6 @@ const InstructionsBox = (props: ComponentsTooltipProps) => {
 
 	const component = anchor ? withPopper : box;
 
-	return <>{isVisible && component}</>;
+	return <>{_isVisible && component}</>;
 };
 export default InstructionsBox;

@@ -3,14 +3,14 @@ import {AlertType} from '../../../constants/Alerts';
 
 type AppState = {
 	alerts: AlertType[];
-	instructionsSteps: number;
-	showInstructions: boolean;
+	instructionsStepNum: number;
+	areInstructionsVisible: boolean;
 };
 
 const initialState: AppState = {
 	alerts: [],
-	instructionsSteps: 0,
-	showInstructions: true,
+	instructionsStepNum: 0,
+	areInstructionsVisible: true,
 };
 
 const AppSlice = createSlice({
@@ -26,10 +26,10 @@ const AppSlice = createSlice({
 			state.alerts = state.alerts.filter(alert => JSON.stringify(alert) !== JSON.stringify(action.payload));
 		},
 		goToInstructionsStep(state, action: PayloadAction<number>) {
-			state.instructionsSteps = action.payload;
+			state.instructionsStepNum = action.payload;
 		},
-		setShowInstructions(state, action: PayloadAction<boolean>) {
-			state.showInstructions = action.payload;
+		setAreInstructionsVisible(state, action: PayloadAction<boolean>) {
+			state.areInstructionsVisible = action.payload;
 		},
 	},
 });

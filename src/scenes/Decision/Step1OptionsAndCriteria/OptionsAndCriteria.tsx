@@ -31,8 +31,8 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const OptionsAndCriteria: React.FC = () => {
-	const [showOptionsInfo, setShowOptionsInfo] = useState(false);
-	const [showCriteriaInfo, setShowCriteriaInfo] = useState(false);
+	const [isOptionsInfoVisible, setIsOptionsInfoVisible] = useState(false);
+	const [isCriteriaInfoVisible, setIsCriteriaInfoVisible] = useState(false);
 
 	const classes = useStyles();
 
@@ -47,7 +47,7 @@ const OptionsAndCriteria: React.FC = () => {
 								aria-label='Show decision options help'
 								data-testid={`${OptionsAndCriteriaKeys.decisionOptions}InfoButton`}
 								className={classes.infoButton}
-								onClick={() => setShowOptionsInfo(true)}
+								onClick={() => setIsOptionsInfoVisible(true)}
 							>
 								<HelpOutlineRounded />
 							</IconButton>
@@ -63,7 +63,7 @@ const OptionsAndCriteria: React.FC = () => {
 							<IconButton
 								data-testid={`${OptionsAndCriteriaKeys.selectionCriteria}InfoButton`}
 								className={classes.infoButton}
-								onClick={() => setShowCriteriaInfo(true)}
+								onClick={() => setIsCriteriaInfoVisible(true)}
 							>
 								<HelpOutlineRounded />
 							</IconButton>
@@ -72,8 +72,16 @@ const OptionsAndCriteria: React.FC = () => {
 					<EditableList itemsKey={OptionsAndCriteriaKeys.selectionCriteria} notEnoughItemsAlert={NOT_ENOUGH_CRITERIA} />
 				</Grid>
 			</Grid>
-			<InfoDialog text={DecisionOptionInfo} show={showOptionsInfo} onClose={() => setShowOptionsInfo(false)} />
-			<InfoDialog text={SelectionCriteriaInfo} show={showCriteriaInfo} onClose={() => setShowCriteriaInfo(false)} />
+			<InfoDialog
+				text={DecisionOptionInfo}
+				isVisible={isOptionsInfoVisible}
+				onClose={() => setIsOptionsInfoVisible(false)}
+			/>
+			<InfoDialog
+				text={SelectionCriteriaInfo}
+				isVisible={isCriteriaInfoVisible}
+				onClose={() => setIsCriteriaInfoVisible(false)}
+			/>
 		</div>
 	);
 };

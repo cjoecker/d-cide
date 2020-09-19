@@ -30,13 +30,13 @@ const useStyles = makeStyles(theme => ({
 
 type Props = {
 	text: JSX.Element;
-	show: boolean;
+	isVisible: boolean;
 	onClose: () => void;
-	fullWidth?: boolean;
+	hasFullWidth?: boolean;
 };
 
 const InfoDialog: React.FC<Props> = (props: Props) => {
-	const {text, show, onClose, fullWidth} = props;
+	const {text, isVisible, onClose, hasFullWidth} = props;
 
 	const classes = useStyles();
 
@@ -51,8 +51,8 @@ const InfoDialog: React.FC<Props> = (props: Props) => {
 		if (isMounted) {
 			const dialogTitle = text.props.children.find((obj: {type: string}) => obj.type === 'h1').props.children;
 
-			if (show) {
-				if (fullWidth != null) {
+			if (isVisible) {
+				if (hasFullWidth != null) {
 					setMaxWidth('lg');
 				}
 
@@ -66,7 +66,7 @@ const InfoDialog: React.FC<Props> = (props: Props) => {
 					action: `Close ${dialogTitle} dialog`,
 				});
 		}
-	}, [show]);
+	}, [isVisible]);
 
 	const handleClose = () => {
 		onClose();
@@ -80,7 +80,7 @@ const InfoDialog: React.FC<Props> = (props: Props) => {
 				className={classes.dialog}
 				onClose={handleClose}
 				aria-labelledby='customized-dialog-title'
-				open={show}
+				open={isVisible}
 			>
 				<DialogContent className={classes.dialogContent}>
 					<ComponentsTooltip>

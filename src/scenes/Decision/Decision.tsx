@@ -65,8 +65,8 @@ const useStyles = makeStyles(theme => ({
 type stepsType = {
 	number: number;
 	name: string;
-	disabled: boolean;
-	completed: boolean;
+	isDisabled: boolean;
+	isCompleted: boolean;
 };
 
 const variants = {
@@ -93,36 +93,36 @@ const variants = {
 const Decision: React.FC = () => {
 	const [[activeStepNum, direction], setActiveStepNum] = useState([1, 0]);
 
-	const [disableStepButtons, setDisableStepButtons] = useState(false);
+	const [areStepButtonsDisabled, setAreStepButtonsDisabled] = useState(false);
 	const [steps, setSteps] = useState<stepsType[]>([
 		{
 			number: 1,
 			name: 'Options and selection criteria',
-			disabled: false,
-			completed: false,
+			isDisabled: false,
+			isCompleted: false,
 		},
 		{
 			number: 2,
 			name: 'Weight criteria',
-			disabled: false,
-			completed: false,
+			isDisabled: false,
+			isCompleted: false,
 		},
 		{
 			number: 3,
 			name: 'Rate options',
-			disabled: false,
-			completed: false,
+			isDisabled: false,
+			isCompleted: false,
 		},
 		{
 			number: 4,
 			name: 'Result',
-			disabled: false,
-			completed: false,
+			isDisabled: false,
+			isCompleted: false,
 		},
 	]);
 
 	const {alerts} = useSelector((state: RootState) => state.App, shallowEqual);
-	const {instructionsSteps} = useSelector((state: RootState) => state.App, shallowEqual);
+	const {instructionsStepNum} = useSelector((state: RootState) => state.App, shallowEqual);
 
 	const classes = useStyles();
 	const dispatch = useDispatch();
@@ -145,26 +145,26 @@ const Decision: React.FC = () => {
 		);
 	}, [alerts]);
 
-	const disableButtons = (disabled: boolean) => {
-		setDisableStepButtons(disabled);
+	const disableButtons = (isDisabled: boolean) => {
+		setAreStepButtonsDisabled(isDisabled);
 		setSteps(
 			steps.map(step => {
-				if (step.number > 1) return {...step, disabled};
+				if (step.number > 1) return {...step, isDisabled};
 				return step;
 			})
 		);
 	};
 
-	const setStepCompleted = (stepNumber: number) => {
+	const setStepCompleted = (stepNum: number) => {
 		const newSteps = [...steps];
-		const index = newSteps.findIndex(obj => obj.number === stepNumber);
-		newSteps[index].completed = true;
+		const index = newSteps.findIndex(obj => obj.number === stepNum);
+		newSteps[index].isCompleted = true;
 
 		setSteps(newSteps);
 	};
 
 	const changeStep = (newDirection: number, element: string) => {
-		dispatch(AppSlice.actions.setShowInstructions(false));
+		dispatch(AppSlice.actions.setAreInstructionsVisible(false));
 		const newStep = activeStepNum + newDirection;
 		setStepCompleted(activeStepNum);
 
@@ -178,9 +178,9 @@ const Decision: React.FC = () => {
 			action: `Change to step ${newStep} with ${element}`,
 		});
 
-		if (instructionsSteps === 5 && activeStepNum === 1) dispatch(AppSlice.actions.goToInstructionsStep(6));
-		if (instructionsSteps === 7 && activeStepNum === 2) dispatch(AppSlice.actions.goToInstructionsStep(8));
-		if (instructionsSteps === 9 && activeStepNum === 3) dispatch(AppSlice.actions.goToInstructionsStep(10));
+		if (instructionsStepNum === 5 && activeStepNum === 1) dispatch(AppSlice.actions.goToInstructionsStep(6));
+		if (instructionsStepNum === 7 && activeStepNum === 2) dispatch(AppSlice.actions.goToInstructionsStep(8));
+		if (instructionsStepNum === 9 && activeStepNum === 3) dispatch(AppSlice.actions.goToInstructionsStep(10));
 	};
 
 	const stepsComponents = [<OptionsAndCriteria />, <WeightCriteria />, <RateOptions />, <Results />];
@@ -196,8 +196,8 @@ const Decision: React.FC = () => {
 									focusRipple
 									data-testid={`Step${step.number}Button`}
 									onClick={() => changeStep(step.number - activeStepNum, 'step button')}
-									completed={step.completed}
-									disabled={step.disabled}
+									completed={step.isCompleted}
+									disabled={step.isDisabled}
 									aria-label={`Go to step ${step.number}`}
 								>
 									<StepLabel StepIconProps={{classes: {root: classes.stepperLabel}}}>{step.name}</StepLabel>
@@ -211,7 +211,7 @@ const Decision: React.FC = () => {
 				<AnimatePresence
 					initial={false}
 					custom={direction}
-					onExitComplete={() => dispatch(AppSlice.actions.setShowInstructions(true))}
+					onExitComplete={() => dispatch(AppSlice.actions.setAreInstructionsVisible(true))}
 				>
 					<motion.div
 						className={classes.divSteps}
@@ -253,10 +253,10 @@ const Decision: React.FC = () => {
 				</Grid>
 				<Grid style={{width: '100%', zIndex: 2000}} item>
 					<InstructionsBox
-						show={
-							(instructionsSteps === 5 && activeStepNum === 1) ||
-							(instructionsSteps === 7 && activeStepNum === 2) ||
-							(instructionsSteps === 9 && activeStepNum === 3)
+						isVisible={
+							(instructionsStepNum === 5 && activeStepNum === 1) ||
+							(instructionsStepNum === 7 && activeStepNum === 2) ||
+							(instructionsStepNum === 9 && activeStepNum === 3)
 						}
 					/>
 				</Grid>
@@ -270,7 +270,7 @@ const Decision: React.FC = () => {
 								size='medium'
 								className={classes.buttonNext}
 								onClick={() => changeStep(1, 'next button')}
-								disabled={disableStepButtons}
+								disabled={areStepButtonsDisabled}
 								style={{
 									marginBottom: isEdge ? 10 : 'env(safe-area-inset-bottom',
 									marginRight: isEdge ? 10 : 'env(safe-area-inset-right)',

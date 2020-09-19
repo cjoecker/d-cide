@@ -38,10 +38,10 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const CookiesBanner: React.FC = () => {
-	const [open, setOpen] = useState(false);
+	const [isVisible, setIsVisible] = useState(false);
 
 	useEffect(() => {
-		if (localStorage.getItem('cookieConsentAccepted') == null) setOpen(true);
+		if (localStorage.getItem('cookieConsentAccepted') == null) setIsVisible(true);
 	}, []);
 
 	const classes = useStyles();
@@ -52,14 +52,14 @@ const CookiesBanner: React.FC = () => {
 			action: `Close cookie dialog`,
 		});
 
-		setOpen(false);
+		setIsVisible(false);
 
 		localStorage.setItem('cookieConsentAccepted', 'true');
 	};
 
 	const desktopBanner = (
 		<div role='dialog' className={classes.div} style={{bottom: isEdge ? 10 : 'env(safe-area-inset-bottom)'}}>
-			<Slide direction='up' in={open} mountOnEnter unmountOnExit>
+			<Slide direction='up' in={isVisible} mountOnEnter unmountOnExit>
 				<Grid data-testid='cookiesConsent' className={classes.grid} container justify='center' alignContent='center'>
 					<Paper className={classes.paper} elevation={7}>
 						<Grid item className={classes.typographyGridItem} xs={12}>
@@ -85,7 +85,7 @@ const CookiesBanner: React.FC = () => {
 	);
 
 	const mobileDialog = (
-		<Dialog data-testid='cookiesConsent' open={open} onClose={handleClose}>
+		<Dialog data-testid='cookiesConsent' open={isVisible} onClose={handleClose}>
 			<DialogContent>
 				<DialogContentText id='alert-dialog-description'>{PrivacyText}</DialogContentText>
 			</DialogContent>

@@ -10,8 +10,8 @@ import AppSlice from '../services/redux/actionsAndSlicers/AppSlice';
 const AlertsBanner: React.FC = () => {
 	const {alerts} = useSelector((state: RootState) => state.App, shallowEqual);
 
-	const [autoHideTime, setAutoHideTime] = useState(0);
-	const [open, setOpen] = useState(false);
+	const [autoHideSecsNum, setAutoHideSecsNum] = useState(0);
+	const [isVisible, setIsVisible] = useState(false);
 	const [alert, setAlert] = useState(AlertInitialState);
 
 	const dispatch = useDispatch();
@@ -20,10 +20,10 @@ const AlertsBanner: React.FC = () => {
 	useEffect(() => {
 		if (alerts[0] != null && alerts[0].text !== '') {
 			setAlert(sortAlerts(alerts));
-			setAutoHideTime(calculateHideTime(alerts[0]));
-			setOpen(true);
+			setAutoHideSecsNum(calculateHideTime(alerts[0]));
+			setIsVisible(true);
 		} else {
-			setOpen(false);
+			setIsVisible(false);
 		}
 	}, [alerts]);
 
@@ -32,7 +32,7 @@ const AlertsBanner: React.FC = () => {
 			return;
 		}
 
-		setOpen(false);
+		setIsVisible(false);
 
 		dispatch(AppSlice.actions.deleteAlert(alert));
 	};
@@ -47,33 +47,37 @@ const AlertsBanner: React.FC = () => {
 		return (wordsNum / 3.3) * 1500;
 	};
 
-	const sortAlerts = (localAlerts: AlertType[]) => {
-		const errors = localAlerts.filter(filteredAlert => filteredAlert.type === AlertTypes.error);
+	const sortAlerts = (_alerts: AlertType[]) => {
+		const errors = _alerts.filter(_alert => _alert.type === AlertTypes.error);
 		if (errors.length > 0) {
 			return errors[0];
 		}
 
-		const warning = localAlerts.filter(filteredAlert => filteredAlert.type === AlertTypes.warning);
+		const warning = _alerts.filter(filteredAlert => filteredAlert.type === AlertTypes.warning);
 		if (warning.length > 0) {
 			return warning[0];
 		}
 
-		const success = localAlerts.filter(filteredAlert => filteredAlert.type === AlertTypes.success);
+		const success = _alerts.filter(filteredAlert => filteredAlert.type === AlertTypes.success);
 		if (success.length > 0) {
 			return success[0];
 		}
 
-		const info = localAlerts.filter(filteredAlert => filteredAlert.type === AlertTypes.info);
+		const info = _alerts.filter(filteredAlert => filteredAlert.type === AlertTypes.info);
 		if (info.length > 0) {
 			return info[0];
 		}
 
-		return localAlerts[0];
+		return _alerts[0];
 	};
 
 	return (
 		<div>
-			<Snackbar open={open} autoHideDuration={autoHideTime !== 0 ? autoHideTime : undefined} onClose={handleClose}>
+			<Snackbar
+				open={isVisible}
+				autoHideDuration={autoHideSecsNum !== 0 ? autoHideSecsNum : undefined}
+				onClose={handleClose}
+			>
 				<Alert
 					style={{marginBottom: theme.spacing(1)}}
 					data-testid={`${alert.type}Alert`}

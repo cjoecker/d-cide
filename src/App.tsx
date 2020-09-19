@@ -64,8 +64,8 @@ const useStyles = makeStyles(styleTheme => ({
 const App: React.FC = () => {
 	const classes = useStyles();
 
-	const [showPrivacyPolicy, setShowPrivacyPolicy] = useState(false);
-	const [darkModeActive, setDarkModeActive] = useState(false);
+	const [isPrivacyPolicyVisible, setIsPrivacyPolicyVisible] = useState(false);
+	const [isDarkModeActive, setIsDarkModeActive] = useState(false);
 
 	useEffect(() => {
 		defineDarkMode();
@@ -76,20 +76,20 @@ const App: React.FC = () => {
 	}, []);
 
 	useEffect(() => {
-		if (darkModeActive) localStorage.setItem('darkModeActive', 'true');
-		else localStorage.setItem('darkModeActive', 'false');
-	}, [darkModeActive]);
+		if (isDarkModeActive) localStorage.setItem('isDarkModeActive', 'true');
+		else localStorage.setItem('isDarkModeActive', 'false');
+	}, [isDarkModeActive]);
 
 	const defineDarkMode = () => {
-		if (localStorage.getItem('darkModeActive') == null) {
+		if (localStorage.getItem('isDarkModeActive') == null) {
 			if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-				setDarkModeActive(true);
-				localStorage.setItem('darkModeActive', 'true');
+				setIsDarkModeActive(true);
+				localStorage.setItem('isDarkModeActive', 'true');
 			} else {
-				setDarkModeActive(false);
-				localStorage.setItem('darkModeActive', 'false');
+				setIsDarkModeActive(false);
+				localStorage.setItem('isDarkModeActive', 'false');
 			}
-		} else if (localStorage.getItem('darkModeActive') === 'true') setDarkModeActive(true);
+		} else if (localStorage.getItem('isDarkModeActive') === 'true') setIsDarkModeActive(true);
 	};
 
 	const initializeGoogleAnalytics = () => {
@@ -115,16 +115,16 @@ const App: React.FC = () => {
 		console.log(`${process.env.REACT_APP_NAME} ${process.env.REACT_APP_VERSION}`);
 	};
 
-	const onClickDarkMode = () => {
+	const handleClickOnDarkMode = () => {
 		ReactGA.event({
 			category: 'Change dark mode',
-			action: (!darkModeActive).toString(),
+			action: (!isDarkModeActive).toString(),
 		});
 
-		setDarkModeActive(darkMode => !darkMode);
+		setIsDarkModeActive(darkMode => !darkMode);
 	};
 
-	const appTheme = React.useMemo(() => theme(darkModeActive), [darkModeActive]);
+	const appTheme = React.useMemo(() => theme(isDarkModeActive), [isDarkModeActive]);
 
 	return (
 		<ThemeProvider theme={appTheme}>
@@ -138,15 +138,15 @@ const App: React.FC = () => {
 						style={{marginBottom: isMobile ? 0 : appTheme.spacing(-2)}}
 					>
 						<Toolbar>
-							<Logo className={classes.logo} fill={darkModeActive ? 'white' : appTheme.palette.primary.main} />
+							<Logo className={classes.logo} fill={isDarkModeActive ? 'white' : appTheme.palette.primary.main} />
 							<div style={{flexGrow: 1}} />
 							<ComponentsTooltip>
 								<IconButton
-									aria-label={darkModeActive ? 'Set light theme' : 'Set dark theme'}
-									onClick={onClickDarkMode}
+									aria-label={isDarkModeActive ? 'Set light theme' : 'Set dark theme'}
+									onClick={handleClickOnDarkMode}
 									data-testid='darkModeButton'
 								>
-									{darkModeActive ? <FlareRounded /> : <Brightness3 />}
+									{isDarkModeActive ? <FlareRounded /> : <Brightness3 />}
 								</IconButton>
 							</ComponentsTooltip>
 						</Toolbar>
@@ -159,7 +159,8 @@ const App: React.FC = () => {
 								<span style={{position: 'relative', top: appTheme.spacing(0.35)}}>
 									<Favorite aria-label='love' fontSize='inherit' />
 								</span>
-								&nbsp;by{' '}
+								&nbsp;by
+{' '}
 								<Link
 									data-testid='cjoeckerLink'
 									href='https://www.cjoecker.de/'
@@ -182,7 +183,7 @@ const App: React.FC = () => {
 								<Button
 									className={classes.linkButton}
 									data-testid='privacyPolicyLink'
-									onClick={() => setShowPrivacyPolicy(true)}
+									onClick={() => setIsPrivacyPolicyVisible(true)}
 									color='primary'
 								>
 									Privacy Policy
@@ -192,7 +193,12 @@ const App: React.FC = () => {
 					</Grid>
 					<AlertsBanner />
 					<CookiesBanner />
-					<InfoDialog fullWidth text={PrivacyPolicy} show={showPrivacyPolicy} onClose={() => setShowPrivacyPolicy(false)} />
+					<InfoDialog
+						hasFullWidth
+						text={PrivacyPolicy}
+						isVisible={isPrivacyPolicyVisible}
+						onClose={() => setIsPrivacyPolicyVisible(false)}
+					/>
 				</div>
 			</main>
 		</ThemeProvider>

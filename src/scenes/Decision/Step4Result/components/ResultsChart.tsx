@@ -45,23 +45,23 @@ const useStyles = makeStyles(theme => ({
 
 type Props = {
 	itemsKey: OptionsAndCriteriaKeys;
-	hidden: boolean;
+	isVisible: boolean;
 	title: string;
 	infoText: JSX.Element;
 };
 
 const ResultsChart: React.FC<Props> = (props: Props) => {
 	const [localItems, setLocalItems] = useState<OptionAndCriteria[]>([]);
-	const [showInfo, setShowInfo] = useState(false);
+	const [isInfoVisible, setIsInfoVisible] = useState(false);
 	const [startAnimation, setStartAnimation] = useState(true);
 	const [itemsType, setItemsType] = useState('');
-	const [showInstructions, setShowInstructions] = useState(false);
+	const [areInstructionsVisible, setAreInstructionsVisible] = useState(false);
 	const [instructionsText, setInstructionsText] = useState<JSX.Element | null>(null);
 
-	const {hidden, itemsKey, title, infoText} = props;
+	const {isVisible, itemsKey, title, infoText} = props;
 
 	const items = useSelector((state: RootState) => state.OptionsAndCriteria[itemsKey], shallowEqual);
-	const {instructionsSteps} = useSelector((state: RootState) => state.App, shallowEqual);
+	const {instructionsStepNum} = useSelector((state: RootState) => state.App, shallowEqual);
 
 	const classes = useStyles();
 	const theme = useTheme();
@@ -71,13 +71,13 @@ const ResultsChart: React.FC<Props> = (props: Props) => {
 			return {...item, name: wrapWord(item.name, 13)};
 		});
 
-		if (!hidden && JSON.stringify(newOrderedItems) !== JSON.stringify(localItems)) {
+		if (isVisible && JSON.stringify(newOrderedItems) !== JSON.stringify(localItems)) {
 			if (itemsKey === OptionsAndCriteriaKeys.decisionOptions) setItemsType('Decision options');
 			else setItemsType('Selection criteria');
 			setLocalItems(newOrderedItems);
 			setStartAnimation(true);
 		}
-	}, [hidden, items]);
+	}, [isVisible, items]);
 
 	useEffect(() => {
 		if (localItems.length > 1) {
@@ -109,9 +109,9 @@ const ResultsChart: React.FC<Props> = (props: Props) => {
 	}, [localItems, itemsKey]);
 
 	useEffect(() => {
-		if (instructionsSteps === 10) setShowInstructions(true);
-		else setShowInstructions(false);
-	}, [instructionsSteps]);
+		if (instructionsStepNum === 10) setAreInstructionsVisible(true);
+		else setAreInstructionsVisible(false);
+	}, [instructionsStepNum]);
 
 	const getSortedItems = (itemsLocal: OptionAndCriteria[]): OptionAndCriteria[] => {
 		return [...itemsLocal].sort((a, b) => {
@@ -130,17 +130,17 @@ const ResultsChart: React.FC<Props> = (props: Props) => {
 								data-testid={`${itemsKey}ResultsInfoButton`}
 								aria-label={`Show help for ${itemsType} results`}
 								className={classes.infoButton}
-								onClick={() => setShowInfo(true)}
-								tabIndex={hidden ? -1 : 0}
+								onClick={() => setIsInfoVisible(true)}
+								tabIndex={isVisible ? 0 : -1}
 							>
 								<HelpOutlineRounded />
 							</IconButton>
 						</ComponentsTooltip>
 					</Typography>
 					<Grid container style={{width: '100%'}}>
-						<InstructionsBox show={showInstructions} customText={instructionsText} />
+						<InstructionsBox isVisible={areInstructionsVisible} customText={instructionsText} />
 					</Grid>
-					{!hidden && (
+					{isVisible && (
 						<Typography component='span' variant='body1'>
 							<ResponsiveContainer
 								id={`${itemsKey}ResponsiveContainer`}
@@ -202,7 +202,7 @@ const ResultsChart: React.FC<Props> = (props: Props) => {
 					)}
 				</Paper>
 			</Fade>
-			<InfoDialog text={infoText} show={showInfo} onClose={() => setShowInfo(false)} />
+			<InfoDialog text={infoText} isVisible={isInfoVisible} onClose={() => setIsInfoVisible(false)} />
 		</div>
 	);
 };

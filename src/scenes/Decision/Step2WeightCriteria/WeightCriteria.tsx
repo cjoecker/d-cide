@@ -20,6 +20,7 @@ import AppSlice from '../../../services/redux/actionsAndSlicers/AppSlice';
 import wrapWord from '../../../services/wrapWord';
 import {useEffectUnsafe} from '../../../services/unsafeHooks';
 import {shuffleArray} from '../../../services/arraysUtils';
+import {createWeightedCriteria} from '../../../services/createData';
 
 const useStyles = makeStyles(theme => ({
 	divMain: {
@@ -82,14 +83,14 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const WeightCriteria: React.FC = () => {
-	const [showInfo, setShowInfo] = useState(false);
-	const [showInstructions, setShowInstructions] = useState(false);
+	const [isInfoVisible, setIsInfoVisible] = useState(false);
+	const [areInstructionsVisible, setAreInstructionsVisible] = useState(false);
 	const sliderRef = useRef<HTMLElement>(null);
 	const paperRef = useRef<HTMLElement>(null);
 
 	const selectionCriteria = useSelector((state: RootState) => state.OptionsAndCriteria.selectionCriteria, shallowEqual);
 	const weightedCriteria = useSelector((state: RootState) => state.WeightedCriteria, shallowEqual);
-	const {instructionsSteps} = useSelector((state: RootState) => state.App, shallowEqual);
+	const {instructionsStepNum} = useSelector((state: RootState) => state.App, shallowEqual);
 
 	const classes = useStyles();
 	const dispatch = useDispatch();
@@ -113,53 +114,25 @@ const WeightCriteria: React.FC = () => {
 	];
 
 	useEffectUnsafe(() => {
-		createWeightedCriteria();
+		dispatch(
+			WeightedCriteriaSlice.actions.setWeightedCriteria(
+				shuffleArray(createWeightedCriteria(weightedCriteria, selectionCriteria))
+			)
+		);
 	}, [selectionCriteria]);
 
 	useEffect(() => {
-		if (instructionsSteps === 6) setShowInstructions(true);
-		else setShowInstructions(false);
-	}, [instructionsSteps]);
+		if (instructionsStepNum === 6) setAreInstructionsVisible(true);
+		else setAreInstructionsVisible(false);
+	}, [instructionsStepNum]);
 
-	const onChange = (event: React.BaseSyntheticEvent, value: number, itemLocal: WeightedCriteriaType) => {
+	const handleChange = (event: React.BaseSyntheticEvent, value: number, itemLocal: WeightedCriteriaType) => {
 		weightedCriteria.forEach(criteria => {
 			if (criteria.id === itemLocal.id)
 				dispatch(WeightedCriteriaSlice.actions.updateWeightedCriteria({...criteria, weight: value}));
 		});
 
-		if (instructionsSteps === 6) dispatch(AppSlice.actions.goToInstructionsStep(7));
-	};
-
-	const createWeightedCriteria = () => {
-		let newWeightedCriteria: WeightedCriteriaType[] = [];
-
-		let id = Math.max(...weightedCriteria.map(object => object.id), 0) + 1;
-
-		for (let i = 0; i < selectionCriteria.length; i += 1) {
-			for (let j = i + 1; j < selectionCriteria.length; j += 1) {
-				const existingWeightedCriteria = weightedCriteria.find(
-					weightedCriteriaObj =>
-						(weightedCriteriaObj.selectionCriteria1Id === selectionCriteria[i].id &&
-							weightedCriteriaObj.selectionCriteria2Id === selectionCriteria[j].id) ||
-						(weightedCriteriaObj.selectionCriteria1Id === selectionCriteria[j].id &&
-							weightedCriteriaObj.selectionCriteria2Id === selectionCriteria[i].id)
-				);
-
-				newWeightedCriteria = [
-					...newWeightedCriteria,
-					{
-						id,
-						weight: existingWeightedCriteria != null ? existingWeightedCriteria.weight : 0,
-						selectionCriteria1Id: selectionCriteria[i].id,
-						selectionCriteria2Id: selectionCriteria[j].id,
-					},
-				];
-
-				id += 1;
-			}
-		}
-
-		dispatch(WeightedCriteriaSlice.actions.setWeightedCriteria(shuffleArray(newWeightedCriteria)));
+		if (instructionsStepNum === 6) dispatch(AppSlice.actions.goToInstructionsStep(7));
 	};
 
 	const getSelectionCriteriaName = (selectionCriteriaId: number) => {
@@ -203,7 +176,7 @@ const WeightCriteria: React.FC = () => {
 									data-testid='WeightCriteriaInfoButton'
 									aria-label='Show weighted criteria help'
 									className={classes.infoButton}
-									onClick={() => setShowInfo(true)}
+									onClick={() => setIsInfoVisible(true)}
 								>
 									<HelpOutlineRounded />
 								</IconButton>
@@ -251,7 +224,7 @@ const WeightCriteria: React.FC = () => {
 										max={100}
 										step={1}
 										marks={sliderMarks}
-										onChange={(event, value) => onChange(event, value as number, criteria)}
+										onChange={(event, value) => handleChange(event, value as number, criteria)}
 									/>
 								</Grid>
 								<Grid item xs={12} className={classes.gridItemSliderInfo}>
@@ -270,10 +243,18 @@ const WeightCriteria: React.FC = () => {
 				))}
 			</Grid>
 			{paperRef.current && (
-				<InstructionsBox show={showInstructions} anchor={sliderRef.current} width={paperRef.current.offsetWidth} />
+				<InstructionsBox
+					isVisible={areInstructionsVisible}
+					anchor={sliderRef.current}
+					width={paperRef.current.offsetWidth}
+				/>
 			)}
 
-			<InfoDialog text={LongStrings.WeightCriteriaInfo} show={showInfo} onClose={() => setShowInfo(false)} />
+			<InfoDialog
+				text={LongStrings.WeightCriteriaInfo}
+				isVisible={isInfoVisible}
+				onClose={() => setIsInfoVisible(false)}
+			/>
 		</div>
 	);
 };

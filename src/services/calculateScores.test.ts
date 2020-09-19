@@ -2,7 +2,7 @@
 import {WeightedCriteriaType} from './redux/actionsAndSlicers/WeightCriteriaSlice';
 import {RatedOption} from './redux/actionsAndSlicers/RatedOptionsSlice';
 import {predefinedDecisionOptions, predefinedSelectionCriteria} from '../constants/PredifinedOptionsAndCriteria';
-import {getScoredDecisionOptions, getScoredSelectionCriteria} from './scoresCalculator';
+import {getScoredDecisionOptions, getScoredSelectionCriteria} from './calculateScores';
 
 it('calculates options and criteria scores', () => {
 	const weightedCriteria: WeightedCriteriaType[] = [
