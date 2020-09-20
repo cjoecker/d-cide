@@ -112,15 +112,11 @@ const InstructionsBox = (props: ComponentsTooltipProps) => {
 	const [_isVisible, set_isVisible] = useState(true);
 	const {instructionsStepNum, areInstructionsVisible} = useSelector((state: RootState) => state.App, shallowEqual);
 
-	useEffect(() => {
-		console.log(instructionsStepNum);
-	}, [instructionsStepNum]);
-
 	const theme = useTheme();
-	const classes = useStyles(instructions[instructionsStepNum]);
+	const classes = useStyles(instructions[instructionsStepNum ?? 0]);
 	const dispatch = useDispatch();
 
-	const {arrowPos} = instructions[instructionsStepNum];
+	const {arrowPos} = instructions[instructionsStepNum ?? 0];
 	const arrowClass = classes[`instructionsBox${arrowPos.charAt(0).toUpperCase()}${arrowPos.slice(1)}`];
 	const isHiddenPermanently = localStorage.getItem('hideHelp') === 'true';
 
