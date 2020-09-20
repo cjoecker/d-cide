@@ -144,7 +144,7 @@ const InstructionsBox = (props: ComponentsTooltipProps) => {
 			<AnimatePresence exitBeforeEnter>
 				{_isVisible && areInstructionsVisible && !isHiddenPermanently && (
 					<motion.div
-						style={{width: anchor ? undefined : width, zIndex: 1450}}
+						style={{width: anchor ? undefined : width, zIndex: 1275}}
 						variants={loopAnimation(arrowPos)}
 						initial='from'
 						animate='to'
