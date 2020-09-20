@@ -74,6 +74,7 @@ const AlertsBanner: React.FC = () => {
 	return (
 		<div>
 			<Snackbar
+				style={{zIndex: 1250}}
 				open={isVisible}
 				autoHideDuration={autoHideSecsNum !== 0 ? autoHideSecsNum : undefined}
 				onClose={handleClose}

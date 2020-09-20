@@ -277,7 +277,6 @@ const variants = {
 		};
 	},
 	center: {
-		zIndex: 1,
 		x: 0,
 		opacity: 1,
 	},
