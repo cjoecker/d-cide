@@ -1,8 +1,9 @@
 // Link.react.test.js
-import {WeightedCriteriaType} from './redux/actionsAndSlicers/WeightCriteriaSlice';
-import {RatedOption} from './redux/actionsAndSlicers/RatedOptionsSlice';
 import {predefinedDecisionOptions, predefinedSelectionCriteria} from '../constants/PredifinedOptionsAndCriteria';
+
 import {getScoredDecisionOptions, getScoredSelectionCriteria} from './calculateScores';
+import {RatedOption} from './redux/actionsAndSlicers/RatedOptionsSlice';
+import {WeightedCriteriaType} from './redux/actionsAndSlicers/WeightCriteriaSlice';
 
 it('calculates options and criteria scores', () => {
 	const weightedCriteria: WeightedCriteriaType[] = [

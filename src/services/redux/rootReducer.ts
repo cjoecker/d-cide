@@ -1,8 +1,9 @@
 import {combineReducers} from '@reduxjs/toolkit';
+
 import AppSlice from './actionsAndSlicers/AppSlice';
 import OptionsAndCriteriaSlice from './actionsAndSlicers/OptionsAndCriteriaSlice';
-import WeightedCriteriaSlice from './actionsAndSlicers/WeightCriteriaSlice';
 import RatedOptionsSlice from './actionsAndSlicers/RatedOptionsSlice';
+import WeightedCriteriaSlice from './actionsAndSlicers/WeightCriteriaSlice';
 
 const rootReducer = combineReducers({
 	App: AppSlice.reducer,

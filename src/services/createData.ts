@@ -1,6 +1,6 @@
 import {OptionAndCriteria} from './redux/actionsAndSlicers/OptionsAndCriteriaSlice';
-import {WeightedCriteriaType} from './redux/actionsAndSlicers/WeightCriteriaSlice';
 import {RatedOption} from './redux/actionsAndSlicers/RatedOptionsSlice';
+import {WeightedCriteriaType} from './redux/actionsAndSlicers/WeightCriteriaSlice';
 
 export const createWeightedCriteria = (
 	_weightedCriteria: WeightedCriteriaType[],

@@ -1,26 +1,27 @@
-import React, {useEffect, useRef, useState} from 'react';
-import {makeStyles, useTheme} from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
-import Slider from '@material-ui/core/Slider';
-import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
-import {shallowEqual, useDispatch, useSelector} from 'react-redux';
 import Fade from '@material-ui/core/Fade';
-import {isMobile} from 'react-device-detect';
+import Grid from '@material-ui/core/Grid';
+import IconButton from '@material-ui/core/IconButton';
+import Paper from '@material-ui/core/Paper';
+import Slider from '@material-ui/core/Slider';
+import {makeStyles, useTheme} from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
 import {HelpOutlineRounded} from '@material-ui/icons';
-import * as LongStrings from '../../../constants/InfoDialogTexts';
-import InfoDialog from '../../../components/InfoDialog';
-import {RootState} from '../../../services/redux/rootReducer';
-import RatedOptionsSlice from '../../../services/redux/actionsAndSlicers/RatedOptionsSlice';
+import React, {useEffect, useRef, useState} from 'react';
+import {isMobile} from 'react-device-detect';
+import {shallowEqual, useDispatch, useSelector} from 'react-redux';
+
 import ComponentsTooltip from '../../../components/ComponentsTooltip';
-import {OptionAndCriteria} from '../../../services/redux/actionsAndSlicers/OptionsAndCriteriaSlice';
+import InfoDialog from '../../../components/InfoDialog';
 import InstructionsBox from '../../../components/InstructionsBox';
-import AppSlice from '../../../services/redux/actionsAndSlicers/AppSlice';
-import wrapWord from '../../../services/wrapWord';
+import * as LongStrings from '../../../constants/InfoDialogTexts';
 import {shuffleArray} from '../../../services/arraysUtils';
-import {useEffectUnsafe} from '../../../services/unsafeHooks';
 import {createRatedOptions} from '../../../services/createData';
+import AppSlice from '../../../services/redux/actionsAndSlicers/AppSlice';
+import {OptionAndCriteria} from '../../../services/redux/actionsAndSlicers/OptionsAndCriteriaSlice';
+import RatedOptionsSlice from '../../../services/redux/actionsAndSlicers/RatedOptionsSlice';
+import {RootState} from '../../../services/redux/rootReducer';
+import {useEffectUnsafe} from '../../../services/unsafeHooks';
+import wrapWord from '../../../services/wrapWord';
 
 const useStyles = makeStyles(theme => ({
 	divMain: {
@@ -153,17 +154,17 @@ const RateOptions: React.FC = () => {
 	}, [selectionCriteria, decisionOptions]);
 
 	useEffect(() => {
-		if (instructionsStepNum === 8) setAreInstructionsVisible(true);
-		else setAreInstructionsVisible(false);
+		if (instructionsStepNum === 8) {setAreInstructionsVisible(true);}
+		else {setAreInstructionsVisible(false);}
 	}, [instructionsStepNum]);
 
 	const onChange = (event: React.BaseSyntheticEvent, criteriaId: number, optionId: number, score: number) => {
 		ratedOptions.forEach(option => {
 			if (option.selectionCriteriaId === criteriaId && option.decisionOptionId === optionId)
-				dispatch(RatedOptionsSlice.actions.updateRatedOptions({...option, score}));
+				{dispatch(RatedOptionsSlice.actions.updateRatedOptions({...option, score}));}
 		});
 
-		if (instructionsStepNum === 8) dispatch(AppSlice.actions.goToInstructionsStep(9));
+		if (instructionsStepNum === 8) {dispatch(AppSlice.actions.goToInstructionsStep(9));}
 	};
 
 	const getScore = (criteriaId: number, optionId: number): number => {
@@ -275,7 +276,7 @@ const RateOptions: React.FC = () => {
 			</Grid>
 			{paperRef.current && (
 				<InstructionsBox
-					isVisible={areInstructionsVisible}
+					show={areInstructionsVisible}
 					anchor={sliderRef.current}
 					width={paperRef.current.offsetWidth}
 					customText={instructionsText}

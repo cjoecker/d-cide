@@ -1,26 +1,26 @@
-import React, {useEffect, useRef, useState} from 'react';
 import Grid from '@material-ui/core/Grid';
+import IconButton from '@material-ui/core/IconButton';
 import Paper from '@material-ui/core/Paper';
 import Slider from '@material-ui/core/Slider';
-import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
-import {shallowEqual, useDispatch, useSelector} from 'react-redux';
 import {makeStyles} from '@material-ui/core/styles';
-
+import Typography from '@material-ui/core/Typography';
 import {HelpOutlineRounded} from '@material-ui/icons';
-import * as LongStrings from '../../../constants/InfoDialogTexts';
+import React, {useEffect, useRef, useState} from 'react';
+import {shallowEqual, useDispatch, useSelector} from 'react-redux';
+
+import ComponentsTooltip from '../../../components/ComponentsTooltip';
 import InfoDialog from '../../../components/InfoDialog';
-import {RootState} from '../../../services/redux/rootReducer';
+import InstructionsBox from '../../../components/InstructionsBox';
+import * as LongStrings from '../../../constants/InfoDialogTexts';
+import {shuffleArray} from '../../../services/arraysUtils';
+import {createWeightedCriteria} from '../../../services/createData';
+import AppSlice from '../../../services/redux/actionsAndSlicers/AppSlice';
 import WeightedCriteriaSlice, {
 	WeightedCriteriaType,
 } from '../../../services/redux/actionsAndSlicers/WeightCriteriaSlice';
-import ComponentsTooltip from '../../../components/ComponentsTooltip';
-import InstructionsBox from '../../../components/InstructionsBox';
-import AppSlice from '../../../services/redux/actionsAndSlicers/AppSlice';
-import wrapWord from '../../../services/wrapWord';
+import {RootState} from '../../../services/redux/rootReducer';
 import {useEffectUnsafe} from '../../../services/unsafeHooks';
-import {shuffleArray} from '../../../services/arraysUtils';
-import {createWeightedCriteria} from '../../../services/createData';
+import wrapWord from '../../../services/wrapWord';
 
 const useStyles = makeStyles(theme => ({
 	divMain: {
@@ -122,17 +122,17 @@ const WeightCriteria: React.FC = () => {
 	}, [selectionCriteria]);
 
 	useEffect(() => {
-		if (instructionsStepNum === 6) setAreInstructionsVisible(true);
-		else setAreInstructionsVisible(false);
+		if (instructionsStepNum === 6) {setAreInstructionsVisible(true);}
+		else {setAreInstructionsVisible(false);}
 	}, [instructionsStepNum]);
 
 	const handleChange = (event: React.BaseSyntheticEvent, value: number, itemLocal: WeightedCriteriaType) => {
 		weightedCriteria.forEach(criteria => {
 			if (criteria.id === itemLocal.id)
-				dispatch(WeightedCriteriaSlice.actions.updateWeightedCriteria({...criteria, weight: value}));
+				{dispatch(WeightedCriteriaSlice.actions.updateWeightedCriteria({...criteria, weight: value}));}
 		});
 
-		if (instructionsStepNum === 6) dispatch(AppSlice.actions.goToInstructionsStep(7));
+		if (instructionsStepNum === 6) {dispatch(AppSlice.actions.goToInstructionsStep(7));}
 	};
 
 	const getSelectionCriteriaName = (selectionCriteriaId: number) => {
@@ -244,7 +244,7 @@ const WeightCriteria: React.FC = () => {
 			</Grid>
 			{paperRef.current && (
 				<InstructionsBox
-					isVisible={areInstructionsVisible}
+					show={areInstructionsVisible}
 					anchor={sliderRef.current}
 					width={paperRef.current.offsetWidth}
 				/>

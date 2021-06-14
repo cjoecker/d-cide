@@ -1,4 +1,5 @@
 import CryptoJS from 'crypto-js';
+
 import {RootState} from './rootReducer';
 
 export const storeStorageKey = 'appState';
@@ -16,7 +17,6 @@ export const decrypt = (input: string): string => {
 
 export const persistedState = () => {
 	try {
-		console.log(JSON.parse(decrypt(localStorage.getItem(storeStorageKey) as string)));
 		return JSON.parse(decrypt(localStorage.getItem(storeStorageKey) as string));
 	} catch (e) {
 		return {};

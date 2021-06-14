@@ -1,16 +1,17 @@
-import React, {useState} from 'react';
 import Grid from '@material-ui/core/Grid';
 import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
 import {makeStyles} from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
 import {HelpOutlineRounded} from '@material-ui/icons';
-import InfoDialog from '../../../components/InfoDialog';
-import EditableList from './components/EditableList';
+import React, {useState} from 'react';
 
+import ComponentsTooltip from '../../../components/ComponentsTooltip';
+import InfoDialog from '../../../components/InfoDialog';
+import {NOT_ENOUGH_CRITERIA, NOT_ENOUGH_OPTIONS} from '../../../constants/Alerts';
 import {DecisionOptionInfo, SelectionCriteriaInfo} from '../../../constants/InfoDialogTexts';
 import {OptionsAndCriteriaKeys} from '../../../services/redux/actionsAndSlicers/OptionsAndCriteriaSlice';
-import {NOT_ENOUGH_CRITERIA, NOT_ENOUGH_OPTIONS} from '../../../constants/Alerts';
-import ComponentsTooltip from '../../../components/ComponentsTooltip';
+
+import EditableList from './components/EditableList';
 
 const useStyles = makeStyles(theme => ({
 	divMain: {

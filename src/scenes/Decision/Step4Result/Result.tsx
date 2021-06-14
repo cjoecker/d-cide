@@ -1,16 +1,17 @@
-import React, {useState} from 'react';
 import Grid from '@material-ui/core/Grid';
 import {makeStyles} from '@material-ui/core/styles';
+import React, {useState} from 'react';
 import {shallowEqual, useDispatch, useSelector} from 'react-redux';
-import * as LongStrings from '../../../constants/InfoDialogTexts';
 
+import * as LongStrings from '../../../constants/InfoDialogTexts';
+import {getScoredDecisionOptions, getScoredSelectionCriteria} from '../../../services/calculateScores';
 import OptionsAndCriteriaSlice, {
 	OptionsAndCriteriaKeys,
 } from '../../../services/redux/actionsAndSlicers/OptionsAndCriteriaSlice';
-import ResultsChart from './components/ResultsChart';
 import {RootState} from '../../../services/redux/rootReducer';
 import {useEffectUnsafe} from '../../../services/unsafeHooks';
-import {getScoredDecisionOptions, getScoredSelectionCriteria} from '../../../services/calculateScores';
+
+import ResultsChart from './components/ResultsChart';
 
 const useStyles = makeStyles(theme => ({
 	divMain: {

@@ -1,29 +1,29 @@
-import React, {useRef, useState} from 'react';
-import {makeStyles, useTheme} from '@material-ui/core/styles';
-import IconButton from '@material-ui/core/IconButton';
-import DeleteIcon from '@material-ui/icons/DeleteOutlineRounded';
-import AddIcon from '@material-ui/icons/AddRounded';
-import Paper from '@material-ui/core/Paper';
-import {shallowEqual, useDispatch, useSelector} from 'react-redux';
-import Fade from '@material-ui/core/Fade';
 import {Box, Input} from '@material-ui/core';
-import ReactGA from 'react-ga';
+import Fade from '@material-ui/core/Fade';
 import Grid from '@material-ui/core/Grid';
-
-import {debounceTime} from 'rxjs/operators';
+import IconButton from '@material-ui/core/IconButton';
+import Paper from '@material-ui/core/Paper';
+import {makeStyles, useTheme} from '@material-ui/core/styles';
+import AddIcon from '@material-ui/icons/AddRounded';
+import DeleteIcon from '@material-ui/icons/DeleteOutlineRounded';
+import React, {useRef, useState} from 'react';
+import ReactGA from 'react-ga';
+import {shallowEqual, useDispatch, useSelector} from 'react-redux';
 import {Subject} from 'rxjs';
+import {debounceTime} from 'rxjs/operators';
+
+import ComponentsTooltip from '../../../../components/ComponentsTooltip';
+import InstructionsBox from '../../../../components/InstructionsBox';
+import {AlertType} from '../../../../constants/Alerts';
+import AppSlice from '../../../../services/redux/actionsAndSlicers/AppSlice';
 import OptionsAndCriteriaSlice, {
 	OptionAndCriteria,
 	OptionsAndCriteriaKeys,
 } from '../../../../services/redux/actionsAndSlicers/OptionsAndCriteriaSlice';
-import {RootState} from '../../../../services/redux/rootReducer';
-import AppSlice from '../../../../services/redux/actionsAndSlicers/AppSlice';
-import {AlertType} from '../../../../constants/Alerts';
-import ComponentsTooltip from '../../../../components/ComponentsTooltip';
-import InstructionsBox from '../../../../components/InstructionsBox';
-import {useEffectUnsafe} from '../../../../services/unsafeHooks';
 import RatedOptionsSlice from '../../../../services/redux/actionsAndSlicers/RatedOptionsSlice';
 import WeightedCriteriaSlice from '../../../../services/redux/actionsAndSlicers/WeightCriteriaSlice';
+import {RootState} from '../../../../services/redux/rootReducer';
+import {useEffectUnsafe} from '../../../../services/unsafeHooks';
 
 const onChangeNewEntry$ = new Subject();
 
@@ -84,8 +84,8 @@ const EditableList: React.FC<Props> = (props: Props) => {
 	const theme = useTheme();
 
 	useEffectUnsafe(() => {
-		if (isDecisionOptionsList) setItemsType('Decision options');
-		else setItemsType('Selection criteria');
+		if (isDecisionOptionsList) {setItemsType('Decision options');}
+		else {setItemsType('Selection criteria');}
 
 		const subscription = onChangeNewEntry$.pipe(debounceTime(1000)).subscribe(() => {
 			dispatch(AppSlice.actions.goToInstructionsStep(1));
@@ -119,14 +119,14 @@ const EditableList: React.FC<Props> = (props: Props) => {
 			(isDecisionOptionsList && instructionsStepNum >= 0 && instructionsStepNum < 3) ||
 			(!isDecisionOptionsList && instructionsStepNum >= 3 && instructionsStepNum < 5)
 		)
-			setAreInstructionsVisible(true);
-		else setAreInstructionsVisible(false);
+			{setAreInstructionsVisible(true);}
+		else {setAreInstructionsVisible(false);}
 
 		manageInstructionsStepNum();
 	}, [instructionsStepNum]);
 
 	const onCreateItem = (_newEntry: string) => {
-		if (_newEntry === '') return;
+		if (_newEntry === '') {return;}
 
 		const newItem: OptionAndCriteria = {
 			id: Math.max(...items.map(object => object.id), 0) + 1,
@@ -149,7 +149,7 @@ const EditableList: React.FC<Props> = (props: Props) => {
 	const onChangeNewEntry = (event: React.BaseSyntheticEvent) => {
 		setNewEntry(event.target.value);
 
-		if (isDecisionOptionsList && instructionsStepNum === 0) onChangeNewEntry$.next(event.target.value);
+		if (isDecisionOptionsList && instructionsStepNum === 0) {onChangeNewEntry$.next(event.target.value);}
 	};
 
 	const onChangeItem = (event: React.BaseSyntheticEvent, itemId: number) => {
@@ -163,15 +163,15 @@ const EditableList: React.FC<Props> = (props: Props) => {
 				action: `Edit ${itemsType}`,
 			});
 
-			if (isDecisionOptionsList) dispatch(OptionsAndCriteriaSlice.actions.updateDecisionOption(itemLocal));
-			else dispatch(OptionsAndCriteriaSlice.actions.updateSelectionCriteria(itemLocal));
+			if (isDecisionOptionsList) {dispatch(OptionsAndCriteriaSlice.actions.updateDecisionOption(itemLocal));}
+			else {dispatch(OptionsAndCriteriaSlice.actions.updateSelectionCriteria(itemLocal));}
 		} else {
 			ReactGA.event({
 				category: itemsType,
 				action: `Delete ${itemsType} after empty`,
 			});
-			if (isDecisionOptionsList) dispatch(OptionsAndCriteriaSlice.actions.deleteDecisionOption(itemLocal.id));
-			else dispatch(OptionsAndCriteriaSlice.actions.deleteSelectionCriteria(itemLocal.id));
+			if (isDecisionOptionsList) {dispatch(OptionsAndCriteriaSlice.actions.deleteDecisionOption(itemLocal.id));}
+			else {dispatch(OptionsAndCriteriaSlice.actions.deleteSelectionCriteria(itemLocal.id));}
 		}
 	};
 
@@ -215,16 +215,16 @@ const EditableList: React.FC<Props> = (props: Props) => {
 	};
 
 	const endOfAnimation = (index: number) => {
-		if (index === localItems.length - 1) setStopAnimation(true);
+		if (index === localItems.length - 1) {setStopAnimation(true);}
 	};
 
 	const clearNewEntryWhenCreated = () => {
-		if (items.length > 0 && items[0].name === newEntry) setNewEntry('');
+		if (items.length > 0 && items[0].name === newEntry) {setNewEntry('');}
 	};
 
 	const manageNotEnoughItemsAlerts = () => {
-		if (items.length < 2) dispatch(AppSlice.actions.addAlert(notEnoughItemsAlert));
-		else dispatch(AppSlice.actions.deleteAlert(notEnoughItemsAlert));
+		if (items.length < 2) {dispatch(AppSlice.actions.addAlert(notEnoughItemsAlert));}
+		else {dispatch(AppSlice.actions.deleteAlert(notEnoughItemsAlert));}
 	};
 
 	return (
@@ -270,7 +270,7 @@ const EditableList: React.FC<Props> = (props: Props) => {
 					</Paper>
 				</Grid>
 				<Grid item xs={12}>
-					<InstructionsBox isVisible={areInstructionsVisible} width='100%' />
+					<InstructionsBox show={areInstructionsVisible} width='100%' />
 				</Grid>
 				{localItems.map((item, index) => (
 					<Fade

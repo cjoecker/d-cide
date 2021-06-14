@@ -1,24 +1,24 @@
-import React, {useEffect, useState} from 'react';
-import {makeStyles, useTheme} from '@material-ui/core/styles';
-import {Bar, BarChart, CartesianGrid, Cell, Rectangle, ResponsiveContainer, XAxis, YAxis} from 'recharts';
-import {shallowEqual, useSelector} from 'react-redux';
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
-import IconButton from '@material-ui/core/IconButton';
 import Fade from '@material-ui/core/Fade';
-
-import {HelpOutlineRounded} from '@material-ui/icons';
 import Grid from '@material-ui/core/Grid';
-import {RootState} from '../../../../services/redux/rootReducer';
+import IconButton from '@material-ui/core/IconButton';
+import Paper from '@material-ui/core/Paper';
+import {makeStyles, useTheme} from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
+import {HelpOutlineRounded} from '@material-ui/icons';
+import React, {useEffect, useState} from 'react';
+import {shallowEqual, useSelector} from 'react-redux';
+import {Bar, BarChart, CartesianGrid, Cell, Rectangle, ResponsiveContainer, XAxis, YAxis, LabelList} from 'recharts';
+
+import ComponentsTooltip from '../../../../components/ComponentsTooltip';
+import InfoDialog from '../../../../components/InfoDialog';
+import InstructionsBox from '../../../../components/InstructionsBox';
 import {
 	OptionAndCriteria,
 	OptionsAndCriteriaKeys,
 } from '../../../../services/redux/actionsAndSlicers/OptionsAndCriteriaSlice';
-import InfoDialog from '../../../../components/InfoDialog';
-import ComponentsTooltip from '../../../../components/ComponentsTooltip';
-import InstructionsBox from '../../../../components/InstructionsBox';
-import wrapWord from '../../../../services/wrapWord';
+import {RootState} from '../../../../services/redux/rootReducer';
 import {useEffectUnsafe} from '../../../../services/unsafeHooks';
+import wrapWord from '../../../../services/wrapWord';
 
 const useStyles = makeStyles(theme => ({
 	divMain: {
@@ -72,8 +72,8 @@ const ResultsChart: React.FC<Props> = (props: Props) => {
 		});
 
 		if (isVisible && JSON.stringify(newOrderedItems) !== JSON.stringify(localItems)) {
-			if (itemsKey === OptionsAndCriteriaKeys.decisionOptions) setItemsType('Decision options');
-			else setItemsType('Selection criteria');
+			if (itemsKey === OptionsAndCriteriaKeys.decisionOptions) {setItemsType('Decision options');}
+			else {setItemsType('Selection criteria');}
 			setLocalItems(newOrderedItems);
 			setStartAnimation(true);
 		}
@@ -109,8 +109,8 @@ const ResultsChart: React.FC<Props> = (props: Props) => {
 	}, [localItems, itemsKey]);
 
 	useEffect(() => {
-		if (instructionsStepNum === 10) setAreInstructionsVisible(true);
-		else setAreInstructionsVisible(false);
+		if (instructionsStepNum === 10) {setAreInstructionsVisible(true);}
+		else {setAreInstructionsVisible(false);}
 	}, [instructionsStepNum]);
 
 	const getSortedItems = (itemsLocal: OptionAndCriteria[]): OptionAndCriteria[] => {
@@ -138,7 +138,7 @@ const ResultsChart: React.FC<Props> = (props: Props) => {
 						</ComponentsTooltip>
 					</Typography>
 					<Grid container style={{width: '100%'}}>
-						<InstructionsBox isVisible={areInstructionsVisible} customText={instructionsText} />
+						<InstructionsBox show={areInstructionsVisible} customText={instructionsText} />
 					</Grid>
 					{isVisible && (
 						<Typography component='span' variant='body1'>
@@ -177,9 +177,6 @@ const ResultsChart: React.FC<Props> = (props: Props) => {
 										dataKey='score'
 										animationBegin={500}
 										animationDuration={1000}
-										label={{
-											position: 'right',
-										}}
 										shape={<Rectangle radius={[0, 10, 10, 0]} />}
 									>
 										{localItems.map((entry, index) => (
@@ -195,6 +192,7 @@ const ResultsChart: React.FC<Props> = (props: Props) => {
 												})()}
 											/>
 										))}
+										<LabelList dataKey='score' position="right" />
 									</Bar>
 								</BarChart>
 							</ResponsiveContainer>

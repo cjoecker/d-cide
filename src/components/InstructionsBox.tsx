@@ -1,16 +1,18 @@
-import React, {useEffect, useState} from 'react';
 import {Button, IconButton, Popper, Theme, useTheme} from '@material-ui/core';
+import Grid from '@material-ui/core/Grid';
 import {makeStyles} from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
-import Grid from '@material-ui/core/Grid';
-import {shallowEqual, useDispatch, useSelector} from 'react-redux';
 import {AnimatePresence, motion} from 'framer-motion';
-import {RootState} from '../services/redux/rootReducer';
+import React, {useEffect, useState} from 'react';
+import {shallowEqual, useDispatch, useSelector} from 'react-redux';
+
 import {instructions} from '../constants/Instructions';
-import ComponentsTooltip from './ComponentsTooltip';
-import {useEffectUnsafe} from '../services/unsafeHooks';
 import AppSlice from '../services/redux/actionsAndSlicers/AppSlice';
+import {RootState} from '../services/redux/rootReducer';
+import {useEffectUnsafe} from '../services/unsafeHooks';
+
+import ComponentsTooltip from './ComponentsTooltip';
 
 export interface StyleProps {
 	arrowPos: 'top' | 'right' | 'bottom';
@@ -34,9 +36,9 @@ const useStyles = makeStyles<Theme, StyleProps>(theme => ({
 	instructionsBoxTop: {
 		left: '0px',
 		'&::after': {
-			left: ({arrowOffset, isArrowOffsetDirectionInverted}) =>
+			left: ({arrowOffset, isArrowOffsetDirectionInverted}:arrowPosition) =>
 				getConditionalPos(!isArrowOffsetDirectionInverted, arrowOffset, theme),
-			right: ({arrowOffset, isArrowOffsetDirectionInverted}) =>
+			right: ({arrowOffset, isArrowOffsetDirectionInverted}:arrowPosition) =>
 				getConditionalPos(isArrowOffsetDirectionInverted, arrowOffset, theme),
 			top: '-13px',
 			borderLeft: `7px solid transparent`,
@@ -48,9 +50,9 @@ const useStyles = makeStyles<Theme, StyleProps>(theme => ({
 	instructionsBoxBottom: {
 		left: '0px',
 		'&::after': {
-			left: ({arrowOffset, isArrowOffsetDirectionInverted}) =>
+			left: ({arrowOffset, isArrowOffsetDirectionInverted}:arrowPosition) =>
 				getConditionalPos(!isArrowOffsetDirectionInverted, arrowOffset, theme),
-			right: ({arrowOffset, isArrowOffsetDirectionInverted}) =>
+			right: ({arrowOffset, isArrowOffsetDirectionInverted}:arrowPosition) =>
 				getConditionalPos(isArrowOffsetDirectionInverted, arrowOffset, theme),
 			bottom: '-13px',
 			borderLeft: `7px solid transparent`,
@@ -64,9 +66,9 @@ const useStyles = makeStyles<Theme, StyleProps>(theme => ({
 		marginRight: '20px',
 		flex: 1,
 		'&::after': {
-			top: ({arrowOffset, isArrowOffsetDirectionInverted}) =>
+			top: ({arrowOffset, isArrowOffsetDirectionInverted}:arrowPosition) =>
 				getConditionalPos(!isArrowOffsetDirectionInverted, arrowOffset, theme),
-			bottom: ({arrowOffset, isArrowOffsetDirectionInverted}) =>
+			bottom: ({arrowOffset, isArrowOffsetDirectionInverted}:arrowPosition) =>
 				getConditionalPos(isArrowOffsetDirectionInverted, arrowOffset, theme),
 			right: '-13px',
 			borderTop: `7px solid transparent`,
@@ -99,17 +101,16 @@ const useStyles = makeStyles<Theme, StyleProps>(theme => ({
 }));
 
 type ComponentsTooltipProps = {
-	isVisible: boolean;
+	show: boolean;
 	customText?: JSX.Element | null;
 	width?: string | number;
 	anchor?: HTMLElement | null;
 };
 
 const InstructionsBox = (props: ComponentsTooltipProps) => {
-	const {isVisible, customText, width, anchor} = props;
+	const {show, customText, width, anchor} = props;
 
-	// eslint-disable-next-line @typescript-eslint/camelcase
-	const [_isVisible, set_isVisible] = useState(true);
+	const [isVisible, setIsVisible] = useState(true);
 	const {instructionsStepNum, areInstructionsVisible} = useSelector((state: RootState) => state.App, shallowEqual);
 
 	const theme = useTheme();
@@ -122,16 +123,16 @@ const InstructionsBox = (props: ComponentsTooltipProps) => {
 
 	const handleClickDontShowHelpAnymore = () => {
 		localStorage.setItem('hideHelp', 'true');
-		set_isVisible(false);
+		setIsVisible(false);
 		dispatch(AppSlice.actions.goToInstructionsStep(0));
 	};
 
 	useEffect(() => {
-		set_isVisible(isVisible);
-	}, [isVisible]);
+		setIsVisible(show);
+	}, [show]);
 
 	useEffectUnsafe(() => {
-		set_isVisible(isVisible);
+		setIsVisible(show);
 	}, [instructionsStepNum]);
 
 	const box = (
@@ -142,7 +143,7 @@ const InstructionsBox = (props: ComponentsTooltipProps) => {
 			alignContent='flex-start'
 		>
 			<AnimatePresence exitBeforeEnter>
-				{_isVisible && areInstructionsVisible && !isHiddenPermanently && (
+				{isVisible && areInstructionsVisible && !isHiddenPermanently && (
 					<motion.div
 						style={{width: anchor ? undefined : width, zIndex: 1275}}
 						variants={loopAnimation(arrowPos)}
@@ -158,7 +159,7 @@ const InstructionsBox = (props: ComponentsTooltipProps) => {
 												aria-label='Close dialog'
 												data-testid='hideHelp'
 												className={classes.closeButton}
-												onClick={() => set_isVisible(false)}
+												onClick={() => setIsVisible(false)}
 											>
 												<CloseIcon fontSize='small' />
 											</IconButton>
@@ -188,7 +189,7 @@ const InstructionsBox = (props: ComponentsTooltipProps) => {
 		</Grid>
 	);
 
-	const withPopper = _isVisible && anchor && (
+	const withPopper = isVisible && anchor && (
 		<Popper
 			style={{marginTop: theme.spacing(2), width, zIndex: 1000}}
 			id='popper'
@@ -207,14 +208,14 @@ const InstructionsBox = (props: ComponentsTooltipProps) => {
 
 	const component = anchor ? withPopper : box;
 
-	return <>{_isVisible && component}</>;
+	return <>{isVisible && component}</>;
 };
 export default InstructionsBox;
 
 const getConditionalPos = (shouldReturnPos: boolean, offset: string | number, theme: Theme) => {
-	if (!shouldReturnPos) return null;
+	if (!shouldReturnPos) {return null;}
 
-	if (typeof offset === 'string') return offset;
+	if (typeof offset === 'string') {return offset;}
 
 	return theme.spacing(offset);
 };
@@ -246,3 +247,8 @@ const loopAnimation = (arrowPos: 'top' | 'right' | 'bottom') => ({
 	},
 	from: {translateY: 0},
 });
+
+type arrowPosition = {
+arrowOffset: number
+	isArrowOffsetDirectionInverted: boolean
+}

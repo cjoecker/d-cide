@@ -1,6 +1,6 @@
 import {OptionAndCriteria} from './redux/actionsAndSlicers/OptionsAndCriteriaSlice';
-import {WeightedCriteriaType} from './redux/actionsAndSlicers/WeightCriteriaSlice';
 import {RatedOption} from './redux/actionsAndSlicers/RatedOptionsSlice';
+import {WeightedCriteriaType} from './redux/actionsAndSlicers/WeightCriteriaSlice';
 
 export const getScoredDecisionOptions = (
 	decisionOptions: OptionAndCriteria[],
@@ -19,7 +19,7 @@ export const getScoredDecisionOptions = (
 			.filter(ratedOption => ratedOption.decisionOptionId === option.id)
 			.forEach(ratedOption => {
 				const selectionCriteriaLocal = selectionCriteria.find(criteria => criteria.id === ratedOption.selectionCriteriaId);
-				if (selectionCriteriaLocal != null) score += ratedOption.score * selectionCriteriaLocal.score;
+				if (selectionCriteriaLocal != null) {score += ratedOption.score * selectionCriteriaLocal.score;}
 			});
 
 		score = weightSum === 0 ? 0 : +Math.min(score / 100, 10).toFixed(1);
@@ -43,7 +43,7 @@ export const getScoredSelectionCriteria = (
 		let score = 0;
 		const summedCriteria = sumWeightedCriteriaOfSelectionCriteria(weightedCriteria, criteria.id);
 
-		if (summedCriteria !== 0) score = +Math.min((summedCriteria / weightSum) * 10, 10).toFixed(1);
+		if (summedCriteria !== 0) {score = +Math.min((summedCriteria / weightSum) * 10, 10).toFixed(1);}
 
 		newSelectionCriteria.push({...criteria, score});
 	});
@@ -61,7 +61,7 @@ const sumWeightedCriteriaOfSelectionCriteria = (
 			(criteria.selectionCriteria1Id === selectionCriteriaId && criteria.weight <= 0) ||
 			(criteria.selectionCriteria2Id === selectionCriteriaId && criteria.weight > 0)
 		)
-			weightedCriteriaSummed += Math.abs(criteria.weight);
+			{weightedCriteriaSummed += Math.abs(criteria.weight);}
 	});
 
 	return weightedCriteriaSummed;

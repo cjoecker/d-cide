@@ -1,28 +1,29 @@
-import React, {useEffect, useState} from 'react';
-import Step from '@material-ui/core/Step';
-import Stepper from '@material-ui/core/Stepper';
-import StepButton from '@material-ui/core/StepButton';
-import Fab from '@material-ui/core/Fab';
-import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
-import ArrowBackIcon from '@material-ui/icons/ArrowBack';
-import {makeStyles} from '@material-ui/core/styles';
 import {StepLabel} from '@material-ui/core';
-import {shallowEqual, useDispatch, useSelector} from 'react-redux';
-import ReactGA from 'react-ga';
-import {isEdge} from 'react-device-detect';
-
+import Fab from '@material-ui/core/Fab';
 import Grid from '@material-ui/core/Grid';
+import Step from '@material-ui/core/Step';
+import StepButton from '@material-ui/core/StepButton';
+import Stepper from '@material-ui/core/Stepper';
+import {makeStyles} from '@material-ui/core/styles';
+import ArrowBackIcon from '@material-ui/icons/ArrowBack';
+import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import {AnimatePresence, motion} from 'framer-motion';
+import React, {useEffect, useState} from 'react';
+import {isEdge} from 'react-device-detect';
+import ReactGA from 'react-ga';
+import {shallowEqual, useDispatch, useSelector} from 'react-redux';
+
+import ComponentsTooltip from '../../components/ComponentsTooltip';
+import InstructionsBox from '../../components/InstructionsBox';
+import {NOT_ENOUGH_CRITERIA, NOT_ENOUGH_OPTIONS} from '../../constants/Alerts';
+import AppSlice from '../../services/redux/actionsAndSlicers/AppSlice';
+import {RootState} from '../../services/redux/rootReducer';
+import {useEffectUnsafe} from '../../services/unsafeHooks';
+
 import OptionsAndCriteria from './Step1OptionsAndCriteria/OptionsAndCriteria';
 import WeightCriteria from './Step2WeightCriteria/WeightCriteria';
 import RateOptions from './Step3RateOptions/RateOptions';
 import Results from './Step4Result/Result';
-import {RootState} from '../../services/redux/rootReducer';
-import {NOT_ENOUGH_CRITERIA, NOT_ENOUGH_OPTIONS} from '../../constants/Alerts';
-import ComponentsTooltip from '../../components/ComponentsTooltip';
-import InstructionsBox from '../../components/InstructionsBox';
-import AppSlice from '../../services/redux/actionsAndSlicers/AppSlice';
-import {useEffectUnsafe} from '../../services/unsafeHooks';
 
 const useStyles = makeStyles(theme => ({
 	divMain: {
@@ -96,7 +97,9 @@ const Decision: React.FC = () => {
 		setAreStepButtonsDisabled(isDisabled);
 		setSteps(
 			steps.map(step => {
-				if (step.number > 1) return {...step, isDisabled};
+				if (step.number > 1) {
+					return {...step, isDisabled};
+				}
 				return step;
 			})
 		);
@@ -125,12 +128,23 @@ const Decision: React.FC = () => {
 			action: `Change to step ${newStep} with ${element}`,
 		});
 
-		if (instructionsStepNum === 5 && activeStepNum === 1) dispatch(AppSlice.actions.goToInstructionsStep(6));
-		if (instructionsStepNum === 7 && activeStepNum === 2) dispatch(AppSlice.actions.goToInstructionsStep(8));
-		if (instructionsStepNum === 9 && activeStepNum === 3) dispatch(AppSlice.actions.goToInstructionsStep(10));
+		if (instructionsStepNum === 5 && activeStepNum === 1) {
+			dispatch(AppSlice.actions.goToInstructionsStep(6));
+		}
+		if (instructionsStepNum === 7 && activeStepNum === 2) {
+			dispatch(AppSlice.actions.goToInstructionsStep(8));
+		}
+		if (instructionsStepNum === 9 && activeStepNum === 3) {
+			dispatch(AppSlice.actions.goToInstructionsStep(10));
+		}
 	};
 
-	const stepsComponents = [<OptionsAndCriteria />, <WeightCriteria />, <RateOptions />, <Results />];
+	const stepsComponents = [
+		<OptionsAndCriteria key={'firstStep'} />,
+		<WeightCriteria key={'secondStep'} />,
+		<RateOptions key={'thirdStep'} />,
+		<Results key={'fourthStep'} />,
+	];
 
 	return (
 		<div className={classes.divMain}>
@@ -200,7 +214,7 @@ const Decision: React.FC = () => {
 				</Grid>
 				<Grid style={{width: '100%', zIndex: 2000}} item>
 					<InstructionsBox
-						isVisible={
+						show={
 							(instructionsStepNum === 5 && activeStepNum === 1) ||
 							(instructionsStepNum === 7 && activeStepNum === 2) ||
 							(instructionsStepNum === 9 && activeStepNum === 3)

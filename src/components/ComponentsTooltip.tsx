@@ -1,5 +1,5 @@
-import React from 'react';
 import {Tooltip} from '@material-ui/core';
+import React from 'react';
 
 type ComponentsTooltipProps = {
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any

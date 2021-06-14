@@ -1,23 +1,24 @@
-import React, {useEffect, useState} from 'react';
-import './index.css';
-import AppBar from '@material-ui/core/AppBar';
-import {makeStyles, ThemeProvider} from '@material-ui/core/styles';
-import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import Grid from '@material-ui/core/Grid';
-import ReactGA, {ga} from 'react-ga';
-import {Button, IconButton, Link} from '@material-ui/core';
-import CssBaseline from '@material-ui/core/CssBaseline';
+import Toolbar from '@material-ui/core/Toolbar';
 import {Brightness3, Favorite, FlareRounded} from '@material-ui/icons';
+import './index.css';
+import {Button, IconButton, Link} from '@material-ui/core';
+import AppBar from '@material-ui/core/AppBar';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Grid from '@material-ui/core/Grid';
+import {makeStyles, ThemeProvider} from '@material-ui/core/styles';
+import React, {useEffect, useState} from 'react';
 import {isMobile} from 'react-device-detect';
-import Decision from './scenes/Decision/Decision';
+import ReactGA, {ga} from 'react-ga';
+
 import AlertsBanner from './components/AlertsBanner';
-import {ReactComponent as Logo} from './images/d-cide_Logo.svg';
+import ComponentsTooltip from './components/ComponentsTooltip';
 import CookiesBanner from './components/CookiesBanner';
 import InfoDialog from './components/InfoDialog';
 import {PrivacyPolicy} from './constants/PrivacyTexts';
+import {ReactComponent as Logo} from './images/d-cide_Logo.svg';
 import theme from './muiTheme';
-import ComponentsTooltip from './components/ComponentsTooltip';
+import Decision from './scenes/Decision/Decision';
 
 const useStyles = makeStyles(styleTheme => ({
 	divMain: {
@@ -49,6 +50,7 @@ const useStyles = makeStyles(styleTheme => ({
 		marginTop: 'auto',
 		marginBottom: styleTheme.spacing(0.5),
 		paddingBottom: 'env(safe-area-inset-bottom)',
+		zIndex: 900,
 	},
 	linkButton: {
 		textTransform: 'none',
@@ -76,8 +78,8 @@ const App: React.FC = () => {
 	}, []);
 
 	useEffect(() => {
-		if (isDarkModeActive) localStorage.setItem('isDarkModeActive', 'true');
-		else localStorage.setItem('isDarkModeActive', 'false');
+		if (isDarkModeActive) {localStorage.setItem('isDarkModeActive', 'true');}
+		else {localStorage.setItem('isDarkModeActive', 'false');}
 	}, [isDarkModeActive]);
 
 	const defineDarkMode = () => {
@@ -89,11 +91,11 @@ const App: React.FC = () => {
 				setIsDarkModeActive(false);
 				localStorage.setItem('isDarkModeActive', 'false');
 			}
-		} else if (localStorage.getItem('isDarkModeActive') === 'true') setIsDarkModeActive(true);
+		} else if (localStorage.getItem('isDarkModeActive') === 'true') {setIsDarkModeActive(true);}
 	};
 
 	const initializeGoogleAnalytics = () => {
-		if (process.env.REACT_APP_googleAnalyticsKey != null) ReactGA.initialize(process.env.REACT_APP_googleAnalyticsKey);
+		if (process.env.REACT_APP_googleAnalyticsKey != null) {ReactGA.initialize(process.env.REACT_APP_googleAnalyticsKey);}
 
 		if (window.matchMedia('(display-mode: standalone)').matches) {
 			ReactGA.event({
@@ -112,7 +114,8 @@ const App: React.FC = () => {
 		ReactGA.pageview(window.location.pathname + window.location.search);
 		ga('set', 'appVersion', process.env.REACT_APP_VERSION);
 
-		console.log(`${process.env.REACT_APP_NAME} ${process.env.REACT_APP_VERSION}`);
+		// eslint-disable-next-line no-console
+		console.info(`${process.env.REACT_APP_NAME} ${process.env.REACT_APP_VERSION}`);
 	};
 
 	const handleClickOnDarkMode = () => {

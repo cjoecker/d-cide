@@ -1,11 +1,12 @@
-import React, {useEffect, useState} from 'react';
+import {useTheme} from '@material-ui/core';
 import Snackbar from '@material-ui/core/Snackbar';
 import Alert from '@material-ui/lab/Alert';
+import React, {useEffect, useState} from 'react';
 import {shallowEqual, useDispatch, useSelector} from 'react-redux';
-import {useTheme} from '@material-ui/core';
+
 import {AlertInitialState, AlertType, AlertTypes} from '../constants/Alerts';
-import {RootState} from '../services/redux/rootReducer';
 import AppSlice from '../services/redux/actionsAndSlicers/AppSlice';
+import {RootState} from '../services/redux/rootReducer';
 
 const AlertsBanner: React.FC = () => {
 	const {alerts} = useSelector((state: RootState) => state.App, shallowEqual);
@@ -38,7 +39,7 @@ const AlertsBanner: React.FC = () => {
 	};
 
 	const calculateHideTime = (alertLocal: AlertType) => {
-		if (!alertLocal.autoHide) return 0;
+		if (!alertLocal.autoHide) {return 0;}
 
 		const matches = String(alertLocal.text).match(/[\w\d’-]+/gi);
 		const wordsNum = matches ? matches.length : 0;

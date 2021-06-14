@@ -1,5 +1,6 @@
 import {Action, configureStore} from '@reduxjs/toolkit';
 import {ThunkAction} from 'redux-thunk';
+
 import rootReducer, {RootState} from './rootReducer';
 import {encrypt, persistedState, storeStorageKey} from './storeEncription';
 

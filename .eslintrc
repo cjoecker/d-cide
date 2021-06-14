@@ -1,38 +1,69 @@
 {
 	"root": true,
-	"extends": [
-		"airbnb",
-		"eslint-config-prettier",
-		"eslint:recommended",
-		"plugin:@typescript-eslint/eslint-recommended",
-		"plugin:@typescript-eslint/recommended",
-		"prettier/@typescript-eslint"
-	],
-	"plugins": ["react", "react-hooks"],
 	"parser": "@typescript-eslint/parser",
+	"parserOptions": {
+		"ecmaVersion": 6,
+		"sourceType": "module",
+		"ecmaFeatures": {
+			"jsx": true
+		}
+	},
+	"settings": {
+		"react": {
+			"version": "detect" // React version. "detect" automatically picks the version you have installed.
+		}
+	},
+	"extends": [
+		"eslint:recommended",
+		"plugin:@typescript-eslint/recommended",
+		"plugin:react/recommended",
+		"prettier",
+		"plugin:jsx-a11y/recommended"
+	],
+	"plugins": [
+		"@typescript-eslint",
+		"react-hooks",
+		"unused-imports",
+		"import",
+		"jsx-a11y"
+	],
 	"rules": {
-		"no-param-reassign": [
-			2,
-			{
-				"props": false
-			}
+
+		"no-console": [
+			"error"
 		],
-		"import/extensions": "off",
-		"import/no-unresolved": "off",
-		"spaced-comment": "off",
-		"react/jsx-indent": "off",
-		"react/jsx-indent-props": "off",
-		"no-use-before-define": "off",
-		"@typescript-eslint/no-use-before-define": "off",
-		"@typescript-eslint/explicit-function-return-type": "off",
-		"react/jsx-curly-newline": "off",
-		"react-hooks/exhaustive-deps": "off",
-		"react/require-default-props": "off",
-		"react/jsx-filename-extension": [
-			2,
-			{
-				"extensions": [".js", ".jsx", ".ts", ".tsx"]
-			}
-		]
+		"no-undef": "off",
+		"no-empty-pattern": "off",
+		"react-hooks/rules-of-hooks": "error",
+		"react-hooks/exhaustive-deps": "error",
+		"@typescript-eslint/ban-types": "off",
+		"@typescript-eslint/no-empty-interface": "off",
+		"@typescript-eslint/no-var-requires": "off",
+		"@typescript-eslint/no-empty-function": "off",
+		"@typescript-eslint/explicit-module-boundary-types": "off",
+		"@typescript-eslint/no-explicit-any": "off",
+		"@typescript-eslint/no-non-null-assertion": "off",
+		"react/no-unescaped-entities": "off",
+		"react/prop-types": "off",
+		"react/display-name": "off",
+		"prefer-const": ["error", {
+			"destructuring": "all"
+		}],
+		"no-unused-vars": "off",
+		"@typescript-eslint/no-unused-vars": "off",
+		"unused-imports/no-unused-imports-ts": "warn",
+		"unused-imports/no-unused-vars-ts": [
+			"warn",
+			{ "vars": "all", "varsIgnorePattern": "^_", "args": "after-used", "argsIgnorePattern": "^_" }
+		],
+		"curly": "warn",
+		"jsx-a11y/no-autofocus": ["error", {
+			"ignoreNonDOM": true
+		}]
+	},
+	"env": {
+		"browser": true,
+		"node": true,
+		"jest": true
 	}
 }

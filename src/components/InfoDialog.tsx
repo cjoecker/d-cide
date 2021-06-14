@@ -1,14 +1,15 @@
-import React, {useEffect, useState} from 'react';
-import {makeStyles} from '@material-ui/core/styles';
 import Dialog, {DialogProps} from '@material-ui/core/Dialog';
-import IconButton from '@material-ui/core/IconButton';
-import CloseIcon from '@material-ui/icons/Close';
-import Typography from '@material-ui/core/Typography';
 import DialogContent from '@material-ui/core/DialogContent/DialogContent';
+import IconButton from '@material-ui/core/IconButton';
+import {makeStyles} from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
+import CloseIcon from '@material-ui/icons/Close';
+import React, {useEffect, useState} from 'react';
 import ReactGA from 'react-ga';
 
-import ComponentsTooltip from './ComponentsTooltip';
 import {useEffectUnsafe} from '../services/unsafeHooks';
+
+import ComponentsTooltip from './ComponentsTooltip';
 
 const useStyles = makeStyles(theme => ({
 	dialog: {
@@ -61,10 +62,10 @@ const InfoDialog: React.FC<Props> = (props: Props) => {
 					action: `Open ${dialogTitle} dialog`,
 				});
 			} else
-				ReactGA.event({
+				{ReactGA.event({
 					category: 'Info dialog',
 					action: `Close ${dialogTitle} dialog`,
-				});
+				});}
 		}
 	}, [isVisible]);
 

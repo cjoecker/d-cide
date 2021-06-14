@@ -1,17 +1,17 @@
-//TYPES
-export type AlertType = {
-	type: AlertTypes;
-	allowClose: boolean;
-	autoHide: boolean;
-	text: string;
-};
-
 export enum AlertTypes {
 	error = 'error',
 	warning = 'warning',
 	info = 'info',
 	success = 'success',
 }
+
+
+export type AlertType = {
+	type: AlertTypes;
+	allowClose: boolean;
+	autoHide: boolean;
+	text: string;
+};
 
 export const AlertInitialState: AlertType = {
 	type: AlertTypes.error,

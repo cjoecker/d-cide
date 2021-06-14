@@ -1,16 +1,17 @@
-import React, {useEffect, useState} from 'react';
-import {makeStyles} from '@material-ui/core/styles';
-import ReactGA from 'react-ga';
-import Button from '@material-ui/core/Button';
-import Typography from '@material-ui/core/Typography';
-import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
-import Slide from '@material-ui/core/Slide';
-import {isEdge, isMobile} from 'react-device-detect';
 import {Dialog} from '@material-ui/core';
+import Button from '@material-ui/core/Button';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
+import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
+import Slide from '@material-ui/core/Slide';
+import {makeStyles} from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
+import React, {useEffect, useState} from 'react';
+import {isEdge, isMobile} from 'react-device-detect';
+import ReactGA from 'react-ga';
+
 import {PrivacyText} from '../constants/PrivacyTexts';
 
 const useStyles = makeStyles(theme => ({
@@ -41,7 +42,7 @@ const CookiesBanner: React.FC = () => {
 	const [isVisible, setIsVisible] = useState(false);
 
 	useEffect(() => {
-		if (localStorage.getItem('cookieConsentAccepted') == null) setIsVisible(true);
+		if (localStorage.getItem('cookieConsentAccepted') == null) {setIsVisible(true);}
 	}, []);
 
 	const classes = useStyles();

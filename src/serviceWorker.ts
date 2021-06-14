@@ -46,7 +46,7 @@ function registerValidSW(swUrl: string, config?: Config) {
 						if (config && config.onUpdate) {
 							config.onUpdate(registration);
 						}
-					} else if (config && config.onSuccess) config.onSuccess(registration);
+					} else if (config && config.onSuccess) {config.onSuccess(registration);}
 				}
 			};
 		};
