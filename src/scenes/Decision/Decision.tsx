@@ -45,7 +45,6 @@ const useStyles = makeStyles(theme => ({
 		width: '100%',
 		bottom: 0,
 		padding: theme.spacing(0, 2, 2, 0),
-		pointerEvents: 'none',
 		zIndex: 1000,
 	},
 	stepperLabel: {
