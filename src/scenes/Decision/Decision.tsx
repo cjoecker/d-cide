@@ -46,9 +46,15 @@ const useStyles = makeStyles(theme => ({
 		bottom: 0,
 		padding: theme.spacing(0, 2, 2, 0),
 		zIndex: 1000,
+		pointerEvents: 'none',
 	},
 	stepperLabel: {
 		marginBottom: theme.spacing(-1.5),
+	},
+	instructionsWrapper: {
+		width: '100%',
+		zIndex: 2000,
+		pointerEvents: 'auto',
 	},
 	buttonNext: {
 		zIndex: 1000,
@@ -103,6 +109,11 @@ const Decision: React.FC = () => {
 			})
 		);
 	};
+
+	const isInstructionsVisible =
+		(instructionsStepNum === 5 && activeStepNum === 1) ||
+		(instructionsStepNum === 7 && activeStepNum === 2) ||
+		(instructionsStepNum === 9 && activeStepNum === 3);
 
 	const setStepCompleted = (stepNum: number) => {
 		const newSteps = [...steps];
@@ -211,14 +222,8 @@ const Decision: React.FC = () => {
 						</ComponentsTooltip>
 					)}
 				</Grid>
-				<Grid style={{width: '100%', zIndex: 2000}} item>
-					<InstructionsBox
-						show={
-							(instructionsStepNum === 5 && activeStepNum === 1) ||
-							(instructionsStepNum === 7 && activeStepNum === 2) ||
-							(instructionsStepNum === 9 && activeStepNum === 3)
-						}
-					/>
+				<Grid className={classes.instructionsWrapper} item>
+					<InstructionsBox show={isInstructionsVisible} />
 				</Grid>
 				<Grid item>
 					{activeStepNum !== steps.length && (

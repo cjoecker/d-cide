@@ -36,7 +36,7 @@ context('Step 4 Results', () => {
 		});
 
 		it('shows diagram correctly', () => {
-			showsDiagramCorrectly('selectionCriteria', ['Short term', 'Risks', 'Monthly', 'Long term']);
+			showsDiagramCorrectly('selectionCriteria', ['Short', 'Risks', 'Monthly', 'Long term']);
 		});
 
 		it('wraps long labels', () => {
