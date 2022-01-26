@@ -1,22 +1,22 @@
 {
   "files": {
     "main.css": "/static/css/main.9fe6b8e6.chunk.css",
-    "main.js": "/static/js/main.cf6a8d80.chunk.js",
-    "main.js.map": "/static/js/main.cf6a8d80.chunk.js.map",
+    "main.js": "/static/js/main.53525c0a.chunk.js",
+    "main.js.map": "/static/js/main.53525c0a.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.b30c16ed.js",
     "runtime-main.js.map": "/static/js/runtime-main.b30c16ed.js.map",
-    "static/js/2.79eee361.chunk.js": "/static/js/2.79eee361.chunk.js",
-    "static/js/2.79eee361.chunk.js.map": "/static/js/2.79eee361.chunk.js.map",
+    "static/js/2.f938cfbb.chunk.js": "/static/js/2.f938cfbb.chunk.js",
+    "static/js/2.f938cfbb.chunk.js.map": "/static/js/2.f938cfbb.chunk.js.map",
     "index.html": "/index.html",
     "static/css/main.9fe6b8e6.chunk.css.map": "/static/css/main.9fe6b8e6.chunk.css.map",
-    "static/js/2.79eee361.chunk.js.LICENSE.txt": "/static/js/2.79eee361.chunk.js.LICENSE.txt",
+    "static/js/2.f938cfbb.chunk.js.LICENSE.txt": "/static/js/2.f938cfbb.chunk.js.LICENSE.txt",
     "static/media/d-cide_Logo.2f74115f.svg": "/static/media/d-cide_Logo.2f74115f.svg",
     "static/media/index.css": "/static/media/quicksand-v22-latin-regular.55896949.woff"
   },
   "entrypoints": [
     "static/js/runtime-main.b30c16ed.js",
-    "static/js/2.79eee361.chunk.js",
+    "static/js/2.f938cfbb.chunk.js",
     "static/css/main.9fe6b8e6.chunk.css",
-    "static/js/main.cf6a8d80.chunk.js"
+    "static/js/main.53525c0a.chunk.js"
   ]
 }
