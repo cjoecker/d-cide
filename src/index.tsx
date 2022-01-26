@@ -19,5 +19,3 @@ const render = () => {
 };
 
 render();
-
-serviceWorker.register();
