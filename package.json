@@ -18,7 +18,7 @@
 		"react-redux": "^7.2.4",
 		"react-scripts": "^4.0.3",
 		"react-swipeable-views": "^0.14.0",
-		"recharts": "^2.0.9",
+		"recharts": "^2.1.14",
 		"redux": "^4.1.0",
 		"redux-offline": "^2.0.0",
 		"redux-thunk": "^2.3.0",
